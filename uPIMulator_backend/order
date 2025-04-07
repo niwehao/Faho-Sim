@@ -1,0 +1,1 @@
+--benchmark VA --num_tasklets 16 --bindir   /mnt/d/Upmen/uPIMulator/python_cpp/uPIMulator/uPIMulator_frontend/bin/1_dpus/ --logdir .

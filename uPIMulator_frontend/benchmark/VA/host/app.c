@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
     // Allocate DPUs and load binary
     DPU_ASSERT(dpu_alloc(NR_DPUS, NULL, &dpu_set));
     DPU_ASSERT(dpu_load(dpu_set, DPU_BINARY, NULL));
-    DPU_ASSERT(dpu_get_nr_dpus(dpu_set, &nr_of_dpus));
+    DPU_ASSERT(dpu_get_nr_dpus(dpu_set, &nr_of_dpus));//--benchmark VA --num_tasklets 16 --bindir   /mnt/d/Upmen/uPIMulator/python_cpp/uPIMulator_frontend/bin/1_dpus/ --logdir .
     printf("Allocated %d DPU(s)\n", nr_of_dpus);
     unsigned int i = 0;
 
@@ -171,7 +171,7 @@ int main(int argc, char **argv) {
         i = 0;
         // PARALLEL RETRIEVE TRANSFER
         DPU_FOREACH(dpu_set, dpu, i) {
-            DPU_ASSERT(dpu_prepare_xfer(dpu, bufferC + input_size_dpu_8bytes * i));
+            DPU_ASSERT(dpu_prepare_xfer(dpu, bufferC + input_size_dpu_8bytes * i));//bufferC的拷贝位置
         }
         DPU_ASSERT(dpu_push_xfer(dpu_set, DPU_XFER_FROM_DPU, DPU_MRAM_HEAP_POINTER_NAME, input_size_dpu_8bytes * sizeof(T), input_size_dpu_8bytes * sizeof(T), DPU_XFER_DEFAULT));
         if(rep >= p.n_warmup)

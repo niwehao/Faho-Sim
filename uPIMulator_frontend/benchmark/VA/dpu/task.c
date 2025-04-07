@@ -54,7 +54,7 @@ int main_kernel1() {
     uint32_t mram_base_addr_B = (uint32_t)(DPU_MRAM_HEAP_POINTER + input_size_dpu_bytes_transfer);
 
     // Initialize a local cache to store the MRAM block
-    T *cache_A = (T *) mem_alloc(BLOCK_SIZE);
+    T *cache_A = (T *) mem_alloc(BLOCK_SIZE);//数据分配在WRAM
     T *cache_B = (T *) mem_alloc(BLOCK_SIZE);
 
     for(unsigned int byte_index = base_tasklet; byte_index < input_size_dpu_bytes; byte_index += BLOCK_SIZE * NR_TASKLETS){

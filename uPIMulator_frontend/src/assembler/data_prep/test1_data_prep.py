@@ -12,7 +12,7 @@ from util.config_loader import ConfigLoader
 
 class TEST1DataPrep:
     def __init__(self, num_tasklets: int, data_prep_param: List[int], num_dpus: int):#data_prep_param 是输入参数
-        assert 0 < num_tasklets < ConfigLoader.max_num_tasklets()
+        assert 0 < num_tasklets < ConfigLoader.max_num_tasklets()#结果的储存取决于结果的储存方式,所以input和output大小需要对称
 
         self._num_tasklets: int = num_tasklets
         self._num_dpus: int = num_dpus
@@ -37,14 +37,7 @@ class TEST1DataPrep:
         else:
             self._input_size_dpu_8bytes = input_size_dpu
 
-        self._buffer_a: List[int] = [0 for _ in range(self._input_size_dpu_8bytes * num_dpus)]
-        self._buffer_b: List[int] = [0 for _ in range(self._input_size_dpu_8bytes * num_dpus)]
-
-        for i in range(input_size):
-            self._buffer_a[i] = IntInitializer.value_by_range(0, 2**31)
-            self._buffer_b[i] = IntInitializer.value_by_range(0, 2**31)
-
-        self._buffer_c: List[int] = list(np.add(self._buffer_a, self._buffer_b))#预期结果
+        self.a=1
 
         self._size: List[int] = [self._input_size_dpu_8bytes * elem_size for _ in range(self._num_dpus - 1)]
         self._size.append((input_size_8bytes - (self._input_size_dpu_8bytes * (self._num_dpus - 1))) * elem_size)
@@ -64,16 +57,15 @@ class TEST1DataPrep:
         assert 0 <= dpu_id < self._num_dpus
 
         bytes_: List[Byte] = []
+        #决定读入区域多大 labels.bin
 
-        start_elem = self._input_size_dpu_8bytes * dpu_id
 
-        for i in range(self._input_size_dpu_8bytes):
-            element_immediate = Immediate(Representation.UNSIGNED, 32, self._buffer_a[start_elem + i])
-            bytes_ += element_immediate.to_bytes()
 
-        for i in range(self._input_size_dpu_8bytes):
-            element_immediate = Immediate(Representation.UNSIGNED, 32, self._buffer_b[start_elem + i])
-            bytes_ += element_immediate.to_bytes()
+
+        element_immediate = Immediate(Representation.UNSIGNED, 32, self.a)#32位转4字节
+        bytes_ += element_immediate.to_bytes()
+
+
 
         return Bin(bytes_)
 
@@ -82,17 +74,8 @@ class TEST1DataPrep:
         assert 0 <= dpu_id < self._num_dpus
 
         bytes_: List[Byte] = []
-
-        start_elem = self._input_size_dpu_8bytes * dpu_id
-
-        for i in range(self._input_size_dpu_8bytes):
-            element_immediate = Immediate(Representation.UNSIGNED, 32, self._buffer_a[start_elem + i])
-            bytes_ += element_immediate.to_bytes()
-
-        for i in range(self._input_size_dpu_8bytes):
-            element_immediate = Immediate(Representation.UNSIGNED, 32, self._buffer_c[start_elem + i])
-            bytes_ += element_immediate.to_bytes()
-        #output_dpu_mram_heap_pointer_name,导入到此处,是预期结果
+        element_immediate = Immediate(Representation.UNSIGNED, 32, 10)
+        bytes_ += element_immediate.to_bytes()
 
         return Bin(bytes_)
 
@@ -102,14 +85,14 @@ class TEST1DataPrep:
 
         bytes_: List[Byte] = []
 
-        size_immediate = Immediate(Representation.UNSIGNED, 32, self._size[dpu_id])
-        bytes_ += size_immediate.to_bytes()
-
-        transfer_size_immediate = Immediate(Representation.UNSIGNED, 32, self._transfer_size[dpu_id])
-        bytes_ += transfer_size_immediate.to_bytes()
-
-        kernel_immediate = Immediate(Representation.UNSIGNED, 32, self._kernel[dpu_id])
-        bytes_ += kernel_immediate.to_bytes()
+        # size_immediate = Immediate(Representation.UNSIGNED, 32, self._size[dpu_id])
+        # bytes_ += size_immediate.to_bytes()
+        #
+        # transfer_size_immediate = Immediate(Representation.UNSIGNED, 32, self._transfer_size[dpu_id])
+        # bytes_ += transfer_size_immediate.to_bytes()
+        #
+        # kernel_immediate = Immediate(Representation.UNSIGNED, 32, self._kernel[dpu_id])
+        # bytes_ += kernel_immediate.to_bytes()
 
         return Bin(bytes_)
 

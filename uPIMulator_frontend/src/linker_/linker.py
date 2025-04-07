@@ -33,10 +33,11 @@ class Linker:
         self._analyze_liveness(executable)
         self._assign_labels(executable)
         linker_script.assign_address(executable)#分配地址
-        self._assign_set(executable)#分配常量
+        self._assign_set(executable)
         self._assign_instruction(executable, linker_script)
 
         Assembler.assemble(executable, linker_script, data_prep_param, num_dpus)
+       
 
     def _analyze_liveness(self, binary: Union[Relocatable, Executable]):
         document = Parser.parse_lines(binary.lines())

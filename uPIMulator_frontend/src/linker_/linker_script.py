@@ -178,7 +178,7 @@ class LinkerScript:
 
         self.symbol("__sw_cache_buffer").set_address(cur_address)
         cur_address += 8 * self._num_tasklets
-
+#print line
         cur_address = (
             math.ceil(cur_address / ConfigLoader.min_access_granularity()) * ConfigLoader.min_access_granularity()
         )

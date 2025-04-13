@@ -67,12 +67,12 @@ class RegFile {
   void cycle() = delete;
 
  private:
-  std::vector<GPReg *> gp_regs_;
-  SPReg *sp_reg_;
+  std::vector<GPReg *> gp_regs_;//普通寄存器 24个
+  SPReg *sp_reg_;//特殊寄存器
   PCReg *pc_reg_;
-  ConditionReg *condition_reg_;
-  FlagReg *flag_reg_;
-  ExceptionReg *exception_reg_;
+  ConditionReg *condition_reg_;//条件位
+  FlagReg *flag_reg_;//zero & carry
+  ExceptionReg *exception_reg_;//处理异常
 };
 
 }  // namespace upmem_sim::simulator::reg

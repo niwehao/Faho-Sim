@@ -21,7 +21,7 @@ class GPReg {
 
  private:
   abi::reg::GPReg *gp_reg_;
-  abi::word::DataWord *word_;
+  abi::word::DataWord *word_;//32比特
 };
 
 }  // namespace upmem_sim::simulator::reg

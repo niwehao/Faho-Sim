@@ -30,7 +30,38 @@ class AsciiEncoder:
     @staticmethod
     def _ascii_table() -> Dict[str, int]:
         return {
-            "\t": 9,
+            "\0": 0,      # Null character
+            "\x01": 1,    # Start of Heading
+            "\x02": 2,    # Start of Text
+            "\x03": 3,    # End of Text
+            "\x04": 4,    # End of Transmission
+            "\x05": 5,    # Enquiry
+            "\x06": 6,    # Acknowledge
+            "\a": 7,      # Bell
+            "\b": 8,      # Backspace
+            "\t": 9,      # Horizontal Tab
+            "\n": 10,     # Line Feed
+            "\v": 11,     # Vertical Tab
+            "\f": 12,     # Form Feed
+            "\r": 13,     # Carriage Return
+            "\x0e": 14,   # Shift Out
+            "\x0f": 15,   # Shift In
+            "\x10": 16,   # Data Link Escape
+            "\x11": 17,   # Device Control 1
+            "\x12": 18,   # Device Control 2
+            "\x13": 19,   # Device Control 3
+            "\x14": 20,   # Device Control 4
+            "\x15": 21,   # Negative Acknowledge
+            "\x16": 22,   # Synchronous Idle
+            "\x17": 23,   # End of Transmission Block
+            "\x18": 24,   # Cancel
+            "\x19": 25,   # End of Medium
+            "\x1a": 26,   # Substitute
+            "\x1b": 27,   # Escape
+            "\x1c": 28,   # File Separator
+            "\x1d": 29,   # Group Separator
+            "\x1e": 30,   # Record Separator
+            "\x1f": 31,   # Unit Separator
             " ": 32,
             "!": 33,
             '"': 34,
@@ -126,6 +157,7 @@ class AsciiEncoder:
             "|": 124,
             "}": 125,
             "~": 126,
+            "\x7f": 127,   # Delete
             "Ç": 128,
             "ü": 129,
             "é": 130,
@@ -253,4 +285,5 @@ class AsciiEncoder:
             "³": 252,
             "²": 253,
             "■": 254,
+            "\xff": 255    # Non-breaking space or undefined in some code pages
         }

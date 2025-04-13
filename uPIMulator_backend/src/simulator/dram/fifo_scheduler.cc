@@ -44,7 +44,7 @@ bool FIFOScheduler::service_fcfs() {
   auto [dma_command, address, size] = reorder_buffer_[0];
   Address wordline_address = (address / wordline_size_) * wordline_size_;
 
-  if (row_address_ == nullptr and ready_q_->can_push(2)) {//先激活位置,再执行
+  if (row_address_ == nullptr and ready_q_->can_push(2)) {//空行 先激活位置,再执行
     reorder_buffer_.erase(reorder_buffer_.begin());
 
     ready_q_->push(
@@ -92,7 +92,7 @@ bool FIFOScheduler::service_fcfs() {
     reorder_buffer_.erase(reorder_buffer_.begin());// erase(): 删除指定位置的元素
 
     ready_q_->push(
-        new MemoryCommand(MemoryCommand::PRECHARGE, row_address_->address()));
+        new MemoryCommand(MemoryCommand::PRECHARGE, row_address_->address()));//先擦除.擦除前需要写回
     ready_q_->push(
         new MemoryCommand(MemoryCommand::ACTIVATION, wordline_address));
 

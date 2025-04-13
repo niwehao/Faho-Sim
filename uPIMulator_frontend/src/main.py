@@ -47,6 +47,6 @@ if __name__ == "__main__":
     elif args.mode == "all":
         compile(args.benchmark, args.num_tasklets)
         link(args.benchmark,  args.num_dpus, args.num_tasklets, data_prep_param)
-        iss(args.benchmark, args.num_tasklets)
+        #iss(args.benchmark, args.num_tasklets)
     else:
         raise ValueError

@@ -19,7 +19,8 @@ Thread::Thread(util::ArgumentParser *argument_parser)
 
   init_dpu_transfer_pointer();
   init_num_executions();
-}
+
+}//bad_function_call
 
 encoder::ByteStream *Thread::load_byte_stream(std::string filename) {
   std::string bin_filepath = bindir_ + "/" + benchmark_ + "." +
@@ -41,6 +42,7 @@ void Thread::init_dpu_transfer_pointer() {
 
   ifs >> sys_used_mram_end_pointer_ >> dpu_input_arguments_pointer_ >>
       dpu_results_pointer_ >> sys_end_pointer_;//
+  std::cout<<"sys_used_mram_end_pointer_:"<<sys_used_mram_end_pointer_<<std::endl;
 }
 
 void Thread::init_num_executions() {

@@ -1,5 +1,5 @@
 #include "simulator/sram/wram.h"
-
+#include <iostream>
 namespace upmem_sim::simulator::sram {
 
 WRAM::WRAM() {
@@ -26,10 +26,34 @@ WRAM::~WRAM() {
 }
 
 int64_t WRAM::read(Address address) {
-  return cells_[index(address)]->value(abi::word::UNSIGNED);//读取数值
+  std::cout<<"WRAM::read from "<<address<<std::endl;
+  int64_t value = cells_[index(address)]->value(abi::word::UNSIGNED);
+  for (int i = 7; i >= 0; --i) {
+    // 每次提取8位
+    uint8_t byte = (value >> (i * 8)) & 0xFF;
+    std::cout << static_cast<int>(byte);
+
+    if (i > 0) {
+      std::cout << ",";
+    }
+  }
+  std::cout << std::endl;
+  return value;//读取数值
 }
 
 void WRAM::write(Address address, int64_t value) {
+  std::cout<<"WRAM::write to "<<address<<std::endl;
+  for (int i = 7; i >= 0; --i) {
+    // 每次提取8位
+    uint8_t byte = (value >> (i * 8)) & 0xFF;
+    std::cout << static_cast<int>(byte);
+
+    if (i > 0) {
+      std::cout << ",";
+    }
+  }
+  std::cout << std::endl;
+
   cells_[index(address)]->set_value(value);//写入数值
 }
 

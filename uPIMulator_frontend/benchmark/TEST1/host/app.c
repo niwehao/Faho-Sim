@@ -27,22 +27,18 @@
 
 int main(int argc, char **argv) {
     struct dpu_set_t dpu_set, dpu;
-    int a;
+    int a=7;
     int i=0;
 
 
     DPU_ASSERT(dpu_alloc(1, NULL, &dpu_set));
     DPU_ASSERT(dpu_load(dpu_set, DPU_BINARY, NULL));
-    DPU_FOREACH(dpu_set, dpu, i) {
-        DPU_ASSERT(dpu_prepare_xfer(dpu,&a));
-    }
-    DPU_ASSERT(dpu_push_xfer(dpu_set, DPU_XFER_TO_DPU, DPU_MRAM_HEAP_POINTER_NAME, 0, sizeof(int), DPU_XFER_DEFAULT));
 
     DPU_ASSERT(dpu_launch(dpu_set, DPU_SYNCHRONOUS));//启动
     DPU_FOREACH(dpu_set, dpu, i) {
         DPU_ASSERT(dpu_prepare_xfer(dpu, &a));//bufferC的拷贝位置
     }
-    DPU_ASSERT(dpu_push_xfer(dpu_set, DPU_XFER_FROM_DPU, DPU_MRAM_HEAP_POINTER_NAME, 0, sizeof(int), DPU_XFER_DEFAULT));
+    DPU_ASSERT(dpu_push_xfer(dpu_set, DPU_XFER_FROM_DPU, DPU_MRAM_HEAP_POINTER_NAME, 0, 32, DPU_XFER_DEFAULT));
     DPU_ASSERT(dpu_free(dpu_set));
     printf("a=%d\n",a);
 

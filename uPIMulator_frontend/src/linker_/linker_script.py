@@ -25,7 +25,7 @@ class LinkerScript:
         for symbol in self._symbols:
             if symbol.name() == symbol_name:
                 return symbol
-        raise ValueError
+        raise ValueError#_mram_end_pointer
 
     def symbol_names(self) -> Set[str]:
         return {symbol.name() for symbol in self._symbols}

@@ -16,6 +16,34 @@ namespace upmem_sim::abi::instruction {
 
 class Instruction {
  public:
+    std::string getSuffixName(Suffix suffix) {
+        static const std::map<Suffix, std::string> suffixNames = {
+            {RICI, "RICI"}, {RRI, "RRI"}, {RRIC, "RRIC"}, {RRICI, "RRICI"}, {RRIF, "RRIF"},
+            {RRR, "RRR"}, {RRRC, "RRRC"}, {RRRCI, "RRRCI"}, {ZRI, "ZRI"}, {ZRIC, "ZRIC"},
+            {ZRICI, "ZRICI"}, {ZRIF, "ZRIF"}, {ZRR, "ZRR"}, {ZRRC, "ZRRC"}, {ZRRCI, "ZRRCI"},
+            {S_RRI, "S_RRI"}, {S_RRIC, "S_RRIC"}, {S_RRICI, "S_RRICI"}, {S_RRIF, "S_RRIF"},
+            {S_RRR, "S_RRR"}, {S_RRRC, "S_RRRC"}, {S_RRRCI, "S_RRRCI"}, {U_RRI, "U_RRI"},
+            {U_RRIC, "U_RRIC"}, {U_RRICI, "U_RRICI"}, {U_RRIF, "U_RRIF"}, {U_RRR, "U_RRR"},
+            {U_RRRC, "U_RRRC"}, {U_RRRCI, "U_RRRCI"}, {RR, "RR"}, {RRC, "RRC"}, {RRCI, "RRCI"},
+            {ZR, "ZR"}, {ZRC, "ZRC"}, {ZRCI, "ZRCI"}, {S_RR, "S_RR"}, {S_RRC, "S_RRC"},
+            {S_RRCI, "S_RRCI"}, {U_RR, "U_RR"}, {U_RRC, "U_RRC"}, {U_RRCI, "U_RRCI"},
+            {DRDICI, "DRDICI"}, {RRRI, "RRRI"}, {RRRICI, "RRRICI"}, {ZRRI, "ZRRI"},
+            {ZRRICI, "ZRRICI"}, {S_RRRI, "S_RRRI"}, {S_RRRICI, "S_RRRICI"}, {U_RRRI, "U_RRRI"},
+            {U_RRRICI, "U_RRRICI"}, {RIR, "RIR"}, {RIRC, "RIRC"}, {RIRCI, "RIRCI"}, {ZIR, "ZIR"},
+            {ZIRC, "ZIRC"}, {ZIRCI, "ZIRCI"}, {S_RIRC, "S_RIRC"}, {S_RIRCI, "S_RIRCI"},
+            {U_RIRC, "U_RIRC"}, {U_RIRCI, "U_RIRCI"}, {R, "R"}, {RCI, "RCI"}, {Z, "Z"},
+            {ZCI, "ZCI"}, {S_R, "S_R"}, {S_RCI, "S_RCI"}, {U_R, "U_R"}, {U_RCI, "U_RCI"},
+            {CI, "CI"}, {I, "I"}, {DDCI, "DDCI"}, {ERRI, "ERRI"}, {S_ERRI, "S_ERRI"},
+            {U_ERRI, "U_ERRI"}, {EDRI, "EDRI"}, {ERII, "ERII"}, {ERIR, "ERIR"}, {ERID, "ERID"},
+            {DMA_RRI, "DMA_RRI"}
+        };
+
+        auto it = suffixNames.find(suffix);
+        if (it != suffixNames.end()) {
+            return it->second;
+        }
+        return "Unknown";
+    }
   static std::set<OpCode> acquire_rici_op_codes() { return {ACQUIRE}; }
   static std::set<OpCode> release_rici_op_codes() { return {RELEASE}; }
   static std::set<OpCode> boot_rici_op_codes() { return {BOOT, RESUME}; }
@@ -502,6 +530,8 @@ class Instruction {
   void init_erid(isa::Endian endian, reg::SrcReg *ra, int64_t off,
                  reg::PairReg *db);
   void init_dma_rri(reg::SrcReg *ra, reg::SrcReg *rb, int64_t imm);
+    // 方法1：使用映射表（推荐）
+
 
  private:
   OpCode op_code_;

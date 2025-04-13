@@ -36,6 +36,7 @@ class Linker:
         self._assign_set(executable)
         self._assign_instruction(executable, linker_script)
 
+
         Assembler.assemble(executable, linker_script, data_prep_param, num_dpus)
        
 
@@ -68,6 +69,8 @@ class Linker:
         for relocatable in relocatables:
             defs.update(relocatable.liveness().defs())
         return defs
+
+    #main.s
 
     def _unresolved_symbols(self, relocatables: Set[Relocatable], linker_script: LinkerScript) -> Set[str]:
         defs = self._defs(relocatables)

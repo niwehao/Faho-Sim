@@ -29,10 +29,11 @@ class LabelAssigner(assemblyListener):
         i = 0
         characters = ""
         while i < len(string_literal):
+
             if string_literal[i] == "\\":
                 octal = Byte(int(string_literal[i + 1 : i + 4], base=8))
                 characters += AsciiEncoder().decode(octal)
-                i += 3
+                i += 4
             else:
                 characters += string_literal[i]
                 i += 1

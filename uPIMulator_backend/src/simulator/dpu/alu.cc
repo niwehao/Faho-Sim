@@ -10,7 +10,7 @@ namespace upmem_sim::simulator::dpu {//加法器
 
 int64_t ALU::atomic_address_hash(int64_t operand1, int64_t operand2) {//检查原子地址是否在范围中
   assert(operand1 + operand2 < 256);
-  auto [result, carry, overflow] = add(operand1, operand2);
+  auto [result, carry, overflow] = add(operand1, operand2);//地址散列机制
   return result;
 }
 

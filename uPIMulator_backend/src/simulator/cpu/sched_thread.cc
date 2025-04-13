@@ -115,10 +115,12 @@ void SchedThread::dma_transfer_output_dpu_mram_heap_pointer_name(
                                                 byte_stream->size());
       rank_->read(rank_message);
       rank_messages.insert(rank_message);
+      //读取mram来比较结果
 
       encoder::ByteStream *mram_byte_stream =
           rank_->dpus()[dpu_id]->dma()->transfer_from_mram(
               sys_used_mram_end_pointer(), byte_stream->size());
+      //1111111000110011111111100011000011111110001100011111111000110001
 
       assert(byte_stream->size() == mram_byte_stream->size());
       for (int i = 0; i < byte_stream->size(); i++) {

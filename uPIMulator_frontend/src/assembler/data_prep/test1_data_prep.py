@@ -62,8 +62,8 @@ class TEST1DataPrep:
 
 
 
-        element_immediate = Immediate(Representation.UNSIGNED, 32, self.a)#32位转4字节
-        bytes_ += element_immediate.to_bytes()
+        #element_immediate = Immediate(Representation.UNSIGNED, 32, self.a)#32位转4字节
+        #bytes_ += element_immediate.to_bytes()
 
 
 
@@ -74,7 +74,7 @@ class TEST1DataPrep:
         assert 0 <= dpu_id < self._num_dpus
 
         bytes_: List[Byte] = []
-        element_immediate = Immediate(Representation.UNSIGNED, 32, 10)
+        element_immediate = Immediate(Representation.UNSIGNED, 32, 16843010)
         bytes_ += element_immediate.to_bytes()
 
         return Bin(bytes_)

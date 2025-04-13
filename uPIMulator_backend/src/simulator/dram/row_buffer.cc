@@ -312,6 +312,7 @@ std::vector<int> RowBuffer::read_from_row_buffer(Address address,
 void RowBuffer::write_to_mram() {
   assert(row_address_ != nullptr);
 
+
   mram_->write(row_address_->address(), std::move(row_buffer_));
 }
 

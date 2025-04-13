@@ -48,6 +48,8 @@ class Assembler:
     def assemble(
         executable: Executable, linker_script: LinkerScript, data_prep_param: List[int], num_dpus: int
     ) -> None:
+        #把executable.sections内容存到t.txt
+
         Assembler._assemble_atomic(executable, num_dpus)
         Assembler._assemble_iram(executable, num_dpus)
         Assembler._assemble_wram(executable, num_dpus)

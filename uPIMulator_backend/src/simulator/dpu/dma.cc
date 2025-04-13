@@ -93,6 +93,8 @@ void DMA::transfer_from_wram_to_mram(
     Address wram_address, Address mram_address, Address size,
     abi::instruction::Instruction *instruction) {
   assert(can_push());
+  std::cout<<"DMA::transfer_from_wram to mram "<<std::endl;
+
 
   encoder::ByteStream *byte_stream = transfer_from_wram(wram_address, size);//先从wram读取数据
 
@@ -109,6 +111,7 @@ void DMA::transfer_from_mram_to_wram(
     Address wram_address, Address mram_address, Address size,
     abi::instruction::Instruction *instruction) {
   assert(can_push());
+  std::cout<<"DMA::transfer_from_mram to wram "<<std::endl;
 
   auto dma_command = new DMACommand(DMACommand::READ, wram_address,
                                     mram_address, size, instruction);

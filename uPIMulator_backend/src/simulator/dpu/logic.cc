@@ -239,6 +239,8 @@ void Logic::service_dma() {
 
 void Logic::execute_instruction(abi::instruction::Instruction *instruction) {//执行指令
   abi::instruction::Suffix suffix = instruction->suffix();
+  std::cout << instruction->getSuffixName(suffix) << std::endl;
+
 
   if (suffix == abi::instruction::RICI) {
     execute_rici(instruction);
@@ -403,6 +405,7 @@ void Logic::execute_instruction(abi::instruction::Instruction *instruction) {//�
   }
 }
 
+
 void Logic::execute_rici(abi::instruction::Instruction *instruction) {
     // 1. 验证操作码和后缀
   assert(abi::instruction::Instruction::rici_op_codes().count(
@@ -428,7 +431,7 @@ void Logic::execute_rici(abi::instruction::Instruction *instruction) {
   }
 }
 
-void Logic::execute_acquire_rici(abi::instruction::Instruction *instruction) {
+void Logic::execute_acquire_rici(abi::instruction::Instruction *instruction) {//给atomic上锁
   assert(abi::instruction::Instruction::acquire_rici_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::RICI);
@@ -529,7 +532,7 @@ void Logic::execute_rri(abi::instruction::Instruction *instruction) {
 
   abi::instruction::OpCode op_code = instruction->op_code();
   if (abi::instruction::Instruction::add_rri_op_codes().count(op_code)) {
-    execute_add_rri(instruction);
+    execute_add_rri(instruction);//加法指令
   } else if (abi::instruction::Instruction::asr_rri_op_codes().count(op_code)) {
     execute_asr_rri(instruction);
   } else if (abi::instruction::Instruction::call_rri_op_codes().count(
@@ -540,7 +543,12 @@ void Logic::execute_rri(abi::instruction::Instruction *instruction) {
   }
 }
 
-void Logic::execute_add_rri(abi::instruction::Instruction *instruction) {
+void Logic::execute_add_rri(abi::instruction::Instruction *instruction) {//add.s dc:wr64 rb:wr32 imm:u32
+  /**
+  - dc = (rb + imm):S64
+
+- ZF,CF <- dc
+   ***/
   assert(abi::instruction::Instruction::add_rri_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::RRI);
@@ -582,6 +590,14 @@ void Logic::execute_add_rri(abi::instruction::Instruction *instruction) {
 }
 
 void Logic::execute_asr_rri(abi::instruction::Instruction *instruction) {
+  //asr rc:wr32 ra:r32 shift:u5 按立即数进行移动
+  /**
+  - x = ra >>a shift[0:4]
+
+- rc = x
+
+- ZF <- x
+   ***/
   assert(abi::instruction::Instruction::asr_rri_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::RRI);
@@ -626,6 +642,7 @@ void Logic::execute_asr_rri(abi::instruction::Instruction *instruction) {
 }
 
 void Logic::execute_call_rri(abi::instruction::Instruction *instruction) {
+  //
   assert(abi::instruction::Instruction::call_rri_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::RRI);
@@ -674,7 +691,7 @@ void Logic::execute_rric(abi::instruction::Instruction *instruction) {
   }
 }
 
-void Logic::execute_add_rric(abi::instruction::Instruction *instruction) {
+void Logic::execute_add_rric(abi::instruction::Instruction *instruction) {//通过计算结果设置条件寄存器 计算imm+ra
   assert(abi::instruction::Instruction::add_rric_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::RRIC);
@@ -747,6 +764,20 @@ void Logic::execute_add_rric(abi::instruction::Instruction *instruction) {
 }
 
 void Logic::execute_asr_rric(abi::instruction::Instruction *instruction) {
+  //asr rc:wr32 ra:r32 shift:u5 log_set_cc:cc
+  /****
+  * - x = ra >>a shift[0:4]
+
+- if (log_set_cc x) then
+
+-     rc = 1
+
+- else
+
+-     rc = 0
+
+- ZF <- x
+   */
   assert(abi::instruction::Instruction::asr_rric_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::RRIC);
@@ -856,6 +887,18 @@ void Logic::execute_rrici(abi::instruction::Instruction *instruction) {
 }
 
 void Logic::execute_add_rrici(abi::instruction::Instruction *instruction) {
+  //add rc:wr32 ra:r32 imm:s8 add_nz_cc:cc pc:pc16
+  /**
+  *- x = ra + imm
+
+- rc = x
+
+- if (add_nz_cc x) then
+
+-     jump @[pc]
+
+- ZF,CF <- x
+   ***/
   assert(abi::instruction::Instruction::add_rrici_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::RRICI);
@@ -939,6 +982,18 @@ void Logic::execute_and_rrici(abi::instruction::Instruction *instruction) {
 }
 
 void Logic::execute_asr_rrici(abi::instruction::Instruction *instruction) {
+  //asr rc:wr32 ra:r32 shift:u5 imm_shift_nz_cc:cc pc:pc16
+  /**
+  *- x = ra >>a shift[0:4]
+
+- rc = x
+
+- if (imm_shift_nz_cc x) then
+
+-     jump @[pc]
+
+- ZF <- x
+   */
   assert(abi::instruction::Instruction::asr_rrici_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::RRICI);
@@ -1296,7 +1351,7 @@ void Logic::execute_rrrc(abi::instruction::Instruction *instruction) {
   }
 }
 
-void Logic::execute_add_rrrc(abi::instruction::Instruction *instruction) {
+void Logic::execute_add_rrrc(abi::instruction::Instruction *instruction) {//把ra+rb计算,根据标志位一起来决定对rc置零还是其他操作
   assert(abi::instruction::Instruction::add_rrrc_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::RRRC);
@@ -1454,7 +1509,7 @@ void Logic::execute_add_rrrc(abi::instruction::Instruction *instruction) {
   instruction->thread()->reg_file()->clear_conditions();
   set_log_set_cc(instruction, result);
 
-  if (instruction->thread()->reg_file()->condition(instruction->condition())) {
+  if (instruction->thread()->reg_file()->condition(instruction->condition())) {//看
     instruction->thread()->reg_file()->write_gp_reg(instruction->rc(), 1);
   } else {
     instruction->thread()->reg_file()->write_gp_reg(instruction->rc(), 0);
@@ -1564,7 +1619,7 @@ void Logic::execute_rrrci(abi::instruction::Instruction *instruction) {
   }
 }
 
-void Logic::execute_add_rrrci(abi::instruction::Instruction *instruction) {
+void Logic::execute_add_rrrci(abi::instruction::Instruction *instruction) {//同rrrc,但是ra+rb会存到rc,然后根据立即数跳转到
   assert(abi::instruction::Instruction::add_rrrci_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::RRRCI);
@@ -1817,8 +1872,8 @@ void Logic::execute_zri(abi::instruction::Instruction *instruction) {
   }
 }
 
-void Logic::execute_add_zri(abi::instruction::Instruction *instruction) {
-  assert(abi::instruction::Instruction::add_rri_op_codes().count(
+void Logic::execute_add_zri(abi::instruction::Instruction *instruction) {//add zero rb:wr32 imm:u32
+  assert(abi::instruction::Instruction::add_rri_op_codes().count(//- ZF,CF <- rb + imm
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::ZRI);
 
@@ -1858,6 +1913,10 @@ void Logic::execute_add_zri(abi::instruction::Instruction *instruction) {
 }
 
 void Logic::execute_asr_zri(abi::instruction::Instruction *instruction) {
+  //asr zero ra:r32 shift:u5
+  /**
+   *- ZF <- ra >>a shift[0:4]
+   **/
   assert(abi::instruction::Instruction::asr_rri_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::ZRI);
@@ -1945,8 +2004,8 @@ void Logic::execute_zric(abi::instruction::Instruction *instruction) {
   }
 }
 
-void Logic::execute_add_zric(abi::instruction::Instruction *instruction) {
-  assert(abi::instruction::Instruction::add_rric_op_codes().count(
+void Logic::execute_add_zric(abi::instruction::Instruction *instruction) {//add zero ra:r32 imm:s27 log_set_cc:cc
+  assert(abi::instruction::Instruction::add_rric_op_codes().count(//- ZF,CF <- ra + imm
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::ZRIC);
 
@@ -2011,7 +2070,16 @@ void Logic::execute_add_zric(abi::instruction::Instruction *instruction) {
   set_flags(instruction, result, carry);
 }
 
-void Logic::execute_asr_zric(abi::instruction::Instruction *instruction) {
+void Logic::execute_asr_zric(abi::instruction::Instruction *instruction) {//asr zero ra:r32 shift:u5 imm_shift_nz_cc:cc pc:pc16
+  /**
+  *- x = ra >>a shift[0:4]
+
+- if (imm_shift_nz_cc x) then
+
+-     jump @[pc]
+
+- ZF <- x
+   */
   assert(abi::instruction::Instruction::asr_rric_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::ZRIC);
@@ -2108,7 +2176,16 @@ void Logic::execute_zrici(abi::instruction::Instruction *instruction) {
   }
 }
 
-void Logic::execute_add_zrici(abi::instruction::Instruction *instruction) {
+void Logic::execute_add_zrici(abi::instruction::Instruction *instruction) {//add zero ra:r32 imm:s11 add_nz_cc:cc pc:pc16
+  /**
+  *- x = ra + imm
+
+- if (add_nz_cc x) then
+
+-     jump @[pc]
+
+- ZF,CF <- x
+   ***/
   assert(abi::instruction::Instruction::add_rrici_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::ZRICI);
@@ -2188,6 +2265,16 @@ void Logic::execute_and_zrici(abi::instruction::Instruction *instruction) {
 }
 
 void Logic::execute_asr_zrici(abi::instruction::Instruction *instruction) {
+  //asr zero ra:r32 shift:u5 imm_shift_nz_cc:cc pc:pc16
+  /**
+  *- x = ra >>a shift[0:4]
+
+- if (imm_shift_nz_cc x) then
+
+-     jump @[pc]
+
+- ZF <- x
+   **/
   assert(abi::instruction::Instruction::asr_rrici_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::ZRICI);
@@ -2536,8 +2623,8 @@ void Logic::execute_zrrc(abi::instruction::Instruction *instruction) {
   }
 }
 
-void Logic::execute_add_zrrc(abi::instruction::Instruction *instruction) {
-  assert(abi::instruction::Instruction::add_rrrc_op_codes().count(
+void Logic::execute_add_zrrc(abi::instruction::Instruction *instruction) {//add zero ra:r32 rb:wr32 log_set_cc:cc
+  assert(abi::instruction::Instruction::add_rrrc_op_codes().count(//- ZF,CF <- ra + rb
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::ZRRC);
 
@@ -2786,7 +2873,15 @@ void Logic::execute_zrrci(abi::instruction::Instruction *instruction) {
   }
 }
 
-void Logic::execute_add_zrrci(abi::instruction::Instruction *instruction) {
+void Logic::execute_add_zrrci(abi::instruction::Instruction *instruction) {//add zero ra:r32 rb:wr32 add_nz_cc:cc pc:pc16
+  /**
+  *- x = ra + rb
+
+  - if (add_nz_cc x) then
+
+  -     jump @[pc]
+
+  - ZF,CF <- x**/
   assert(abi::instruction::Instruction::add_rrrci_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::ZRRCI);
@@ -2868,6 +2963,16 @@ void Logic::execute_and_zrrci(abi::instruction::Instruction *instruction) {
 }
 
 void Logic::execute_asr_zrrci(abi::instruction::Instruction *instruction) {
+  //asr zero ra:r32 rb:wr32 shift_nz_cc:cc pc:pc16
+  /**
+  *- x = ra >>a rb[0:4]
+
+- if (shift_nz_cc x) then
+
+-     jump @[pc]
+
+- ZF <- x
+   **/
   assert(abi::instruction::Instruction::asr_rrrci_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::ZRRCI);
@@ -3026,7 +3131,12 @@ void Logic::execute_s_rri(abi::instruction::Instruction *instruction) {
   }
 }
 
-void Logic::execute_add_s_rri(abi::instruction::Instruction *instruction) {
+void Logic::execute_add_s_rri(abi::instruction::Instruction *instruction) {//add.s dc:wr64 rb:wr32 imm:u32
+  /**
+  *- dc = (rb + imm):S64
+
+- ZF,CF <- dc
+   ***/
   assert(abi::instruction::Instruction::add_rri_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::S_RRI);
@@ -3072,6 +3182,14 @@ void Logic::execute_add_s_rri(abi::instruction::Instruction *instruction) {
 }
 
 void Logic::execute_asr_s_rri(abi::instruction::Instruction *instruction) {
+  //asr.s dc:wr64 ra:r32 shift:u5
+  /**
+  *- x = ra >>a shift[0:4]
+
+- dc = x:S64
+
+- ZF <- x
+   ***/
   assert(abi::instruction::Instruction::asr_rri_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::S_RRI);
@@ -3120,10 +3238,19 @@ void Logic::execute_asr_s_rri(abi::instruction::Instruction *instruction) {
 }
 
 void Logic::execute_s_rric(abi::instruction::Instruction *instruction) {
+
   throw std::bad_function_call();
 }
 
 void Logic::execute_s_rrici(abi::instruction::Instruction *instruction) {
+  //asr.s dc:wr64 ra:r32 rb:wr32
+  /**
+  *- x = ra >>a rb[0:4]
+
+- dc = x:S64
+
+- ZF <- x
+   ***/
   assert(abi::instruction::Instruction::rrici_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::S_RRICI);
@@ -3146,6 +3273,18 @@ void Logic::execute_s_rrici(abi::instruction::Instruction *instruction) {
 }
 
 void Logic::execute_add_s_rrici(abi::instruction::Instruction *instruction) {
+  //add.s dc:wr64 ra:r32 imm:s8 add_nz_cc:cc pc:pc16
+  /**
+  - x = ra + imm
+
+- dc = x:S64
+
+- if (add_nz_cc x) then
+
+-     jump @[pc]
+
+- ZF,CF <- x
+   ***/
   assert(abi::instruction::Instruction::add_rrici_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::S_RRICI);
@@ -3233,6 +3372,18 @@ void Logic::execute_and_s_rrici(abi::instruction::Instruction *instruction) {
 }
 
 void Logic::execute_asr_s_rrici(abi::instruction::Instruction *instruction) {
+  //asr.s dc:wr64 ra:r32 shift:u5 imm_shift_nz_cc:cc pc:pc16
+/**
+  *- x = ra >>a shift[0:4]
+
+  - dc = x:S64
+
+  - if (imm_shift_nz_cc x) then
+
+  -     jump @[pc]
+
+  - ZF <-
+ ***/
   assert(abi::instruction::Instruction::asr_rrici_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::S_RRICI);
@@ -3424,7 +3575,12 @@ void Logic::execute_u_rri(abi::instruction::Instruction *instruction) {
   }
 }
 
-void Logic::execute_add_u_rri(abi::instruction::Instruction *instruction) {
+void Logic::execute_add_u_rri(abi::instruction::Instruction *instruction) {//add.u dc:wr64 rb:wr32 imm:u32
+  /**
+  - dc = (rb + imm):U64
+
+- ZF,CF <- dc
+   ***/
   assert(abi::instruction::Instruction::add_rri_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::U_RRI);
@@ -3544,6 +3700,18 @@ void Logic::execute_u_rrici(abi::instruction::Instruction *instruction) {
 }
 
 void Logic::execute_add_u_rrici(abi::instruction::Instruction *instruction) {
+  //add.u dc:wr64 ra:r32 imm:s8 add_nz_cc:cc pc:pc16
+  /**
+  - x = ra + imm
+
+- dc = x:U64
+
+- if (add_nz_cc x) then
+
+-     jump @[pc]
+
+- ZF,CF <- x
+   ***/
   assert(abi::instruction::Instruction::add_rrici_op_codes().count(
       instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::U_RRICI);
@@ -4832,7 +5000,7 @@ void Logic::execute_s_erri(abi::instruction::Instruction *instruction) {
   throw std::bad_function_call();
 }
 
-void Logic::execute_u_erri(abi::instruction::Instruction *instruction) {
+void Logic::  execute_u_erri(abi::instruction::Instruction *instruction) {
   throw std::bad_function_call();
 }
 
@@ -5411,6 +5579,7 @@ void Logic::set_imm_shift_nz_cc(abi::instruction::Instruction *instruction,
 
 void Logic::set_log_nz_cc(abi::instruction::Instruction *instruction,
                           int64_t operand1, int64_t result) {
+
   if (result == 0) {
     instruction->thread()->reg_file()->set_condition(abi::isa::Z);
   } else {

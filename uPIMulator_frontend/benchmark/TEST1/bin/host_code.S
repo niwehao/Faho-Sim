@@ -262,27 +262,25 @@ main:
 .LFB42:
 	.cfi_startproc
 	endbr64
-	pushq	%r12
+	pushq	%rbp
 	.cfi_def_cfa_offset 16
-	.cfi_offset 12, -16
+	.cfi_offset 6, -16
 	xorl	%esi, %esi
 	movl	$1, %edi
-	pushq	%rbp
-	.cfi_def_cfa_offset 24
-	.cfi_offset 6, -24
 	pushq	%rbx
-	.cfi_def_cfa_offset 32
-	.cfi_offset 3, -32
-	subq	$176, %rsp
+	.cfi_def_cfa_offset 24
+	.cfi_offset 3, -24
+	subq	$184, %rsp
 	.cfi_def_cfa_offset 208
 	movq	%fs:40, %rax
 	movq	%rax, 168(%rsp)
 	xorl	%eax, %eax
-	leaq	16(%rsp), %r12
-	movq	%r12, %rdx
+	leaq	16(%rsp), %rbp
+	movl	$7, 12(%rsp)
+	movq	%rbp, %rdx
 	call	dpu_alloc@PLT
 	testl	%eax, %eax
-	jne	.L40
+	jne	.L35
 	subq	$8, %rsp
 	.cfi_def_cfa_offset 216
 	xorl	%esi, %esi
@@ -297,62 +295,7 @@ main:
 	addq	$32, %rsp
 	.cfi_def_cfa_offset 208
 	testl	%eax, %eax
-	jne	.L41
-	leaq	80(%rsp), %rbx
-	movq	%r12, %rsi
-	movq	%rbx, %rdi
-	call	dpu_set_dpu_iterator_from@PLT
-	movq	160(%rsp), %rax
-	movdqa	144(%rsp), %xmm2
-	cmpb	$0, 136(%rsp)
-	movq	%rax, 64(%rsp)
-	movaps	%xmm2, 48(%rsp)
-	je	.L25
-	leaq	12(%rsp), %rbp
-	.p2align 4,,10
-	.p2align 3
-.L27:
-	subq	$8, %rsp
-	.cfi_def_cfa_offset 216
-	movq	%rbp, %rdi
-	pushq	72(%rsp)
-	.cfi_def_cfa_offset 224
-	pushq	72(%rsp)
-	.cfi_def_cfa_offset 232
-	pushq	72(%rsp)
-	.cfi_def_cfa_offset 240
-	call	dpu_prepare_xfer@PLT
-	addq	$32, %rsp
-	.cfi_def_cfa_offset 208
-	testl	%eax, %eax
-	jne	.L42
-	movq	%rbx, %rdi
-	call	dpu_set_dpu_iterator_next@PLT
-	movq	160(%rsp), %rax
-	movdqa	144(%rsp), %xmm0
-	cmpb	$0, 136(%rsp)
-	movq	%rax, 64(%rsp)
-	movaps	%xmm0, 48(%rsp)
-	jne	.L27
-.L25:
-	subq	$8, %rsp
-	.cfi_def_cfa_offset 216
-	xorl	%r8d, %r8d
-	movl	$4, %ecx
-	xorl	%edx, %edx
-	pushq	40(%rsp)
-	.cfi_def_cfa_offset 224
-	leaq	.LC9(%rip), %rsi
-	xorl	%edi, %edi
-	pushq	40(%rsp)
-	.cfi_def_cfa_offset 232
-	pushq	40(%rsp)
-	.cfi_def_cfa_offset 240
-	call	dpu_push_xfer@PLT
-	addq	$32, %rsp
-	.cfi_def_cfa_offset 208
-	testl	%eax, %eax
-	jne	.L43
+	jne	.L36
 	subq	$8, %rsp
 	.cfi_def_cfa_offset 216
 	movl	$1, %edi
@@ -366,20 +309,21 @@ main:
 	addq	$32, %rsp
 	.cfi_def_cfa_offset 208
 	testl	%eax, %eax
-	jne	.L44
-	movq	%r12, %rsi
+	jne	.L37
+	leaq	80(%rsp), %rbx
+	movq	%rbp, %rsi
 	movq	%rbx, %rdi
 	call	dpu_set_dpu_iterator_from@PLT
 	movq	160(%rsp), %rax
-	movdqa	144(%rsp), %xmm3
+	movdqa	144(%rsp), %xmm1
 	cmpb	$0, 136(%rsp)
 	movq	%rax, 64(%rsp)
-	movaps	%xmm3, 48(%rsp)
-	je	.L30
+	movaps	%xmm1, 48(%rsp)
+	je	.L26
 	leaq	12(%rsp), %rbp
 	.p2align 4,,10
 	.p2align 3
-.L32:
+.L28:
 	subq	$8, %rsp
 	.cfi_def_cfa_offset 216
 	movq	%rbp, %rdi
@@ -393,20 +337,20 @@ main:
 	addq	$32, %rsp
 	.cfi_def_cfa_offset 208
 	testl	%eax, %eax
-	jne	.L45
+	jne	.L38
 	movq	%rbx, %rdi
 	call	dpu_set_dpu_iterator_next@PLT
 	movq	160(%rsp), %rax
-	movdqa	144(%rsp), %xmm1
+	movdqa	144(%rsp), %xmm0
 	cmpb	$0, 136(%rsp)
 	movq	%rax, 64(%rsp)
-	movaps	%xmm1, 48(%rsp)
-	jne	.L32
-.L30:
+	movaps	%xmm0, 48(%rsp)
+	jne	.L28
+.L26:
 	subq	$8, %rsp
 	.cfi_def_cfa_offset 216
 	xorl	%r8d, %r8d
-	movl	$4, %ecx
+	movl	$32, %ecx
 	xorl	%edx, %edx
 	pushq	40(%rsp)
 	.cfi_def_cfa_offset 224
@@ -420,7 +364,7 @@ main:
 	addq	$32, %rsp
 	.cfi_def_cfa_offset 208
 	testl	%eax, %eax
-	jne	.L46
+	jne	.L39
 	subq	$8, %rsp
 	.cfi_def_cfa_offset 216
 	pushq	40(%rsp)
@@ -433,7 +377,7 @@ main:
 	addq	$32, %rsp
 	.cfi_def_cfa_offset 208
 	testl	%eax, %eax
-	jne	.L47
+	jne	.L40
 	movl	12(%rsp), %edx
 	xorl	%eax, %eax
 	movl	$1, %edi
@@ -441,29 +385,27 @@ main:
 	call	__printf_chk@PLT
 	movq	168(%rsp), %rax
 	xorq	%fs:40, %rax
-	jne	.L48
-	addq	$176, %rsp
+	jne	.L41
+	addq	$184, %rsp
 	.cfi_remember_state
-	.cfi_def_cfa_offset 32
+	.cfi_def_cfa_offset 24
 	xorl	%eax, %eax
 	popq	%rbx
-	.cfi_def_cfa_offset 24
-	popq	%rbp
 	.cfi_def_cfa_offset 16
-	popq	%r12
+	popq	%rbp
 	.cfi_def_cfa_offset 8
 	ret
-.L42:
+.L38:
 	.cfi_restore_state
 	movl	%eax, %edi
 	call	dpu_error_to_string@PLT
-	movl	$37, %r8d
-	pushq	%r9
-	.cfi_def_cfa_offset 216
 	leaq	__func__.3565(%rip), %r9
+	movl	$39, %r8d
+	pushq	%rsi
+	.cfi_def_cfa_offset 216
 	pushq	%rax
 	.cfi_def_cfa_offset 224
-.L39:
+.L34:
 	movq	stderr(%rip), %rdi
 	leaq	.LC6(%rip), %rcx
 	leaq	.LC7(%rip), %rdx
@@ -472,43 +414,19 @@ main:
 	call	__fprintf_chk@PLT
 	movl	$1, %edi
 	call	exit@PLT
-.L45:
+.L37:
 	.cfi_def_cfa_offset 208
 	movl	%eax, %edi
 	call	dpu_error_to_string@PLT
 	leaq	__func__.3565(%rip), %r9
-	movl	$43, %r8d
-	pushq	%rsi
-	.cfi_remember_state
-	.cfi_def_cfa_offset 216
-	pushq	%rax
-	.cfi_def_cfa_offset 224
-	jmp	.L39
-.L46:
-	.cfi_restore_state
-	movl	%eax, %edi
-	call	dpu_error_to_string@PLT
-	leaq	__func__.3565(%rip), %r9
-	movl	$45, %r8d
-	pushq	%rcx
-	.cfi_remember_state
-	.cfi_def_cfa_offset 216
-	pushq	%rax
-	.cfi_def_cfa_offset 224
-	jmp	.L39
-.L44:
-	.cfi_restore_state
-	movl	%eax, %edi
-	call	dpu_error_to_string@PLT
-	leaq	__func__.3565(%rip), %r9
-	movl	$41, %r8d
+	movl	$37, %r8d
 	pushq	%rdi
 	.cfi_remember_state
 	.cfi_def_cfa_offset 216
 	pushq	%rax
 	.cfi_def_cfa_offset 224
-	jmp	.L39
-.L43:
+	jmp	.L34
+.L36:
 	.cfi_restore_state
 	movl	%eax, %edi
 	call	dpu_error_to_string@PLT
@@ -516,47 +434,47 @@ main:
 	pushq	%r8
 	.cfi_remember_state
 	.cfi_def_cfa_offset 216
-	movl	$39, %r8d
+	movl	$35, %r8d
 	pushq	%rax
 	.cfi_def_cfa_offset 224
-	jmp	.L39
+	jmp	.L34
+.L35:
+	.cfi_restore_state
+	movl	%eax, %edi
+	call	dpu_error_to_string@PLT
+	movl	$34, %r8d
+	pushq	%r9
+	.cfi_remember_state
+	.cfi_def_cfa_offset 216
+	leaq	__func__.3565(%rip), %r9
+	pushq	%rax
+	.cfi_def_cfa_offset 224
+	jmp	.L34
 .L41:
 	.cfi_restore_state
-	movl	%eax, %edi
-	call	dpu_error_to_string@PLT
-	leaq	__func__.3565(%rip), %r9
-	movl	$35, %r8d
-	pushq	%r10
-	.cfi_remember_state
-	.cfi_def_cfa_offset 216
-	pushq	%rax
-	.cfi_def_cfa_offset 224
-	jmp	.L39
-.L40:
-	.cfi_restore_state
-	movl	%eax, %edi
-	call	dpu_error_to_string@PLT
-	leaq	__func__.3565(%rip), %r9
-	movl	$34, %r8d
-	pushq	%r11
-	.cfi_remember_state
-	.cfi_def_cfa_offset 216
-	pushq	%rax
-	.cfi_def_cfa_offset 224
-	jmp	.L39
-.L48:
-	.cfi_restore_state
 	call	__stack_chk_fail@PLT
-.L47:
+.L40:
 	movl	%eax, %edi
 	call	dpu_error_to_string@PLT
 	leaq	__func__.3565(%rip), %r9
-	movl	$46, %r8d
+	movl	$42, %r8d
 	pushq	%rdx
+	.cfi_remember_state
 	.cfi_def_cfa_offset 216
 	pushq	%rax
 	.cfi_def_cfa_offset 224
-	jmp	.L39
+	jmp	.L34
+.L39:
+	.cfi_restore_state
+	movl	%eax, %edi
+	call	dpu_error_to_string@PLT
+	leaq	__func__.3565(%rip), %r9
+	movl	$41, %r8d
+	pushq	%rcx
+	.cfi_def_cfa_offset 216
+	pushq	%rax
+	.cfi_def_cfa_offset 224
+	jmp	.L34
 	.cfi_endproc
 .LFE42:
 	.size	main, .-main

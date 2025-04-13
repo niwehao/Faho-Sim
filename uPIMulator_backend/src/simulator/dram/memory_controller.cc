@@ -3,8 +3,8 @@
 #include "simulator/dram/fifo_scheduler.h"
 #include "simulator/dram/frfcfs_scheduler.h"
 
-namespace upmem_sim::simulator::dram {
 
+namespace upmem_sim::simulator::dram {
 MemoryController::MemoryController(util::ArgumentParser *argument_parser)
     : wordline_size_(argument_parser->get_int_parameter("wordline_size")),//子线大小
       row_buffer_(new RowBuffer(argument_parser)),//行缓冲区
@@ -104,7 +104,12 @@ void MemoryController::write(Address address, Address size,
                              std::vector<int> bytes) {
   assert(bytes.size() == size);
 
+
   Address end_address = address + size;
+
+
+  // 打印开始和结束地址
+  std::cout << "MemContro writing to address " << address << " to " << end_address - 1 << std::endl;
 
   Address cur_address = address;
   int cur_bytes_offset = 0;
@@ -136,6 +141,9 @@ void MemoryController::write(Address address, Address size,
   std::vector<int> bytes = byte_stream->bytes();
 
   Address end_address = address + size;
+  // 打印开始和结束地址
+  std::cout << "MC Writing to address " << address << " to " << end_address - 1 << std::endl;
+
 
   Address cur_address = address;
   int cur_bytes_offset = 0;

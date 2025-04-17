@@ -6,6 +6,7 @@
 #include "simulator/dpu/operand_collector.h"
 #include "simulator/dpu/pipeline.h"
 #include "simulator/dpu/revolver_scheduler.h"
+#include "simulator/dpu/performance_counter.h"
 #include "simulator/dram/memory_controller.h"
 #include "simulator/sram/atomic.h"
 #include "simulator/sram/iram.h"
@@ -31,7 +32,10 @@ class Logic {
             util::ConfigLoader::max_num_tasklets())),//等待指令队列
         stat_factory_(new util::StatFactory("Logic")),//统计工厂
         num_pipeline_stages_(
-            argument_parser->get_int_parameter("num_pipeline_stages")) {}//流水线阶段
+            argument_parser->get_int_parameter("num_pipeline_stages"))
+  {
+
+  }//流水线阶段
   ~Logic();
 
   DPUID dpu_id() { return dpu_id_; }
@@ -43,6 +47,7 @@ class Logic {
   void connect_iram(sram::IRAM *iram);
   void connect_operand_collector(OperandCollector *operand_collector);
   void connect_dma(DMA *dma);
+    void connect_performance_counter(PerformanceCounter *performance_counter);
 
   bool empty() {
     return pipeline_->empty() and cycle_rule_->empty() and
@@ -289,6 +294,9 @@ class Logic {
   void set_flags(abi::instruction::Instruction *instruction, int64_t result,
                  bool carry);
 
+    void execute_time_r(abi::instruction::Instruction *instruction);
+
+
  private:
   DPUID dpu_id_;
   int verbose_;
@@ -297,6 +305,7 @@ class Logic {
   sram::Atomic *atomic_;
   sram::IRAM *iram_;
   DMA *dma_;
+   PerformanceCounter *performance_counter_;
   //每一个dpu只有一个pipline
 
   Pipeline *pipeline_;//流水线

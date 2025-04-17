@@ -41,7 +41,7 @@ class CPU {
   int num_executions() { return fini_thread_->num_executions(); }
 
   void init() { init_thread_->init(); }
-  void launch() { init_thread_->launch(); }
+  void launch() { init_thread_->launch(); }//初始化程序计数器
   void sched(int execution) { sched_thread_->sched(execution); }
   void check(int execution) { sched_thread_->check(execution); }
   void fini() {}

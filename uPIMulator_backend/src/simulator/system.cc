@@ -43,7 +43,7 @@ void System::cycle() {
   rank_->cycle();
 
   if (is_zombie()) {
-    cpu_->check(execuion_);
+    cpu_->check(execuion_);//程序的执行次数
     execuion_ += 1;
 
     if (not is_finished()) {

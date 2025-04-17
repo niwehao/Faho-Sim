@@ -26,33 +26,33 @@ WRAM::~WRAM() {
 }
 
 int64_t WRAM::read(Address address) {
-  std::cout<<"WRAM::read from "<<address<<std::endl;
+  //std::cout<<"WRAM::read from "<<address<<std::endl;
   int64_t value = cells_[index(address)]->value(abi::word::UNSIGNED);
-  for (int i = 7; i >= 0; --i) {
+  //for (int i = 7; i >= 0; --i) {
     // 每次提取8位
-    uint8_t byte = (value >> (i * 8)) & 0xFF;
-    std::cout << static_cast<int>(byte);
+  //  uint8_t byte = (value >> (i * 8)) & 0xFF;
+  //  std::cout << static_cast<int>(byte);
 
-    if (i > 0) {
-      std::cout << ",";
-    }
-  }
-  std::cout << std::endl;
+  //  if (i > 0) {
+  //    std::cout << ",";
+  //  }
+  //}
+  //std::cout << std::endl;
   return value;//读取数值
 }
 
 void WRAM::write(Address address, int64_t value) {
-  std::cout<<"WRAM::write to "<<address<<std::endl;
-  for (int i = 7; i >= 0; --i) {
+ // std::cout<<"WRAM::write to "<<address<<std::endl;
+  //for (int i = 7; i >= 0; --i) {
     // 每次提取8位
-    uint8_t byte = (value >> (i * 8)) & 0xFF;
-    std::cout << static_cast<int>(byte);
+  //  uint8_t byte = (value >> (i * 8)) & 0xFF;
+ //   std::cout << static_cast<int>(byte);
 
-    if (i > 0) {
-      std::cout << ",";
-    }
-  }
-  std::cout << std::endl;
+ //   if (i > 0) {
+ //     std::cout << ",";
+ //   }
+ // }
+ // std::cout << std::endl;
 
   cells_[index(address)]->set_value(value);//写入数值
 }

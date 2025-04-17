@@ -6,6 +6,7 @@
 #include "simulator/basic/timer_queue.h"
 #include "util/argument_parser.h"
 #include "util/stat_factory.h"
+#include "simulator/dpu/performance_counter.h"
 
 namespace upmem_sim::simulator::dpu {
 
@@ -24,6 +25,11 @@ class CycleRule {
   bool can_pop() { return ready_q_->can_pop(); }
   abi::instruction::Instruction *pop() { return ready_q_->pop(); }
   void cycle();
+    void connect_performace_counter( PerformanceCounter * performance_counter )
+    {
+        performance_counter_ = performance_counter;
+
+    }
 
  protected:
   void service_input_q();
@@ -44,6 +50,7 @@ class CycleRule {
   basic::Queue<abi::instruction::Instruction> *input_q_;
   basic::TimerQueue<abi::instruction::Instruction> *wait_q_;
   basic::Queue<abi::instruction::Instruction> *ready_q_;
+    PerformanceCounter *performance_counter_;
 
   std::vector<std::set<abi::reg::GPReg *>> prev_write_gp_regs_;
   std::vector<std::set<abi::reg::GPReg *>> cur_read_gp_regs_;

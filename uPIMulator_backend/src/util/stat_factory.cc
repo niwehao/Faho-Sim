@@ -20,6 +20,7 @@ void StatFactory::increment(std::string stat, int64_t value) {
   }
 }
 
+
 void StatFactory::overwrite(std::string stat, int64_t value) {
   stats_[stat] = value;
 }

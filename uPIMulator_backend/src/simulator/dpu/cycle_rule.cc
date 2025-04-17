@@ -54,11 +54,13 @@ void CycleRule::cycle() {
 void CycleRule::service_input_q() {
   if (input_q_->can_pop() and wait_q_->can_push()) {
     abi::instruction::Instruction *instruction = input_q_->pop();
-    int extra_cycle = calculate_extra_cycles(instruction);
+    int extra_cycle = calculate_extra_cycles(instruction);//有些操作需要多个周期
+
 
     wait_q_->push(instruction, extra_cycle);
 
-    stat_factory_->increment("cycle_rule", extra_cycle);
+    stat_factory_->increment("cycle_rule", extra_cycle);//似乎没有统计基础的周期 统计操作的周期 `logic_cycle`
+    performance_counter_->add_counter(extra_cycle+1,2);
     stat_factory_->increment(
         std::to_string(instruction->thread()->id()) + "_cycle_rule",
         extra_cycle);
@@ -66,7 +68,7 @@ void CycleRule::service_input_q() {
 }
 
 void CycleRule::service_ready_q() {
-  if (wait_q_->can_pop() and ready_q_->can_push()) {
+  if (wait_q_->can_pop() and ready_q_->can_push()) {//结束前置等待以后开始执行
     abi::instruction::Instruction *instruction = wait_q_->pop();
     ready_q_->push(instruction);
 

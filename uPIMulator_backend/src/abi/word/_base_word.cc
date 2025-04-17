@@ -15,7 +15,6 @@ int64_t _BaseWord::bit_slice(Representation representation, int begin,
                              int end) {//一段字符进行转换
   assert(0 <= begin and begin < end and end <= width());
   assert(end - begin < 64);
-
   int slice_width = end - begin;
   int64_t value = 0;
   for (int i = 0; i < slice_width; i++) {

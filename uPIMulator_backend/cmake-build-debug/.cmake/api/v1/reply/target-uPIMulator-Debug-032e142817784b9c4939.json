@@ -115,7 +115,8 @@
 				49,
 				50,
 				51,
-				52
+				52,
+				53
 			]
 		}
 	],
@@ -205,7 +206,8 @@
 				49,
 				50,
 				51,
-				52
+				52,
+				53
 			]
 		}
 	],
@@ -389,6 +391,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/simulator/dpu/operand_collector.cc",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/simulator/dpu/performance_counter.cc",
 			"sourceGroupIndex" : 0
 		},
 		{

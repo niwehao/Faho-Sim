@@ -187,7 +187,7 @@ void RowBuffer::service_input_q() {
 }
 
 void RowBuffer::service_activation_q() {
-  auto [memory_command, cycle] = activation_q_->front();
+  auto [memory_command, cycle] = activation_q_->front();//距离上次激活的距离实际
   if (cycle == timing_parameters_["t_ras"] - timing_parameters_["t_rcd"]) {//如果行激活队列的计时器达到t_ras-t_rcd
     // t_ras: Row Active Time（行激活时间）
     // - 从行激活到预充电的最小时间间隔

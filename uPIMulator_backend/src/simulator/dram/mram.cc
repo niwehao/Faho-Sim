@@ -49,14 +49,14 @@ void MRAM::write(Address address, std::vector<int> bytes) {
   std::cout<<"MRAM::write to "<<address<<std::endl;
   //遍历打印bytes
   // 遍历打印bytes
-  std::cout << "Data bytes: ";
-  for (size_t i = 0; i < bytes.size(); ++i) {
-    std::cout << bytes[i];
-    if (i < bytes.size() - 1) {
-std::cout << ", ";
-    }
-  }
-  std::cout << std::endl;
+  //std::cout << "Data bytes: ";
+ // for (size_t i = 0; i < bytes.size(); ++i) {
+ //   std::cout << bytes[i];
+ //   if (i < bytes.size() - 1) {
+//::cout << ", ";
+  //  }
+ // }
+ // std::cout << std::endl;
   wordlines_[index(address)]->write(std::move(bytes));
 }
 

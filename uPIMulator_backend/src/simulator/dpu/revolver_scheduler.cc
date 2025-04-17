@@ -173,7 +173,7 @@ void RevolverScheduler::cycle() {
   stat_factory_->increment("total_SLEEP", num_sleep);
   stat_factory_->increment("total_BLOCK", num_block);
   stat_factory_->increment("total_ZOMBIE", num_zombie);
-
+//`breakdown_dma`
   issuable_threads_ = num_active_tasklets;
 }
 

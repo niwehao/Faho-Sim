@@ -21,9 +21,9 @@ void SchedThread::sched(int execution) {
   std::cout << "sched " << execution << " completed..." << std::endl;
 }
 
-void SchedThread::check(int execution) {
+void SchedThread::check(int execution) {//先不去检查结果
   dma_transfer_output_dpu_mram_heap_pointer_name(execution);
-  dma_transfer_dpu_results(execution);
+  //dma_transfer_dpu_results(execution);
 
   std::cout << "check " << execution << " completed..." << std::endl;
 }

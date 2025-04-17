@@ -15,7 +15,9 @@ DPU::DPU(DPUID dpu_id, util::ArgumentParser *argument_parser)
       dma_(new DMA()),//dma
       operand_collector_(new OperandCollector()),//操作收集器
       memory_controller_(new dram::MemoryController(argument_parser)),//内存控制器
-      stat_factory_(new util::StatFactory("DPU#" + std::to_string(dpu_id))) {
+      stat_factory_(new util::StatFactory("DPU#" + std::to_string(dpu_id))),
+      performance_counter_(new PerformanceCounter())
+  {
   int num_threads =
       static_cast<int>(argument_parser->get_int_parameter("num_tasklets"));
 
@@ -34,6 +36,7 @@ DPU::DPU(DPUID dpu_id, util::ArgumentParser *argument_parser)
   logic_->connect_iram(iram_);
   logic_->connect_operand_collector(operand_collector_);
   logic_->connect_dma(dma_);
+  logic_->connect_performance_counter(performance_counter_);
 
   dma_->connect_atomic(atomic_);
   dma_->connect_iram(iram_);
@@ -66,6 +69,7 @@ DPU::~DPU() {
   delete dma_;
   delete operand_collector_;
   delete memory_controller_;
+  delete performance_counter_;
 
   delete stat_factory_;
 }
@@ -116,7 +120,9 @@ void DPU::cycle() {//dpu的周期
             static_cast<double>(stat_factory_->value("cycle") - 1)));
   for (int i = 0; i < num_memory_cycles; i++) {
     memory_controller_->cycle();
+
   }
+
 
   stat_factory_->increment("cycle");
 }

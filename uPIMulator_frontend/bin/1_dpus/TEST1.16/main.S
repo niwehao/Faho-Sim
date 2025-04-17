@@ -1,4 +1,927 @@
 	$text,
+	$file,	"task.c"
+	$section,	%text, fun,"ax",@progbits
+	$globl,	fun                             //  -  -  Begin function fun
+	$type,	fun,@function
+fun:                                    // @fun
+.Lfunc_begin0:
+	$file,	1 "/root/uPIMulator_frontend/benchmark/TEST1" "dpu/task.c"
+	$loc,	1 12 0                          // dpu/task.c:12:0
+	$cfi_sections, %debug_frame
+	$cfi_startproc,
+// %bb.0:
+	//DEBUG_VALUE: fun:a < -  [DW_OP_constu 1, DW_OP_minus, DW_OP_stack_value] $r0
+	$cfi_def_cfa_offset, 0
+	//DEBUG_VALUE: fun:c < -  1
+	//DEBUG_VALUE: fun:a < -  [DW_OP_constu 1, DW_OP_minus, DW_OP_stack_value] $r1
+	$move , r1, r0, z, .LBB0_1
+.Ltmp0:
+// %bb.2:
+	//DEBUG_VALUE: fun:c < -  1
+	$move , r0, 1
+.Ltmp1:
+.LBB0_3:                                // =>This Inner Loop Header: Depth=1
+	//DEBUG_VALUE: fun:a < -  $r1
+	//DEBUG_VALUE: fun:c < -  $r0
+	$loc,	1 15 7 prologue_end             // dpu/task.c:15:7
+	$lsl , r2, r0, 1
+	$lsl_add , r0, r2, r0, 2
+.Ltmp2:
+	//DEBUG_VALUE: fun:c < -  $r0
+	//DEBUG_VALUE: fun:a < -  [DW_OP_constu 1, DW_OP_minus, DW_OP_stack_value] $r1
+	//DEBUG_VALUE: fun:a < -  $r1
+	$loc,	1 14 11                         // dpu/task.c:14:11
+	$add , r1, r1,  - 1, nz, .LBB0_3
+.Ltmp3:
+// %bb.4:
+	//DEBUG_VALUE: fun:c < -  $r0
+	$loc,	1 17 3                          // dpu/task.c:17:3
+	$jump , r23
+.Ltmp4:
+.LBB0_1:
+	//DEBUG_VALUE: fun:c < -  1
+	$loc,	1 0 3 is_stmt 0                 // dpu/task.c:0:3
+	$move , r0, 1
+	$loc,	1 17 3                          // dpu/task.c:17:3
+	$jump , r23
+.Ltmp5:
+.Lfunc_end0:
+	$size,	fun, .Lfunc_end0 - fun
+	$cfi_endproc,
+	$section,	%stack_sizes,"o",@progbits,%text, fun
+	$long,	.Lfunc_begin0
+	$byte,	0
+	$section,	%text, fun,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%text, main,"ax",@progbits
+	$globl,	main                            //  -  -  Begin function main
+	$type,	main,@function
+main:                                   // @main
+.Lfunc_begin1:
+	$loc,	1 19 0 is_stmt 1                // dpu/task.c:19:0
+	$cfi_startproc,
+// %bb.0:
+	$cfi_def_cfa_offset, 0
+	$move , r0, 0
+	$move , r1, 3
+.Ltmp6:
+	$loc,	1 20 3 prologue_end             // dpu/task.c:20:3
+	// inline asm
+	$time_cfg , r0, r1
+
+	// inline asm
+.Ltmp7:
+	//DEBUG_VALUE: main:time < -  0
+	$loc,	1 25 3                          // dpu/task.c:25:3
+	// inline asm
+	$time , r1
+
+	// inline asm
+.Ltmp8:
+	//DEBUG_VALUE: main:time < -  $r1
+	$loc,	1 28 3                          // dpu/task.c:28:3
+	// inline asm
+	$time , r1
+
+	// inline asm
+.Ltmp9:
+	//DEBUG_VALUE: main:time < -  $r1
+	$loc,	1 30 1                          // dpu/task.c:30:1
+	$jump , r23
+.Ltmp10:
+.Lfunc_end1:
+	$size,	main, .Lfunc_end1 - main
+	$cfi_endproc,
+	$section,	%stack_sizes,"o",@progbits,%text, main
+	$long,	.Lfunc_begin1
+	$byte,	0
+	$section,	%text, main,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%debug_loc,"",@progbits
+.Ldebug_loc0:
+	$long,	 - 1
+	$long,	.Lfunc_begin0                   //   base address
+	$long,	.Lfunc_begin0 - .Lfunc_begin0
+	$long,	.Ltmp0 - .Lfunc_begin0
+	$short,	3                               // Loc expr size
+	$byte,	113                             // DW_OP_breg1
+	$byte,	127                             //  - 1
+	$byte,	159                             // DW_OP_stack_value
+	$long,	.Ltmp1 - .Lfunc_begin0
+	$long,	.Ltmp3 - .Lfunc_begin0
+	$short,	1                               // Loc expr size
+	$byte,	81                              // DW_OP_reg1
+	$long,	0
+	$long,	0
+.Ldebug_loc1:
+	$long,	 - 1
+	$long,	.Lfunc_begin0                   //   base address
+	$long,	.Lfunc_begin0 - .Lfunc_begin0
+	$long,	.Ltmp1 - .Lfunc_begin0
+	$short,	3                               // Loc expr size
+	$byte,	17                              // DW_OP_consts
+	$byte,	1                               // 1
+	$byte,	159                             // DW_OP_stack_value
+	$long,	.Ltmp1 - .Lfunc_begin0
+	$long,	.Ltmp4 - .Lfunc_begin0
+	$short,	1                               // Loc expr size
+	$byte,	80                              // DW_OP_reg0
+	$long,	.Ltmp4 - .Lfunc_begin0
+	$long,	.Lfunc_end0 - .Lfunc_begin0
+	$short,	3                               // Loc expr size
+	$byte,	17                              // DW_OP_consts
+	$byte,	1                               // 1
+	$byte,	159                             // DW_OP_stack_value
+	$long,	0
+	$long,	0
+.Ldebug_loc2:
+	$long,	 - 1
+	$long,	.Lfunc_begin1                   //   base address
+	$long,	.Ltmp7 - .Lfunc_begin1
+	$long,	.Ltmp8 - .Lfunc_begin1
+	$short,	2                               // Loc expr size
+	$byte,	48                              // DW_OP_lit0
+	$byte,	159                             // DW_OP_stack_value
+	$long,	.Ltmp8 - .Lfunc_begin1
+	$long,	.Lfunc_end1 - .Lfunc_begin1
+	$short,	1                               // Loc expr size
+	$byte,	81                              // DW_OP_reg1
+	$long,	0
+	$long,	0
+	$section,	%debug_abbrev,"",@progbits
+	$byte,	1                               // Abbreviation Code
+	$byte,	17                              // DW_TAG_compile_unit
+	$byte,	1                               // DW_CHILDREN_yes
+	$byte,	37                              // DW_AT_producer
+	$byte,	14                              // DW_FORM_strp
+	$byte,	19                              // DW_AT_language
+	$byte,	5                               // DW_FORM_data2
+	$byte,	3                               // DW_AT_name
+	$byte,	14                              // DW_FORM_strp
+	$byte,	16                              // DW_AT_stmt_list
+	$byte,	23                              // DW_FORM_sec_offset
+	$byte,	27                              // DW_AT_comp_dir
+	$byte,	14                              // DW_FORM_strp
+	$byte,	17                              // DW_AT_low_pc
+	$byte,	1                               // DW_FORM_addr
+	$byte,	85                              // DW_AT_ranges
+	$byte,	23                              // DW_FORM_sec_offset
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	2                               // Abbreviation Code
+	$byte,	46                              // DW_TAG_subprogram
+	$byte,	1                               // DW_CHILDREN_yes
+	$byte,	17                              // DW_AT_low_pc
+	$byte,	1                               // DW_FORM_addr
+	$byte,	18                              // DW_AT_high_pc
+	$byte,	6                               // DW_FORM_data4
+	$byte,	64                              // DW_AT_frame_base
+	$byte,	24                              // DW_FORM_exprloc
+	$ascii,	"\227B"                         // DW_AT_GNU_all_call_sites
+	$byte,	25                              // DW_FORM_flag_present
+	$byte,	3                               // DW_AT_name
+	$byte,	14                              // DW_FORM_strp
+	$byte,	58                              // DW_AT_decl_file
+	$byte,	11                              // DW_FORM_data1
+	$byte,	59                              // DW_AT_decl_line
+	$byte,	11                              // DW_FORM_data1
+	$byte,	39                              // DW_AT_prototyped
+	$byte,	25                              // DW_FORM_flag_present
+	$byte,	73                              // DW_AT_type
+	$byte,	19                              // DW_FORM_ref4
+	$byte,	63                              // DW_AT_external
+	$byte,	25                              // DW_FORM_flag_present
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	3                               // Abbreviation Code
+	$byte,	5                               // DW_TAG_formal_parameter
+	$byte,	0                               // DW_CHILDREN_no
+	$byte,	2                               // DW_AT_location
+	$byte,	23                              // DW_FORM_sec_offset
+	$byte,	3                               // DW_AT_name
+	$byte,	14                              // DW_FORM_strp
+	$byte,	58                              // DW_AT_decl_file
+	$byte,	11                              // DW_FORM_data1
+	$byte,	59                              // DW_AT_decl_line
+	$byte,	11                              // DW_FORM_data1
+	$byte,	73                              // DW_AT_type
+	$byte,	19                              // DW_FORM_ref4
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	4                               // Abbreviation Code
+	$byte,	52                              // DW_TAG_variable
+	$byte,	0                               // DW_CHILDREN_no
+	$byte,	2                               // DW_AT_location
+	$byte,	23                              // DW_FORM_sec_offset
+	$byte,	3                               // DW_AT_name
+	$byte,	14                              // DW_FORM_strp
+	$byte,	58                              // DW_AT_decl_file
+	$byte,	11                              // DW_FORM_data1
+	$byte,	59                              // DW_AT_decl_line
+	$byte,	11                              // DW_FORM_data1
+	$byte,	73                              // DW_AT_type
+	$byte,	19                              // DW_FORM_ref4
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	5                               // Abbreviation Code
+	$byte,	36                              // DW_TAG_base_type
+	$byte,	0                               // DW_CHILDREN_no
+	$byte,	3                               // DW_AT_name
+	$byte,	14                              // DW_FORM_strp
+	$byte,	62                              // DW_AT_encoding
+	$byte,	11                              // DW_FORM_data1
+	$byte,	11                              // DW_AT_byte_size
+	$byte,	11                              // DW_FORM_data1
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	0                               // EOM(3)
+	$section,	%debug_info,"",@progbits
+.Lcu_begin0:
+	$long,	.Ldebug_info_end0 - .Ldebug_info_start0 // Length of Unit
+.Ldebug_info_start0:
+	$short,	4                               // DWARF version number
+	$long,	%debug_abbrev                   // Offset Into Abbrev. Section
+	$byte,	4                               // Address Size (in bytes)
+	$byte,	1                               // Abbrev [1] 0xb:0x83 DW_TAG_compile_unit
+	$long,	.Linfo_string0                  // DW_AT_producer
+	$short,	12                              // DW_AT_language
+	$long,	.Linfo_string1                  // DW_AT_name
+	$long,	.Lline_table_start0             // DW_AT_stmt_list
+	$long,	.Linfo_string2                  // DW_AT_comp_dir
+	$long,	0                               // DW_AT_low_pc
+	$long,	.Ldebug_ranges0                 // DW_AT_ranges
+	$byte,	2                               // Abbrev [2] 0x26:0x34 DW_TAG_subprogram
+	$long,	.Lfunc_begin0                   // DW_AT_low_pc
+	$long,	.Lfunc_end0 - .Lfunc_begin0       // DW_AT_high_pc
+	$byte,	1                               // DW_AT_frame_base
+	$byte,	102
+                                        // DW_AT_GNU_all_call_sites
+	$long,	.Linfo_string3                  // DW_AT_name
+	$byte,	1                               // DW_AT_decl_file
+	$byte,	12                              // DW_AT_decl_line
+                                        // DW_AT_prototyped
+	$long,	127                             // DW_AT_type
+                                        // DW_AT_external
+	$byte,	3                               // Abbrev [3] 0x3b:0xf DW_TAG_formal_parameter
+	$long,	.Ldebug_loc0                    // DW_AT_location
+	$long,	.Linfo_string6                  // DW_AT_name
+	$byte,	1                               // DW_AT_decl_file
+	$byte,	12                              // DW_AT_decl_line
+	$long,	127                             // DW_AT_type
+	$byte,	4                               // Abbrev [4] 0x4a:0xf DW_TAG_variable
+	$long,	.Ldebug_loc1                    // DW_AT_location
+	$long,	.Linfo_string7                  // DW_AT_name
+	$byte,	1                               // DW_AT_decl_file
+	$byte,	13                              // DW_AT_decl_line
+	$long,	127                             // DW_AT_type
+	$byte,	0                               // End Of Children Mark
+	$byte,	2                               // Abbrev [2] 0x5a:0x25 DW_TAG_subprogram
+	$long,	.Lfunc_begin1                   // DW_AT_low_pc
+	$long,	.Lfunc_end1 - .Lfunc_begin1       // DW_AT_high_pc
+	$byte,	1                               // DW_AT_frame_base
+	$byte,	102
+                                        // DW_AT_GNU_all_call_sites
+	$long,	.Linfo_string5                  // DW_AT_name
+	$byte,	1                               // DW_AT_decl_file
+	$byte,	19                              // DW_AT_decl_line
+                                        // DW_AT_prototyped
+	$long,	127                             // DW_AT_type
+                                        // DW_AT_external
+	$byte,	4                               // Abbrev [4] 0x6f:0xf DW_TAG_variable
+	$long,	.Ldebug_loc2                    // DW_AT_location
+	$long,	.Linfo_string8                  // DW_AT_name
+	$byte,	1                               // DW_AT_decl_file
+	$byte,	24                              // DW_AT_decl_line
+	$long,	134                             // DW_AT_type
+	$byte,	0                               // End Of Children Mark
+	$byte,	5                               // Abbrev [5] 0x7f:0x7 DW_TAG_base_type
+	$long,	.Linfo_string4                  // DW_AT_name
+	$byte,	5                               // DW_AT_encoding
+	$byte,	4                               // DW_AT_byte_size
+	$byte,	5                               // Abbrev [5] 0x86:0x7 DW_TAG_base_type
+	$long,	.Linfo_string9                  // DW_AT_name
+	$byte,	7                               // DW_AT_encoding
+	$byte,	4                               // DW_AT_byte_size
+	$byte,	0                               // End Of Children Mark
+.Ldebug_info_end0:
+	$section,	%debug_ranges,"",@progbits
+.Ldebug_ranges0:
+	$long,	.Lfunc_begin0
+	$long,	.Lfunc_end0
+	$long,	.Lfunc_begin1
+	$long,	.Lfunc_end1
+	$long,	0
+	$long,	0
+	$section,	%debug_str,"MS",@progbits,1
+.Linfo_string0:
+	$asciz,	"clang version 12.0.0 (https://github.com/upmem/llvm - project.git d36425841d9a4d1420b7aa155675f6ae8bcf9f08)" // string offset=0
+.Linfo_string1:
+	$asciz,	"dpu/task.c"                    // string offset=106
+.Linfo_string2:
+	$asciz,	"/root/uPIMulator_frontend/benchmark/TEST1" // string offset=117
+.Linfo_string3:
+	$asciz,	"fun"                           // string offset=159
+.Linfo_string4:
+	$asciz,	"int"                           // string offset=163
+.Linfo_string5:
+	$asciz,	"main"                          // string offset=167
+.Linfo_string6:
+	$asciz,	"a"                             // string offset=172
+.Linfo_string7:
+	$asciz,	"c"                             // string offset=174
+.Linfo_string8:
+	$asciz,	"time"                          // string offset=176
+.Linfo_string9:
+	$asciz,	"unsigned int"                  // string offset=181
+	$addrsig,
+	$section,	%debug_line,"",@progbits
+.Lline_table_start0:
+	$text,
+	$file,	"crt0.c"
+	$file,	1 "/root" "uPIMulator_frontend/sdk/stdlib/stdint.h"
+	$file,	2 "/root" "uPIMulator_frontend/sdk/misc/crt0.c"
+	$file,	3 "/root" "uPIMulator_frontend/sdk/syslib/dpuruntime.h"
+	$section,	%text, __bootstrap,"ax",@progbits
+	$globl,	__bootstrap                     //  -  -  Begin function __bootstrap
+	$type,	__bootstrap,@function
+__bootstrap:                            // @__bootstrap
+crt0..Lfunc_begin0:
+	$loc,	2 33 0                          // uPIMulator_frontend/sdk/misc/crt0.c:33:0
+	$cfi_sections, %debug_frame
+	$cfi_startproc,
+// %bb.0:
+	$loc,	2 35 5 prologue_end             // uPIMulator_frontend/sdk/misc/crt0.c:35:5
+	// inline asm
+	$jnz , id, crt0.__sys_start_thread
+
+	$sd , zero, __stdout_buffer_state, 0
+	$move , r23, __atomic_end_addr
+crt0.__sys_atomic_bit_clear:
+	$jeq , r23, __atomic_used_addr, crt0.__sys_start_thread
+crt0..Ltmp0:
+	$release , r23, 0, nz, crt0..Ltmp0 + 1
+	$add , r23, r23,  - 1, true, crt0.__sys_atomic_bit_clear
+crt0.__sys_start_thread:
+crt0..Ltmp1:
+	$jeq , id, NR_TASKLETS - 1, crt0..Ltmp1 + 2
+	$boot , id, 1
+	$ld , d22, id8, __sys_thread_stack_table_ptr
+	$call , r23, main
+	$globl,	__sys_end
+__sys_end:
+
+	$stop , true, __sys_end
+	// inline asm
+crt0..Ltmp2:
+crt0..Lfunc_end0:
+	$size,	__bootstrap, crt0..Lfunc_end0 - __bootstrap
+	$cfi_endproc,
+	$section,	%stack_sizes,"o",@progbits,%text, __bootstrap
+	$long,	crt0..Lfunc_begin0
+	$byte,	0
+	$section,	%text, __bootstrap,"ax",@progbits
+                                        //  -  -  End function
+	$type,	__sys_null_pointer,@object      // @__sys_null_pointer
+	$section,	%data, __sys_zero,"aw",@progbits
+	$globl,	__sys_null_pointer
+	$p2align,	3
+__sys_null_pointer:
+	$quad,	0                               // 0x0
+	$size,	__sys_null_pointer, 8
+
+	$type,	__sys_thread_stack_table_ptr,@object // @__sys_thread_stack_table_ptr
+	$section,	%data, __sys_keep,"aw",@progbits
+	$globl,	__sys_thread_stack_table_ptr
+	$p2align,	3
+__sys_thread_stack_table_ptr:
+	$long,	STACK_SIZE_TASKLET_0
+	$long,	__sys_stack_thread_0
+	$long,	STACK_SIZE_TASKLET_1
+	$long,	__sys_stack_thread_1
+	$long,	STACK_SIZE_TASKLET_2
+	$long,	__sys_stack_thread_2
+	$long,	STACK_SIZE_TASKLET_3
+	$long,	__sys_stack_thread_3
+	$long,	STACK_SIZE_TASKLET_4
+	$long,	__sys_stack_thread_4
+	$long,	STACK_SIZE_TASKLET_5
+	$long,	__sys_stack_thread_5
+	$long,	STACK_SIZE_TASKLET_6
+	$long,	__sys_stack_thread_6
+	$long,	STACK_SIZE_TASKLET_7
+	$long,	__sys_stack_thread_7
+	$long,	STACK_SIZE_TASKLET_8
+	$long,	__sys_stack_thread_8
+	$long,	STACK_SIZE_TASKLET_9
+	$long,	__sys_stack_thread_9
+	$long,	STACK_SIZE_TASKLET_10
+	$long,	__sys_stack_thread_10
+	$long,	STACK_SIZE_TASKLET_11
+	$long,	__sys_stack_thread_11
+	$long,	STACK_SIZE_TASKLET_12
+	$long,	__sys_stack_thread_12
+	$long,	STACK_SIZE_TASKLET_13
+	$long,	__sys_stack_thread_13
+	$long,	STACK_SIZE_TASKLET_14
+	$long,	__sys_stack_thread_14
+	$long,	STACK_SIZE_TASKLET_15
+	$long,	__sys_stack_thread_15
+	$long,	STACK_SIZE_TASKLET_16
+	$long,	__sys_stack_thread_16
+	$long,	STACK_SIZE_TASKLET_17
+	$long,	__sys_stack_thread_17
+	$long,	STACK_SIZE_TASKLET_18
+	$long,	__sys_stack_thread_18
+	$long,	STACK_SIZE_TASKLET_19
+	$long,	__sys_stack_thread_19
+	$long,	STACK_SIZE_TASKLET_20
+	$long,	__sys_stack_thread_20
+	$long,	STACK_SIZE_TASKLET_21
+	$long,	__sys_stack_thread_21
+	$long,	STACK_SIZE_TASKLET_22
+	$long,	__sys_stack_thread_22
+	$long,	STACK_SIZE_TASKLET_23
+	$long,	__sys_stack_thread_23
+	$size,	__sys_thread_stack_table_ptr, 192
+
+	$type,	__sys_used_mram_end,@object     // @__sys_used_mram_end
+	$section,	%mram, noinit,"aw",@progbits
+	$globl,	__sys_used_mram_end
+	$p2align,	3
+__sys_used_mram_end:
+	$size,	__sys_used_mram_end, 0
+
+	$type,	thread_profiling,@object        // @thread_profiling
+	$section,	%data, immediate_memory.thread_profiling,"aw",@progbits
+	$globl,	thread_profiling
+	$p2align,	2
+thread_profiling:
+	$zero,	96
+	$size,	thread_profiling, 96
+
+	$type,	perfcounter_end_value,@object   // @perfcounter_end_value
+	$section,	%bss, perfcounter_end_value,"aw",@nobits
+	$globl,	perfcounter_end_value
+	$p2align,	2
+perfcounter_end_value:
+	$long,	0                               // 0x0
+	$size,	perfcounter_end_value, 4
+
+	$type,	CLOCKS_PER_SEC,@object          // @CLOCKS_PER_SEC
+	$section,	%dpu_host,"a",@progbits
+	$globl,	CLOCKS_PER_SEC
+	$p2align,	3
+CLOCKS_PER_SEC:
+	$long,	0                               // 0x0
+	$size,	CLOCKS_PER_SEC, 4
+
+	$type,	error_storage,@object           // @error_storage
+	$globl,	error_storage
+	$p2align,	3
+error_storage:
+	$long,	0                               // 0x0
+	$size,	error_storage, 4
+
+	$section,	%debug_abbrev,"",@progbits
+	$byte,	1                               // Abbreviation Code
+	$byte,	17                              // DW_TAG_compile_unit
+	$byte,	1                               // DW_CHILDREN_yes
+	$byte,	37                              // DW_AT_producer
+	$byte,	14                              // DW_FORM_strp
+	$byte,	19                              // DW_AT_language
+	$byte,	5                               // DW_FORM_data2
+	$byte,	3                               // DW_AT_name
+	$byte,	14                              // DW_FORM_strp
+	$byte,	16                              // DW_AT_stmt_list
+	$byte,	23                              // DW_FORM_sec_offset
+	$byte,	27                              // DW_AT_comp_dir
+	$byte,	14                              // DW_FORM_strp
+	$byte,	17                              // DW_AT_low_pc
+	$byte,	1                               // DW_FORM_addr
+	$byte,	18                              // DW_AT_high_pc
+	$byte,	6                               // DW_FORM_data4
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	2                               // Abbreviation Code
+	$byte,	52                              // DW_TAG_variable
+	$byte,	0                               // DW_CHILDREN_no
+	$byte,	3                               // DW_AT_name
+	$byte,	14                              // DW_FORM_strp
+	$byte,	73                              // DW_AT_type
+	$byte,	19                              // DW_FORM_ref4
+	$byte,	63                              // DW_AT_external
+	$byte,	25                              // DW_FORM_flag_present
+	$byte,	58                              // DW_AT_decl_file
+	$byte,	11                              // DW_FORM_data1
+	$byte,	59                              // DW_AT_decl_line
+	$byte,	11                              // DW_FORM_data1
+	$byte,	2                               // DW_AT_location
+	$byte,	24                              // DW_FORM_exprloc
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	3                               // Abbreviation Code
+	$byte,	22                              // DW_TAG_typedef
+	$byte,	0                               // DW_CHILDREN_no
+	$byte,	73                              // DW_AT_type
+	$byte,	19                              // DW_FORM_ref4
+	$byte,	3                               // DW_AT_name
+	$byte,	14                              // DW_FORM_strp
+	$byte,	58                              // DW_AT_decl_file
+	$byte,	11                              // DW_FORM_data1
+	$byte,	59                              // DW_AT_decl_line
+	$byte,	11                              // DW_FORM_data1
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	4                               // Abbreviation Code
+	$byte,	36                              // DW_TAG_base_type
+	$byte,	0                               // DW_CHILDREN_no
+	$byte,	3                               // DW_AT_name
+	$byte,	14                              // DW_FORM_strp
+	$byte,	62                              // DW_AT_encoding
+	$byte,	11                              // DW_FORM_data1
+	$byte,	11                              // DW_AT_byte_size
+	$byte,	11                              // DW_FORM_data1
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	5                               // Abbreviation Code
+	$byte,	52                              // DW_TAG_variable
+	$byte,	0                               // DW_CHILDREN_no
+	$byte,	3                               // DW_AT_name
+	$byte,	14                              // DW_FORM_strp
+	$byte,	73                              // DW_AT_type
+	$byte,	19                              // DW_FORM_ref4
+	$byte,	63                              // DW_AT_external
+	$byte,	25                              // DW_FORM_flag_present
+	$byte,	58                              // DW_AT_decl_file
+	$byte,	11                              // DW_FORM_data1
+	$byte,	59                              // DW_AT_decl_line
+	$byte,	11                              // DW_FORM_data1
+	$ascii,	"\210\001"                      // DW_AT_alignment
+	$byte,	15                              // DW_FORM_udata
+	$byte,	2                               // DW_AT_location
+	$byte,	24                              // DW_FORM_exprloc
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	6                               // Abbreviation Code
+	$byte,	1                               // DW_TAG_array_type
+	$byte,	1                               // DW_CHILDREN_yes
+	$byte,	73                              // DW_AT_type
+	$byte,	19                              // DW_FORM_ref4
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	7                               // Abbreviation Code
+	$byte,	33                              // DW_TAG_subrange_type
+	$byte,	0                               // DW_CHILDREN_no
+	$byte,	73                              // DW_AT_type
+	$byte,	19                              // DW_FORM_ref4
+	$byte,	55                              // DW_AT_count
+	$byte,	11                              // DW_FORM_data1
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	8                               // Abbreviation Code
+	$byte,	19                              // DW_TAG_structure_type
+	$byte,	1                               // DW_CHILDREN_yes
+	$byte,	11                              // DW_AT_byte_size
+	$byte,	11                              // DW_FORM_data1
+	$byte,	58                              // DW_AT_decl_file
+	$byte,	11                              // DW_FORM_data1
+	$byte,	59                              // DW_AT_decl_line
+	$byte,	11                              // DW_FORM_data1
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	9                               // Abbreviation Code
+	$byte,	13                              // DW_TAG_member
+	$byte,	0                               // DW_CHILDREN_no
+	$byte,	3                               // DW_AT_name
+	$byte,	14                              // DW_FORM_strp
+	$byte,	73                              // DW_AT_type
+	$byte,	19                              // DW_FORM_ref4
+	$byte,	58                              // DW_AT_decl_file
+	$byte,	11                              // DW_FORM_data1
+	$byte,	59                              // DW_AT_decl_line
+	$byte,	11                              // DW_FORM_data1
+	$byte,	56                              // DW_AT_data_member_location
+	$byte,	11                              // DW_FORM_data1
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	10                              // Abbreviation Code
+	$byte,	36                              // DW_TAG_base_type
+	$byte,	0                               // DW_CHILDREN_no
+	$byte,	3                               // DW_AT_name
+	$byte,	14                              // DW_FORM_strp
+	$byte,	11                              // DW_AT_byte_size
+	$byte,	11                              // DW_FORM_data1
+	$byte,	62                              // DW_AT_encoding
+	$byte,	11                              // DW_FORM_data1
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	11                              // Abbreviation Code
+	$byte,	38                              // DW_TAG_const_type
+	$byte,	0                               // DW_CHILDREN_no
+	$byte,	73                              // DW_AT_type
+	$byte,	19                              // DW_FORM_ref4
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	12                              // Abbreviation Code
+	$byte,	53                              // DW_TAG_volatile_type
+	$byte,	0                               // DW_CHILDREN_no
+	$byte,	73                              // DW_AT_type
+	$byte,	19                              // DW_FORM_ref4
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	13                              // Abbreviation Code
+	$byte,	46                              // DW_TAG_subprogram
+	$byte,	0                               // DW_CHILDREN_no
+	$byte,	17                              // DW_AT_low_pc
+	$byte,	1                               // DW_FORM_addr
+	$byte,	18                              // DW_AT_high_pc
+	$byte,	6                               // DW_FORM_data4
+	$byte,	64                              // DW_AT_frame_base
+	$byte,	24                              // DW_FORM_exprloc
+	$ascii,	"\227B"                         // DW_AT_GNU_all_call_sites
+	$byte,	25                              // DW_FORM_flag_present
+	$byte,	3                               // DW_AT_name
+	$byte,	14                              // DW_FORM_strp
+	$byte,	58                              // DW_AT_decl_file
+	$byte,	11                              // DW_FORM_data1
+	$byte,	59                              // DW_AT_decl_line
+	$byte,	11                              // DW_FORM_data1
+	$byte,	63                              // DW_AT_external
+	$byte,	25                              // DW_FORM_flag_present
+	$byte,	0                               // EOM(1)
+	$byte,	0                               // EOM(2)
+	$byte,	0                               // EOM(3)
+	$section,	%debug_info,"",@progbits
+crt0..Lcu_begin0:
+	$long,	crt0..Ldebug_info_end0 - crt0..Ldebug_info_start0 // Length of Unit
+crt0..Ldebug_info_start0:
+	$short,	4                               // DWARF version number
+	$long,	%debug_abbrev                   // Offset Into Abbrev. Section
+	$byte,	4                               // Address Size (in bytes)
+	$byte,	1                               // Abbrev [1] 0xb:0x13b DW_TAG_compile_unit
+	$long,	crt0..Linfo_string0                  // DW_AT_producer
+	$short,	12                              // DW_AT_language
+	$long,	crt0..Linfo_string1                  // DW_AT_name
+	$long,	crt0..Lline_table_start0             // DW_AT_stmt_list
+	$long,	crt0..Linfo_string2                  // DW_AT_comp_dir
+	$long,	crt0..Lfunc_begin0                   // DW_AT_low_pc
+	$long,	crt0..Lfunc_end0 - crt0..Lfunc_begin0       // DW_AT_high_pc
+	$byte,	2                               // Abbrev [2] 0x26:0x11 DW_TAG_variable
+	$long,	crt0..Linfo_string3                  // DW_AT_name
+	$long,	55                              // DW_AT_type
+                                        // DW_AT_external
+	$byte,	2                               // DW_AT_decl_file
+	$byte,	13                              // DW_AT_decl_line
+	$byte,	5                               // DW_AT_location
+	$byte,	3
+	$long,	__sys_null_pointer
+	$byte,	3                               // Abbrev [3] 0x37:0xb DW_TAG_typedef
+	$long,	66                              // DW_AT_type
+	$long,	crt0..Linfo_string5                  // DW_AT_name
+	$byte,	1                               // DW_AT_decl_file
+	$byte,	53                              // DW_AT_decl_line
+	$byte,	4                               // Abbrev [4] 0x42:0x7 DW_TAG_base_type
+	$long,	crt0..Linfo_string4                  // DW_AT_name
+	$byte,	7                               // DW_AT_encoding
+	$byte,	8                               // DW_AT_byte_size
+	$byte,	5                               // Abbrev [5] 0x49:0x12 DW_TAG_variable
+	$long,	crt0..Linfo_string6                  // DW_AT_name
+	$long,	91                              // DW_AT_type
+                                        // DW_AT_external
+	$byte,	2                               // DW_AT_decl_file
+	$byte,	26                              // DW_AT_decl_line
+	$byte,	8                               // DW_AT_alignment
+	$byte,	5                               // DW_AT_location
+	$byte,	3
+	$long,	__sys_thread_stack_table_ptr
+	$byte,	6                               // Abbrev [6] 0x5b:0xc DW_TAG_array_type
+	$long,	103                             // DW_AT_type
+	$byte,	7                               // Abbrev [7] 0x60:0x6 DW_TAG_subrange_type
+	$long,	161                             // DW_AT_type
+	$byte,	24                              // DW_AT_count
+	$byte,	0                               // End Of Children Mark
+	$byte,	3                               // Abbrev [3] 0x67:0xb DW_TAG_typedef
+	$long,	114                             // DW_AT_type
+	$long,	crt0..Linfo_string11                 // DW_AT_name
+	$byte,	3                               // DW_AT_decl_file
+	$byte,	27                              // DW_AT_decl_line
+	$byte,	8                               // Abbrev [8] 0x72:0x1d DW_TAG_structure_type
+	$byte,	8                               // DW_AT_byte_size
+	$byte,	3                               // DW_AT_decl_file
+	$byte,	24                              // DW_AT_decl_line
+	$byte,	9                               // Abbrev [9] 0x76:0xc DW_TAG_member
+	$long,	crt0..Linfo_string7                  // DW_AT_name
+	$long,	143                             // DW_AT_type
+	$byte,	3                               // DW_AT_decl_file
+	$byte,	25                              // DW_AT_decl_line
+	$byte,	0                               // DW_AT_data_member_location
+	$byte,	9                               // Abbrev [9] 0x82:0xc DW_TAG_member
+	$long,	crt0..Linfo_string10                 // DW_AT_name
+	$long,	143                             // DW_AT_type
+	$byte,	3                               // DW_AT_decl_file
+	$byte,	26                              // DW_AT_decl_line
+	$byte,	4                               // DW_AT_data_member_location
+	$byte,	0                               // End Of Children Mark
+	$byte,	3                               // Abbrev [3] 0x8f:0xb DW_TAG_typedef
+	$long,	154                             // DW_AT_type
+	$long,	crt0..Linfo_string9                  // DW_AT_name
+	$byte,	1                               // DW_AT_decl_file
+	$byte,	48                              // DW_AT_decl_line
+	$byte,	4                               // Abbrev [4] 0x9a:0x7 DW_TAG_base_type
+	$long,	crt0..Linfo_string8                  // DW_AT_name
+	$byte,	7                               // DW_AT_encoding
+	$byte,	4                               // DW_AT_byte_size
+	$byte,	10                              // Abbrev [10] 0xa1:0x7 DW_TAG_base_type
+	$long,	crt0..Linfo_string12                 // DW_AT_name
+	$byte,	8                               // DW_AT_byte_size
+	$byte,	7                               // DW_AT_encoding
+	$byte,	5                               // Abbrev [5] 0xa8:0x12 DW_TAG_variable
+	$long,	crt0..Linfo_string13                 // DW_AT_name
+	$long,	186                             // DW_AT_type
+                                        // DW_AT_external
+	$byte,	2                               // DW_AT_decl_file
+	$byte,	11                              // DW_AT_decl_line
+	$byte,	8                               // DW_AT_alignment
+	$byte,	5                               // DW_AT_location
+	$byte,	3
+	$long,	__sys_used_mram_end
+	$byte,	6                               // Abbrev [6] 0xba:0xc DW_TAG_array_type
+	$long,	198                             // DW_AT_type
+	$byte,	7                               // Abbrev [7] 0xbf:0x6 DW_TAG_subrange_type
+	$long,	161                             // DW_AT_type
+	$byte,	0                               // DW_AT_count
+	$byte,	0                               // End Of Children Mark
+	$byte,	3                               // Abbrev [3] 0xc6:0xb DW_TAG_typedef
+	$long,	209                             // DW_AT_type
+	$long,	crt0..Linfo_string15                 // DW_AT_name
+	$byte,	1                               // DW_AT_decl_file
+	$byte,	40                              // DW_AT_decl_line
+	$byte,	4                               // Abbrev [4] 0xd1:0x7 DW_TAG_base_type
+	$long,	crt0..Linfo_string14                 // DW_AT_name
+	$byte,	8                               // DW_AT_encoding
+	$byte,	1                               // DW_AT_byte_size
+	$byte,	2                               // Abbrev [2] 0xd8:0x11 DW_TAG_variable
+	$long,	crt0..Linfo_string16                 // DW_AT_name
+	$long,	233                             // DW_AT_type
+                                        // DW_AT_external
+	$byte,	2                               // DW_AT_decl_file
+	$byte,	15                              // DW_AT_decl_line
+	$byte,	5                               // DW_AT_location
+	$byte,	3
+	$long,	thread_profiling
+	$byte,	6                               // Abbrev [6] 0xe9:0xc DW_TAG_array_type
+	$long,	143                             // DW_AT_type
+	$byte,	7                               // Abbrev [7] 0xee:0x6 DW_TAG_subrange_type
+	$long,	161                             // DW_AT_type
+	$byte,	24                              // DW_AT_count
+	$byte,	0                               // End Of Children Mark
+	$byte,	2                               // Abbrev [2] 0xf5:0x11 DW_TAG_variable
+	$long,	crt0..Linfo_string17                 // DW_AT_name
+	$long,	143                             // DW_AT_type
+                                        // DW_AT_external
+	$byte,	2                               // DW_AT_decl_file
+	$byte,	16                              // DW_AT_decl_line
+	$byte,	5                               // DW_AT_location
+	$byte,	3
+	$long,	perfcounter_end_value
+	$byte,	5                               // Abbrev [5] 0x106:0x12 DW_TAG_variable
+	$long,	crt0..Linfo_string18                 // DW_AT_name
+	$long,	280                             // DW_AT_type
+                                        // DW_AT_external
+	$byte,	2                               // DW_AT_decl_file
+	$byte,	28                              // DW_AT_decl_line
+	$byte,	8                               // DW_AT_alignment
+	$byte,	5                               // DW_AT_location
+	$byte,	3
+	$long,	CLOCKS_PER_SEC
+	$byte,	11                              // Abbrev [11] 0x118:0x5 DW_TAG_const_type
+	$long,	285                             // DW_AT_type
+	$byte,	12                              // Abbrev [12] 0x11d:0x5 DW_TAG_volatile_type
+	$long,	143                             // DW_AT_type
+	$byte,	5                               // Abbrev [5] 0x122:0x12 DW_TAG_variable
+	$long,	crt0..Linfo_string19                 // DW_AT_name
+	$long,	280                             // DW_AT_type
+                                        // DW_AT_external
+	$byte,	2                               // DW_AT_decl_file
+	$byte,	30                              // DW_AT_decl_line
+	$byte,	8                               // DW_AT_alignment
+	$byte,	5                               // DW_AT_location
+	$byte,	3
+	$long,	error_storage
+	$byte,	13                              // Abbrev [13] 0x134:0x11 DW_TAG_subprogram
+	$long,	crt0..Lfunc_begin0                   // DW_AT_low_pc
+	$long,	crt0..Lfunc_end0 - crt0..Lfunc_begin0       // DW_AT_high_pc
+	$byte,	1                               // DW_AT_frame_base
+	$byte,	102
+                                        // DW_AT_GNU_all_call_sites
+	$long,	crt0..Linfo_string20                 // DW_AT_name
+	$byte,	2                               // DW_AT_decl_file
+	$byte,	32                              // DW_AT_decl_line
+                                        // DW_AT_external
+	$byte,	0                               // End Of Children Mark
+crt0..Ldebug_info_end0:
+	$section,	%debug_str,"MS",@progbits,1
+crt0..Linfo_string0:
+	$asciz,	"clang version 12.0.0 (https://github.com/upmem/llvm - project.git d36425841d9a4d1420b7aa155675f6ae8bcf9f08)" // string offset=0
+crt0..Linfo_string1:
+	$asciz,	"/root/uPIMulator_frontend/sdk/misc/crt0.c" // string offset=106
+crt0..Linfo_string2:
+	$asciz,	"/root/upmem_compiler"          // string offset=148
+crt0..Linfo_string3:
+	$asciz,	"__sys_null_pointer"            // string offset=169
+crt0..Linfo_string4:
+	$asciz,	"long unsigned int"             // string offset=188
+crt0..Linfo_string5:
+	$asciz,	"uint64_t"                      // string offset=206
+crt0..Linfo_string6:
+	$asciz,	"__sys_thread_stack_table_ptr"  // string offset=215
+crt0..Linfo_string7:
+	$asciz,	"stack_size"                    // string offset=244
+crt0..Linfo_string8:
+	$asciz,	"unsigned int"                  // string offset=255
+crt0..Linfo_string9:
+	$asciz,	"uint32_t"                      // string offset=268
+crt0..Linfo_string10:
+	$asciz,	"stack_ptr"                     // string offset=277
+crt0..Linfo_string11:
+	$asciz,	"thread_stack_t"                // string offset=287
+crt0..Linfo_string12:
+	$asciz,	"__ARRAY_SIZE_TYPE__"           // string offset=302
+crt0..Linfo_string13:
+	$asciz,	"__sys_used_mram_end"           // string offset=322
+crt0..Linfo_string14:
+	$asciz,	"unsigned char"                 // string offset=342
+crt0..Linfo_string15:
+	$asciz,	"uint8_t"                       // string offset=356
+crt0..Linfo_string16:
+	$asciz,	"thread_profiling"              // string offset=364
+crt0..Linfo_string17:
+	$asciz,	"perfcounter_end_value"         // string offset=381
+crt0..Linfo_string18:
+	$asciz,	"CLOCKS_PER_SEC"                // string offset=403
+crt0..Linfo_string19:
+	$asciz,	"error_storage"                 // string offset=418
+crt0..Linfo_string20:
+	$asciz,	"__bootstrap"                   // string offset=432
+	$addrsig,
+	$addrsig_sym, __bootstrap
+	$addrsig_sym, __sys_null_pointer
+	$addrsig_sym, STACK_SIZE_TASKLET_0
+	$addrsig_sym, __sys_stack_thread_0
+	$addrsig_sym, STACK_SIZE_TASKLET_1
+	$addrsig_sym, __sys_stack_thread_1
+	$addrsig_sym, STACK_SIZE_TASKLET_2
+	$addrsig_sym, __sys_stack_thread_2
+	$addrsig_sym, STACK_SIZE_TASKLET_3
+	$addrsig_sym, __sys_stack_thread_3
+	$addrsig_sym, STACK_SIZE_TASKLET_4
+	$addrsig_sym, __sys_stack_thread_4
+	$addrsig_sym, STACK_SIZE_TASKLET_5
+	$addrsig_sym, __sys_stack_thread_5
+	$addrsig_sym, STACK_SIZE_TASKLET_6
+	$addrsig_sym, __sys_stack_thread_6
+	$addrsig_sym, STACK_SIZE_TASKLET_7
+	$addrsig_sym, __sys_stack_thread_7
+	$addrsig_sym, STACK_SIZE_TASKLET_8
+	$addrsig_sym, __sys_stack_thread_8
+	$addrsig_sym, STACK_SIZE_TASKLET_9
+	$addrsig_sym, __sys_stack_thread_9
+	$addrsig_sym, STACK_SIZE_TASKLET_10
+	$addrsig_sym, __sys_stack_thread_10
+	$addrsig_sym, STACK_SIZE_TASKLET_11
+	$addrsig_sym, __sys_stack_thread_11
+	$addrsig_sym, STACK_SIZE_TASKLET_12
+	$addrsig_sym, __sys_stack_thread_12
+	$addrsig_sym, STACK_SIZE_TASKLET_13
+	$addrsig_sym, __sys_stack_thread_13
+	$addrsig_sym, STACK_SIZE_TASKLET_14
+	$addrsig_sym, __sys_stack_thread_14
+	$addrsig_sym, STACK_SIZE_TASKLET_15
+	$addrsig_sym, __sys_stack_thread_15
+	$addrsig_sym, STACK_SIZE_TASKLET_16
+	$addrsig_sym, __sys_stack_thread_16
+	$addrsig_sym, STACK_SIZE_TASKLET_17
+	$addrsig_sym, __sys_stack_thread_17
+	$addrsig_sym, STACK_SIZE_TASKLET_18
+	$addrsig_sym, __sys_stack_thread_18
+	$addrsig_sym, STACK_SIZE_TASKLET_19
+	$addrsig_sym, __sys_stack_thread_19
+	$addrsig_sym, STACK_SIZE_TASKLET_20
+	$addrsig_sym, __sys_stack_thread_20
+	$addrsig_sym, STACK_SIZE_TASKLET_21
+	$addrsig_sym, __sys_stack_thread_21
+	$addrsig_sym, STACK_SIZE_TASKLET_22
+	$addrsig_sym, __sys_stack_thread_22
+	$addrsig_sym, STACK_SIZE_TASKLET_23
+	$addrsig_sym, __sys_stack_thread_23
+	$addrsig_sym, __sys_thread_stack_table_ptr
+	$addrsig_sym, __sys_used_mram_end
+	$addrsig_sym, thread_profiling
+	$addrsig_sym, CLOCKS_PER_SEC
+	$addrsig_sym, error_storage
+	$section,	%debug_line,"",@progbits
+crt0..Lline_table_start0:
+	$text,
 	$file,	"stdio.c"
 	$file,	1 "/root" "uPIMulator_frontend/sdk/stdlib/stdio.c"
 	$file,	2 "/root" "uPIMulator_frontend/sdk/stdlib/stdint.h"
@@ -2898,1076 +3821,6 @@ stdio..Linfo_string56:
 	$addrsig_sym, stdio.__stdout_cache_buffer
 	$section,	%debug_line,"",@progbits
 stdio..Lline_table_start0:
-	$text,
-	$file,	"task.c"
-	$file,	1 "/root" "upmem - 2021.3.0 - Linux - x86_64/bin/../share/upmem/include/stdlib/stdint.h"
-	$file,	2 "/root/uPIMulator_frontend/benchmark/TEST1" "dpu/task.c"
-	$section,	%text, main,"ax",@progbits
-	$globl,	main                            //  -  -  Begin function main
-	$type,	main,@function
-main:                                   // @main
-.Lfunc_begin0:
-	$loc,	2 20 0                          // dpu/task.c:20:0
-	$cfi_sections, %debug_frame
-	$cfi_startproc,
-// %bb.0:
-	$cfi_def_cfa_offset, 0
-	$move , r1, 3
-	$move , r0, 16777216
-.Ltmp0:
-	$loc,	2 21 13 prologue_end            // dpu/task.c:21:13
-	$sd , r22, 0, d0
-.Ltmp1:
-	//DEBUG_VALUE: mram_read:nb_of_bytes < -  8
-	//DEBUG_VALUE: mram_read:to < -  undef
-	$file,	3 "/root" "upmem - 2021.3.0 - Linux - x86_64/bin/../share/upmem/include/syslib/mram.h"
-	$loc,	3 35 24                         // upmem - 2021.3.0 - Linux - x86_64/bin/../share/upmem/include/syslib/mram.h:35:24
-	$move , r0, nb_loop
-.Ltmp2:
-	//DEBUG_VALUE: mram_read:from < -  $r0
-	$loc,	3 0 24 is_stmt 0                // upmem - 2021.3.0 - Linux - x86_64/bin/../share/upmem/include/syslib/mram.h:0:24
-	$add , r1, r22, 0
-	$loc,	3 35 24                         // upmem - 2021.3.0 - Linux - x86_64/bin/../share/upmem/include/syslib/mram.h:35:24
-	$ldma , r1, r0, 0
-.Ltmp3:
-	$loc,	2 33 19 is_stmt 1               // dpu/task.c:33:19
-	$sb , r22, 1, 1
-.Ltmp4:
-	//DEBUG_VALUE: mram_write:nb_of_bytes < -  8
-	//DEBUG_VALUE: mram_write:from < -  undef
-	$loc,	3 53 24                         // upmem - 2021.3.0 - Linux - x86_64/bin/../share/upmem/include/syslib/mram.h:53:24
-	$move , r2, __sys_used_mram_end
-	$move , r0, 0
-.Ltmp5:
-	$sdma , r1, r2, 0
-.Ltmp6:
-	$loc,	2 35 1                          // dpu/task.c:35:1
-	$jump , r23
-.Ltmp7:
-.Lfunc_end0:
-	$size,	main, .Lfunc_end0 - main
-	$cfi_endproc,
-	$section,	%stack_sizes,"o",@progbits,%text, main
-	$long,	.Lfunc_begin0
-	$byte,	8
-	$section,	%text, main,"ax",@progbits
-                                        //  -  -  End function
-	$type,	nb_loop,@object                 // @nb_loop
-	$section,	%mram,"aw",@progbits
-	$globl,	nb_loop
-	$p2align,	3
-nb_loop:
-	$ascii,	"\002\000\001\001\000\000\000\001"
-	$size,	nb_loop, 8
-
-	$section,	%debug_loc,"",@progbits
-.Ldebug_loc0:
-	$long,	.Ltmp2 - .Lfunc_begin0
-	$long,	.Ltmp5 - .Lfunc_begin0
-	$short,	1                               // Loc expr size
-	$byte,	80                              // DW_OP_reg0
-	$long,	0
-	$long,	0
-	$section,	%debug_abbrev,"",@progbits
-	$byte,	1                               // Abbreviation Code
-	$byte,	17                              // DW_TAG_compile_unit
-	$byte,	1                               // DW_CHILDREN_yes
-	$byte,	37                              // DW_AT_producer
-	$byte,	14                              // DW_FORM_strp
-	$byte,	19                              // DW_AT_language
-	$byte,	5                               // DW_FORM_data2
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	16                              // DW_AT_stmt_list
-	$byte,	23                              // DW_FORM_sec_offset
-	$byte,	27                              // DW_AT_comp_dir
-	$byte,	14                              // DW_FORM_strp
-	$byte,	17                              // DW_AT_low_pc
-	$byte,	1                               // DW_FORM_addr
-	$byte,	18                              // DW_AT_high_pc
-	$byte,	6                               // DW_FORM_data4
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	2                               // Abbreviation Code
-	$byte,	52                              // DW_TAG_variable
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	63                              // DW_AT_external
-	$byte,	25                              // DW_FORM_flag_present
-	$byte,	58                              // DW_AT_decl_file
-	$byte,	11                              // DW_FORM_data1
-	$byte,	59                              // DW_AT_decl_line
-	$byte,	11                              // DW_FORM_data1
-	$ascii,	"\210\001"                      // DW_AT_alignment
-	$byte,	15                              // DW_FORM_udata
-	$byte,	2                               // DW_AT_location
-	$byte,	24                              // DW_FORM_exprloc
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	3                               // Abbreviation Code
-	$byte,	1                               // DW_TAG_array_type
-	$byte,	1                               // DW_CHILDREN_yes
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	4                               // Abbreviation Code
-	$byte,	33                              // DW_TAG_subrange_type
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	55                              // DW_AT_count
-	$byte,	11                              // DW_FORM_data1
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	5                               // Abbreviation Code
-	$byte,	22                              // DW_TAG_typedef
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	58                              // DW_AT_decl_file
-	$byte,	11                              // DW_FORM_data1
-	$byte,	59                              // DW_AT_decl_line
-	$byte,	11                              // DW_FORM_data1
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	6                               // Abbreviation Code
-	$byte,	36                              // DW_TAG_base_type
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	62                              // DW_AT_encoding
-	$byte,	11                              // DW_FORM_data1
-	$byte,	11                              // DW_AT_byte_size
-	$byte,	11                              // DW_FORM_data1
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	7                               // Abbreviation Code
-	$byte,	36                              // DW_TAG_base_type
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	11                              // DW_AT_byte_size
-	$byte,	11                              // DW_FORM_data1
-	$byte,	62                              // DW_AT_encoding
-	$byte,	11                              // DW_FORM_data1
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	8                               // Abbreviation Code
-	$byte,	15                              // DW_TAG_pointer_type
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	9                               // Abbreviation Code
-	$byte,	46                              // DW_TAG_subprogram
-	$byte,	1                               // DW_CHILDREN_yes
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	58                              // DW_AT_decl_file
-	$byte,	11                              // DW_FORM_data1
-	$byte,	59                              // DW_AT_decl_line
-	$byte,	11                              // DW_FORM_data1
-	$byte,	39                              // DW_AT_prototyped
-	$byte,	25                              // DW_FORM_flag_present
-	$byte,	32                              // DW_AT_inline
-	$byte,	11                              // DW_FORM_data1
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	10                              // Abbreviation Code
-	$byte,	5                               // DW_TAG_formal_parameter
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	58                              // DW_AT_decl_file
-	$byte,	11                              // DW_FORM_data1
-	$byte,	59                              // DW_AT_decl_line
-	$byte,	11                              // DW_FORM_data1
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	11                              // Abbreviation Code
-	$byte,	15                              // DW_TAG_pointer_type
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	12                              // Abbreviation Code
-	$byte,	38                              // DW_TAG_const_type
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	13                              // Abbreviation Code
-	$byte,	46                              // DW_TAG_subprogram
-	$byte,	1                               // DW_CHILDREN_yes
-	$byte,	17                              // DW_AT_low_pc
-	$byte,	1                               // DW_FORM_addr
-	$byte,	18                              // DW_AT_high_pc
-	$byte,	6                               // DW_FORM_data4
-	$byte,	64                              // DW_AT_frame_base
-	$byte,	24                              // DW_FORM_exprloc
-	$ascii,	"\227B"                         // DW_AT_GNU_all_call_sites
-	$byte,	25                              // DW_FORM_flag_present
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	58                              // DW_AT_decl_file
-	$byte,	11                              // DW_FORM_data1
-	$byte,	59                              // DW_AT_decl_line
-	$byte,	11                              // DW_FORM_data1
-	$byte,	39                              // DW_AT_prototyped
-	$byte,	25                              // DW_FORM_flag_present
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	63                              // DW_AT_external
-	$byte,	25                              // DW_FORM_flag_present
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	14                              // Abbreviation Code
-	$byte,	52                              // DW_TAG_variable
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	2                               // DW_AT_location
-	$byte,	24                              // DW_FORM_exprloc
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	58                              // DW_AT_decl_file
-	$byte,	11                              // DW_FORM_data1
-	$byte,	59                              // DW_AT_decl_line
-	$byte,	11                              // DW_FORM_data1
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	15                              // Abbreviation Code
-	$byte,	29                              // DW_TAG_inlined_subroutine
-	$byte,	1                               // DW_CHILDREN_yes
-	$byte,	49                              // DW_AT_abstract_origin
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	17                              // DW_AT_low_pc
-	$byte,	1                               // DW_FORM_addr
-	$byte,	18                              // DW_AT_high_pc
-	$byte,	6                               // DW_FORM_data4
-	$byte,	88                              // DW_AT_call_file
-	$byte,	11                              // DW_FORM_data1
-	$byte,	89                              // DW_AT_call_line
-	$byte,	11                              // DW_FORM_data1
-	$byte,	87                              // DW_AT_call_column
-	$byte,	11                              // DW_FORM_data1
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	16                              // Abbreviation Code
-	$byte,	5                               // DW_TAG_formal_parameter
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	2                               // DW_AT_location
-	$byte,	23                              // DW_FORM_sec_offset
-	$byte,	49                              // DW_AT_abstract_origin
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	17                              // Abbreviation Code
-	$byte,	5                               // DW_TAG_formal_parameter
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	49                              // DW_AT_abstract_origin
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	18                              // Abbreviation Code
-	$byte,	5                               // DW_TAG_formal_parameter
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	28                              // DW_AT_const_value
-	$byte,	15                              // DW_FORM_udata
-	$byte,	49                              // DW_AT_abstract_origin
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	0                               // EOM(3)
-	$section,	%debug_info,"",@progbits
-.Lcu_begin0:
-	$long,	.Ldebug_info_end0 - .Ldebug_info_start0 // Length of Unit
-.Ldebug_info_start0:
-	$short,	4                               // DWARF version number
-	$long,	%debug_abbrev                   // Offset Into Abbrev. Section
-	$byte,	4                               // Address Size (in bytes)
-	$byte,	1                               // Abbrev [1] 0xb:0x12c DW_TAG_compile_unit
-	$long,	.Linfo_string0                  // DW_AT_producer
-	$short,	12                              // DW_AT_language
-	$long,	.Linfo_string1                  // DW_AT_name
-	$long,	.Lline_table_start0             // DW_AT_stmt_list
-	$long,	.Linfo_string2                  // DW_AT_comp_dir
-	$long,	.Lfunc_begin0                   // DW_AT_low_pc
-	$long,	.Lfunc_end0 - .Lfunc_begin0       // DW_AT_high_pc
-	$byte,	2                               // Abbrev [2] 0x26:0x12 DW_TAG_variable
-	$long,	.Linfo_string3                  // DW_AT_name
-	$long,	56                              // DW_AT_type
-                                        // DW_AT_external
-	$byte,	2                               // DW_AT_decl_file
-	$byte,	11                              // DW_AT_decl_line
-	$byte,	8                               // DW_AT_alignment
-	$byte,	5                               // DW_AT_location
-	$byte,	3
-	$long,	nb_loop
-	$byte,	3                               // Abbrev [3] 0x38:0xc DW_TAG_array_type
-	$long,	68                              // DW_AT_type
-	$byte,	4                               // Abbrev [4] 0x3d:0x6 DW_TAG_subrange_type
-	$long,	86                              // DW_AT_type
-	$byte,	8                               // DW_AT_count
-	$byte,	0                               // End Of Children Mark
-	$byte,	5                               // Abbrev [5] 0x44:0xb DW_TAG_typedef
-	$long,	79                              // DW_AT_type
-	$long,	.Linfo_string5                  // DW_AT_name
-	$byte,	1                               // DW_AT_decl_file
-	$byte,	40                              // DW_AT_decl_line
-	$byte,	6                               // Abbrev [6] 0x4f:0x7 DW_TAG_base_type
-	$long,	.Linfo_string4                  // DW_AT_name
-	$byte,	8                               // DW_AT_encoding
-	$byte,	1                               // DW_AT_byte_size
-	$byte,	7                               // Abbrev [7] 0x56:0x7 DW_TAG_base_type
-	$long,	.Linfo_string6                  // DW_AT_name
-	$byte,	8                               // DW_AT_byte_size
-	$byte,	7                               // DW_AT_encoding
-	$byte,	5                               // Abbrev [5] 0x5d:0xb DW_TAG_typedef
-	$long,	104                             // DW_AT_type
-	$long,	.Linfo_string8                  // DW_AT_name
-	$byte,	1                               // DW_AT_decl_file
-	$byte,	48                              // DW_AT_decl_line
-	$byte,	6                               // Abbrev [6] 0x68:0x7 DW_TAG_base_type
-	$long,	.Linfo_string7                  // DW_AT_name
-	$byte,	7                               // DW_AT_encoding
-	$byte,	4                               // DW_AT_byte_size
-	$byte,	8                               // Abbrev [8] 0x6f:0x1 DW_TAG_pointer_type
-	$byte,	9                               // Abbrev [9] 0x70:0x2a DW_TAG_subprogram
-	$long,	.Linfo_string9                  // DW_AT_name
-	$byte,	3                               // DW_AT_decl_file
-	$byte,	33                              // DW_AT_decl_line
-                                        // DW_AT_prototyped
-	$byte,	1                               // DW_AT_inline
-	$byte,	10                              // Abbrev [10] 0x78:0xb DW_TAG_formal_parameter
-	$long,	.Linfo_string10                 // DW_AT_name
-	$byte,	3                               // DW_AT_decl_file
-	$byte,	33                              // DW_AT_decl_line
-	$long,	154                             // DW_AT_type
-	$byte,	10                              // Abbrev [10] 0x83:0xb DW_TAG_formal_parameter
-	$long,	.Linfo_string11                 // DW_AT_name
-	$byte,	3                               // DW_AT_decl_file
-	$byte,	33                              // DW_AT_decl_line
-	$long,	111                             // DW_AT_type
-	$byte,	10                              // Abbrev [10] 0x8e:0xb DW_TAG_formal_parameter
-	$long,	.Linfo_string12                 // DW_AT_name
-	$byte,	3                               // DW_AT_decl_file
-	$byte,	33                              // DW_AT_decl_line
-	$long,	104                             // DW_AT_type
-	$byte,	0                               // End Of Children Mark
-	$byte,	11                              // Abbrev [11] 0x9a:0x5 DW_TAG_pointer_type
-	$long,	159                             // DW_AT_type
-	$byte,	12                              // Abbrev [12] 0x9f:0x1 DW_TAG_const_type
-	$byte,	9                               // Abbrev [9] 0xa0:0x2a DW_TAG_subprogram
-	$long,	.Linfo_string13                 // DW_AT_name
-	$byte,	3                               // DW_AT_decl_file
-	$byte,	51                              // DW_AT_decl_line
-                                        // DW_AT_prototyped
-	$byte,	1                               // DW_AT_inline
-	$byte,	10                              // Abbrev [10] 0xa8:0xb DW_TAG_formal_parameter
-	$long,	.Linfo_string10                 // DW_AT_name
-	$byte,	3                               // DW_AT_decl_file
-	$byte,	51                              // DW_AT_decl_line
-	$long,	154                             // DW_AT_type
-	$byte,	10                              // Abbrev [10] 0xb3:0xb DW_TAG_formal_parameter
-	$long,	.Linfo_string11                 // DW_AT_name
-	$byte,	3                               // DW_AT_decl_file
-	$byte,	51                              // DW_AT_decl_line
-	$long,	111                             // DW_AT_type
-	$byte,	10                              // Abbrev [10] 0xbe:0xb DW_TAG_formal_parameter
-	$long,	.Linfo_string12                 // DW_AT_name
-	$byte,	3                               // DW_AT_decl_file
-	$byte,	51                              // DW_AT_decl_line
-	$long,	104                             // DW_AT_type
-	$byte,	0                               // End Of Children Mark
-	$byte,	13                              // Abbrev [13] 0xca:0x65 DW_TAG_subprogram
-	$long,	.Lfunc_begin0                   // DW_AT_low_pc
-	$long,	.Lfunc_end0 - .Lfunc_begin0       // DW_AT_high_pc
-	$byte,	1                               // DW_AT_frame_base
-	$byte,	102
-                                        // DW_AT_GNU_all_call_sites
-	$long,	.Linfo_string14                 // DW_AT_name
-	$byte,	2                               // DW_AT_decl_file
-	$byte,	20                              // DW_AT_decl_line
-                                        // DW_AT_prototyped
-	$long,	303                             // DW_AT_type
-                                        // DW_AT_external
-	$byte,	14                              // Abbrev [14] 0xdf:0xe DW_TAG_variable
-	$byte,	2                               // DW_AT_location
-	$byte,	145
-	$byte,	0
-	$long,	.Linfo_string16                 // DW_AT_name
-	$byte,	2                               // DW_AT_decl_file
-	$byte,	21                              // DW_AT_decl_line
-	$long,	56                              // DW_AT_type
-	$byte,	15                              // Abbrev [15] 0xed:0x25 DW_TAG_inlined_subroutine
-	$long,	112                             // DW_AT_abstract_origin
-	$long,	.Ltmp1                          // DW_AT_low_pc
-	$long,	.Ltmp3 - .Ltmp1                   // DW_AT_high_pc
-	$byte,	2                               // DW_AT_call_file
-	$byte,	24                              // DW_AT_call_line
-	$byte,	5                               // DW_AT_call_column
-	$byte,	16                              // Abbrev [16] 0xfd:0x9 DW_TAG_formal_parameter
-	$long,	.Ldebug_loc0                    // DW_AT_location
-	$long,	120                             // DW_AT_abstract_origin
-	$byte,	17                              // Abbrev [17] 0x106:0x5 DW_TAG_formal_parameter
-	$long,	131                             // DW_AT_abstract_origin
-	$byte,	18                              // Abbrev [18] 0x10b:0x6 DW_TAG_formal_parameter
-	$byte,	8                               // DW_AT_const_value
-	$long,	142                             // DW_AT_abstract_origin
-	$byte,	0                               // End Of Children Mark
-	$byte,	15                              // Abbrev [15] 0x112:0x1c DW_TAG_inlined_subroutine
-	$long,	160                             // DW_AT_abstract_origin
-	$long,	.Ltmp4                          // DW_AT_low_pc
-	$long,	.Ltmp6 - .Ltmp4                   // DW_AT_high_pc
-	$byte,	2                               // DW_AT_call_file
-	$byte,	34                              // DW_AT_call_line
-	$byte,	5                               // DW_AT_call_column
-	$byte,	17                              // Abbrev [17] 0x122:0x5 DW_TAG_formal_parameter
-	$long,	168                             // DW_AT_abstract_origin
-	$byte,	18                              // Abbrev [18] 0x127:0x6 DW_TAG_formal_parameter
-	$byte,	8                               // DW_AT_const_value
-	$long,	190                             // DW_AT_abstract_origin
-	$byte,	0                               // End Of Children Mark
-	$byte,	0                               // End Of Children Mark
-	$byte,	6                               // Abbrev [6] 0x12f:0x7 DW_TAG_base_type
-	$long,	.Linfo_string15                 // DW_AT_name
-	$byte,	5                               // DW_AT_encoding
-	$byte,	4                               // DW_AT_byte_size
-	$byte,	0                               // End Of Children Mark
-.Ldebug_info_end0:
-	$section,	%debug_str,"MS",@progbits,1
-.Linfo_string0:
-	$asciz,	"clang version 12.0.0 (https://github.com/upmem/llvm - project.git d36425841d9a4d1420b7aa155675f6ae8bcf9f08)" // string offset=0
-.Linfo_string1:
-	$asciz,	"dpu/task.c"                    // string offset=106
-.Linfo_string2:
-	$asciz,	"/root/uPIMulator_frontend/benchmark/TEST1" // string offset=117
-.Linfo_string3:
-	$asciz,	"nb_loop"                       // string offset=159
-.Linfo_string4:
-	$asciz,	"unsigned char"                 // string offset=167
-.Linfo_string5:
-	$asciz,	"uint8_t"                       // string offset=181
-.Linfo_string6:
-	$asciz,	"__ARRAY_SIZE_TYPE__"           // string offset=189
-.Linfo_string7:
-	$asciz,	"unsigned int"                  // string offset=209
-.Linfo_string8:
-	$asciz,	"uint32_t"                      // string offset=222
-.Linfo_string9:
-	$asciz,	"mram_read"                     // string offset=231
-.Linfo_string10:
-	$asciz,	"from"                          // string offset=241
-.Linfo_string11:
-	$asciz,	"to"                            // string offset=246
-.Linfo_string12:
-	$asciz,	"nb_of_bytes"                   // string offset=249
-.Linfo_string13:
-	$asciz,	"mram_write"                    // string offset=261
-.Linfo_string14:
-	$asciz,	"main"                          // string offset=272
-.Linfo_string15:
-	$asciz,	"int"                           // string offset=277
-.Linfo_string16:
-	$asciz,	"local_value"                   // string offset=281
-	$addrsig,
-	$addrsig_sym, nb_loop
-	$addrsig_sym, __sys_used_mram_end
-	$section,	%debug_line,"",@progbits
-.Lline_table_start0:
-	$text,
-	$file,	"crt0.c"
-	$file,	1 "/root" "uPIMulator_frontend/sdk/stdlib/stdint.h"
-	$file,	2 "/root" "uPIMulator_frontend/sdk/misc/crt0.c"
-	$file,	3 "/root" "uPIMulator_frontend/sdk/syslib/dpuruntime.h"
-	$section,	%text, __bootstrap,"ax",@progbits
-	$globl,	__bootstrap                     //  -  -  Begin function __bootstrap
-	$type,	__bootstrap,@function
-__bootstrap:                            // @__bootstrap
-crt0..Lfunc_begin0:
-	$loc,	2 33 0                          // uPIMulator_frontend/sdk/misc/crt0.c:33:0
-	$cfi_sections, %debug_frame
-	$cfi_startproc,
-// %bb.0:
-	$loc,	2 35 5 prologue_end             // uPIMulator_frontend/sdk/misc/crt0.c:35:5
-	// inline asm
-	$jnz , id, crt0.__sys_start_thread
-
-	$sd , zero, __stdout_buffer_state, 0
-	$move , r23, __atomic_end_addr
-crt0.__sys_atomic_bit_clear:
-	$jeq , r23, __atomic_used_addr, crt0.__sys_start_thread
-crt0..Ltmp0:
-	$release , r23, 0, nz, crt0..Ltmp0 + 1
-	$add , r23, r23,  - 1, true, crt0.__sys_atomic_bit_clear
-crt0.__sys_start_thread:
-crt0..Ltmp1:
-	$jeq , id, NR_TASKLETS - 1, crt0..Ltmp1 + 2
-	$boot , id, 1
-	$ld , d22, id8, __sys_thread_stack_table_ptr
-	$call , r23, main
-	$globl,	__sys_end
-__sys_end:
-
-	$stop , true, __sys_end
-	// inline asm
-crt0..Ltmp2:
-crt0..Lfunc_end0:
-	$size,	__bootstrap, crt0..Lfunc_end0 - __bootstrap
-	$cfi_endproc,
-	$section,	%stack_sizes,"o",@progbits,%text, __bootstrap
-	$long,	crt0..Lfunc_begin0
-	$byte,	0
-	$section,	%text, __bootstrap,"ax",@progbits
-                                        //  -  -  End function
-	$type,	__sys_null_pointer,@object      // @__sys_null_pointer
-	$section,	%data, __sys_zero,"aw",@progbits
-	$globl,	__sys_null_pointer
-	$p2align,	3
-__sys_null_pointer:
-	$quad,	0                               // 0x0
-	$size,	__sys_null_pointer, 8
-
-	$type,	__sys_thread_stack_table_ptr,@object // @__sys_thread_stack_table_ptr
-	$section,	%data, __sys_keep,"aw",@progbits
-	$globl,	__sys_thread_stack_table_ptr
-	$p2align,	3
-__sys_thread_stack_table_ptr:
-	$long,	STACK_SIZE_TASKLET_0
-	$long,	__sys_stack_thread_0
-	$long,	STACK_SIZE_TASKLET_1
-	$long,	__sys_stack_thread_1
-	$long,	STACK_SIZE_TASKLET_2
-	$long,	__sys_stack_thread_2
-	$long,	STACK_SIZE_TASKLET_3
-	$long,	__sys_stack_thread_3
-	$long,	STACK_SIZE_TASKLET_4
-	$long,	__sys_stack_thread_4
-	$long,	STACK_SIZE_TASKLET_5
-	$long,	__sys_stack_thread_5
-	$long,	STACK_SIZE_TASKLET_6
-	$long,	__sys_stack_thread_6
-	$long,	STACK_SIZE_TASKLET_7
-	$long,	__sys_stack_thread_7
-	$long,	STACK_SIZE_TASKLET_8
-	$long,	__sys_stack_thread_8
-	$long,	STACK_SIZE_TASKLET_9
-	$long,	__sys_stack_thread_9
-	$long,	STACK_SIZE_TASKLET_10
-	$long,	__sys_stack_thread_10
-	$long,	STACK_SIZE_TASKLET_11
-	$long,	__sys_stack_thread_11
-	$long,	STACK_SIZE_TASKLET_12
-	$long,	__sys_stack_thread_12
-	$long,	STACK_SIZE_TASKLET_13
-	$long,	__sys_stack_thread_13
-	$long,	STACK_SIZE_TASKLET_14
-	$long,	__sys_stack_thread_14
-	$long,	STACK_SIZE_TASKLET_15
-	$long,	__sys_stack_thread_15
-	$long,	STACK_SIZE_TASKLET_16
-	$long,	__sys_stack_thread_16
-	$long,	STACK_SIZE_TASKLET_17
-	$long,	__sys_stack_thread_17
-	$long,	STACK_SIZE_TASKLET_18
-	$long,	__sys_stack_thread_18
-	$long,	STACK_SIZE_TASKLET_19
-	$long,	__sys_stack_thread_19
-	$long,	STACK_SIZE_TASKLET_20
-	$long,	__sys_stack_thread_20
-	$long,	STACK_SIZE_TASKLET_21
-	$long,	__sys_stack_thread_21
-	$long,	STACK_SIZE_TASKLET_22
-	$long,	__sys_stack_thread_22
-	$long,	STACK_SIZE_TASKLET_23
-	$long,	__sys_stack_thread_23
-	$size,	__sys_thread_stack_table_ptr, 192
-
-	$type,	__sys_used_mram_end,@object     // @__sys_used_mram_end
-	$section,	%mram, noinit,"aw",@progbits
-	$globl,	__sys_used_mram_end
-	$p2align,	3
-__sys_used_mram_end:
-	$size,	__sys_used_mram_end, 0
-
-	$type,	thread_profiling,@object        // @thread_profiling
-	$section,	%data, immediate_memory.thread_profiling,"aw",@progbits
-	$globl,	thread_profiling
-	$p2align,	2
-thread_profiling:
-	$zero,	96
-	$size,	thread_profiling, 96
-
-	$type,	perfcounter_end_value,@object   // @perfcounter_end_value
-	$section,	%bss, perfcounter_end_value,"aw",@nobits
-	$globl,	perfcounter_end_value
-	$p2align,	2
-perfcounter_end_value:
-	$long,	0                               // 0x0
-	$size,	perfcounter_end_value, 4
-
-	$type,	CLOCKS_PER_SEC,@object          // @CLOCKS_PER_SEC
-	$section,	%dpu_host,"a",@progbits
-	$globl,	CLOCKS_PER_SEC
-	$p2align,	3
-CLOCKS_PER_SEC:
-	$long,	0                               // 0x0
-	$size,	CLOCKS_PER_SEC, 4
-
-	$type,	error_storage,@object           // @error_storage
-	$globl,	error_storage
-	$p2align,	3
-error_storage:
-	$long,	0                               // 0x0
-	$size,	error_storage, 4
-
-	$section,	%debug_abbrev,"",@progbits
-	$byte,	1                               // Abbreviation Code
-	$byte,	17                              // DW_TAG_compile_unit
-	$byte,	1                               // DW_CHILDREN_yes
-	$byte,	37                              // DW_AT_producer
-	$byte,	14                              // DW_FORM_strp
-	$byte,	19                              // DW_AT_language
-	$byte,	5                               // DW_FORM_data2
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	16                              // DW_AT_stmt_list
-	$byte,	23                              // DW_FORM_sec_offset
-	$byte,	27                              // DW_AT_comp_dir
-	$byte,	14                              // DW_FORM_strp
-	$byte,	17                              // DW_AT_low_pc
-	$byte,	1                               // DW_FORM_addr
-	$byte,	18                              // DW_AT_high_pc
-	$byte,	6                               // DW_FORM_data4
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	2                               // Abbreviation Code
-	$byte,	52                              // DW_TAG_variable
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	63                              // DW_AT_external
-	$byte,	25                              // DW_FORM_flag_present
-	$byte,	58                              // DW_AT_decl_file
-	$byte,	11                              // DW_FORM_data1
-	$byte,	59                              // DW_AT_decl_line
-	$byte,	11                              // DW_FORM_data1
-	$byte,	2                               // DW_AT_location
-	$byte,	24                              // DW_FORM_exprloc
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	3                               // Abbreviation Code
-	$byte,	22                              // DW_TAG_typedef
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	58                              // DW_AT_decl_file
-	$byte,	11                              // DW_FORM_data1
-	$byte,	59                              // DW_AT_decl_line
-	$byte,	11                              // DW_FORM_data1
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	4                               // Abbreviation Code
-	$byte,	36                              // DW_TAG_base_type
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	62                              // DW_AT_encoding
-	$byte,	11                              // DW_FORM_data1
-	$byte,	11                              // DW_AT_byte_size
-	$byte,	11                              // DW_FORM_data1
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	5                               // Abbreviation Code
-	$byte,	52                              // DW_TAG_variable
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	63                              // DW_AT_external
-	$byte,	25                              // DW_FORM_flag_present
-	$byte,	58                              // DW_AT_decl_file
-	$byte,	11                              // DW_FORM_data1
-	$byte,	59                              // DW_AT_decl_line
-	$byte,	11                              // DW_FORM_data1
-	$ascii,	"\210\001"                      // DW_AT_alignment
-	$byte,	15                              // DW_FORM_udata
-	$byte,	2                               // DW_AT_location
-	$byte,	24                              // DW_FORM_exprloc
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	6                               // Abbreviation Code
-	$byte,	1                               // DW_TAG_array_type
-	$byte,	1                               // DW_CHILDREN_yes
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	7                               // Abbreviation Code
-	$byte,	33                              // DW_TAG_subrange_type
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	55                              // DW_AT_count
-	$byte,	11                              // DW_FORM_data1
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	8                               // Abbreviation Code
-	$byte,	19                              // DW_TAG_structure_type
-	$byte,	1                               // DW_CHILDREN_yes
-	$byte,	11                              // DW_AT_byte_size
-	$byte,	11                              // DW_FORM_data1
-	$byte,	58                              // DW_AT_decl_file
-	$byte,	11                              // DW_FORM_data1
-	$byte,	59                              // DW_AT_decl_line
-	$byte,	11                              // DW_FORM_data1
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	9                               // Abbreviation Code
-	$byte,	13                              // DW_TAG_member
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	58                              // DW_AT_decl_file
-	$byte,	11                              // DW_FORM_data1
-	$byte,	59                              // DW_AT_decl_line
-	$byte,	11                              // DW_FORM_data1
-	$byte,	56                              // DW_AT_data_member_location
-	$byte,	11                              // DW_FORM_data1
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	10                              // Abbreviation Code
-	$byte,	36                              // DW_TAG_base_type
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	11                              // DW_AT_byte_size
-	$byte,	11                              // DW_FORM_data1
-	$byte,	62                              // DW_AT_encoding
-	$byte,	11                              // DW_FORM_data1
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	11                              // Abbreviation Code
-	$byte,	38                              // DW_TAG_const_type
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	12                              // Abbreviation Code
-	$byte,	53                              // DW_TAG_volatile_type
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	73                              // DW_AT_type
-	$byte,	19                              // DW_FORM_ref4
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	13                              // Abbreviation Code
-	$byte,	46                              // DW_TAG_subprogram
-	$byte,	0                               // DW_CHILDREN_no
-	$byte,	17                              // DW_AT_low_pc
-	$byte,	1                               // DW_FORM_addr
-	$byte,	18                              // DW_AT_high_pc
-	$byte,	6                               // DW_FORM_data4
-	$byte,	64                              // DW_AT_frame_base
-	$byte,	24                              // DW_FORM_exprloc
-	$ascii,	"\227B"                         // DW_AT_GNU_all_call_sites
-	$byte,	25                              // DW_FORM_flag_present
-	$byte,	3                               // DW_AT_name
-	$byte,	14                              // DW_FORM_strp
-	$byte,	58                              // DW_AT_decl_file
-	$byte,	11                              // DW_FORM_data1
-	$byte,	59                              // DW_AT_decl_line
-	$byte,	11                              // DW_FORM_data1
-	$byte,	63                              // DW_AT_external
-	$byte,	25                              // DW_FORM_flag_present
-	$byte,	0                               // EOM(1)
-	$byte,	0                               // EOM(2)
-	$byte,	0                               // EOM(3)
-	$section,	%debug_info,"",@progbits
-crt0..Lcu_begin0:
-	$long,	crt0..Ldebug_info_end0 - crt0..Ldebug_info_start0 // Length of Unit
-crt0..Ldebug_info_start0:
-	$short,	4                               // DWARF version number
-	$long,	%debug_abbrev                   // Offset Into Abbrev. Section
-	$byte,	4                               // Address Size (in bytes)
-	$byte,	1                               // Abbrev [1] 0xb:0x13b DW_TAG_compile_unit
-	$long,	crt0..Linfo_string0                  // DW_AT_producer
-	$short,	12                              // DW_AT_language
-	$long,	crt0..Linfo_string1                  // DW_AT_name
-	$long,	crt0..Lline_table_start0             // DW_AT_stmt_list
-	$long,	crt0..Linfo_string2                  // DW_AT_comp_dir
-	$long,	crt0..Lfunc_begin0                   // DW_AT_low_pc
-	$long,	crt0..Lfunc_end0 - crt0..Lfunc_begin0       // DW_AT_high_pc
-	$byte,	2                               // Abbrev [2] 0x26:0x11 DW_TAG_variable
-	$long,	crt0..Linfo_string3                  // DW_AT_name
-	$long,	55                              // DW_AT_type
-                                        // DW_AT_external
-	$byte,	2                               // DW_AT_decl_file
-	$byte,	13                              // DW_AT_decl_line
-	$byte,	5                               // DW_AT_location
-	$byte,	3
-	$long,	__sys_null_pointer
-	$byte,	3                               // Abbrev [3] 0x37:0xb DW_TAG_typedef
-	$long,	66                              // DW_AT_type
-	$long,	crt0..Linfo_string5                  // DW_AT_name
-	$byte,	1                               // DW_AT_decl_file
-	$byte,	53                              // DW_AT_decl_line
-	$byte,	4                               // Abbrev [4] 0x42:0x7 DW_TAG_base_type
-	$long,	crt0..Linfo_string4                  // DW_AT_name
-	$byte,	7                               // DW_AT_encoding
-	$byte,	8                               // DW_AT_byte_size
-	$byte,	5                               // Abbrev [5] 0x49:0x12 DW_TAG_variable
-	$long,	crt0..Linfo_string6                  // DW_AT_name
-	$long,	91                              // DW_AT_type
-                                        // DW_AT_external
-	$byte,	2                               // DW_AT_decl_file
-	$byte,	26                              // DW_AT_decl_line
-	$byte,	8                               // DW_AT_alignment
-	$byte,	5                               // DW_AT_location
-	$byte,	3
-	$long,	__sys_thread_stack_table_ptr
-	$byte,	6                               // Abbrev [6] 0x5b:0xc DW_TAG_array_type
-	$long,	103                             // DW_AT_type
-	$byte,	7                               // Abbrev [7] 0x60:0x6 DW_TAG_subrange_type
-	$long,	161                             // DW_AT_type
-	$byte,	24                              // DW_AT_count
-	$byte,	0                               // End Of Children Mark
-	$byte,	3                               // Abbrev [3] 0x67:0xb DW_TAG_typedef
-	$long,	114                             // DW_AT_type
-	$long,	crt0..Linfo_string11                 // DW_AT_name
-	$byte,	3                               // DW_AT_decl_file
-	$byte,	27                              // DW_AT_decl_line
-	$byte,	8                               // Abbrev [8] 0x72:0x1d DW_TAG_structure_type
-	$byte,	8                               // DW_AT_byte_size
-	$byte,	3                               // DW_AT_decl_file
-	$byte,	24                              // DW_AT_decl_line
-	$byte,	9                               // Abbrev [9] 0x76:0xc DW_TAG_member
-	$long,	crt0..Linfo_string7                  // DW_AT_name
-	$long,	143                             // DW_AT_type
-	$byte,	3                               // DW_AT_decl_file
-	$byte,	25                              // DW_AT_decl_line
-	$byte,	0                               // DW_AT_data_member_location
-	$byte,	9                               // Abbrev [9] 0x82:0xc DW_TAG_member
-	$long,	crt0..Linfo_string10                 // DW_AT_name
-	$long,	143                             // DW_AT_type
-	$byte,	3                               // DW_AT_decl_file
-	$byte,	26                              // DW_AT_decl_line
-	$byte,	4                               // DW_AT_data_member_location
-	$byte,	0                               // End Of Children Mark
-	$byte,	3                               // Abbrev [3] 0x8f:0xb DW_TAG_typedef
-	$long,	154                             // DW_AT_type
-	$long,	crt0..Linfo_string9                  // DW_AT_name
-	$byte,	1                               // DW_AT_decl_file
-	$byte,	48                              // DW_AT_decl_line
-	$byte,	4                               // Abbrev [4] 0x9a:0x7 DW_TAG_base_type
-	$long,	crt0..Linfo_string8                  // DW_AT_name
-	$byte,	7                               // DW_AT_encoding
-	$byte,	4                               // DW_AT_byte_size
-	$byte,	10                              // Abbrev [10] 0xa1:0x7 DW_TAG_base_type
-	$long,	crt0..Linfo_string12                 // DW_AT_name
-	$byte,	8                               // DW_AT_byte_size
-	$byte,	7                               // DW_AT_encoding
-	$byte,	5                               // Abbrev [5] 0xa8:0x12 DW_TAG_variable
-	$long,	crt0..Linfo_string13                 // DW_AT_name
-	$long,	186                             // DW_AT_type
-                                        // DW_AT_external
-	$byte,	2                               // DW_AT_decl_file
-	$byte,	11                              // DW_AT_decl_line
-	$byte,	8                               // DW_AT_alignment
-	$byte,	5                               // DW_AT_location
-	$byte,	3
-	$long,	__sys_used_mram_end
-	$byte,	6                               // Abbrev [6] 0xba:0xc DW_TAG_array_type
-	$long,	198                             // DW_AT_type
-	$byte,	7                               // Abbrev [7] 0xbf:0x6 DW_TAG_subrange_type
-	$long,	161                             // DW_AT_type
-	$byte,	0                               // DW_AT_count
-	$byte,	0                               // End Of Children Mark
-	$byte,	3                               // Abbrev [3] 0xc6:0xb DW_TAG_typedef
-	$long,	209                             // DW_AT_type
-	$long,	crt0..Linfo_string15                 // DW_AT_name
-	$byte,	1                               // DW_AT_decl_file
-	$byte,	40                              // DW_AT_decl_line
-	$byte,	4                               // Abbrev [4] 0xd1:0x7 DW_TAG_base_type
-	$long,	crt0..Linfo_string14                 // DW_AT_name
-	$byte,	8                               // DW_AT_encoding
-	$byte,	1                               // DW_AT_byte_size
-	$byte,	2                               // Abbrev [2] 0xd8:0x11 DW_TAG_variable
-	$long,	crt0..Linfo_string16                 // DW_AT_name
-	$long,	233                             // DW_AT_type
-                                        // DW_AT_external
-	$byte,	2                               // DW_AT_decl_file
-	$byte,	15                              // DW_AT_decl_line
-	$byte,	5                               // DW_AT_location
-	$byte,	3
-	$long,	thread_profiling
-	$byte,	6                               // Abbrev [6] 0xe9:0xc DW_TAG_array_type
-	$long,	143                             // DW_AT_type
-	$byte,	7                               // Abbrev [7] 0xee:0x6 DW_TAG_subrange_type
-	$long,	161                             // DW_AT_type
-	$byte,	24                              // DW_AT_count
-	$byte,	0                               // End Of Children Mark
-	$byte,	2                               // Abbrev [2] 0xf5:0x11 DW_TAG_variable
-	$long,	crt0..Linfo_string17                 // DW_AT_name
-	$long,	143                             // DW_AT_type
-                                        // DW_AT_external
-	$byte,	2                               // DW_AT_decl_file
-	$byte,	16                              // DW_AT_decl_line
-	$byte,	5                               // DW_AT_location
-	$byte,	3
-	$long,	perfcounter_end_value
-	$byte,	5                               // Abbrev [5] 0x106:0x12 DW_TAG_variable
-	$long,	crt0..Linfo_string18                 // DW_AT_name
-	$long,	280                             // DW_AT_type
-                                        // DW_AT_external
-	$byte,	2                               // DW_AT_decl_file
-	$byte,	28                              // DW_AT_decl_line
-	$byte,	8                               // DW_AT_alignment
-	$byte,	5                               // DW_AT_location
-	$byte,	3
-	$long,	CLOCKS_PER_SEC
-	$byte,	11                              // Abbrev [11] 0x118:0x5 DW_TAG_const_type
-	$long,	285                             // DW_AT_type
-	$byte,	12                              // Abbrev [12] 0x11d:0x5 DW_TAG_volatile_type
-	$long,	143                             // DW_AT_type
-	$byte,	5                               // Abbrev [5] 0x122:0x12 DW_TAG_variable
-	$long,	crt0..Linfo_string19                 // DW_AT_name
-	$long,	280                             // DW_AT_type
-                                        // DW_AT_external
-	$byte,	2                               // DW_AT_decl_file
-	$byte,	30                              // DW_AT_decl_line
-	$byte,	8                               // DW_AT_alignment
-	$byte,	5                               // DW_AT_location
-	$byte,	3
-	$long,	error_storage
-	$byte,	13                              // Abbrev [13] 0x134:0x11 DW_TAG_subprogram
-	$long,	crt0..Lfunc_begin0                   // DW_AT_low_pc
-	$long,	crt0..Lfunc_end0 - crt0..Lfunc_begin0       // DW_AT_high_pc
-	$byte,	1                               // DW_AT_frame_base
-	$byte,	102
-                                        // DW_AT_GNU_all_call_sites
-	$long,	crt0..Linfo_string20                 // DW_AT_name
-	$byte,	2                               // DW_AT_decl_file
-	$byte,	32                              // DW_AT_decl_line
-                                        // DW_AT_external
-	$byte,	0                               // End Of Children Mark
-crt0..Ldebug_info_end0:
-	$section,	%debug_str,"MS",@progbits,1
-crt0..Linfo_string0:
-	$asciz,	"clang version 12.0.0 (https://github.com/upmem/llvm - project.git d36425841d9a4d1420b7aa155675f6ae8bcf9f08)" // string offset=0
-crt0..Linfo_string1:
-	$asciz,	"/root/uPIMulator_frontend/sdk/misc/crt0.c" // string offset=106
-crt0..Linfo_string2:
-	$asciz,	"/root/upmem_compiler"          // string offset=148
-crt0..Linfo_string3:
-	$asciz,	"__sys_null_pointer"            // string offset=169
-crt0..Linfo_string4:
-	$asciz,	"long unsigned int"             // string offset=188
-crt0..Linfo_string5:
-	$asciz,	"uint64_t"                      // string offset=206
-crt0..Linfo_string6:
-	$asciz,	"__sys_thread_stack_table_ptr"  // string offset=215
-crt0..Linfo_string7:
-	$asciz,	"stack_size"                    // string offset=244
-crt0..Linfo_string8:
-	$asciz,	"unsigned int"                  // string offset=255
-crt0..Linfo_string9:
-	$asciz,	"uint32_t"                      // string offset=268
-crt0..Linfo_string10:
-	$asciz,	"stack_ptr"                     // string offset=277
-crt0..Linfo_string11:
-	$asciz,	"thread_stack_t"                // string offset=287
-crt0..Linfo_string12:
-	$asciz,	"__ARRAY_SIZE_TYPE__"           // string offset=302
-crt0..Linfo_string13:
-	$asciz,	"__sys_used_mram_end"           // string offset=322
-crt0..Linfo_string14:
-	$asciz,	"unsigned char"                 // string offset=342
-crt0..Linfo_string15:
-	$asciz,	"uint8_t"                       // string offset=356
-crt0..Linfo_string16:
-	$asciz,	"thread_profiling"              // string offset=364
-crt0..Linfo_string17:
-	$asciz,	"perfcounter_end_value"         // string offset=381
-crt0..Linfo_string18:
-	$asciz,	"CLOCKS_PER_SEC"                // string offset=403
-crt0..Linfo_string19:
-	$asciz,	"error_storage"                 // string offset=418
-crt0..Linfo_string20:
-	$asciz,	"__bootstrap"                   // string offset=432
-	$addrsig,
-	$addrsig_sym, __bootstrap
-	$addrsig_sym, __sys_null_pointer
-	$addrsig_sym, STACK_SIZE_TASKLET_0
-	$addrsig_sym, __sys_stack_thread_0
-	$addrsig_sym, STACK_SIZE_TASKLET_1
-	$addrsig_sym, __sys_stack_thread_1
-	$addrsig_sym, STACK_SIZE_TASKLET_2
-	$addrsig_sym, __sys_stack_thread_2
-	$addrsig_sym, STACK_SIZE_TASKLET_3
-	$addrsig_sym, __sys_stack_thread_3
-	$addrsig_sym, STACK_SIZE_TASKLET_4
-	$addrsig_sym, __sys_stack_thread_4
-	$addrsig_sym, STACK_SIZE_TASKLET_5
-	$addrsig_sym, __sys_stack_thread_5
-	$addrsig_sym, STACK_SIZE_TASKLET_6
-	$addrsig_sym, __sys_stack_thread_6
-	$addrsig_sym, STACK_SIZE_TASKLET_7
-	$addrsig_sym, __sys_stack_thread_7
-	$addrsig_sym, STACK_SIZE_TASKLET_8
-	$addrsig_sym, __sys_stack_thread_8
-	$addrsig_sym, STACK_SIZE_TASKLET_9
-	$addrsig_sym, __sys_stack_thread_9
-	$addrsig_sym, STACK_SIZE_TASKLET_10
-	$addrsig_sym, __sys_stack_thread_10
-	$addrsig_sym, STACK_SIZE_TASKLET_11
-	$addrsig_sym, __sys_stack_thread_11
-	$addrsig_sym, STACK_SIZE_TASKLET_12
-	$addrsig_sym, __sys_stack_thread_12
-	$addrsig_sym, STACK_SIZE_TASKLET_13
-	$addrsig_sym, __sys_stack_thread_13
-	$addrsig_sym, STACK_SIZE_TASKLET_14
-	$addrsig_sym, __sys_stack_thread_14
-	$addrsig_sym, STACK_SIZE_TASKLET_15
-	$addrsig_sym, __sys_stack_thread_15
-	$addrsig_sym, STACK_SIZE_TASKLET_16
-	$addrsig_sym, __sys_stack_thread_16
-	$addrsig_sym, STACK_SIZE_TASKLET_17
-	$addrsig_sym, __sys_stack_thread_17
-	$addrsig_sym, STACK_SIZE_TASKLET_18
-	$addrsig_sym, __sys_stack_thread_18
-	$addrsig_sym, STACK_SIZE_TASKLET_19
-	$addrsig_sym, __sys_stack_thread_19
-	$addrsig_sym, STACK_SIZE_TASKLET_20
-	$addrsig_sym, __sys_stack_thread_20
-	$addrsig_sym, STACK_SIZE_TASKLET_21
-	$addrsig_sym, __sys_stack_thread_21
-	$addrsig_sym, STACK_SIZE_TASKLET_22
-	$addrsig_sym, __sys_stack_thread_22
-	$addrsig_sym, STACK_SIZE_TASKLET_23
-	$addrsig_sym, __sys_stack_thread_23
-	$addrsig_sym, __sys_thread_stack_table_ptr
-	$addrsig_sym, __sys_used_mram_end
-	$addrsig_sym, thread_profiling
-	$addrsig_sym, CLOCKS_PER_SEC
-	$addrsig_sym, error_storage
-	$section,	%debug_line,"",@progbits
-crt0..Lline_table_start0:
 	$text,
 	$file,	"memset.c"
 	$file,	1 "/root" "uPIMulator_frontend/sdk/stdlib/stdint.h"

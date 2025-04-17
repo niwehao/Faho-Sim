@@ -26,6 +26,8 @@ int main(int argc, char **argv) {
     struct dpu_set_t dpu_set, dpu;
     int a=7;
     int i=0;
+  
+  
 
 
     DPU_ASSERT(dpu_alloc(1, NULL, &dpu_set));
@@ -37,6 +39,6 @@ int main(int argc, char **argv) {
     }
     DPU_ASSERT(dpu_push_xfer(dpu_set, DPU_XFER_FROM_DPU, DPU_MRAM_HEAP_POINTER_NAME, 0, 8, DPU_XFER_DEFAULT));
     DPU_ASSERT(dpu_free(dpu_set));
-    printf("%x\n",a);
+    printf("%d\n",a);
     return 0;
 }

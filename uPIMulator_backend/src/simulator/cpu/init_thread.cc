@@ -11,7 +11,7 @@ void InitThread::connect_rank(rank::Rank *rank) {
   rank_ = rank;
 }
 
-void InitThread::init() {//在编译阶段已经确定了ram的分配
+void InitThread::init() {//在编译阶段已经确定了ram的分配,多次执行的时候不需要重新读取
   dma_transfer_to_atomic();
   dma_transfer_to_iram();
   dma_transfer_to_wram();
@@ -39,7 +39,7 @@ void InitThread::dma_transfer_to_atomic() {
 
 void InitThread::dma_transfer_to_iram() {
   auto byte_stream = load_byte_stream("iram");//把编译好的指令放入iram
-  for (auto &dpu : rank_->dpus()) {//遍历dpu
+  for (auto &dpu : rank_->dpus()) {//遍历dpu,所有dpu都读入
     dpu->dma()->transfer_to_iram(util::ConfigLoader::iram_offset(),
                                  byte_stream);
   }

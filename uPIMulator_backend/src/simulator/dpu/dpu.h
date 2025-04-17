@@ -1,6 +1,7 @@
 #ifndef UPMEM_SIM_SIMULATOR_DPU_DPU_H_
 #define UPMEM_SIM_SIMULATOR_DPU_DPU_H_
 
+#include "performance_counter.h"
 #include "simulator/dpu/dma.h"
 #include "simulator/dpu/logic.h"
 #include "simulator/dpu/operand_collector.h"
@@ -23,6 +24,9 @@ class DPU {
 
   RevolverScheduler *scheduler() { return scheduler_; }
   DMA *dma() { return dma_; }
+  PerformanceCounter *performance_counter() {
+    return performance_counter_;
+  }
 
   util::StatFactory *stat_factory();
 
@@ -43,6 +47,8 @@ class DPU {
   Logic *logic_;
   DMA *dma_;
   OperandCollector *operand_collector_;
+  PerformanceCounter *performance_counter_;
+
   dram::MemoryController *memory_controller_;
 
   int logic_frequency_;

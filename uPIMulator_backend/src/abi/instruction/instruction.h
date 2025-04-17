@@ -204,6 +204,7 @@ class Instruction {
   static std::set<OpCode> extsb_rrci_op_codes() {
     return {EXTSB, EXTSH, EXTUB, EXTUH, SATS};
   }
+    static std::set<OpCode> time_r_op_codes() { return {TIME}; }
   static std::set<OpCode> time_cfg_rrci_op_codes() { return {TIME_CFG}; }
   static std::set<OpCode> rrci_op_codes() {
     std::set<OpCode> cao_rrci_op_codes = Instruction::cao_rrci_op_codes();

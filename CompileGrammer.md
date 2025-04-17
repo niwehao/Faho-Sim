@@ -223,7 +223,6 @@ addc会检查目前的进位符号,已经集成到add函数内部
 
 Asr 右移
 
-
 #### u s 比较:
 
 取决于最后写入的值
@@ -240,7 +239,6 @@ Asr 右移
 
   //add.u dc:wr64 ra:r32 imm:s8 add_nz_cc:cc pc:pc16
   /**
-
 - x = ra + imm
 - dc = x:U64
 - if (add_nz_cc x) then
@@ -250,7 +248,6 @@ Asr 右移
 
   //add.s dc:wr64 ra:r32 imm:s8 add_nz_cc:cc pc:pc16
   /**
-
 - x = ra + imm
 - dc = x:S64
 - if (add_nz_cc x) then
@@ -281,7 +278,6 @@ cls:计算从最高有效位开始连续相同的符号位的数量。
 * `0b11110000`：符号位是1，有4个前导符号位（最左边的4个1）
 * `0b01111111`：符号位是0，有1个前导符号位（只有最高位的一个0）
 * `0b10000000`：符号位是1，有1个前导符号位（只有最高位的一个1）
-
 
 clz计算leading zero bit
 
@@ -341,7 +337,7 @@ nxor:  ~(ra ^ imm)
 
 orn:  x = ~ra | imm
 
-rol: 
+rol:
 
 循环左移与普通左移的区别是：左移时移出的位不会丢失，而是从右侧"循环"回来。例如，对32位值0x12345678循环左移4位的结果是0x23456781。
 
@@ -392,3 +388,87 @@ lw:加载32位
 sb:储存一个字节 sw储存4个字节
 
 std::cout<<"test"<<std::endl;
+
+## 性能指标
+
+CycleRule/[0-15]_cycle_rule 该线程参与执行的周期数
+
+CycleRule/cycle_rule 总执行的周期数
+
+`RevolverScheduler/[0-15]_revolver_wait`: 每个线程(tasklet)的等待周期
+
+`RevolverScheduler/active_tasklets_[0-16]`: 全部周期下活跃的线程数量
+
+`RevolverScheduler/breakdown_dma`: 因为dma发生了堵塞
+
+`RevolverScheduler/breakdown_run`: 到大于runnable而
+
+`RevolverScheduler/revolver_wait`: 总等待周期数(146927) 到达runnable还是没有达到14个等待周期
+
+`RevolverScheduler/total_[状态]`: 线程每一次周期各状态下的总计数
+
+* EMBRYO: 初始化状态(442487)
+* RUNNABLE: 可运行状态(168562)
+* SLEEP: 休眠状态(20207)
+* ZOMBIE: 已完成状态(1611451)
+
+### Scheduler/内存访问指标
+
+* `Scheduler/row_buffer_hit`: 行缓冲命中次数(1519)
+* `Scheduler/row_buffer_miss`: 行缓冲未命中次数(17)
+* `row_buffer/num_reads`: 读操作次数(1024)
+* `row_buffer/num_writes`: 写操作次数(512)
+* `row_buffer/read_bytes`: 读取的总字节数(8192)
+* `row_buffer/write_bytes`: 写入的总字节数(4096)
+
+### Logic指标
+
+这些指标与处理器逻辑执行相关：
+
+* `Logic/[0-15]_num_instructions`: 每个线程执行的指令数
+* `Logic/active_tasklets_[0-16]`: 各种状态下的活跃tasklets
+* `Logic/logic_cycle`: 逻辑周期总数(141075)
+* `Logic/num_instructions`: 执行的总指令数(13400)
+
+### MemoryController指标
+
+* `MemoryController/mem_cycle`: 内存控制器周期数(967371)
+
+### DPU延迟分解
+
+对每个线程的延迟进行分类：
+
+* `DPU#0/[0-15]_latency_breakdown_ARITHMETIC`: 算术操作延迟
+* `DPU#0/[0-15]_latency_breakdown_SPM_ACCESS`: 暂存存储器访问延迟
+* `DPU#0/[0-15]_latency_breakdown_WAIT_DATA`: 等待数据延迟
+* `DPU#0/[0-15]_latency_breakdown_WAIT_SCHEDULE`: 等待调度延迟
+* `DPU#0/[0-15]_latency_breakdown_WAIT_SYNC`: 等待同步延迟
+* `DPU#0/cycle`: DPU总周期数(141075)
+
+### Rank指标
+
+这些是与内存级别相关的统计：
+
+* `Rank/communication_cycle`: 通信周期数(109266)
+* `Rank/num_reads`: 读操作数(1)
+* `Rank/num_writes`: 写操作数(2)
+* `Rank/rank_cycle`: 总周期数(141075)
+* `Rank/read_bytes`: 读取的总字节数(8192)
+* `Rank/write_bytes`: 写入的总字节数(8204)
+
+## Instruction for implement
+
+time:r
+
+Read the performance counter
+
+```
+- x = (T:read)[4:35]
+
+- rc = x
+```
+
+time_cfg:rr
+
+* 程序所花费的时钟周期总数
+* 或者指令所花费的时钟周期数，不包括 DMA 传输（它表示 DPU 执行的指令数以及重放）

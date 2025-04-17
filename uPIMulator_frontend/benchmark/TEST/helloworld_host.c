@@ -10,7 +10,7 @@
 int main(void) {
   struct dpu_set_t set, dpu;
 
-  DPU_ASSERT(dpu_alloc(1, NULL, &set));
+  DPU_ASSERT(dpu_alloc(2, NULL, &set));
   DPU_ASSERT(dpu_load(set, DPU_BINARY, NULL));
   DPU_ASSERT(dpu_launch(set, DPU_SYNCHRONOUS));
 

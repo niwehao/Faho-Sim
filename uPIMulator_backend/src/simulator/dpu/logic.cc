@@ -69,6 +69,13 @@ void Logic::connect_dma(DMA *dma) {
 
   dma_ = dma;
 }
+  void Logic::connect_performance_counter(PerformanceCounter *performance_counter)
+{
+  assert(performance_counter != nullptr);
+  assert(performance_counter_ == nullptr);
+  performance_counter_ = performance_counter;
+  cycle_rule_->connect_performace_counter(performance_counter);
+}
 
 void Logic::cycle() {
   stat_factory_->overwrite("mram_address", -1);
@@ -86,7 +93,8 @@ void Logic::cycle() {
   pipeline_->cycle();
   cycle_rule_->cycle();
 
-  stat_factory_->increment("logic_cycle");
+  stat_factory_->increment("logic_cycle");//all cycle
+  performance_counter_->add_counter(1,1);
 }
 
 void Logic::
@@ -100,10 +108,15 @@ void Logic::
     Thread *thread = scheduler_->schedule(); //调度一个线程
     if (thread != nullptr) {
       int chosen_thread_id = thread->id();
+      //打印线程id:
+     // std::cout <<"thread id is "<< chosen_thread_id << std::endl;
+     // std::cout << instruction->getSuffixName(suffix) << std::endl;
       abi::instruction::Instruction *instruction =
-          iram_->read(thread->reg_file()->read_pc_reg());//从IRAM中读取指令
+          iram_->read(thread->reg_file()->read_pc_reg());//从IRAM中读取指令,每一个thread维护一份指令表
       instruction->set_thread(thread);//设置指令的线程
       pipeline_->push(instruction);//将指令加入流水线
+      abi::instruction::Suffix suffix = instruction->suffix();
+
 
       if (instruction->suffix() != abi::instruction::DMA_RRI) {
         if (verbose_ >= 1) {
@@ -117,7 +130,7 @@ void Logic::
           std::cout << converter::RegFileConverter::to_string(instruction->thread()->reg_file()) << std::endl;
         }
       } else {
-        scheduler_->block(thread->id());
+        scheduler_->block(thread->id());//堵塞该线程
         instruction->thread()->reg_file()->increment_pc_reg();
         wait_instruction_q_->push(instruction);
         /**
@@ -140,8 +153,7 @@ dma_instruction {
       }
 
       stat_factory_->increment("num_instructions");
-      stat_factory_->increment(std::to_string(instruction->thread()->id()) +
-                               "_num_instructions");
+      stat_factory_->increment(std::to_string(instruction->thread()->id()) +"_num_instructions");
 
       for (auto &th : scheduler_->threads()) {
         if (th->state() == Thread::BLOCK) {
@@ -239,7 +251,7 @@ void Logic::service_dma() {
 
 void Logic::execute_instruction(abi::instruction::Instruction *instruction) {//执行指令
   abi::instruction::Suffix suffix = instruction->suffix();
-  std::cout << instruction->getSuffixName(suffix) << std::endl;
+
 
 
   if (suffix == abi::instruction::RICI) {
@@ -4004,10 +4016,17 @@ void Logic::execute_rr(abi::instruction::Instruction *instruction) {
   } else if (op_code == abi::instruction::SATS) {
     result = ALU::sats(ra);
   } else if (op_code == abi::instruction::TIME_CFG) {
-    throw std::bad_function_call();
+    //int64_t rb = instruction->thread()->reg_file()->read_src_reg(instruction->rb(), abi::word::UNSIGNED);
+    performance_counter_->set_cfg(ra);
+    result=performance_counter_->get_value();
+    instruction->thread()->reg_file()->clear_conditions();
+    instruction->thread()->reg_file()->write_gp_reg(instruction->rc(), result);
+    instruction->thread()->reg_file()->increment_pc_reg();
+    return;
   } else {
     throw std::invalid_argument("");
   }
+  //cycle_rule
 
   instruction->thread()->reg_file()->clear_conditions();
   instruction->thread()->reg_file()->write_gp_reg(instruction->rc(), result);
@@ -4845,9 +4864,27 @@ void Logic::execute_u_rirc(abi::instruction::Instruction *instruction) {
 void Logic::execute_u_rirci(abi::instruction::Instruction *instruction) {
   throw std::bad_function_call();
 }
+  void Logic::execute_time_r(abi::instruction::Instruction *instruction)//执行时间指令
+{
+  assert(abi::instruction::Instruction::time_r_op_codes().count(
+     instruction->op_code()));
+  assert(instruction->suffix() == abi::instruction::R);
+  int64_t result;
+  result=performance_counter_->get_value();
+  std::cout<<"performance_counter_:"<<result<<std::endl;
+  instruction->thread()->reg_file()->write_gp_reg(instruction->rc(), result);
+  instruction->thread()->reg_file()->clear_conditions();
+  instruction->thread()->reg_file()->increment_pc_reg();
+}
 
 void Logic::execute_r(abi::instruction::Instruction *instruction) {
-  throw std::bad_function_call();
+  assert(abi::instruction::Instruction::r_op_codes().count(
+            instruction->op_code()) );
+  if (abi::instruction::Instruction::time_r_op_codes().count(instruction->op_code()))
+  {
+    execute_time_r(instruction);
+
+  }
 }
 
 void Logic::execute_rci(abi::instruction::Instruction *instruction) {

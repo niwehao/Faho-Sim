@@ -41,12 +41,12 @@ MRAM::~MRAM() {
 }
 
 std::vector<int> MRAM::read(Address address) {
-  std::cout<<"MRAM::read from "<<address<<std::endl;
+  //std::cout<<"MRAM::read from "<<address<<std::endl;
   return std::move(wordlines_[index(address)]->read());//不明白,可能是多此一举
 }
 
 void MRAM::write(Address address, std::vector<int> bytes) {
-  std::cout<<"MRAM::write to "<<address<<std::endl;
+  //std::cout<<"MRAM::write to "<<address<<std::endl;
   //遍历打印bytes
   // 遍历打印bytes
   //std::cout << "Data bytes: ";

@@ -71,3 +71,8 @@
 1199	3143	1744899591976954200	src/uPIMulator	f73907b8dd7c76d9
 657	7587	1744899739444759900	src/CMakeFiles/uPIMulator.dir/simulator/dpu/logic.cc.o	1ad09c1b7d75e728
 7592	9590	1744899746377029600	src/uPIMulator	f73907b8dd7c76d9
+1056	8538	1744984235659239900	src/CMakeFiles/uPIMulator.dir/simulator/dpu/logic.cc.o	1ad09c1b7d75e728
+8541	10851	1744984243131287600	src/uPIMulator	f73907b8dd7c76d9
+642	1615	1744984382992853200	src/CMakeFiles/uPIMulator.dir/simulator/dram/mram.cc.o	1b9b4cd4d29c8390
+638	7380	1744984382987805600	src/CMakeFiles/uPIMulator.dir/simulator/dpu/logic.cc.o	1ad09c1b7d75e728
+7383	9617	1744984389731890700	src/uPIMulator	f73907b8dd7c76d9

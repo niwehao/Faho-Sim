@@ -1,12 +1,12 @@
 	.text
 	.file	"task.c"
-	.file	1 "/root" "upmem-2021.3.0-Linux-x86_64/bin/../share/upmem/include/stdlib/stdint.h"
+	.file	1 "/usr/bin/../share/upmem/include/stdlib" "stdint.h"
 	.section	.text.fun,"ax",@progbits
 	.globl	fun                             // -- Begin function fun
 	.type	fun,@function
 fun:                                    // @fun
 .Lfunc_begin0:
-	.file	2 "/root/uPIMulator_frontend/benchmark/TEST1" "dpu/task.c"
+	.file	2 "/mnt/d/Upmen/uPIMulator/python_cpp/uPIMulator_frontend/benchmark/TEST1" "dpu/task.c"
 	.loc	2 11 0                          // dpu/task.c:11:0
 	.cfi_sections .debug_frame
 	.cfi_startproc
@@ -91,8 +91,8 @@ main:                                   // @main
 .Ltmp10:
 	//DEBUG_VALUE: mram_write:nb_of_bytes <- 8
 	//DEBUG_VALUE: main:time <- [DW_OP_deref] $r22
-	.file	3 "/root" "upmem-2021.3.0-Linux-x86_64/bin/../share/upmem/include/syslib/mram.h"
-	.loc	3 53 24                         // upmem-2021.3.0-Linux-x86_64/bin/../share/upmem/include/syslib/mram.h:53:24
+	.file	3 "/usr/bin/../share/upmem/include/syslib" "mram.h"
+	.loc	3 66 24                         // /usr/bin/../share/upmem/include/syslib/mram.h:66:24
 	move r1, __sys_used_mram_end
 	add r2, r22, 0
 .Ltmp11:
@@ -408,23 +408,23 @@ main:                                   // @main
 	.byte	8                               // Abbrev [8] 0x6d:0x2a DW_TAG_subprogram
 	.long	.Linfo_string5                  // DW_AT_name
 	.byte	3                               // DW_AT_decl_file
-	.byte	51                              // DW_AT_decl_line
+	.byte	60                              // DW_AT_decl_line
                                         // DW_AT_prototyped
 	.byte	1                               // DW_AT_inline
 	.byte	9                               // Abbrev [9] 0x75:0xb DW_TAG_formal_parameter
 	.long	.Linfo_string6                  // DW_AT_name
 	.byte	3                               // DW_AT_decl_file
-	.byte	51                              // DW_AT_decl_line
+	.byte	60                              // DW_AT_decl_line
 	.long	151                             // DW_AT_type
 	.byte	9                               // Abbrev [9] 0x80:0xb DW_TAG_formal_parameter
 	.long	.Linfo_string7                  // DW_AT_name
 	.byte	3                               // DW_AT_decl_file
-	.byte	51                              // DW_AT_decl_line
+	.byte	60                              // DW_AT_decl_line
 	.long	56                              // DW_AT_type
 	.byte	9                               // Abbrev [9] 0x8b:0xb DW_TAG_formal_parameter
 	.long	.Linfo_string8                  // DW_AT_name
 	.byte	3                               // DW_AT_decl_file
-	.byte	51                              // DW_AT_decl_line
+	.byte	60                              // DW_AT_decl_line
 	.long	49                              // DW_AT_type
 	.byte	0                               // End Of Children Mark
 	.byte	10                              // Abbrev [10] 0x97:0x5 DW_TAG_pointer_type
@@ -479,35 +479,35 @@ main:                                   // @main
 	.long	0
 	.section	.debug_str,"MS",@progbits,1
 .Linfo_string0:
-	.asciz	"clang version 12.0.0 (https://github.com/upmem/llvm-project.git d36425841d9a4d1420b7aa155675f6ae8bcf9f08)" // string offset=0
+	.asciz	"clang version 12.0.0 (https://github.com/upmem/llvm-project.git 02a1f3ffa0f15d3c21b60ffc12196131c3e3cffa)" // string offset=0
 .Linfo_string1:
 	.asciz	"dpu/task.c"                    // string offset=106
 .Linfo_string2:
-	.asciz	"/root/uPIMulator_frontend/benchmark/TEST1" // string offset=117
+	.asciz	"/mnt/d/Upmen/uPIMulator/python_cpp/uPIMulator_frontend/benchmark/TEST1" // string offset=117
 .Linfo_string3:
-	.asciz	"unsigned int"                  // string offset=159
+	.asciz	"unsigned int"                  // string offset=188
 .Linfo_string4:
-	.asciz	"uint32_t"                      // string offset=172
+	.asciz	"uint32_t"                      // string offset=201
 .Linfo_string5:
-	.asciz	"mram_write"                    // string offset=181
+	.asciz	"mram_write"                    // string offset=210
 .Linfo_string6:
-	.asciz	"from"                          // string offset=192
+	.asciz	"from"                          // string offset=221
 .Linfo_string7:
-	.asciz	"to"                            // string offset=197
+	.asciz	"to"                            // string offset=226
 .Linfo_string8:
-	.asciz	"nb_of_bytes"                   // string offset=200
+	.asciz	"nb_of_bytes"                   // string offset=229
 .Linfo_string9:
-	.asciz	"fun"                           // string offset=212
+	.asciz	"fun"                           // string offset=241
 .Linfo_string10:
-	.asciz	"int"                           // string offset=216
+	.asciz	"int"                           // string offset=245
 .Linfo_string11:
-	.asciz	"main"                          // string offset=220
+	.asciz	"main"                          // string offset=249
 .Linfo_string12:
-	.asciz	"a"                             // string offset=225
+	.asciz	"a"                             // string offset=254
 .Linfo_string13:
-	.asciz	"c"                             // string offset=227
+	.asciz	"c"                             // string offset=256
 .Linfo_string14:
-	.asciz	"time"                          // string offset=229
+	.asciz	"time"                          // string offset=258
 	.addrsig
 	.addrsig_sym __sys_used_mram_end
 	.section	.debug_line,"",@progbits

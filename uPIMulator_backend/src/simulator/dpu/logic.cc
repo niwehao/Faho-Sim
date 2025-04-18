@@ -109,13 +109,14 @@ void Logic::
     if (thread != nullptr) {
       int chosen_thread_id = thread->id();
       //打印线程id:
-     // std::cout <<"thread id is "<< chosen_thread_id << std::endl;
-     // std::cout << instruction->getSuffixName(suffix) << std::endl;
+     std::cout <<"thread id is "<< chosen_thread_id << std::endl;
+
       abi::instruction::Instruction *instruction =
           iram_->read(thread->reg_file()->read_pc_reg());//从IRAM中读取指令,每一个thread维护一份指令表
       instruction->set_thread(thread);//设置指令的线程
       pipeline_->push(instruction);//将指令加入流水线
       abi::instruction::Suffix suffix = instruction->suffix();
+      std::cout << instruction->getSuffixName(suffix) << std::endl;
 
 
       if (instruction->suffix() != abi::instruction::DMA_RRI) {
@@ -164,6 +165,7 @@ dma_instruction {
         }
       }
     } else {
+      std::cout<<"no thread can be scheduled"<<std::endl;
       for (auto &th : scheduler_->threads()) {
         if (th->state() == Thread::BLOCK) {
           th->update_thread_status("WAIT_DATA", 1);

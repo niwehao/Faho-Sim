@@ -1,6 +1,6 @@
 all : host 
 dpu : dpu.c 
-	dpu-upmem-dpurte-clang -c -O0  -DNR_TASKLETS=16 -g -o dpu.o dpu.c  
+	dpu-upmem-dpurte-clang -O3  -S   -DNR_TASKLETS=1 -g -o dpu.s dpu.c  
 host : dpu host.c 
 	gcc --std=c99 -O0 -g -o host host.c `dpu-pkg-config --cflags --libs dpu`  
 clean :  

@@ -26,6 +26,7 @@ encoder::ByteStream *Thread::load_byte_stream(std::string filename) {
   std::string bin_filepath = bindir_ + "/" + benchmark_ + "." +
                              std::to_string(num_tasklets_) + "/" + filename +
                              ".bin";
+  std::cout<<bin_filepath<<std::endl;
   if (std::filesystem::exists(bin_filepath)) {
     auto byte_stream = new encoder::ByteStream(bin_filepath);
     return byte_stream;

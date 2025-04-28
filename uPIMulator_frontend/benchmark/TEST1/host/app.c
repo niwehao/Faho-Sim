@@ -1,46 +1,41 @@
-/* Communication with a DPU via the MRAM. */
-/* Populate the MRAM with a collection of bytes and request the DPU to */
-/* compute the checksum. */
-
+#include <dpu.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
-#include <dpu.h>
-#include <dpu_log.h>
-#include <unistd.h>
-#include <getopt.h>
-#include <assert.h>
+#include "dpu_elf.h"
+#include "dpu_memory.h"
 
-#include "../support/common.h"
-#include "../support/timer.h"
-#include "../support/params.h"
 
-// Define the DPU Binary path as DPU_BINARY here
-#ifndef DPU_BINARY
-#define DPU_BINARY "./bin/dpu_code"
-#endif
-
-#if ENERGY
-#include <dpu_probe.h>
-#endif
+#define DPU_BINARY "./bin/ldmai"
+#define SECOND_DPU_BINARY "./bin/__new_ldmai"
 
 int main(int argc, char **argv) {
-    struct dpu_set_t dpu_set, dpu;
-    int a=7;
-    int i=0;
+  struct dpu_set_t set, dpu;
+  DPU_ASSERT(dpu_alloc(1, NULL, &set));
+  DPU_ASSERT(dpu_load(set, DPU_BINARY, NULL));
+
+  dpu_error_t err;
+  dpu_elf_file_t file;
+  unsigned char *buf;
+  unsigned int size;
+
+  DPU_ASSERT(dpu_elf_open(SECOND_DPU_BINARY, &file));
+  DPU_ASSERT(dpu_elf_load_section(file, ".text", &size,
+   &buf));
+
+  printf("ELF IRAM size : %i\n",size);
+
+DPU_FOREACH(set,dpu){
+  DPU_ASSERT(dpu_copy_to_mram(dpu.dpu, 0, buf, size));
+}
+
+  DPU_ASSERT(dpu_launch(set, DPU_SYNCHRONOUS));
+  DPU_FOREACH(set,dpu){
+    DPU_ASSERT(dpu_copy_from_mram(dpu.dpu, buf,1<<16, 8));
+  }
+  printf("%i %i\n",((int *)buf)[0],((int *)buf)[1]);
 
 
-    DPU_ASSERT(dpu_alloc(1, NULL, &dpu_set));
-    DPU_ASSERT(dpu_load(dpu_set, DPU_BINARY, NULL));
-
-    DPU_ASSERT(dpu_launch(dpu_set, DPU_SYNCHRONOUS));//启动
-    DPU_FOREACH(dpu_set, dpu, i) {
-        DPU_ASSERT(dpu_prepare_xfer(dpu, &a));//bufferC的拷贝位置
-    }
-    DPU_ASSERT(dpu_push_xfer(dpu_set, DPU_XFER_FROM_DPU, DPU_MRAM_HEAP_POINTER_NAME, 0, 32, DPU_XFER_DEFAULT));
-    DPU_ASSERT(dpu_free(dpu_set));
-    printf("a=%d\n",a);
-
-    return 0;
+  DPU_ASSERT(dpu_free(set));
+  return 0;
 }

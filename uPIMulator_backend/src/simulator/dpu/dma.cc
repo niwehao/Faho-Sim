@@ -79,6 +79,7 @@ void DMA::transfer_to_wram(Address address, encoder::ByteStream *byte_stream) {
   }
 }
 
+
 encoder::ByteStream *DMA::transfer_from_mram(Address address, Address size) {
   memory_controller_->flush();
   std::vector<int> bytes = memory_controller_->read(address, size);
@@ -105,6 +106,18 @@ void DMA::transfer_from_wram_to_mram(
   auto dma_command = new DMACommand(DMACommand::WRITE, wram_address,
                                     mram_address, size, bytes, instruction);//创建写入命令
   input_q_->push(dma_command);//加入输入队列
+}
+
+  void DMA::transfer_from_mram_to_iram(
+    Address iram_address, Address mram_address, Address size,
+    abi::instruction::Instruction *instruction){
+  assert(can_push());
+  std::cout<<"DMA::transfer_from_mram to wram "<<std::endl;
+
+  auto dma_command = new DMACommand(DMACommand::READ_FOR_IRAM, iram_address,
+                                    mram_address, size, instruction);
+  input_q_->push(dma_command);
+
 }
 
 void DMA::transfer_from_mram_to_wram(
@@ -145,10 +158,22 @@ void DMA::service_ready_q() {
     DMACommand *dma_command = memory_controller_->pop();
     ready_q_->push(dma_command);
 
-    if (dma_command->operation() == DMACommand::READ) {
+    if (dma_command->operation() == DMACommand::READ ) {
       auto byte_stream = new encoder::ByteStream(dma_command->bytes());
 
-      transfer_to_wram(dma_command->wram_address(), byte_stream);
+      transfer_to_wram(dma_command->notmram_address(), byte_stream);
+
+      delete byte_stream;
+    }
+    else if ( dma_command->operation() == DMACommand::READ_FOR_IRAM)
+    {
+      auto byte_stream = new encoder::ByteStream(dma_command->bytes());
+      if (byte_stream->size()>abi::word::InstructionWord().size())
+      {
+        byte_stream = byte_stream->slice(0,(int)abi::word::InstructionWord().size());
+      }
+      transfer_to_iram(dma_command->notmram_address(), byte_stream);
+
 
       delete byte_stream;
     }

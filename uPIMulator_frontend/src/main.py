@@ -26,8 +26,10 @@ def compile(benchmark: str, num_tasklets: int) -> None:#简单编译
             "-g",
             "-o",
             f"{asm_path}",
-            "dpu/task.c"
+            "dpu/task2.c"
         ]
+        #打印cmd
+        print("cmd:", cmd)
 
         subprocess.run(cmd, check=True)
         print("compile success")
@@ -62,7 +64,7 @@ if __name__ == "__main__":
         compile(args.benchmark, args.num_tasklets)
         link(args.benchmark, args.num_dpus, args.num_tasklets, data_prep_param)
 
-    if args.mode == "link":
+    elif args.mode == "link":
         #compile(args.benchmark, args.num_tasklets)
         link(args.benchmark, args.num_dpus, args.num_tasklets, data_prep_param)
         print("link success")

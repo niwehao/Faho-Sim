@@ -8,11 +8,11 @@ namespace upmem_sim::simulator::dpu {
 
 DMACommand::DMACommand(Operation operation, Address mram_address, Address size)
     : operation_(operation),
-      wram_address_(nullptr),
+      notmram_address_(nullptr),
       mram_address_(new abi::word::DataAddressWord()),
       size_(size),
       instruction_(nullptr) {
-  assert(operation == READ);
+  assert(operation == READ || operation == READ_FOR_IRAM);
   assert(mram_address >= util::ConfigLoader::mram_offset());
   assert(mram_address + size_ <=
          util::ConfigLoader::mram_offset() + util::ConfigLoader::mram_size());
@@ -23,25 +23,34 @@ DMACommand::DMACommand(Operation operation, Address mram_address, Address size)
   acks_.resize(size);
 }
 
-DMACommand::DMACommand(Operation operation, Address wram_address,
+DMACommand::DMACommand(Operation operation, Address notmram_address,
                        Address mram_address, Address size,
                        abi::instruction::Instruction *instruction)
     : operation_(operation),
-      wram_address_(new abi::word::DataAddressWord()),
+      notmram_address_(new abi::word::DataAddressWord()),
       mram_address_(new abi::word::DataAddressWord()),
       size_(size),
       instruction_(instruction) {
-  assert(operation == READ);
-  assert(wram_address >= util::ConfigLoader::wram_offset());
-  assert(wram_address + size_ <=
-         util::ConfigLoader::wram_offset() + util::ConfigLoader::wram_size());
+  assert(operation == READ || operation == READ_FOR_IRAM);
+  if (operation==READ_FOR_IRAM) {
+    assert(instruction->op_code() == abi::instruction::LDMAI);
+    assert(notmram_address >= util::ConfigLoader::iram_offset());
+    assert(notmram_address + size_ <=
+           util::ConfigLoader::iram_offset() + util::ConfigLoader::iram_size());
+  }
+  else{
+    assert(notmram_address >= util::ConfigLoader::wram_offset());
+    assert(notmram_address + size_ <=
+           util::ConfigLoader::wram_offset() + util::ConfigLoader::wram_size());
+    assert(instruction->op_code() == abi::instruction::LDMA);
+  }
   assert(mram_address >= util::ConfigLoader::mram_offset());
   assert(mram_address + size_ <=
          util::ConfigLoader::mram_offset() + util::ConfigLoader::mram_size());
   assert(size % util::ConfigLoader::min_access_granularity() == 0);
-  assert(instruction->op_code() == abi::instruction::LDMA);
 
-  wram_address_->set_value(wram_address);
+
+ notmram_address_->set_value(notmram_address);
   mram_address_->set_value(mram_address);
   bytes_.resize(size);
   acks_.resize(size);
@@ -50,7 +59,7 @@ DMACommand::DMACommand(Operation operation, Address wram_address,
 DMACommand::DMACommand(Operation operation, Address mram_address, Address size,
                        std::vector<int> bytes)
     : operation_(operation),
-      wram_address_(nullptr),
+      notmram_address_(nullptr),
       mram_address_(new abi::word::DataAddressWord()),
       size_(size),
       bytes_(bytes),
@@ -67,19 +76,19 @@ DMACommand::DMACommand(Operation operation, Address mram_address, Address size,
   acks_.resize(size);
 }
 
-DMACommand::DMACommand(Operation operation, Address wram_address,
+DMACommand::DMACommand(Operation operation, Address notmram_address,
                        Address mram_address, Address size,
                        std::vector<int> bytes,
                        abi::instruction::Instruction *instruction)
     : operation_(operation),
-      wram_address_(new abi::word::DataAddressWord()),
+      notmram_address_(new abi::word::DataAddressWord()),
       mram_address_(new abi::word::DataAddressWord()),
       size_(size),
       bytes_(bytes),
       instruction_(instruction) {
   assert(operation == WRITE);
-  assert(wram_address >= util::ConfigLoader::wram_offset());
-  assert(wram_address + size_ <=
+  assert(notmram_address >= util::ConfigLoader::wram_offset());
+  assert(notmram_address + size_ <=
          util::ConfigLoader::wram_offset() + util::ConfigLoader::wram_size());
   assert(mram_address >= util::ConfigLoader::mram_offset());
   assert(mram_address + size_ <=
@@ -88,7 +97,7 @@ DMACommand::DMACommand(Operation operation, Address wram_address,
   assert(size == bytes.size());
   assert(instruction->op_code() == abi::instruction::SDMA);
 
-  wram_address_->set_value(wram_address);
+  notmram_address_->set_value(notmram_address);
   mram_address_->set_value(mram_address);
   bytes_.resize(size);
   acks_.resize(size);
@@ -96,8 +105,7 @@ DMACommand::DMACommand(Operation operation, Address wram_address,
 
 DMACommand::~DMACommand() {
   assert(is_ready());
-
-  delete wram_address_;
+  delete notmram_address_;
   delete mram_address_;
 }
 

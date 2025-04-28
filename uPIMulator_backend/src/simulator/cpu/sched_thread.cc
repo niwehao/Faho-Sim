@@ -16,7 +16,7 @@ void SchedThread::connect_rank(rank::Rank *rank) {//DPU调度线程
 
 void SchedThread::sched(int execution) {
   dma_transfer_input_dpu_mram_heap_pointer_name(execution);//堆指针
-  dma_transfer_dpu_input_arguments(execution);
+  dma_transfer_dpu_input_arguments(execution);//传入的参数
 
   std::cout << "sched " << execution << " completed..." << std::endl;
 }
@@ -28,7 +28,7 @@ void SchedThread::check(int execution) {//先不去检查结果
   std::cout << "check " << execution << " completed..." << std::endl;
 }
 
-void SchedThread::dma_transfer_input_dpu_mram_heap_pointer_name(int execution) {
+void SchedThread::dma_transfer_input_dpu_mram_heap_pointer_name(int execution) {//write mram的初始值
   std::set<rank::RankMessage*> rank_messages;
   for (DPUID dpu_id = 0; dpu_id < num_dpus(); dpu_id++) {
     std::stringstream ss;
@@ -119,7 +119,7 @@ void SchedThread::dma_transfer_output_dpu_mram_heap_pointer_name(
 
       encoder::ByteStream *mram_byte_stream =
           rank_->dpus()[dpu_id]->dma()->transfer_from_mram(
-              sys_used_mram_end_pointer(), byte_stream->size());
+              sys_used_mram_end_pointer(),16);
       //1111111000110011111111100011000011111110001100011111111000110001
 
       assert(byte_stream->size() == mram_byte_stream->size());

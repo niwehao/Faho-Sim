@@ -4,6 +4,7 @@
         "barrier.h": "c",
         "defs.h": "c",
         "random": "c",
-        "perfcounter.h": "c"
+        "perfcounter.h": "c",
+        "set": "c"
     }
 }

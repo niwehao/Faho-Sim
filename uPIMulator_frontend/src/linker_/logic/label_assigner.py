@@ -39,7 +39,7 @@ class LabelAssigner(assemblyListener):
                 i += 1
         ascii_directive = AsciiDirective(characters)
         cur_label = self._executable.cur_label()
-        cur_label.set_size(cur_label.size() + ascii_directive.size())
+        cur_label.set_size(cur_label.size() + ascii_directive.size())#应当有对齐机制
 
     def exitAsciz_directive(self, ctx: assemblyParser.Asciz_directiveContext) -> None:
         characters = str(ctx.StringLiteral())[1:-1]
@@ -106,7 +106,7 @@ class LabelAssigner(assemblyListener):
         zero_directive = ZeroDirective(size, value)
 
         cur_label = self._executable.cur_label()
-        cur_label.set_size(cur_label.size() + zero_directive.size())
+        cur_label.set_size(cur_label.size() + zero_directive.size())#align
 
     def exitInstruction(self, ctx: assemblyParser.InstructionContext):
         instruction_size = ConfigLoader.iram_data_width() // 8

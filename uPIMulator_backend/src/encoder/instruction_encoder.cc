@@ -367,7 +367,7 @@ abi::instruction::Instruction *InstructionEncoder::decode_rrici(//对于rrici指
 
   int pc_begin = condition_end;
   int pc_end = pc_begin + pc_width();
-  int64_t pc = decode_pc(instruction_word, pc_begin, pc_end);//解码pc,本质上就是解码立即数
+  int64_t pc = decode_pc(instruction_word, pc_begin, pc_end);//解码pc,本质上就是解码立即数?
 
   return new abi::instruction::Instruction(op_code, suffix, rc, ra, imm,
                                            condition, pc);//返回解码后的指令,通过重载的构造函数
@@ -468,7 +468,7 @@ abi::instruction::Instruction *InstructionEncoder::decode_rrrci(
   abi::reg::SrcReg *rb = decode_src_reg(instruction_word, rb_begin, rb_end);
 
   int condition_begin = rb_end;
-  int condition_end = condition_begin + condition_width();
+  int condition_end = condition_begin + condition_width();//逐渐解析条件码
   abi::isa::Condition condition =
       decode_condition(instruction_word, condition_begin, condition_end);
 

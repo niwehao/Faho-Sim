@@ -29,6 +29,7 @@ IRAM::~IRAM() {
 
 abi::instruction::Instruction *IRAM::read(Address address) {
   encoder::ByteStream *byte_stream = cells_[index(address)]->to_byte_stream();//获取地址对应的字节流
+  //TODO pc中应该储存索引而不是地址
   abi::instruction::Instruction *instruction =
       encoder::InstructionEncoder::decode(byte_stream);//解码指令,编程指令的格式
   delete byte_stream;

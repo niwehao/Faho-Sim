@@ -43,6 +43,10 @@ class DMA {
   void transfer_from_mram_to_wram(Address wram_address, Address mram_address,
                                   Address size,
                                   abi::instruction::Instruction *instruction);
+    void transfer_from_mram_to_iram(Address mram_address, Address iram_address,
+                                  Address size,
+                                  abi::instruction::Instruction *instruction);
+
 
   bool can_push() { return input_q_->can_push(); }
   void push(DMACommand *dma_command) = delete;

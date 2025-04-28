@@ -103,7 +103,7 @@ void Logic::
 
   service_scheduler() {
   if (pipeline_->can_push() and cycle_rule_->can_push() and
-      wait_instruction_q_->can_push()) {// 流水线可以接收新指令 周期规则允许  等待指令队列可用
+      wait_instruction_q_->can_push()) {// 流水线可以接收新指令 周期规则允许等待指令队列可用
     // if (pipeline_->can_push() and wait_instruction_q_->can_push()) {
     Thread *thread = scheduler_->schedule(); //调度一个线程
     if (thread != nullptr) {
@@ -112,7 +112,7 @@ void Logic::
      std::cout <<"thread id is "<< chosen_thread_id << std::endl;
 
       abi::instruction::Instruction *instruction =
-          iram_->read(thread->reg_file()->read_pc_reg());//从IRAM中读取指令,每一个thread维护一份指令表
+          iram_->read(thread->reg_file()->read_pc_reg());//从IRAM中读取指令,每一个thread维护一份指令表,通过修改iram的位置来完成数据传入
       instruction->set_thread(thread);//设置指令的线程
       pipeline_->push(instruction);//将指令加入流水线
       abi::instruction::Suffix suffix = instruction->suffix();
@@ -4132,7 +4132,7 @@ void Logic::execute_cao_rrci(abi::instruction::Instruction *instruction) {
   instruction->thread()->reg_file()->write_gp_reg(instruction->rc(), result);
 
   if (instruction->thread()->reg_file()->condition(instruction->condition())) {
-    instruction->thread()->reg_file()->write_pc_reg(instruction->pc()->value());
+    instruction->thread()->reg_file()->write_pc_reg(instruction->pc()->value());//修改下一个地址
   } else {
     instruction->thread()->reg_file()->increment_pc_reg();
   }
@@ -5227,8 +5227,44 @@ void Logic::execute_ldma(abi::instruction::Instruction *instruction) {
   instruction->thread()->reg_file()->clear_conditions();
 }
 
-void Logic::execute_ldmai(abi::instruction::Instruction *instruction) {
-  throw std::bad_function_call();
+void Logic::execute_ldmai(abi::instruction::Instruction *instruction) {//传到iram中
+  assert(abi::instruction::Instruction::ldma_dma_rri_op_codes().count(
+     instruction->op_code()));
+  assert(instruction->suffix() == abi::instruction::DMA_RRI);
+
+  int64_t ra = instruction->thread()->reg_file()->read_src_reg(
+      instruction->ra(), abi::word::SIGNED);
+  int64_t rb = instruction->thread()->reg_file()->read_src_reg(
+      instruction->rb(), abi::word::SIGNED);
+  int64_t imm = instruction->imm()->value();
+
+  Address iram_end_address =
+      util::ConfigLoader::iram_offset() + util::ConfigLoader::iram_size();
+  auto iram_end_address_width =
+      static_cast<Address>(floor(log2(iram_end_address)) + 1);
+  auto iram_mask = static_cast<Address>(pow(2, iram_end_address_width) - 1);
+  Address iram_address = ALU::and_(ra, iram_mask);
+
+  Address mram_end_address =
+      util::ConfigLoader::mram_offset() + util::ConfigLoader::mram_size();
+  auto mram_end_address_width =
+      static_cast<Address>(floor(log2(mram_end_address)) + 1);
+  auto mram_mask = static_cast<Address>(pow(2, mram_end_address_width) - 1);
+  Address mram_address = ALU::and_(rb, mram_mask);
+
+  Address min_access_granularity = util::ConfigLoader::min_access_granularity();
+  Address size = (1 + ALU::and_(imm + ALU::and_(ALU::lsr(ra, 24), 255), 255)) *
+                 min_access_granularity;
+
+  dma_->transfer_from_mram_to_iram(iram_address, mram_address, size,
+                                   instruction);
+
+  stat_factory_->overwrite("mram_address", mram_address);
+  stat_factory_->overwrite("mram_access_thread",
+                           instruction->thread()->id());
+  stat_factory_->overwrite("mram_access_size", size);
+
+  instruction->thread()->reg_file()->clear_conditions();
 }
 
 void Logic::execute_sdma(abi::instruction::Instruction *instruction) {

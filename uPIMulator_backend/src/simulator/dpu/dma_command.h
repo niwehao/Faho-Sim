@@ -12,22 +12,22 @@ namespace upmem_sim::simulator::dpu {
 
 class DMACommand {
  public:
-  enum Operation { READ = 0, WRITE };
+  enum Operation { READ = 0, WRITE,READ_FOR_IRAM };
 
   explicit DMACommand(Operation operation, Address mram_address, Address size);
-  explicit DMACommand(Operation operation, Address wram_address,
+  explicit DMACommand(Operation operation, Address notram_address,
                       Address mram_address, Address size,
                       abi::instruction::Instruction *instruction);
   explicit DMACommand(Operation operation, Address mram_address, Address size,
                       std::vector<int> bytes);
-  explicit DMACommand(Operation operation, Address wram_address,
+  explicit DMACommand(Operation operation, Address notram_address,
                       Address mram_address, Address size,
                       std::vector<int> bytes,
                       abi::instruction::Instruction *instruction);
   ~DMACommand();
 
   Operation operation() { return operation_; }
-  Address wram_address() { return wram_address_->address(); }
+  Address notmram_address() { return notmram_address_->address(); }
   Address mram_address() { return mram_address_->address(); }
   Address size() { return size_; }
   bool has_instruction() { return instruction_ != nullptr; }
@@ -49,7 +49,7 @@ class DMACommand {
 
  private:
   Operation operation_;
-  abi::word::DataAddressWord *wram_address_;
+  abi::word::DataAddressWord *notmram_address_;
   abi::word::DataAddressWord *mram_address_;
   Address size_;
   abi::instruction::Instruction *instruction_;

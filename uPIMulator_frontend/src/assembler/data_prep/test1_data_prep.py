@@ -1,6 +1,7 @@
 from typing import List, Optional
-
+from util.path_collector import PathCollector
 import numpy as np
+import os
 
 from abi.word.immediate import Immediate
 from abi.word.representation import Representation
@@ -17,6 +18,7 @@ class TEST1DataPrep:
         self._num_tasklets: int = num_tasklets
         self._num_dpus: int = num_dpus
         self._buffer_size: int = data_prep_param[0]  # 1048576
+        self._iram=[]
 
         self._num_executions: int = 1
 
@@ -45,6 +47,13 @@ class TEST1DataPrep:
         self._transfer_size: List[int] = [self._input_size_dpu_8bytes * elem_size for _ in range(self._num_dpus)]
 
         self._kernel: List[int] = [0 for _ in range(self._num_dpus)]
+    def read_iram(self):
+        path=os.path.join(PathCollector.bin_path_in_local(),  "ldami_test.bin")
+        #read iram form path
+        with open(path,"rb") as f:
+            for line in f:
+                self.iram.append("")
+
 
     def num_executions(self) -> int:
         return self._num_executions

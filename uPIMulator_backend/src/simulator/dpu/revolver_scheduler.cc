@@ -40,7 +40,7 @@ Thread *RevolverScheduler::schedule() {
 
     if (thread->issue_cycle() >= num_revolver_scheduling_cycles_) {//如果线程的指令周期大于等于每一个线程必须要等待的周期数
       if (thread->state() == Thread::RUNNABLE) {//如果线程处于可运行状态
-        thread->reset_issue_cycle();//重置指令周期
+        thread->reset_issue_cycle();//重置指令周期,指令周期是在被调度的时候重新被设置
 
         stat_factory_->increment("breakdown_run");
 

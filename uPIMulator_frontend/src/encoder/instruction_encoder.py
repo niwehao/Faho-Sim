@@ -21,7 +21,7 @@ class InstructionEncoder:
 
     @staticmethod
     def encode(instruction: Instruction) -> List[Byte]:
-        instruction_word = InstructionWord()
+        instruction_word = InstructionWord()#96位,分别根据大小进行设置为0
         InstructionEncoder._encode_opcode(instruction, instruction_word)
         InstructionEncoder._encode_suffix(instruction, instruction_word)
 
@@ -2671,7 +2671,7 @@ class InstructionEncoder:
     @staticmethod
     def _encode_erri(instruction: Instruction, instruction_word: InstructionWord) -> None:
         assert instruction.op_code() in Instruction.ERRIOpCodes
-        assert instruction.suffix() == Suffix.ERRI
+        assert instruction.suffix() == Suffix.ERRI#96
 
         _, endian_begin = InstructionEncoder._suffix_slice()
         endian_end = endian_begin + InstructionEncoder._endian_width()

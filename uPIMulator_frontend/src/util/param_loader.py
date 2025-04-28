@@ -64,3 +64,4 @@ class ParamLoader:
     @staticmethod
     def t_rp() -> int:
         raise NotImplementedError
+    #register_width

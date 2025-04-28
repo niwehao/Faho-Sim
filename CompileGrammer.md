@@ -458,6 +458,8 @@ CycleRule/cycle_rule 总执行的周期数
 
 ## Instruction for implement
 
+### time
+
 time:r
 
 Read the performance counter
@@ -472,3 +474,124 @@ time_cfg:rr
 
 * 程序所花费的时钟周期总数
 * 或者指令所花费的时钟周期数，不包括 DMA 传输（它表示 DPU 执行的指令数以及重放）
+
+##### time_cfg:rr
+
+*助记符*
+
+```
+time_cfg rc:wr32 rb:wr32
+```
+
+*行为*
+
+```
+- x = T:read
+
+- T:config(rb[0:2])
+
+- y = x[4:35]
+
+- rc = y
+```
+
+80000120 <perfcounter_get>:
+80000120: 00 00 80 20 60 0c 00 00       time r0
+80000128: 00 00 00 b0 03 91 00 00       move.u d2, r0   存到r2和r3 r3=0008
+80000130: 00 00 45 40 0f 80 00 00       lslx r0, r3, 4               *因为8不等于0,所以等于r3>>28,等于把r3的低四位变成32位中的高四位 8000 0000
+80000138: 00 00 40 40 08 80 00 00       lsl_add r0, r0, r2, 4       r0=r2x*16+r0*
+80000140: 00 00 44 40 8f 80 00 00       lsl r1, r3, 4         r1+r3*x16
+80000148: 00 00 00 00 5f 8c 00 00       jump r23 10000010
+
+##### sd:erir
+
+*助记符*
+
+```
+sd endian:e ra:r32 off:s24 db:wr64
+```
+
+*行为*
+
+```
+- let @a = (ra + off)
+
+- Store db:64 into WRAM at address @a with endianness endian
+```
+
+储存数据到64位寄存器
+
+### LDMAI
+
+#### ldmai:rri
+
+*mnemonic*
+
+```
+ldmai ra:r32 rb:wr32 immDma:u8
+```
+
+*behavior*
+
+```
+- let @i = (ra & 0xfffff8)
+
+- let @m = (rb & 0xfffffff8)
+
+- let N = (1 + (immDma:U32 + (ra >> 24) & 0xff) & 0xff) << 3
+
+- Load N bytes from MRAM at address @m into IRAM at address @w
+```
+
+*built-in syntax*
+
+> * __builtin_ldmai_rri(ra, rb, immDma) ;
+
+#### ldma:rri
+
+*助记符*
+
+```
+ldma ra:r32 rb:wr32 immDma:u8
+```
+
+*行为*
+
+```
+- let @w = (ra & 0xfffff8)
+
+- let @m = (rb & 0xfffffff8)
+
+- let N = (1 + (immDma:U32 + (ra >> 24) & 0xff) & 0xff) << 3
+
+- Load N bytes from MRAM at address @m into WRAM at address @w
+```
+
+*内置语法*
+
+> * __builtin_ldma_rri（ra，rb，immDma）；
+
+return new abi::instruction::Instruction(op_code, suffix, rc, ra, imm,
+                                           condition, pc);//返回解码后的指令,通过重载的构造函数
+
+pc代表会跳转到的指令位置
+
+instruction
+
+instructions are considered to be 64-bit long (with their most significant bytes set to 0)
+
+base transfer address in **IRAM** should be in bytes (eg. address 8 corresponds to the second instruction in  **IRAM** )
+
+A DPU comprises an Instruction memory named **IRAM** holding 2 ^ *p* 48-bit wide instructions, where *p* is the **PC** width.
+
+**PC_width and instruction encoding**
+
+* In many instructions, the width of the immediate value that can be encoded varies counter wise to the PC width.
+* The current implementation has a 12-bit PC but supports (through the configuration by the **HCPU** of the **PC_MODE** control register) the execution of binaries generated for DPU with larger PC width, as long these binaries fit into the  **IRAM** .
+
+
+指令格式:
+
+96:
+
+32位 pc->16

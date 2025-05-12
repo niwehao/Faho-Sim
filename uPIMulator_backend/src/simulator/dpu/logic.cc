@@ -165,7 +165,6 @@ dma_instruction {
         }
       }
     } else {
-      std::cout<<"no thread can be scheduled"<<std::endl;
       for (auto &th : scheduler_->threads()) {
         if (th->state() == Thread::BLOCK) {
           th->update_thread_status("WAIT_DATA", 1);
@@ -5228,7 +5227,7 @@ void Logic::execute_ldma(abi::instruction::Instruction *instruction) {
 }
 
 void Logic::execute_ldmai(abi::instruction::Instruction *instruction) {//传到iram中
-  assert(abi::instruction::Instruction::ldma_dma_rri_op_codes().count(
+  assert(abi::instruction::Instruction::ldmai_dma_rri_op_codes().count(
      instruction->op_code()));
   assert(instruction->suffix() == abi::instruction::DMA_RRI);
 
@@ -5239,14 +5238,14 @@ void Logic::execute_ldmai(abi::instruction::Instruction *instruction) {//传到i
   int64_t imm = instruction->imm()->value();
 
   Address iram_end_address =
-      util::ConfigLoader::iram_offset() + util::ConfigLoader::iram_size();
+      util::ConfigLoader::iram_size();
   auto iram_end_address_width =
       static_cast<Address>(floor(log2(iram_end_address)) + 1);
   auto iram_mask = static_cast<Address>(pow(2, iram_end_address_width) - 1);
   Address iram_address = ALU::and_(ra, iram_mask);
 
   Address mram_end_address =
-      util::ConfigLoader::mram_offset() + util::ConfigLoader::mram_size();
+      util::ConfigLoader::mram_offset() + util::ConfigLoader::mram_size()-dma_->get_sys_used_mram_end_pointer();
   auto mram_end_address_width =
       static_cast<Address>(floor(log2(mram_end_address)) + 1);
   auto mram_mask = static_cast<Address>(pow(2, mram_end_address_width) - 1);
@@ -5256,7 +5255,7 @@ void Logic::execute_ldmai(abi::instruction::Instruction *instruction) {//传到i
   Address size = (1 + ALU::and_(imm + ALU::and_(ALU::lsr(ra, 24), 255), 255)) *
                  min_access_granularity;
 
-  dma_->transfer_from_mram_to_iram(iram_address, mram_address, size,
+  dma_->transfer_from_mram_to_iram(iram_address+util::ConfigLoader::iram_offset(), mram_address+dma_->get_sys_used_mram_end_pointer(), size,
                                    instruction);
 
   stat_factory_->overwrite("mram_address", mram_address);

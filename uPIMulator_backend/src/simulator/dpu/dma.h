@@ -46,6 +46,12 @@ class DMA {
     void transfer_from_mram_to_iram(Address mram_address, Address iram_address,
                                   Address size,
                                   abi::instruction::Instruction *instruction);
+   void transfer_to_iram_from_mram(Address address, encoder::ByteStream *byte_stream);
+
+ Address get_sys_used_mram_end_pointer() const {
+  assert(sys_used_mram_end_pointer != 0);
+  return sys_used_mram_end_pointer;
+ }
 
 
   bool can_push() { return input_q_->can_push(); }
@@ -53,6 +59,7 @@ class DMA {
   bool can_pop() { return ready_q_->can_pop(); }
   DMACommand *pop() { return ready_q_->pop(); }
   void cycle();
+ void init_sys_used_mram_end_pointer(Address address);
 
  protected:
   void service_input_q();
@@ -63,6 +70,7 @@ class DMA {
   sram::IRAM *iram_;
   OperandCollector *operand_collector_;
   dram::MemoryController *memory_controller_;
+ Address sys_used_mram_end_pointer=0;
 
   basic::Queue<DMACommand> *input_q_;
   basic::Queue<DMACommand> *ready_q_;

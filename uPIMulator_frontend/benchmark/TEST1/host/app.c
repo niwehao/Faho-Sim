@@ -31,7 +31,7 @@ DPU_FOREACH(set,dpu){
 
   DPU_ASSERT(dpu_launch(set, DPU_SYNCHRONOUS));
   DPU_FOREACH(set,dpu){
-    DPU_ASSERT(dpu_copy_from_mram(dpu.dpu, buf,1<<16, 8));
+    DPU_ASSERT(dpu_copy_from_mram(dpu.dpu, buf,1<<16, 8));//dpu_copy_from_mram(struct dpu_t *dpu, uint8_t *destination, mram_addr_t mram_byte_offset, mram_size_t nb_of_bytes)
   }
   printf("%i %i\n",((int *)buf)[0],((int *)buf)[1]);
 

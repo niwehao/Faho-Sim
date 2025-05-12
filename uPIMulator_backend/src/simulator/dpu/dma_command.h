@@ -12,7 +12,7 @@ namespace upmem_sim::simulator::dpu {
 
 class DMACommand {
  public:
-  enum Operation { READ = 0, WRITE,READ_FOR_IRAM };
+  enum Operation { READ = 0, WRITE,READ_I };
 
   explicit DMACommand(Operation operation, Address mram_address, Address size);
   explicit DMACommand(Operation operation, Address notram_address,

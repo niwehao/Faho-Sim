@@ -11,11 +11,11 @@ void load_prg_memory(unsigned int size_text) {
   
     unsigned int temp = size_text;
   
-    unsigned int off = 0;
+    unsigned int off =8;
     while (temp >= 0x800) { // write by slot of 2048
   
       temp -= 0x800;
-      unsigned int ra = off | (0xff << 24);
+      unsigned int ra = off | (0xff << 24);//ldma ra:r32 rb:wr32 immDma:u8 ra->iram address rb->mram imm->num of bytes
   
       __asm__ volatile( // there is no lib fun for IRAM data trasnfert so use the
                         // ldmai
@@ -25,20 +25,19 @@ void load_prg_memory(unsigned int size_text) {
       off += 0x800;
     }
     unsigned int ra;
-    if (temp & 8)
-      ra = off | (((temp >> 3)) << 24);
-    else
-      ra = off | (((temp >> 3) - 1) << 24);
-    __asm__ volatile( // there is no lib fun for IRAM data trasnfert so use the
-                      // ldmai
-        "\tldmai %[ra], %[mram_place], 0\n"
-        :
-        : [ra] "r"(ra), [mram_place] "r"(off));
+    if (temp & 8)//判断是不是正好等于8
+    ra = off | (((temp >> 3)) << 24);
+  else
+  ra = off | (((temp >> 3) - 1) << 24);
+__asm__ volatile( // there is no lib fun for IRAM data trasnfert so use the
+  // ldmai
+  "\tldmai %[ra], %[mram_place], 0\n"
+  :
+  : [ra] "r"(ra), [mram_place] "r"(off));
   }
 int main(void){
-    __dma_aligned unsigned int a[2]={0,0};
-    mram_write(&a,(__mram_ptr void *)(1<<16),8);
-    load_prg_memory(696);
+    load_prg_memory(512);
+  __asm__ volatile("\tfault 1");
     return 0;       //result MRAM 1<<16 should be 0 0
     
 }

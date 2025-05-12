@@ -26,7 +26,7 @@ def compile(benchmark: str, num_tasklets: int) -> None:#简单编译
             "-g",
             "-o",
             f"{asm_path}",
-            "dpu/task2.c"
+            "dpu/task.c"
         ]
         #打印cmd
         print("cmd:", cmd)

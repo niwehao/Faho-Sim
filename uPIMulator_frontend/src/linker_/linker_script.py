@@ -38,7 +38,7 @@ class LinkerScript:
 
     def _assign_iram(self, executable: Executable) -> None:
         cur_address = ConfigLoader.iram_offset()
-        bootstrap = executable.section(SectionName.TEXT, "__bootstrap")
+        bootstrap = executable.section(SectionName.TEXT, "__bootstrap")#开始段
 
         assert bootstrap is not None
         assert bootstrap.address() is None
@@ -47,7 +47,15 @@ class LinkerScript:
         cur_address += bootstrap.size()
         assert bootstrap.size() % InstructionWord().size() == 0
 
-        text_section = executable.section(SectionName.TEXT, "")
+        text_section = executable.section(SectionName.TEXT, "")#实际执行的代码段
+        if text_section is not None:
+            assert text_section.address() is None
+
+            text_section.set_address(cur_address)
+            cur_address += text_section.size()
+
+            assert text_section.size() % InstructionWord().size() == 0
+        text_section = executable.section(SectionName.TEXT, "main")  # 实际执行的代码段
         if text_section is not None:
             assert text_section.address() is None
 
@@ -57,7 +65,7 @@ class LinkerScript:
             assert text_section.size() % InstructionWord().size() == 0
 
         for section in executable.sections(SectionName.TEXT):
-            if section.name() != "__bootstrap" and section.name() != "":
+            if section.name() != "__bootstrap" and section.name() != "" and section.name() != "main":
                 assert section.address() is None
 
                 section.set_address(cur_address)

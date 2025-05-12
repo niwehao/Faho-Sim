@@ -118,4 +118,4 @@ class LabelAssigner(assemblyListener):
 
         # TODO(bongjoon.hyun@gmail.com): __sys_used_mram_end will be defined in the linker script
         if label_name != "__sys_used_mram_end":
-            self._executable.append_label(str(ctx.Identifier()))
+            self._executable.append_label(str(ctx.Identifier()))#离开label以后结束

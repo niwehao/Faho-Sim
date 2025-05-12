@@ -33,8 +33,8 @@ util::StatFactory *System::stat_factory() {
 }
 
 void System::init() {
-  cpu_->init();
-  cpu_->sched(execuion_);
+  cpu_->init();//初始化各种ram(模拟系统占用
+  cpu_->sched(execuion_);//
   cpu_->launch();
 }
 

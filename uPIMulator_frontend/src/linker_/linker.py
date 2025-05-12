@@ -55,12 +55,13 @@ class Linker:
             has_resolved = False
             for unresolved_symbol in unresolved_symbols:
                 for lib in self._libs:
-                    if unresolved_symbol in lib.liveness().defs():
+                    if unresolved_symbol in lib.liveness().defs():#实际上要看全局地址
                         relocatables.add(lib)
+                        #TODO 只获取
                         has_resolved = True
             assert has_resolved
 
-            unresolved_symbols = self._unresolved_symbols(relocatables, linker_script)
+            unresolved_symbols = self._unresolved_symbols(relocatables, linker_script)#反复遍历直到没有多余变量
 
         return relocatables
 

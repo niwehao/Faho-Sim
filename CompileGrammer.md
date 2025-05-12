@@ -595,3 +595,6 @@ A DPU comprises an Instruction memory named **IRAM** holding 2 ^ *p* 48-bit wide
 96:
 
 32位 pc->16
+
+
+延迟绑定GOT PLT

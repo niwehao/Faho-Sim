@@ -15,8 +15,9 @@ class ConfigLoader {
 
   static int iram_address_width() { return 32; }
   static int iram_data_width() { return 96; }
+    static int iram_data_width_align_bytes() { return 16; }
   static Address iram_offset() { return 384 * 1024; }//对于iram的基地址的偏移,mram和iram在同一片物理地址中
-  static Address iram_size() { return 48 * 1024; }
+  static Address iram_size() { return 48 * 1024; }//代表可以接受的指令的总数
 
   static int wram_address_width() { return 32; }
   static int wram_data_width() { return 32; }

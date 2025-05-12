@@ -43,16 +43,22 @@ class TEST1DataPrep:
 
         self._size: List[int] = [self._input_size_dpu_8bytes * elem_size for _ in range(self._num_dpus - 1)]
         self._size.append((input_size_8bytes - (self._input_size_dpu_8bytes * (self._num_dpus - 1))) * elem_size)
+        self.read_iram()
 
-        self._transfer_size: List[int] = [self._input_size_dpu_8bytes * elem_size for _ in range(self._num_dpus)]
-
-        self._kernel: List[int] = [0 for _ in range(self._num_dpus)]
     def read_iram(self):
-        path=os.path.join(PathCollector.bin_path_in_local(),  "ldami_test.bin")
+        path=os.path.join(PathCollector.bin_path_in_local(),  "ldmai_test","iram.bin")
         #read iram form path
-        with open(path,"rb") as f:
+        count = 0
+        with open(path,"r") as f:
             for line in f:
-                self.iram.append("")
+                num = int(line.strip())
+                self._iram.append(num)
+                count=count+1
+                if(count==12):
+                    #遍历128-96次
+                    for i in range(4):
+                        self._iram.append(i)
+                    count=0
 
 
     def num_executions(self) -> int:
@@ -66,15 +72,12 @@ class TEST1DataPrep:
         assert 0 <= dpu_id < self._num_dpus
 
         bytes_: List[Byte] = []
-        #决定读入区域多大 labels.bin
-
-
+        for i in self._iram:
+            bytes_.append(Byte(i))
 
 
         #element_immediate = Immediate(Representation.UNSIGNED, 32, self.a)#32位转4字节
         #bytes_ += element_immediate.to_bytes()
-
-
 
         return Bin(bytes_)
 
@@ -83,8 +86,8 @@ class TEST1DataPrep:
         assert 0 <= dpu_id < self._num_dpus
 
         bytes_: List[Byte] = []
-        element_immediate = Immediate(Representation.UNSIGNED, 32, 16843010)
-        bytes_ += element_immediate.to_bytes()
+        #element_immediate = Immediate(Representation.UNSIGNED, 32, 16843010)
+        #bytes_ += element_immediate.to_bytes()
 
         return Bin(bytes_)
 

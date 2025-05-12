@@ -53,7 +53,7 @@ bool FIFOScheduler::service_fcfs() {
     row_address_ = new abi::word::DataAddressWord();
     row_address_->set_value(wordline_address);//缓存的字线只有一行
 
-    if (dma_command->operation() == dpu::DMACommand::READ ||dma_command->operation() == dpu::DMACommand::READ_FOR_IRAM) {
+    if (dma_command->operation() == dpu::DMACommand::READ ||dma_command->operation() == dpu::DMACommand::READ_I) {
       ready_q_->push(
           new MemoryCommand(MemoryCommand::READ, address, size, dma_command));
     } else if (dma_command->operation() == dpu::DMACommand::WRITE) {
@@ -72,7 +72,7 @@ bool FIFOScheduler::service_fcfs() {
              ready_q_->can_push(1)) {//命中
     reorder_buffer_.erase(reorder_buffer_.begin());
 
-    if (dma_command->operation() == dpu::DMACommand::READ || dma_command->operation() == dpu::DMACommand::READ_FOR_IRAM) {
+    if (dma_command->operation() == dpu::DMACommand::READ || dma_command->operation() == dpu::DMACommand::READ_I) {
       ready_q_->push(
           new MemoryCommand(MemoryCommand::READ, address, size, dma_command));
     } else if (dma_command->operation() == dpu::DMACommand::WRITE) {
@@ -98,7 +98,7 @@ bool FIFOScheduler::service_fcfs() {
 
     row_address_->set_value(wordline_address);
 
-    if (dma_command->operation() == dpu::DMACommand::READ || dma_command->operation() == dpu::DMACommand::READ_FOR_IRAM) {
+    if (dma_command->operation() == dpu::DMACommand::READ || dma_command->operation() == dpu::DMACommand::READ_I) {
       ready_q_->push(
           new MemoryCommand(MemoryCommand::READ, address, size, dma_command));
     } else if (dma_command->operation() == dpu::DMACommand::WRITE) {

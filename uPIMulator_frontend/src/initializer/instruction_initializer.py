@@ -1065,7 +1065,7 @@ class InstructionInitializer:
         ra = InstructionInitializer._source_register()
         off = InstructionInitializer._imm(Representation.SIGNED, 24)
 
-        return Instruction(op_code, suffix, endian=endian, rc=rc, ra=ra, off=off)
+        return Instruction(op_code, suffix, endian=endian, rc=rc, ra=ra, off=off)#sdma
 
     @staticmethod
     def _s_erri(op_code: OpCode, suffix: Suffix) -> Instruction:

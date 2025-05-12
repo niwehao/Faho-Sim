@@ -26,11 +26,12 @@ MemoryCommand::MemoryCommand(Operation operation, Address address, Address size,
       address_(new abi::word::DataAddressWord()),
       size_(size),
       dma_command_(dma_command) {
+
   assert(operation == READ);
   assert(address >= util::ConfigLoader::mram_offset());
   assert(address + size_ <=
          util::ConfigLoader::mram_offset() + util::ConfigLoader::mram_size());
-  assert(dma_command->operation() == dpu::DMACommand::Operation::READ);
+  assert(dma_command->operation() == dpu::DMACommand::Operation::READ || dma_command->operation() == dpu::DMACommand::Operation::READ_I);
 
   address_->set_value(address);
 }

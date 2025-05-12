@@ -55,7 +55,7 @@ bool FRFCFSScheduler::service_fr() {
 
       if (row_address_->address() == wordline_address and
           ready_q_->can_push(1)) {
-        if (dma_command->operation() == dpu::DMACommand::READ || dma_command->operation() == dpu::DMACommand::READ_FOR_IRAM) {
+        if (dma_command->operation() == dpu::DMACommand::READ || dma_command->operation() == dpu::DMACommand::READ_I) {
           ready_q_->push(new MemoryCommand(MemoryCommand::READ, address, size,
                                            dma_command));
           reorder_buffer_.erase(reorder_buffer_.begin() + i);
@@ -96,7 +96,7 @@ bool FRFCFSScheduler::service_fcfs() {
     row_address_ = new abi::word::DataAddressWord();
     row_address_->set_value(wordline_address);
 
-    if (dma_command->operation() == dpu::DMACommand::READ|| dma_command->operation() == dpu::DMACommand::READ_FOR_IRAM) {
+    if (dma_command->operation() == dpu::DMACommand::READ|| dma_command->operation() == dpu::DMACommand::READ_I) {
       ready_q_->push(
           new MemoryCommand(MemoryCommand::READ, address, size, dma_command));
     } else if (dma_command->operation() == dpu::DMACommand::WRITE) {
@@ -123,7 +123,7 @@ bool FRFCFSScheduler::service_fcfs() {
 
     row_address_->set_value(wordline_address);
 
-    if (dma_command->operation() == dpu::DMACommand::READ|| dma_command->operation() == dpu::DMACommand::READ_FOR_IRAM) {
+    if (dma_command->operation() == dpu::DMACommand::READ|| dma_command->operation() == dpu::DMACommand::READ_I) {
       ready_q_->push(
           new MemoryCommand(MemoryCommand::READ, address, size, dma_command));
     } else if (dma_command->operation() == dpu::DMACommand::WRITE) {

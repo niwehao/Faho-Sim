@@ -12,7 +12,7 @@ DMACommand::DMACommand(Operation operation, Address mram_address, Address size)
       mram_address_(new abi::word::DataAddressWord()),
       size_(size),
       instruction_(nullptr) {
-  assert(operation == READ || operation == READ_FOR_IRAM);
+  assert(operation == READ || operation == READ_I);
   assert(mram_address >= util::ConfigLoader::mram_offset());
   assert(mram_address + size_ <=
          util::ConfigLoader::mram_offset() + util::ConfigLoader::mram_size());
@@ -31,8 +31,8 @@ DMACommand::DMACommand(Operation operation, Address notmram_address,
       mram_address_(new abi::word::DataAddressWord()),
       size_(size),
       instruction_(instruction) {
-  assert(operation == READ || operation == READ_FOR_IRAM);
-  if (operation==READ_FOR_IRAM) {
+  assert(operation == READ || operation == READ_I);
+  if (operation==READ_I) {
     assert(instruction->op_code() == abi::instruction::LDMAI);
     assert(notmram_address >= util::ConfigLoader::iram_offset());
     assert(notmram_address + size_ <=

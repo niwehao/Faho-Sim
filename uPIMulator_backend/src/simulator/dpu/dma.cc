@@ -53,6 +53,7 @@ void DMA::transfer_to_iram(Address address, encoder::ByteStream *byte_stream) {
 
   int num_instructions = static_cast<int>(byte_stream->size() /
                                           abi::word::InstructionWord().size());
+  std::cout<<"num of instructions: "<<num_instructions<<std::endl;
   for (int i = 0; i < num_instructions; i++) {
     Address begin = i * abi::word::InstructionWord().size();
     Address end = (i + 1) * abi::word::InstructionWord().size();
@@ -60,6 +61,22 @@ void DMA::transfer_to_iram(Address address, encoder::ByteStream *byte_stream) {
     encoder::ByteStream *instruction_byte_stream =
         byte_stream->slice(static_cast<int>(begin), static_cast<int>(end));//切出一个指令位置
     iram_->write(util::ConfigLoader::iram_offset() + begin,
+                 instruction_byte_stream);//写入指令缓存
+    delete instruction_byte_stream;
+  }
+}
+  void DMA::transfer_to_iram_from_mram(Address address, encoder::ByteStream *byte_stream) {
+  assert(byte_stream->size() % (util::ConfigLoader::iram_data_width_align_bytes())==0);
+  int num_instructions = static_cast<int>(byte_stream->size() /
+                                             (util::ConfigLoader::iram_data_width_align_bytes()));
+  for (int i = 0; i < num_instructions; i++) {
+    Address begin = i * util::ConfigLoader::iram_data_width_align_bytes();
+    Address end = begin+abi::word::InstructionWord().size();//16
+    Address begin_iram = i * abi::word::InstructionWord().size();
+
+    encoder::ByteStream *instruction_byte_stream =
+        byte_stream->slice(static_cast<int>(begin), static_cast<int>(end));//切出一个指令位置
+    iram_->write(address+begin_iram,
                  instruction_byte_stream);//写入指令缓存
     delete instruction_byte_stream;
   }
@@ -114,7 +131,7 @@ void DMA::transfer_from_wram_to_mram(
   assert(can_push());
   std::cout<<"DMA::transfer_from_mram to wram "<<std::endl;
 
-  auto dma_command = new DMACommand(DMACommand::READ_FOR_IRAM, iram_address,
+  auto dma_command = new DMACommand(DMACommand::READ_I, iram_address,
                                     mram_address, size, instruction);
   input_q_->push(dma_command);
 
@@ -165,19 +182,19 @@ void DMA::service_ready_q() {
 
       delete byte_stream;
     }
-    else if ( dma_command->operation() == DMACommand::READ_FOR_IRAM)
+    else if ( dma_command->operation() == DMACommand::READ_I)
     {
       auto byte_stream = new encoder::ByteStream(dma_command->bytes());
-      if (byte_stream->size()>abi::word::InstructionWord().size())
-      {
-        byte_stream = byte_stream->slice(0,(int)abi::word::InstructionWord().size());
-      }
-      transfer_to_iram(dma_command->notmram_address(), byte_stream);
+      transfer_to_iram_from_mram(dma_command->notmram_address(), byte_stream);
 
 
       delete byte_stream;
     }
   }
+}
+  void DMA::init_sys_used_mram_end_pointer(Address address) {
+  sys_used_mram_end_pointer=address;
+
 }
 
 }  // namespace upmem_sim::simulator::dpu

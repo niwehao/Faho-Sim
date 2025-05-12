@@ -36,12 +36,8 @@ void load_prg_memory(unsigned int size_text) {
         : [ra] "r"(ra), [mram_place] "r"(off));
   }
 int main(void){
-    __dma_aligned unsigned int a[2]={0,0};
-    mram_write(&a,(__mram_ptr void *)(1<<16),8);
-    // load_prg_memory(??);
-    a[0]=1;
-    a[1]=2;
-    mram_write(&a,(__mram_ptr void *)(1<<16),8);
+    load_prg_memory(512);
+    __asm__ volatile("\ttime r1\n");//1
     return 0;       //result MRAM 1<<16 should be 0 0
     
 }

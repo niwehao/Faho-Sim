@@ -23,6 +23,9 @@ class ConfigLoader {
   static int wram_data_width() { return 32; }
   static Address wram_offset() { return 512; }
   static Address wram_size() { return 128 * 1024; }
+  static Address wram_kernel_offset() { return 120 * 1024; }//8k
+  static Address iram_kernel_offset() { return 32* 1024; }//16k
+  
 
   static Address stack_size() { return 2 * 1024; }
   static Address heap_size() { return 4 * 1024; }

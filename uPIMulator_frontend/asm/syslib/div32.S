@@ -5,12 +5,7 @@
 	.type	__udiv32,@function
 __udiv32:                               // @__udiv32
 .Lfunc_begin0:
-	.file	1 "/root" "uPIMulator_frontend/sdk/syslib/div32.c"
-	.loc	1 9 0                           // uPIMulator_frontend/sdk/syslib/div32.c:9:0
-	.cfi_sections .debug_frame
-	.cfi_startproc
 // %bb.0:
-	.loc	1 10 5 prologue_end             // uPIMulator_frontend/sdk/syslib/div32.c:10:5
 	// inline asm
 
 	clz r3, r1, max, __udiv32_division_by_zero
@@ -59,10 +54,8 @@ __udiv32_result_0:
 __udiv32_division_by_zero:
 	fault 2
 	// inline asm
-.Ltmp0:
 .Lfunc_end0:
 	.size	__udiv32, .Lfunc_end0-__udiv32
-	.cfi_endproc
 	.section	.stack_sizes,"o",@progbits,.text.__udiv32
 	.long	.Lfunc_begin0
 	.byte	0
@@ -73,10 +66,7 @@ __udiv32_division_by_zero:
 	.type	__div32,@function
 __div32:                                // @__div32
 .Lfunc_begin1:
-	.loc	1 59 0                          // uPIMulator_frontend/sdk/syslib/div32.c:59:0
-	.cfi_startproc
 // %bb.0:
-	.loc	1 60 5 prologue_end             // uPIMulator_frontend/sdk/syslib/div32.c:60:5
 	// inline asm
 
 	sd r22, 0, d22
@@ -105,117 +95,11 @@ __div32_exit:
 	jump r23
 
 	// inline asm
-.Ltmp1:
 .Lfunc_end1:
 	.size	__div32, .Lfunc_end1-__div32
-	.cfi_endproc
 	.section	.stack_sizes,"o",@progbits,.text.__div32
 	.long	.Lfunc_begin1
 	.byte	0
 	.section	.text.__div32,"ax",@progbits
                                         // -- End function
-	.section	.debug_abbrev,"",@progbits
-	.byte	1                               // Abbreviation Code
-	.byte	17                              // DW_TAG_compile_unit
-	.byte	1                               // DW_CHILDREN_yes
-	.byte	37                              // DW_AT_producer
-	.byte	14                              // DW_FORM_strp
-	.byte	19                              // DW_AT_language
-	.byte	5                               // DW_FORM_data2
-	.byte	3                               // DW_AT_name
-	.byte	14                              // DW_FORM_strp
-	.byte	16                              // DW_AT_stmt_list
-	.byte	23                              // DW_FORM_sec_offset
-	.byte	27                              // DW_AT_comp_dir
-	.byte	14                              // DW_FORM_strp
-	.byte	17                              // DW_AT_low_pc
-	.byte	1                               // DW_FORM_addr
-	.byte	85                              // DW_AT_ranges
-	.byte	23                              // DW_FORM_sec_offset
-	.byte	0                               // EOM(1)
-	.byte	0                               // EOM(2)
-	.byte	2                               // Abbreviation Code
-	.byte	46                              // DW_TAG_subprogram
-	.byte	0                               // DW_CHILDREN_no
-	.byte	17                              // DW_AT_low_pc
-	.byte	1                               // DW_FORM_addr
-	.byte	18                              // DW_AT_high_pc
-	.byte	6                               // DW_FORM_data4
-	.byte	64                              // DW_AT_frame_base
-	.byte	24                              // DW_FORM_exprloc
-	.ascii	"\227B"                         // DW_AT_GNU_all_call_sites
-	.byte	25                              // DW_FORM_flag_present
-	.byte	3                               // DW_AT_name
-	.byte	14                              // DW_FORM_strp
-	.byte	58                              // DW_AT_decl_file
-	.byte	11                              // DW_FORM_data1
-	.byte	59                              // DW_AT_decl_line
-	.byte	11                              // DW_FORM_data1
-	.byte	39                              // DW_AT_prototyped
-	.byte	25                              // DW_FORM_flag_present
-	.byte	63                              // DW_AT_external
-	.byte	25                              // DW_FORM_flag_present
-	.byte	0                               // EOM(1)
-	.byte	0                               // EOM(2)
-	.byte	0                               // EOM(3)
-	.section	.debug_info,"",@progbits
-.Lcu_begin0:
-	.long	.Ldebug_info_end0-.Ldebug_info_start0 // Length of Unit
-.Ldebug_info_start0:
-	.short	4                               // DWARF version number
-	.long	.debug_abbrev                   // Offset Into Abbrev. Section
-	.byte	4                               // Address Size (in bytes)
-	.byte	1                               // Abbrev [1] 0xb:0x3e DW_TAG_compile_unit
-	.long	.Linfo_string0                  // DW_AT_producer
-	.short	12                              // DW_AT_language
-	.long	.Linfo_string1                  // DW_AT_name
-	.long	.Lline_table_start0             // DW_AT_stmt_list
-	.long	.Linfo_string2                  // DW_AT_comp_dir
-	.long	0                               // DW_AT_low_pc
-	.long	.Ldebug_ranges0                 // DW_AT_ranges
-	.byte	2                               // Abbrev [2] 0x26:0x11 DW_TAG_subprogram
-	.long	.Lfunc_begin0                   // DW_AT_low_pc
-	.long	.Lfunc_end0-.Lfunc_begin0       // DW_AT_high_pc
-	.byte	1                               // DW_AT_frame_base
-	.byte	102
-                                        // DW_AT_GNU_all_call_sites
-	.long	.Linfo_string3                  // DW_AT_name
-	.byte	1                               // DW_AT_decl_file
-	.byte	8                               // DW_AT_decl_line
-                                        // DW_AT_prototyped
-                                        // DW_AT_external
-	.byte	2                               // Abbrev [2] 0x37:0x11 DW_TAG_subprogram
-	.long	.Lfunc_begin1                   // DW_AT_low_pc
-	.long	.Lfunc_end1-.Lfunc_begin1       // DW_AT_high_pc
-	.byte	1                               // DW_AT_frame_base
-	.byte	102
-                                        // DW_AT_GNU_all_call_sites
-	.long	.Linfo_string4                  // DW_AT_name
-	.byte	1                               // DW_AT_decl_file
-	.byte	58                              // DW_AT_decl_line
-                                        // DW_AT_prototyped
-                                        // DW_AT_external
-	.byte	0                               // End Of Children Mark
-.Ldebug_info_end0:
-	.section	.debug_ranges,"",@progbits
-.Ldebug_ranges0:
-	.long	.Lfunc_begin0
-	.long	.Lfunc_end0
-	.long	.Lfunc_begin1
-	.long	.Lfunc_end1
-	.long	0
-	.long	0
-	.section	.debug_str,"MS",@progbits,1
-.Linfo_string0:
-	.asciz	"clang version 12.0.0 (https://github.com/upmem/llvm-project.git d36425841d9a4d1420b7aa155675f6ae8bcf9f08)" // string offset=0
-.Linfo_string1:
-	.asciz	"/root/uPIMulator_frontend/sdk/syslib/div32.c" // string offset=106
-.Linfo_string2:
-	.asciz	"/root/upmem_compiler"          // string offset=151
-.Linfo_string3:
-	.asciz	"__udiv32"                      // string offset=172
-.Linfo_string4:
-	.asciz	"__div32"                       // string offset=181
 	.addrsig
-	.section	.debug_line,"",@progbits
-.Lline_table_start0:

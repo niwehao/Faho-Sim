@@ -15,14 +15,14 @@ void SchedThread::connect_rank(rank::Rank *rank) {//DPU调度线程
 }
 
 void SchedThread::sched(int execution) {
-  dma_transfer_input_dpu_mram_heap_pointer_name(execution);//堆指针
-  dma_transfer_dpu_input_arguments(execution);//传入的参数
+  //dma_transfer_input_dpu_mram_heap_pointer_name(execution);//堆指针
+  //dma_transfer_dpu_input_arguments(execution);//传入的参数
 
   std::cout << "sched " << execution << " completed..." << std::endl;
 }
 
 void SchedThread::check(int execution) {//先不去检查结果
-  dma_transfer_output_dpu_mram_heap_pointer_name(execution);
+  //dma_transfer_output_dpu_mram_heap_pointer_name(execution);
   //dma_transfer_dpu_results(execution);
 
   std::cout << "check " << execution << " completed..." << std::endl;

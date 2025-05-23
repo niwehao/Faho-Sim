@@ -5,6 +5,13 @@
         "defs.h": "c",
         "random": "c",
         "perfcounter.h": "c",
-        "set": "c"
+        "set": "c",
+        "sync.h": "c",
+        "def.h": "c",
+        "kernel.h": "c",
+        "istream": "c",
+        "stop_token": "c",
+        "stdlib.h": "c",
+        "*.inc": "c"
     }
 }

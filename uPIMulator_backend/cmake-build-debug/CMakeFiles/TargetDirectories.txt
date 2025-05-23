@@ -1,5 +1,0 @@
-/mnt/d/Upmen/uPIMulator/python_cpp/uPIMulator_backend/cmake-build-debug/CMakeFiles/edit_cache.dir
-/mnt/d/Upmen/uPIMulator/python_cpp/uPIMulator_backend/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/mnt/d/Upmen/uPIMulator/python_cpp/uPIMulator_backend/cmake-build-debug/src/CMakeFiles/uPIMulator.dir
-/mnt/d/Upmen/uPIMulator/python_cpp/uPIMulator_backend/cmake-build-debug/src/CMakeFiles/edit_cache.dir
-/mnt/d/Upmen/uPIMulator/python_cpp/uPIMulator_backend/cmake-build-debug/src/CMakeFiles/rebuild_cache.dir

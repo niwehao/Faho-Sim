@@ -18,7 +18,6 @@ from assembler.data_prep.trns_data_prep import TRNSDataPrep
 from assembler.data_prep.ts_data_prep import TSDataPrep
 from assembler.data_prep.uni_data_prep import UNIDataPrep
 from assembler.data_prep.va_data_prep import VADataPrep
-from assembler.data_prep.test1_data_prep import TEST1DataPrep
 from encoder.byte import Byte
 from linker_.linker_script import LinkerScript
 from util.path_collector import PathCollector
@@ -38,7 +37,6 @@ class Assembler:
         TSDataPrep,
         UNIDataPrep,
         VADataPrep,
-        TEST1DataPrep,
     ]
 
     def __init__(self):
@@ -82,7 +80,6 @@ class Assembler:
             f"{benchmark}.{num_tasklets}",
             "atomic.bin",
         )
-
         bytes_: List[Byte] = []
         for atomic_section in atomic_sections:
             bytes_ += atomic_section.to_bytes()
@@ -348,8 +345,7 @@ class Assembler:
             return UNIDataPrep(num_tasklets, data_prep_param, num_dpus)
         elif benchmark == "VA":
             return VADataPrep(num_tasklets, data_prep_param, num_dpus)
-        elif benchmark == "TEST1":
-            return TEST1DataPrep(num_tasklets, data_prep_param, num_dpus)
+
         else:
             raise ValueError
 

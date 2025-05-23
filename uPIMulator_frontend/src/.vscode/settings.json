@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "kernel.h": "c",
+        "custom_barrier.h": "c",
+        "def.h": "c",
+        "sync.h": "c",
+        "jobs.h": "c",
+        "inode.h": "c",
+        "socket.h": "c"
+    }
+}

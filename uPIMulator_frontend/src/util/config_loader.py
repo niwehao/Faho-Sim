@@ -85,3 +85,9 @@ class ConfigLoader:
     @staticmethod
     def min_access_granularity() -> int:
         return 8
+    @staticmethod
+    def wram_kernel_offset() -> int:
+        return 120 * 1024
+    @staticmethod
+    def iram_kernel_offset() -> int:
+        return 32* 1024

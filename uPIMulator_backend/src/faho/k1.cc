@@ -457,13 +457,13 @@ namespace upmem_sim::simulator::faho::k1
                                     ".bin";
         auto byte_stream = new encoder::ByteStream(wram_filepath);
         auto byte_stream2 = new encoder::ByteStream(iram_filepath);
-        assert(byte_stream->size() < util::ConfigLoader::wram_size() - util::ConfigLoader::wram_K2andK2_offset());
-        assert(byte_stream2->size() < util::ConfigLoader::iram_size() - util::ConfigLoader::iram_K2andK2_offset());
+        assert(byte_stream->size() < util::ConfigLoader::wram_size() - util::ConfigLoader::wram_kernel_offset());
+        assert(byte_stream2->size() < util::ConfigLoader::iram_size() - util::ConfigLoader::iram_kernel_offset());
 
         for (auto &dpu : rank_->dpus())
         {
-            dpu->dma()->transfer_to_wram(util::ConfigLoader::wram_K2andK2_offset()+util::ConfigLoader::wram_offset(), byte_stream);
-            dpu->dma()->transfer_to_iram(util::ConfigLoader::iram_K2andK2_offset()+util::ConfigLoader::iram_offset(), byte_stream2);
+            dpu->dma()->transfer_to_wram(util::ConfigLoader::wram_kernel_offset()+util::ConfigLoader::wram_offset(), byte_stream);
+            dpu->dma()->transfer_to_iram(util::ConfigLoader::iram_kernel_offset()+util::ConfigLoader::iram_offset(), byte_stream2);
         }
         delete byte_stream;
         delete byte_stream2;
@@ -474,7 +474,7 @@ namespace upmem_sim::simulator::faho::k1
         std::cout << "address for dpu_id" << def::dpu_id_address << std::endl;
         std::getline(file, line);
         def::processs_address = std::stoul(line);
-        std::cout << "address for process" << def::processs_address << std::endl;
+        std::cout << "address for processs" << def::processs_address << std::endl;
         std::getline(file, line);
         def::inode_table_address = std::stoul(line);
         std::cout << "address for inode_table" << def::inode_table_address << std::endl;

@@ -478,6 +478,8 @@ StringLiteral
 		| '?'
 		| '!'
 		| '\\'
+		| '<'
+		| '>'
 		| WHITE_SPACE
 		)*
 	'"'

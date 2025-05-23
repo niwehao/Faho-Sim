@@ -30,14 +30,18 @@ class LinkerScript:
     def symbol_names(self) -> Set[str]:
         return {symbol.name() for symbol in self._symbols}
 
-    def assign_address(self, executable: Executable) -> None:
-        self._assign_iram(executable)
-        self._assign_atomic(executable)
-        self._assign_wram(executable)
-        self._assign_mram(executable)
+    def assign_address(self, executable: Executable,benchmark) -> None:
+        self._assign_iram(executable,benchmark)
+        self._assign_atomic(executable,benchmark)
+        self._assign_wram(executable,benchmark)
+        self._assign_mram(executable,benchmark)
 
-    def _assign_iram(self, executable: Executable) -> None:
-        cur_address = ConfigLoader.iram_offset()
+
+    def _assign_iram(self, executable: Executable,benchmark) -> None:
+        if benchmark == "KERNEL":
+            cur_address = ConfigLoader.iram_offset() + ConfigLoader.iram_kernel_offset()
+        else:
+            cur_address = ConfigLoader.iram_offset()
         bootstrap = executable.section(SectionName.TEXT, "__bootstrap")#开始段
 
         assert bootstrap is not None
@@ -75,7 +79,7 @@ class LinkerScript:
 
         assert cur_address < (ConfigLoader.iram_offset() + ConfigLoader.iram_size())
 
-    def _assign_atomic(self, executable: Executable) -> None:
+    def _assign_atomic(self, executable: Executable,benchmark) -> None:
         cur_address = ConfigLoader.atomic_offset()
         self.symbol("__atomic_start_addr").set_address(cur_address)
 
@@ -93,8 +97,11 @@ class LinkerScript:
 
         assert cur_address < (ConfigLoader.atomic_offset() + ConfigLoader.atomic_size())
 
-    def _assign_wram(self, executable: Executable) -> None:
-        cur_address = ConfigLoader.wram_offset()
+    def _assign_wram(self, executable: Executable,benchmark) -> None:
+        if benchmark == "KERNEL":
+            cur_address = ConfigLoader.wram_offset() + ConfigLoader.wram_kernel_offset()
+        else:
+            cur_address = ConfigLoader.wram_offset()
 
         sys_zero = executable.section(SectionName.DATA, "__sys_zero")
         if sys_zero is not None:
@@ -194,9 +201,9 @@ class LinkerScript:
 
         assert cur_address < (ConfigLoader.wram_offset() + ConfigLoader.wram_size())
 
-    def _assign_mram(self, executable: Executable) -> None:
+    def _assign_mram(self, executable: Executable,benchmark) -> None:
+      
         cur_address = ConfigLoader.mram_offset()
-
         debug_abbrev_section = executable.section(SectionName.DEBUG_ABBREV, "")
         if debug_abbrev_section is not None:
             assert debug_abbrev_section.address() is None

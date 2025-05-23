@@ -4,4 +4,4 @@
  */
 
 #define SEQREAD_CACHE_SIZE 128
-#include <seqread.inc>
+#include "seqread.inc"

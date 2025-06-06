@@ -1,7 +1,10 @@
 #ifndef PMEM_SIM_SIMULATOR__FAHO_DEF_H_
 #define PMEM_SIM_SIMULATOR__FAHO_DEF_H_
-#include <stdint.h> //uint_*_t
-#include "faho/k1.h"
+#include <stdint.h>              //uint_*_t
+#include "util/config_loader.h"  // util::ConfigLoader
+#include "encoder/byte_stream.h" // ByteStream
+#include "simulator/dpu/dpu.h"
+
 #define MAX_PRG 10
 #define BUFFER_BIT_MAP 400
 #define JOB_PER_PROCESS 100
@@ -16,7 +19,7 @@
 #define SOCKET_OUT 8
 #define NEW_SOCKET 16
 #define MAX_SD 3
-#define SIZE_STACK 512
+#define SIZE_STACK util::ConfigLoader::stack_size()
 #define SIZE_SOCKET (INODE_BLOCK >> 2)
 #define SIZE_BLOCK INODE_BLOCK
 
@@ -24,13 +27,15 @@
 #include <unistd.h>
 #include <unistd.h>    // 用于read, close
 #include <sys/types.h> // 用于基本系统类型
+#include <fstream>    // std::ifstream, std::ofstream, std::fstream
+#include <iostream>   // std::cin, std::cout, std::cerr
+#include <sstream>  
 #include <sys/stat.h>  // 用于文件状态
-
+#include "faho/inode.h"
+#include "faho/socket.h"
 namespace upmem_sim::simulator::faho::def
 {
-  int dpu_id_address;
-  int processs_address;
-  int inode_table_address;
+
 
   enum STATE
   { // state of a process
@@ -48,10 +53,9 @@ namespace upmem_sim::simulator::faho::def
   };
   enum KIND
   { // state of a process
-    NONE = 0,
     NewProcess = 1,
     LaunchProcess = 2,
-    WriteSocket = 3, // socket_write_handle_evt
+    WriteSockets = 3, // socket_write_handle_evt
     InodeWrite = 4,
     InodeRead = 5,
   };
@@ -74,6 +78,45 @@ namespace upmem_sim::simulator::faho::def
     encoder::ByteStream *buf;
     int size;
   };
+  class inode_data
+  {
+  public:
+    inode_data(int pid);
+    ~inode_data();
+    unsigned int size;
+    unsigned int pid;
+    unsigned int prc_ix;
+    encoder::ByteStream *buf;
+    int offset;
+    std::string path;
+  };
+  class WriteInode
+  {
+  public:
+    unsigned int nb_data = 0;
+    std::vector<inode_data *> data;
+  };
+  class ReadInode
+  {
+  public:
+    unsigned int nb_data = 0;
+    std::vector<inode_data *> data;
+  };
+  class socket_data
+  {
+  public:
+    socket_data(int pid);
+    ~socket_data();
+    unsigned int size;
+    unsigned int pid;
+    encoder::ByteStream *buf;
+  };
+  class WriteSocket
+  {
+  public:
+    unsigned int nb_data = 0;
+    std::vector<socket_data *> data;
+  };
   class DpuFlag
   {
   public:
@@ -90,23 +133,23 @@ namespace upmem_sim::simulator::faho::def
 
   public:
     DpuManager(int id, dpu::DPU *dpu);
-    ~DpuManager();
     dpu::DPU *dpu;
     DpuFlag *dpu_flag;
-    struct def::kernel_info ki;  
+    struct def::kernel_info ki;
     uint32_t dpu_id;
-    u_int16_t inode_table[MAX_PRG][4][2];
+    u_int16_t inode_table[MAX_PRG][4][2]={0};//用于初始填充
     u_int8_t process_table[MAX_PRG] = {0};
     std::vector<struct process_host *> processes;
     std::vector<struct ProcessEvent *> unload_processes;
     std::vector<struct ProcessEvent *> load_processes;
     std::vector<struct ProcessEvent *> unlaunch_processes;
-    std::vector<struct ProcessEvent *> launch_processes;//启动和结束
-    socket::WriteSocket *write_socket;
-    inode::WriteInode *write_inode;
-    inode::ReadInode *read_inode;
+    std::vector<struct ProcessEvent *> launch_processes; // 启动和结束
+    process_host * temp_for_start;
+    WriteSocket *write_socket;
+    WriteInode *write_inode;
+    ReadInode *read_inode;
     int num_process = 0;
-    int inode_num = 3; // 留下一个节点去储存process
+    int inode_num = 2; // 留下一个节点去储存process
   };
   struct socket_descriptor
   {
@@ -133,7 +176,7 @@ namespace upmem_sim::simulator::faho::def
     uint32_t pid;
     uint32_t state;
     uint32_t end_value;
-    uint32_t off_set_prg;
+    uint32_t off_set_prg = 0;
     uint32_t timer;
     uint32_t begin_stack;
     struct prg prg;
@@ -150,7 +193,7 @@ namespace upmem_sim::simulator::faho::def
   };
 
   uint32_t init_process(struct process_host *pi,
-                        uint8_t instant_launched, int pid, int role_id, int app_id,std::string path);
+                        uint8_t instant_launched, int pid, int role_id, int app_id, std::string path);
   void dpu_copy_from_mram(dpu::DPU *dpu, void *buf, int offset, int size);
   void dpu_copy_to_mram(dpu::DPU *dpu, int offset, void *buf, int size);
   void dpu_copy_from_wram(dpu::DPU *dpu, void *buf, int offset, int size);

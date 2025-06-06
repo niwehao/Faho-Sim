@@ -2491,7 +2491,7 @@ class InstructionAssigner(assemblyListener):
         condition = Condition.FALSE
         pc = 0
 
-        instruction = Instruction(op_code, suffix, condiiton=condition, pc=pc)
+        instruction = Instruction(op_code, suffix, condition=condition, pc=pc)
 
         assert op_code == instruction.op_code()
         assert suffix == instruction.suffix()

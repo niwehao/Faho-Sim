@@ -161,6 +161,16 @@ void RevolverScheduler::cycle() {
     else
       assert(0);
   }
+  // 更新统计信息
+  std::string info_new="num_active_tasklets: "+std::to_string(num_active_tasklets)+
+        ", num_embryo: "+std::to_string(num_embryo)+
+        ", num_sleep: "+std::to_string(num_sleep)+
+        ", num_block: "+std::to_string(num_block)+
+        ", num_zombie: "+std::to_string(num_zombie);
+  if (info_ != info_new) {
+    std::cout << info_ << std::endl;
+  }
+  info_ = info_new;
   assert(num_active_tasklets <= 16);//活动线程数不能超过16,这是dpu的限制
   stat_factory_->overwrite("current_active_tasklets",
                            num_active_tasklets); //更新当前活动线程数

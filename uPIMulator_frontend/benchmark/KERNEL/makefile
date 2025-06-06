@@ -1,5 +1,5 @@
 LIB := dpu/
-NR_TASKLETS ?=16
+NR_TASKLETS ?=24
 
 
 
@@ -7,16 +7,15 @@ NR_TASKLETS ?=16
 K_ASM := dpu_code.S 
 K_C := kernel.c
 
-KERNEL_STACK_SIZE=256
-REUSED_STACK_FTHREAD?=1
 
-DPU_KERNEL_FLAG := -Wall -Wextra -Werror  -fverbose-asm  -fdata-sections -DNR_TASKLETS=${NR_TASKLETS} -DSTACK_SIZE_DEFAULT=${KERNEL_STACK_SIZE} -DREUSED_STACK_FTHREAD=${REUSED_STACK_FTHREAD}
+
+DPU_KERNEL_FLAG := -Wall -Wextra -Werror  -fverbose-asm  -fdata-sections -DNR_TASKLETS=${NR_TASKLETS}
 
 all : ${K_ASM} 
 
 
 ${K_ASM} : 
-	dpu-upmem-dpurte-clang -S -g0 -O2 ${DPU_KERNEL_FLAG} -o $@ ${K_C}
+	dpu-upmem-dpurte-clang -ffunction-sections -S -g0 -O0 ${DPU_KERNEL_FLAG} -o $@ ${K_C}
 
 
 clean:

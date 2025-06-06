@@ -9,72 +9,164 @@
 #include "simulator/reg/gp_reg.h"
 #include "simulator/reg/pc_reg.h"
 #include "simulator/reg/sp_reg.h"
+#include <fstream>
+#include <iostream>
+#include <vector>
+#include <filesystem>
+#include <fstream>
+#include <sstream>
 
-namespace upmem_sim::simulator::reg {
+namespace upmem_sim::simulator::reg
+{
+  class timetable
+  {
+  public:
+    int time;
+    std::string name;
+    timetable(int time, std::string name) : time(time), name(name) {}
+  };
+  class RegFile
+  {
+  public:
+    explicit RegFile(ThreadID id);
+    ~RegFile();
 
-class RegFile {
- public:
-  explicit RegFile(ThreadID id);
-  ~RegFile();
+    int64_t read_gp_reg(abi::reg::GPReg *gp_reg,
+                        abi::word::Representation representation)
+    {
+      return gp_regs_[gp_reg->index()]->read(representation);
+    }
+    int64_t read_sp_reg(abi::reg::SPReg sp_reg,
+                        abi::word::Representation representation)
+    {
+      return sp_reg_->read(sp_reg, representation);
+    }
+    std::tuple<int64_t, int64_t> read_pair_reg(
+        abi::reg::PairReg *pair_reg, abi::word::Representation representation);
+    int64_t read_src_reg(abi::reg::SrcReg *src_reg,
+                         abi::word::Representation representation);
 
-  int64_t read_gp_reg(abi::reg::GPReg *gp_reg,
-                      abi::word::Representation representation) {
-    return gp_regs_[gp_reg->index()]->read(representation);
-  }
-  int64_t read_sp_reg(abi::reg::SPReg sp_reg,
-                      abi::word::Representation representation) {
-    return sp_reg_->read(sp_reg, representation);
-  }
-  std::tuple<int64_t, int64_t> read_pair_reg(
-      abi::reg::PairReg *pair_reg, abi::word::Representation representation);
-  int64_t read_src_reg(abi::reg::SrcReg *src_reg,
-                       abi::word::Representation representation);
+    int64_t read_pc_reg() { return pc_reg_->read(); }
+    bool condition(abi::isa::Condition condition)
+    {
+      return condition_reg_->condition(condition);
+    }
+    bool flag(abi::isa::Flag flag) { return flag_reg_->flag(flag); }
+    bool exception(abi::isa::Exception exception)
+    {
+      return exception_reg_->exception(exception);
+    }
 
-  int64_t read_pc_reg() { return pc_reg_->read(); }
-  bool condition(abi::isa::Condition condition) {
-    return condition_reg_->condition(condition);
-  }
-  bool flag(abi::isa::Flag flag) { return flag_reg_->flag(flag); }
-  bool exception(abi::isa::Exception exception) {
-    return exception_reg_->exception(exception);
-  }
+    void write_gp_reg(abi::reg::GPReg *gp_reg, int64_t value)
+    {
+      gp_regs_[gp_reg->index()]->write(value);
+    }
+    void write_pair_reg(abi::reg::PairReg *pair_reg, int64_t even, int64_t odd);
+    void write_pc_reg(int64_t value)
+    {
+      timetable *timetable_p = nullptr;
+      if (value < util::ConfigLoader::iram_offset() + util::ConfigLoader::iram_kernel_offset())
+      {//用户态debug
+        for (auto &timetable_n : time_table_helloworld)
+        {
+          if(value==393216){
+            std::cout << "*** jmp to 0x0" << std::endl;
+            break;
+          }
+          if (timetable_n->time == value)
+          {
+            std::cout << "*** jmp to user: " << timetable_n->name << std::endl;
+            // if(timetable_n->name == ".LBB40_2") {
+            //   std::cout << "*** .LBB40_2" << std::endl;
+            //   return;
+            // }
+            break;
+          }
+          else if (timetable_n->time > value)
+          {
+            assert(timetable_p != nullptr);
 
-  void write_gp_reg(abi::reg::GPReg *gp_reg, int64_t value) {
-    gp_regs_[gp_reg->index()]->write(value);
-  }
-  void write_pair_reg(abi::reg::PairReg *pair_reg, int64_t even, int64_t odd);
-  void write_pc_reg(int64_t value) { pc_reg_->write(value); }
-  void increment_pc_reg() { pc_reg_->increment(); }
+            assert((value - timetable_p->time) % 12 == 0);
+            std::cout << "*** jmp to user: " << timetable_p->name << "+" << (value - timetable_p->time) / 12 << std::endl;
+            break;
+          }
+          timetable_p = timetable_n;
+        }
+      }
+      else
+      {//系统态debug
+        for (auto &timetable_n : time_table_)
+        {
+          if(value==542100){
+            std::cout << "*** jmp to syscall" << std::endl;
+            break;
+          }
+          if (timetable_n->time == value)
+          {
+            std::cout << "*** jmp to kernel: " << timetable_n->name << std::endl;
+            // if(timetable_n->name == ".LBB40_2") {
+            //   std::cout << "*** .LBB40_2" << std::endl;
+            //   return;
+            // }
+            break;
+          }
+          else if (timetable_n->time > value)
+          {
+            assert(timetable_p != nullptr);
 
-  void set_condition(abi::isa::Condition condition) {
-    condition_reg_->set_condition(condition);
-  }
-  void clear_condition(abi::isa::Condition condition) {
-    condition_reg_->clear_condition(condition);
-  }
-  void clear_conditions() { condition_reg_->clear_conditions(); }
+            assert((value - timetable_p->time) % 12 == 0);
+            std::cout << "*** jmp to kernel: " << timetable_p->name << "+" << (value - timetable_p->time) / 12 << std::endl;
+            break;
+          }
+          timetable_p = timetable_n;
+        }
+      }
 
-  void set_flag(abi::isa::Flag flag) { flag_reg_->set_flag(flag); }
-  void clear_flag(abi::isa::Flag flag) { flag_reg_->clear_flag(flag); }
+      pc_reg_->write(value);
+    }
+    void increment_pc_reg()
+    {
+      pc_reg_->increment();
+      // if(pc_reg_->read()  == 570432+12) {
+      //   std::cout << "pc_reg increment to: " << pc_reg_->read() << std::endl;
+      // }
+    }
 
-  void set_exception(abi::isa::Exception exception) {
-    exception_reg_->set_exception(exception);
-  }
-  void clear_exception(abi::isa::Exception exception) {
-    exception_reg_->clear_exception(exception);
-  }
+    void set_condition(abi::isa::Condition condition)
+    {
+      condition_reg_->set_condition(condition);
+    }
+    void clear_condition(abi::isa::Condition condition)
+    {
+      condition_reg_->clear_condition(condition);
+    }
+    void clear_conditions() { condition_reg_->clear_conditions(); }
 
-  void cycle() = delete;
+    void set_flag(abi::isa::Flag flag) { flag_reg_->set_flag(flag); }
+    void clear_flag(abi::isa::Flag flag) { flag_reg_->clear_flag(flag); }
 
- private:
-  std::vector<GPReg *> gp_regs_;//普通寄存器 24个
-  SPReg *sp_reg_;//特殊寄存器
-  PCReg *pc_reg_;
-  ConditionReg *condition_reg_;//条件位
-  FlagReg *flag_reg_;//zero & carry
-  ExceptionReg *exception_reg_;//处理异常
-};
+    void set_exception(abi::isa::Exception exception)
+    {
+      exception_reg_->set_exception(exception);
+    }
+    void clear_exception(abi::isa::Exception exception)
+    {
+      exception_reg_->clear_exception(exception);
+    }
 
-}  // namespace upmem_sim::simulator::reg
+    void cycle() = delete;
+
+  private:
+    std::vector<GPReg *> gp_regs_; // 普通寄存器 24个
+    SPReg *sp_reg_;                // 特殊寄存器
+    PCReg *pc_reg_;
+    std::vector<timetable *> time_table_; // 时间表
+    std::vector<timetable *> time_table_helloworld;
+    ConditionReg *condition_reg_; // 条件位
+    FlagReg *flag_reg_;           // zero & carry
+    ExceptionReg *exception_reg_; // 处理异常
+  };
+
+} // namespace upmem_sim::simulator::reg
 
 #endif

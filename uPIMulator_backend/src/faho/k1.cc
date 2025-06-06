@@ -5,21 +5,30 @@
 #include <stack>
 namespace upmem_sim::simulator::faho::k1
 {
-    K1::K1()
+    int dpu_id_address;
+    int processs_address;
+    int inode_table_address;
+    struct def::socket_connection *sockets_connection;
+    uint32_t nb_so = 0;
+    K1::K1(std::string bindir, std::string benchmark, int num_tasklets, rank::Rank *rank)
     {
-        // 先连接rank再初始化
+        bindir_ = bindir;
+        benchmark_ = benchmark;
+        num_tasklets_ = num_tasklets;
+        connect_rank(rank);
+        init();
     }
+
     void K1::init()
     {
         init_mram();
-        init_K2andK3();
         init_event(); // 读入指令表
         init_dpu_manager();
     }
     void K1::init_event()
     {
         // 打开文件
-        std::ifstream file(bindir_ + "/event");
+        std::ifstream file(bindir_ + "event");
 
         assert(file.is_open());
 
@@ -43,8 +52,9 @@ namespace upmem_sim::simulator::faho::k1
                     def::Event *event = new def::Event();
                     event->pid = pid;
                     event->time = time;
+                    event->num_dpu = num_dpu;
                     event->kind = def::KIND::NewProcess;
-                    event->path = bindir_ + "/" + path;
+                    event->path = (bindir_ + path);
                     events_.push_back(event);
                 }
                 else if (token == "InodeRead")
@@ -77,7 +87,7 @@ namespace upmem_sim::simulator::faho::k1
                     event->time = time;
                     event->offset = offset;
                     event->kind = def::KIND::InodeWrite;
-                    event->buf = new encoder::ByteStream(bindir_ + "/" + path);
+                    event->buf = new encoder::ByteStream(bindir_ + path);
                     events_.push_back(event);
                 }
                 else if (token == "LaunchProcess") // all_launch_evt
@@ -100,8 +110,8 @@ namespace upmem_sim::simulator::faho::k1
                     def::Event *event = new def::Event();
                     event->pid = pid;
                     event->time = time;
-                    event->kind = def::KIND::WriteSocket;
-                    event->buf = new encoder::ByteStream(bindir_ + "/" + path);
+                    event->kind = def::KIND::WriteSockets;
+                    event->buf = new encoder::ByteStream(bindir_ + path);
                     events_.push_back(event);
                 }
                 else
@@ -110,8 +120,6 @@ namespace upmem_sim::simulator::faho::k1
                 }
                 break;
             }
-
-            std::cout << "read_event_done" << std::endl;
         }
 
         file.close();
@@ -121,18 +129,30 @@ namespace upmem_sim::simulator::faho::k1
     void K1::cycle()
     {
         timer_++;
+        int a = 0;
+        // std::cout << "cycle " << timer_ << " :";
+        if (timer_ % 100 == 0)
+        {
+            a = 1; // 只是占位
+        }
+        if (timer_ % 1000 == 0)
+        {
+            std::cout << "****************** 1k " << timer_ << std::endl;
+        }
         def::Event *event = get_event(timer_);
         if (event != nullptr) // 模拟api的操作
         {
             switch (event->kind)
             {
             case def::KIND::NewProcess:
+
                 spread_to_dpu(event);
                 break;
             case def::KIND::LaunchProcess: // all_launch_evt
                 // 进行分配
                 launch_event_handle_evt(event);
-            case def::KIND::WriteSocket: // socket_write_handle_evt
+                break;
+            case def::KIND::WriteSockets: // socket_write_handle_evt
                 socket_write_handle_evt(event);
                 break;
             case def::KIND::InodeWrite: // inode_write_handle_evt
@@ -140,6 +160,9 @@ namespace upmem_sim::simulator::faho::k1
                 break;
             case def::KIND::InodeRead:
                 read_inode_handle_evt(event);
+                break;
+            default:
+                assert(0); // 不可能出现其他事件
             }
         }
         for (size_t i = 0; i < dpu_managers_.size(); i++)
@@ -152,7 +175,7 @@ namespace upmem_sim::simulator::faho::k1
                 dpumanager->dpu_flag->load_proc || dpumanager->dpu_flag->launch_proc ||
                 dpumanager->dpu_flag->write_inode || dpumanager->dpu_flag->read_inode)
             {
-                read_process(dpumanager); // 从内存里读取进程相关信息
+                read_process(dpumanager); // load到的信息被覆盖???
             }
             if (dpumanager->dpu_flag->launch_proc)
             {
@@ -181,6 +204,10 @@ namespace upmem_sim::simulator::faho::k1
 
                 transfert_socket(dpumanager);
             }
+            if (dpumanager->ki.flag1 & PROCESS_END)
+            {
+                parse_end_process(dpumanager);
+            }
             if (dpumanager->dpu_flag->dpu_process_change)
             {
                 write_process(dpumanager);
@@ -189,24 +216,46 @@ namespace upmem_sim::simulator::faho::k1
             // 获取事件,并且写入远端dpu中
         }
     }
+    struct def::socket_connection *K1::find_free_socket_connection_or_alloc()
+    {
+        // 函数实现
+        for (unsigned int i = 0; i < nb_so; i++)
+        {
+            if (sockets_connection[i].pid == 0)
+            {
+                return &sockets_connection[i];
+            }
+        }
+        sockets_connection = (def::socket_connection *)realloc(
+            sockets_connection, (nb_so + 1) * sizeof(*sockets_connection));
+        struct def::socket_connection *sc = &sockets_connection[nb_so];
+        sc->idx = nb_so;
+        nb_so++;
+        return sc;
+    }
     void K1::read_process(def::DpuManager *dpu_manager)
     {
         for (int i = 0; i < MAX_PRG; i++)
         {
+            if (dpu_manager->processes[i] == nullptr)
+                continue; // 该位置没有进程
             dpu::DPU *dpu = dpu_manager->dpu;
-            def::dpu_copy_from_mram(dpu, dpu_manager->processes[i], 
-                def::processs_address + i * sizeof(struct def::process_host),
+            def::dpu_copy_from_wram(dpu, dpu_manager->processes[i],
+                                    k1::processs_address + i * sizeof(struct def::process_host),
                                     sizeof(struct def::process_host));
         }
     }
-    void K1::write_process(def::DpuManager *dpu_manager){
-        for(int i=0;i<MAX_PRG;i++)
+    void K1::write_process(def::DpuManager *dpu_manager)
+    {
+        dpu_manager->dpu_flag->dpu_process_change = 0; // 清除标志位
+        for (int i = 0; i < MAX_PRG; i++)
         {
-            def::dpu_copy_to_wram(dpu_manager->dpu, 
-                def::processs_address+i*sizeof(struct def::process_host), dpu_manager->processes[i], 
-                sizeof(struct def::process_host));
+            if (dpu_manager->processes[i] == nullptr)
+                continue; // 该位置没有进程
+            def::dpu_copy_to_wram(dpu_manager->dpu,
+                                  k1::processs_address + i * sizeof(struct def::process_host), dpu_manager->processes[i],
+                                  sizeof(struct def::process_host));
         }
-
     }
     void K1::launch_event(def::DpuManager *dpu_manager)
     {
@@ -257,7 +306,7 @@ namespace upmem_sim::simulator::faho::k1
                 if (p->pid == event->pid) // 可能还有application_id,但是意义不大
                 {
                     dpu_manager->dpu_flag->write_socket = 1;
-                    socket::add_write_data_socket(dpu_manager, event, p);
+                    add_write_data_socket(dpu_manager, event, p);
                     return;
                 }
             }
@@ -279,7 +328,7 @@ namespace upmem_sim::simulator::faho::k1
                     {
                         if (process->process->pid == event->pid)
                         {
-                            inode::add_write_data_inode(dpu_manager, event, p, MAX_PRG);
+                            def::add_write_data_inode(dpu_manager, event, p, MAX_PRG);
                             return;
                         }
                     }
@@ -304,7 +353,7 @@ namespace upmem_sim::simulator::faho::k1
                 if (p->pid == event->pid) // 可能还有application_id,但是意义不大
                 {
                     dpu_manager->dpu_flag->read_inode = 1;
-                    inode::add_read_request(dpu_manager, event, p->pid);
+                    def::add_read_request(dpu_manager, event, p->pid);
                     return;
                 }
             }
@@ -316,10 +365,8 @@ namespace upmem_sim::simulator::faho::k1
         int num_dpu = event->num_dpu;
         assert(num_dpu <= dpu_managers_.size());
         std::vector<def::DpuManager *> ManagerStack;
-
         for (auto &dpu_manager : dpu_managers_)
         {
-
             ManagerStack.push_back(dpu_manager);
         }
         std::sort(ManagerStack.begin(), ManagerStack.end(),
@@ -339,15 +386,17 @@ namespace upmem_sim::simulator::faho::k1
             int found = 0;
             for (int i = 0; i < MAX_PRG; i++)
             {
-                if (dpu_manager->process_table[i] == 0) // 空闲
+                if (dpu_manager->process_table[i] == 0) // 空闲 在此时进程表没有被修改
                 {
+                    if (dpu_manager->processes[i] != nullptr)
+                        assert(dpu_manager->processes[i]->pid == 0 && dpu_manager->processes[i]->state == def::STATE::NONE); // 该位置没有进程
                     def::ProcessEvent *process_event = new def::ProcessEvent(process, event, i);
                     dpu_manager->unload_processes.push_back(process_event);
                     dpu_manager->num_process++;
                     dpu_manager->dpu_flag->load_proc = 1; // set flag
                     num_dpu--;
-                    dpu_manager->processes[i] = process;
-                    dpu_manager->process_table[i] = all_num_process; // 被占用的
+                    // dpu_manager->processes[i] = process;
+                    dpu_manager->process_table[i] = all_num_process; // 被占用的pid
                     found = 1;
                     break;
                 }
@@ -363,7 +412,6 @@ namespace upmem_sim::simulator::faho::k1
     void K1::connect_rank(rank::Rank *rank)
     {
         assert(rank != nullptr);
-        assert(rank_ == nullptr);
         rank_ = rank;
     }
     void K1::init_dpu_manager()
@@ -374,10 +422,17 @@ namespace upmem_sim::simulator::faho::k1
             assert(dpu_num == dpu->dpu_id());
             auto dpu_manager = new def::DpuManager(dpu->dpu_id(), dpu);
             dpu_managers_.push_back(dpu_manager);
+            def::dpu_copy_to_mram_bytes(dpu, 0, syscall, syscall->size()); // 传递mram_img
             def::dpu_copy_to_wram(dpu,
-                                  def::dpu_id_address ,&dpu_num, sizeof(int)); // 传递dpu id
-             dpu_num++;
+                                  k1::dpu_id_address, &dpu_num, sizeof(int)); // 传递dpu id
+            struct def::process_host p[MAX_PRG];
+            def::dpu_copy_to_wram(dpu,
+                                  k1::processs_address, p, MAX_PRG * sizeof(def::process_host));                                // 初始化进程表
+            def::dpu_copy_to_wram(dpu, k1::inode_table_address, dpu_manager->inode_table, 2 * 4 * MAX_PRG * sizeof(u_int16_t)); // 初始化kernel_info
+            // DPU_ASSERT
+            dpu_num++;
         }
+        // assert(dpu_num == 16); // dpu数量必须与tasklet数量一致
     }
     def::Event *K1::get_event(int time)
     {
@@ -390,6 +445,18 @@ namespace upmem_sim::simulator::faho::k1
         }
         return nullptr;
     }
+    void K1::check_atomic(encoder::ByteStream *buf)
+    {
+        // 遍历buf,所有值都是0
+        for (int i = 0; i < buf->size(); i++)
+        {
+            if (buf->byte(i) != 0)
+            {
+                fprintf(stderr, "atomic file is not empty, please check it\n");
+                assert(0);
+            }
+        }
+    }
 
     void K1::load_event(def::DpuManager *dpu_manager)
     {
@@ -401,29 +468,50 @@ namespace upmem_sim::simulator::faho::k1
             struct def::process_host *p = event->process;
             encoder::ByteStream *buf_wram = new encoder::ByteStream(event->event->path + "/wram.bin");
             encoder::ByteStream *buf_iram = new encoder::ByteStream(event->event->path + "/iram.bin");
-            p->prg.size_text = buf_iram->size() + SIZE_STACK;
-            p->prg.size_data = buf_wram->size();
+            encoder::ByteStream *buf_atomic = new encoder::ByteStream(event->event->path + "/atomic.bin");
+            encoder::ByteStream *temp_iram = new encoder::ByteStream();
+            assert(buf_iram->size() % 12 == 0); // 必须是8的倍数
+            // 对于buf_iram每12个字节插入4个0
+            for (int i = 0; i < buf_iram->size(); i += 1)
+            {
+                temp_iram->append(buf_iram->byte(i));
+                if ((i + 1) % 12 == 0) // 每12个字节的第4个字节插入0
+                {
+                    temp_iram->append(0);
+                    temp_iram->append(0);
+                    temp_iram->append(0);
+                    temp_iram->append(0);
+                }
+            }
+            assert(temp_iram->size() % 16 == 0); // 必须是8的倍数
+            delete buf_iram;
+
+            // 传入atomic
+            check_atomic(buf_atomic);
+
+            p->prg.size_text = temp_iram->size();
+            p->prg.size_data = buf_wram->size() + SIZE_STACK;
             fprintf(stdout, "text section size is %x\n", p->prg.size_text);
-            if (p->prg.size_text > 0x80002388 - 0x80000000)
+            if (p->prg.size_text > util::ConfigLoader::iram_kernel_offset()) // 不能超过iram留给user的空间
                 fprintf(stderr, "Warning !! text section is to big (%x)\n",
                         p->prg.size_text);
             if (p->prg.size_data >= INODE_BLOCK ||
                 p->prg.size_text > INODE_BLOCK)
                 p->state = def::STATE::FAILED;
 
-            p->prg.inode_data = inode::write_content_inode(buf_wram, p->prg.size_data - SIZE_STACK, dpu_manager->dpu);
+            p->prg.inode_data = def::write_content_inode(buf_wram, p->prg.size_data - SIZE_STACK, dpu_manager->dpu);
             delete buf_wram;
-            p->prg.inode_text = inode::write_content_inode(buf_iram, p->prg.size_text, dpu_manager->dpu);
-            delete buf_iram;
-            int first_inode = inode::alloc_inode(dpu_manager->dpu);
-            dpu_manager->inode_table[first_inode][0][0] = p->prg.inode_text;
+            p->prg.inode_text = def::write_content_inode(temp_iram, p->prg.size_text, dpu_manager->dpu);
+            delete buf_atomic;
+            delete temp_iram;
+            int first_inode = def::alloc_inode(dpu_manager->dpu);
             u_int16_t inode_table[4][2];
-            def::dpu_copy_from_wram(dpu_manager->dpu, inode_table, def::inode_table_address+event->index*sizeof(inode_table), sizeof(inode_table)); 
+            def::dpu_copy_from_wram(dpu_manager->dpu, inode_table, k1::inode_table_address + event->index * sizeof(inode_table), sizeof(inode_table));
             // 处设计地址
             inode_table[0][0] = first_inode; // 额外inode
             inode_table[0][1] = 1;
-            def::dpu_copy_to_wram(dpu_manager->dpu, def::inode_table_address+event->index*sizeof(inode_table),inode_table, sizeof(inode_table));
-
+            def::dpu_copy_to_wram(dpu_manager->dpu, k1::inode_table_address + event->index * sizeof(inode_table), inode_table, sizeof(inode_table));
+            dpu_manager->processes[event->index] = p; // 更新进程表
             dpu_manager->load_processes.push_back(event);
         }
 
@@ -434,70 +522,80 @@ namespace upmem_sim::simulator::faho::k1
     {
         timer_ = cycle_;
     }
-    void K1::init_mram()
-    { // 主要是初始化jmp+bit_map+inod_table+dpu_id+inode_table的值
-        // load the event
-        std::string bin_filepath = bindir_ + "/" + "kernel" + "/mram"
-                                                              ".bin";
-        // 遍历dpu然后写入
-        for (auto &dpu : rank_->dpus())
-        {
-            auto byte_stream = new encoder::ByteStream(bin_filepath);
-            dpu->dma()->transfer_to_mram(util::ConfigLoader::mram_offset(), byte_stream);
-            delete byte_stream;
-        }
-    }
-    void K1::init_K2andK3()
-    {
-        std::string wram_filepath = bindir_ + "/" + "kernel" + "/" + "wram" +
-                                    ".bin";
-        std::string iram_filepath = bindir_ + "/" + "kernel" + "/" + "iram" +
-                                    ".bin";
-        std::string pointer_filepath = bindir_ + "/" + "kernel" + "/" + "pointer" +
-                                    ".bin";
-        auto byte_stream = new encoder::ByteStream(wram_filepath);
-        auto byte_stream2 = new encoder::ByteStream(iram_filepath);
-        assert(byte_stream->size() < util::ConfigLoader::wram_size() - util::ConfigLoader::wram_kernel_offset());
-        assert(byte_stream2->size() < util::ConfigLoader::iram_size() - util::ConfigLoader::iram_kernel_offset());
 
-        for (auto &dpu : rank_->dpus())
-        {
-            dpu->dma()->transfer_to_wram(util::ConfigLoader::wram_kernel_offset()+util::ConfigLoader::wram_offset(), byte_stream);
-            dpu->dma()->transfer_to_iram(util::ConfigLoader::iram_kernel_offset()+util::ConfigLoader::iram_offset(), byte_stream2);
-        }
-        delete byte_stream;
-        delete byte_stream2;
+    void K1::init_mram() // 初始化指针
+    {
+
+        std::string pointer_filepath = bindir_ + "KERNEL" + "." +
+                                       std::to_string(num_tasklets_) + "/" + "pointer" +
+                                       ".bin";
+        std::string iram_filepath = bindir_ + "KERNEL" + "." +
+                                    std::to_string(num_tasklets_) + "/" + "iram" +
+                                    ".bin";
         std::string line;
         std::ifstream file(pointer_filepath);
-        std::getline(file, line);
-        def::dpu_id_address = std::stoul(line);
-        std::cout << "address for dpu_id" << def::dpu_id_address << std::endl;
-        std::getline(file, line);
-        def::processs_address = std::stoul(line);
-        std::cout << "address for processs" << def::processs_address << std::endl;
-        std::getline(file, line);
-        def::inode_table_address = std::stoul(line);
-        std::cout << "address for inode_table" << def::inode_table_address << std::endl;
+        int syscall_start = 0;
+        file >> k1::dpu_id_address >> k1::processs_address >> k1::inode_table_address >> syscall_start;
+        file.close();
+        int len_i = util::ConfigLoader::iram_data_width() / 8;
+        // 读取iram_filepath中从syscall_start行开始的len_i个字节
+        encoder::ByteStream *iram_stream = new encoder::ByteStream(iram_filepath);
+        syscall = iram_stream->slice(syscall_start, syscall_start + len_i);
+        delete iram_stream;
+        assert(syscall->size() == len_i);
+        // 把len_i到16的字节设置为0
+        for (int i = 0; i < 16 - len_i; i++)
+        {
+            syscall->append(0);
+        }
+        for (int i = 0; i < BIT_MAP - 16; i++) // 在bit_map之前进行填充
+        {
+            syscall->append(0);
+        }
+        assert(syscall->size() == BIT_MAP);
+        // update_bit_map(syscall, inode_num_initialization); // 更新bit_map
+        int distance = ((SIZE_BLOCK * 1 + 8) - syscall->size());
+
+        for (int i = 0; i < distance; i++)
+        {
+            syscall->append(0);
+        }
+        assert(syscall->size() == (SIZE_BLOCK * 1 + 8));
+    }
+    void K1::update_bit_map(encoder::ByteStream *syscall, uint32_t inode_maxe)
+    {
+        uint8_t inode_info = 3;
+        for (unsigned int i = 1; i < inode_maxe + 1; i++)
+        {
+            if (i % 8 == 0)
+            {
+                syscall->append(inode_info);
+                inode_info = 0;
+            }
+            inode_info |= (1 << (i % 8));
+        }
+        syscall->append(inode_info); // 最后一个字节
     }
     void K1::parse_new_socket(def::DpuManager *dpu_manager)
     {
         for (int i = 0; i < MAX_PRG; i++)
         {
             def::process_host *p = dpu_manager->processes[i];
+            if (p == nullptr)
+                continue; // 该位置没有进程,直接跳过
             for (int j = 0; j < MAX_SD; j++)
             {
-
-                if (p->sd[j].inode != 0 && p->sd[j].flags & NEW_SOCKET)
+                if (p->sd[j].inode != 0 && (p->sd[j].flags &  SOCKET_NEW))
                 {
                     dpu_manager->dpu_flag->dpu_process_change = 1;
                     p->sd[j].flags &= ~SOCKET_NEW;
-                    struct socket::socket_info si;
+                    struct def::socket_info si;
                     uint32_t inode = p->sd[j].inode;
                     uint32_t penpal[2] = {0, 0}; // 0表示是host,1表示是dpu
-                    inode::read_inode(dpu_manager, inode, &penpal, sizeof(penpal), sizeof(si));
+                    def::read_inode(dpu_manager, inode, &penpal, sizeof(penpal), sizeof(si));
                     if (penpal[0] == 0)
                     {
-                        struct socket::socket_connection *sc = socket::find_free_socket_connection_or_alloc(nb_so, sockets_connection);
+                        struct def::socket_connection *sc = find_free_socket_connection_or_alloc();
                         sc->dpu_id = dpu_manager->dpu_id;
                         sc->penpal_is_host = 1;
                         sc->pid = p->pid;
@@ -525,7 +623,7 @@ namespace upmem_sim::simulator::faho::k1
 
                             p->sd[j].flags |= SOCKET_FAIL;
                         }
-                        struct socket::socket_connection *sc = socket::find_free_socket_connection_or_alloc(nb_so, sockets_connection);
+                        struct def::socket_connection *sc = find_free_socket_connection_or_alloc();
                         sc->dpu_id = dpu_manager->dpu_id;
                         sc->penpal_is_host = 0;
                         sc->pid = p->pid;
@@ -556,13 +654,17 @@ namespace upmem_sim::simulator::faho::k1
         uint8_t same = 0;
         if (dpu_manager->dpu_flag->write_socket)
         {
-            socket::transfert_from_api(dpu_manager, nb_so, sockets_connection);
+            def::transfert_from_api(dpu_manager, nb_so, sockets_connection);
         }
         for (auto &process : dpu_manager->processes)
         {
+            if (process == nullptr)
+            {
+                continue; // 该位置没有进程
+            }
             for (unsigned int j = 0; j < MAX_SD; j++)
             {
-                if (process->sd[j].flags & SOCKET_W && process->sd[j].inode != 0)
+                if ((process->sd[j].flags & SOCKET_W) && process->sd[j].inode != 0)
                 {
                     dpu_manager->dpu_flag->dpu_process_change = 1;
                     process->sd[j].flags &= ~SOCKET_W;
@@ -573,8 +675,8 @@ namespace upmem_sim::simulator::faho::k1
                         if (sockets_connection[k].pid == process->pid &&
                             sockets_connection[k].sd == j)
                         {
-                            struct socket::socket_info si;
-                            inode::read_inode(dpu_manager, process->sd[j].inode, &si, sizeof(si), 0);
+                            struct def::socket_info si;
+                            def::read_inode(dpu_manager, process->sd[j].inode, &si, sizeof(si), 0);
                             uint32_t size_8align = (si.w / 8 + 1) * 8;
                             uint32_t size = si.w;
                             void *buf;
@@ -582,13 +684,13 @@ namespace upmem_sim::simulator::faho::k1
                             {
                                 buf = malloc(size_8align);
                                 assert(buf != NULL);
-                                inode::read_inode(dpu_manager, process->sd[j].inode, buf, size_8align,
-                                                  sizeof(si) + SIZE_SOCKET);
+                                def::read_inode(dpu_manager, process->sd[j].inode, buf, size_8align,
+                                                sizeof(si) + SIZE_SOCKET);
                                 // socket_send_to_main
                             }
                             else
                             {
-                                struct socket::socket_connection *sc = &sockets_connection[k], *sc_p;
+                                struct def::socket_connection *sc = &sockets_connection[k], *sc_p;
                                 if (sc->penpal_pid == 0 || sc->penpal_sc_idx == -1)
                                 {
                                     assert(0);
@@ -596,9 +698,9 @@ namespace upmem_sim::simulator::faho::k1
                                 }
                                 sc_p = &sockets_connection[sc->penpal_sc_idx];
                                 same = sc_p->pid == sc->pid;
-                                struct socket::socket_info si_penpal;
-                                inode::read_inode(dpu_managers_[sc_p->dpu_id], sc_p->inode,
-                                                  &si_penpal, sizeof(si_penpal), 0);
+                                struct def::socket_info si_penpal;
+                                def::read_inode(dpu_managers_[sc_p->dpu_id], sc_p->inode,
+                                                &si_penpal, sizeof(si_penpal), 0);
 
                                 uint8_t revolution = si_penpal.rr < si_penpal.rw;
                                 uint32_t place_left =
@@ -614,14 +716,14 @@ namespace upmem_sim::simulator::faho::k1
                                              nb_byte_end_of_read_buffer); // more byte to read
                                 assert(buf != NULL);
                                 if (nb_byte_begin_of_read_buffer)
-                                    inode::read_inode(dpu_managers_[sc_p->dpu_id], sc_p->inode, buf, 8,
-                                                      sizeof(si) + si_penpal.rw - si_penpal.rw % 8);
-                                inode::read_inode(dpu_manager, process->sd[j].inode, buf + nb_byte_begin_of_read_buffer,
-                                                  size_8align, sizeof(si) + SIZE_SOCKET);
+                                    def::read_inode(dpu_managers_[sc_p->dpu_id], sc_p->inode, buf, 8,
+                                                    sizeof(si) + si_penpal.rw - si_penpal.rw % 8);
+                                def::read_inode(dpu_manager, process->sd[j].inode, buf + nb_byte_begin_of_read_buffer,
+                                                size_8align, sizeof(si) + SIZE_SOCKET);
                                 if (nb_byte_end_of_read_buffer)
-                                    inode::read_inode(dpu_managers_[sc_p->dpu_id], sc_p->inode,
-                                                      buf + nb_byte_begin_of_read_buffer + size, 8,
-                                                      sizeof(si) + si_penpal.rr - si_penpal.rr % 8);
+                                    def::read_inode(dpu_managers_[sc_p->dpu_id], sc_p->inode,
+                                                    buf + nb_byte_begin_of_read_buffer + size, 8,
+                                                    sizeof(si) + si_penpal.rr - si_penpal.rr % 8);
 
                                 if (revolution)
                                 {
@@ -630,14 +732,14 @@ namespace upmem_sim::simulator::faho::k1
                                 else
                                 {
 
-                                    inode::write_inode(dpu_managers_[sc_p->dpu_id], sc_p->inode, buf,
-                                                       (size / 8 + 1) * 8,
-                                                       sizeof(si) + si_penpal.rw - si_penpal.rw % 8);
+                                    def::write_inode(dpu_managers_[sc_p->dpu_id], sc_p->inode, buf,
+                                                     (size / 8 + 1) * 8,
+                                                     sizeof(si) + si_penpal.rw - si_penpal.rw % 8);
                                 }
 
                                 si_penpal.rw = si_penpal.rw + size % SIZE_SOCKET;
-                                inode::write_inode(dpu_managers_[sc_p->dpu_id], sc_p->inode,
-                                                   &si_penpal, sizeof(si_penpal), 0);
+                                def::write_inode(dpu_managers_[sc_p->dpu_id], sc_p->inode,
+                                                 &si_penpal, sizeof(si_penpal), 0);
 
                                 uint8_t found = 0;
                                 def::process_host *p_penpal_ = nullptr;
@@ -662,7 +764,7 @@ namespace upmem_sim::simulator::faho::k1
                             }
                             si.w = 0;
                             free(buf);
-                            inode::write_inode(dpu_manager, process->sd[j].inode, &si, sizeof(si), 0);
+                            def::write_inode(dpu_manager, process->sd[j].inode, &si, sizeof(si), 0);
                             process->sd[j].flags |= SOCKET_UPDATE;
                             set_flags(dpu_manager, SOCKET_UPDATE);
                             dpu_manager->dpu_flag->dpu_process_change = 1;
@@ -680,15 +782,17 @@ namespace upmem_sim::simulator::faho::k1
         dpu_manager->dpu_flag->write_inode = 0; // set flag
         for (unsigned int i = 0; i < dpu_manager->write_inode->nb_data; i++)
         {
+
             if (dpu_manager->write_inode->data[i]->pid == 0)
             {
                 continue;
             }
             if (dpu_manager->write_inode->data[i]->prc_ix == MAX_PRG)
             {
+                assert(MAX_PRG == dpu_manager->processes.size());
                 for (int j = 0; j < MAX_PRG; j++)
                 {
-                    assert(MAX_PRG == dpu_manager->processes.size());
+                   
                     if (dpu_manager->processes[j] == nullptr)
                     {
                         continue;
@@ -709,7 +813,7 @@ namespace upmem_sim::simulator::faho::k1
                 ((char *)buf)[j] = dpu_manager->write_inode->data[i]->buf->byte(j);
             }
 
-            assert(inode::write_chained_inode(dpu_manager, dpu_manager->write_inode->data[i]->prc_ix, buf, dpu_manager->write_inode->data[i]->size, dpu_manager->write_inode->data[i]->offset) == 0);
+            assert(def::write_chained_inode(dpu_manager, dpu_manager->write_inode->data[i]->prc_ix, buf, dpu_manager->write_inode->data[i]->size, dpu_manager->write_inode->data[i]->offset, k1::inode_table_address) == 0);
             free(buf);
             dpu_manager->write_inode->data[i]->pid = 0;
             dpu_manager->write_inode->data[i]->prc_ix = MAX_PRG;
@@ -722,18 +826,24 @@ namespace upmem_sim::simulator::faho::k1
         for (unsigned int i = 0;
              i < dpu_manager->read_inode->nb_data && dpu_manager->read_inode->data[i]->pid != 0; i++)
         {
+            assert(MAX_PRG == dpu_manager->processes.size());
             for (int j = 0; j < MAX_PRG; j++)
             {
-                assert(MAX_PRG == dpu_manager->processes.size());
+                if (dpu_manager->processes[j] == nullptr)
+                {
+                    continue; // 该位置没有进程
+                }
+
                 if (dpu_manager->read_inode->data[i]->pid != 0 &&
                     dpu_manager->processes[j]->pid == dpu_manager->read_inode->data[i]->pid)
                 {
                     dpu_manager->read_inode->data[i]->pid = 0;
                     struct def::process_host *p = dpu_manager->processes[j];
                     uint8_t *buf = (uint8_t *)(dpu_manager->read_inode->data[i]->size);
-                    assert(!(inode::read_chained_inode(dpu_manager, j, buf,
-                                                       dpu_manager->read_inode->data[i]->size,
-                                                       dpu_manager->read_inode->data[i]->offset) < 0));
+                    faho::def::read_chained_inode(dpu_manager, j, buf,
+                                                  dpu_manager->read_inode->data[i]->size,
+                                                  dpu_manager->read_inode->data[i]->offset, k1::inode_table_address);
+
                     // 把buf的数据读到dpu_manager->read_inode->data[i]->path的文件中
                     FILE *fp = fopen(dpu_manager->read_inode->data[i]->path.c_str(), "wb");
                     if (fp == NULL)
@@ -742,6 +852,14 @@ namespace upmem_sim::simulator::faho::k1
                         assert(0);
                     }
                     fwrite(buf, 1, dpu_manager->read_inode->data[i]->size, fp);
+                    // 打印buf
+                    printf("Read inode data from process %i, size %u, offset %u",
+                           p->pid, dpu_manager->read_inode->data[i]->size,
+                           dpu_manager->read_inode->data[i]->offset);
+                    for (unsigned int k = 0; k < dpu_manager->read_inode->data[i]->size; k++)
+                    {
+                        printf("%02x ", buf[k]);
+                    }
                     fclose(fp);
                     free(buf);
                 }
@@ -754,9 +872,15 @@ namespace upmem_sim::simulator::faho::k1
         int ret = -1;
 
         for (int i = 0; i < MAX_PRG; i++)
+        {
+            if (dpu_manager->processes[i] == nullptr)
+            {
+                continue; // 该位置没有进程
+            }
             if (dpu_manager->processes[i]->state == def::STATE::FINISHED)
             {
                 struct def::process_host *p = dpu_manager->processes[i];
+                std::cout << "Process " << p->pid << " finish with return " << p->end_value << std::endl;
 
                 // bench_stop_timer(1);   //benchmarck uncomment to see the time of a proc
                 printf("#%u#Process %i(%i) finish with %i value \n", dpu_manager->dpu_id, p->pid,
@@ -769,20 +893,22 @@ namespace upmem_sim::simulator::faho::k1
                                          [pid](def::ProcessEvent *event)
                                          { return event->process->pid == pid; }); // 从已经启动的进程中删除
                 p->pid = 0;
-                dpu_manager->processes[i] = nullptr; // 清空
+
+                // dpu_manager->processes[i] = nullptr; // 不设置为空
                 dpu_manager->dpu_flag->dpu_process_change = 1;
                 dpu_manager->process_table[i] = 0;
 
-                inode::free_inode(dpu_manager, p->prg.inode_text);
-                inode::free_inode(dpu_manager, p->prg.inode_data);
-                inode::free_chained_inode(dpu_manager, i);
+                def::free_inode(dpu_manager, p->prg.inode_text);
+                def::free_inode(dpu_manager, p->prg.inode_data);
+                def::free_chained_inode(dpu_manager, i, k1::inode_table_address);
                 for (unsigned int j = 0; j < MAX_SD; j++)
                     if (p->sd[j].inode > 1)
                     {
-                        inode::free_inode(dpu_manager, p->sd[j].inode);
+                        def::free_inode(dpu_manager, p->sd[j].inode);
                         p->sd[j].inode = 0;
                     }
             }
+        }
 
         return;
     }
@@ -796,7 +922,7 @@ namespace upmem_sim::simulator::faho::k1
         }
         for (auto &process : all_processes)
         {
-            delete process->sd;
+
             delete process;
         }
         // 按nb_so删除sockets_connection
@@ -811,7 +937,6 @@ namespace upmem_sim::simulator::faho::k1
             for (auto &process : dpu_manager->processes)
             {
 
-                delete process->sd;
                 delete process;
             }
 
@@ -819,7 +944,7 @@ namespace upmem_sim::simulator::faho::k1
             {
 
                 delete process->event;
-                delete process->process->sd;
+
                 delete process->process;
                 delete process;
             }
@@ -833,14 +958,14 @@ namespace upmem_sim::simulator::faho::k1
             for (auto &process : dpu_manager->unlaunch_processes)
             {
                 delete process->event;
-                delete process->process->sd;
+
                 delete process->process;
                 delete process;
             }
             for (auto &process : dpu_manager->launch_processes)
             {
                 delete process->event;
-                delete process->process->sd;
+
                 delete process->process;
                 delete process;
             }
@@ -865,6 +990,7 @@ namespace upmem_sim::simulator::faho::k1
             delete dpu_manager->dpu_flag;
             delete dpu_manager->dpu;
             delete dpu_manager;
+            delete syscall;
         }
     }
 }

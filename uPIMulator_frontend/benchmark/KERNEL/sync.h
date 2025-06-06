@@ -157,7 +157,7 @@ int wakeup(void *sync_addr, uint8_t check_cur_only_cur_process,
     mutex_lock(mutex_jobs);
     if (!check_cur_only_cur_process)
       mram_read((__mram_ptr void const *)sizeof(struct kernel_info) +
-                    p * (JOB_PER_PROCESS * sizeof(struct job)),
+                    p * (JOB_PER_PROCESS * sizeof(struct job))+MRAM_OFFSET,
                 jobs, sizeof(jobs));
     else if (p != cur_process_index)
       continue;
@@ -177,12 +177,12 @@ int wakeup(void *sync_addr, uint8_t check_cur_only_cur_process,
       goto end;
     mram_write(jobs,
                (__mram_ptr void *)sizeof(struct kernel_info) +
-                   p * (JOB_PER_PROCESS * sizeof(struct job)),
+                   p * (JOB_PER_PROCESS * sizeof(struct job))+MRAM_OFFSET,
                sizeof(jobs));
   }
 
   mram_read((__mram_ptr void const *)sizeof(struct kernel_info) +
-                cur_process_index * (JOB_PER_PROCESS * sizeof(struct job)),
+                cur_process_index * (JOB_PER_PROCESS * sizeof(struct job))+MRAM_OFFSET,
             jobs, sizeof(jobs));
 
 end:

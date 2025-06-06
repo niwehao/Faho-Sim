@@ -9,9 +9,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-char newline[2] __attribute__((section(".data"))) = "\n";
 char beg[4] __attribute__((section(".data"))) = "{{{";
-char end[4] __attribute__((section(".data"))) = "}}}\n";
+char end[4] __attribute__((section(".data"))) = "}}}";
 
 /**
  * @brief Give back to the scheduler_job

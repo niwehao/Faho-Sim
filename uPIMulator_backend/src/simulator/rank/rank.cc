@@ -57,7 +57,8 @@ util::StatFactory* Rank::stat_factory() {
 void Rank::launch() {
   for (auto& dpu : dpus_) {
     for (auto& thread : dpu->scheduler()->threads()) {
-      Address bootstrap = util::ConfigLoader::iram_offset();
+      Address bootstrap = util::ConfigLoader::iram_offset()+
+                          util::ConfigLoader::iram_kernel_offset() ;
       thread->reg_file()->write_pc_reg(bootstrap);
     }
     dpu->boot();

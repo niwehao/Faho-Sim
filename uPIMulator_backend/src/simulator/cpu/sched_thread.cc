@@ -15,7 +15,7 @@ void SchedThread::connect_rank(rank::Rank *rank) {//DPU调度线程
 }
 
 void SchedThread::sched(int execution) {
-  //dma_transfer_input_dpu_mram_heap_pointer_name(execution);//堆指针
+  //dma_transfer_input_dpu_mram_heap_pointer_name(execution);//通过dma传入的初始数据
   //dma_transfer_dpu_input_arguments(execution);//传入的参数
 
   std::cout << "sched " << execution << " completed..." << std::endl;

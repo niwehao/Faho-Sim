@@ -1,25 +1,8 @@
 #include "socket.h"
-namespace upmem_sim::simulator::faho::socket
+namespace upmem_sim::simulator::faho::def
 {
-    struct socket_connection *find_free_socket_connection_or_alloc(int nb_so,
-                                                                   struct socket_connection *sockets_connection)
-    {
-        // 函数实现
-        for (unsigned int i = 0; i < nb_so; i++)
-        {
-            if (sockets_connection[i].pid == 0)
-            {
-                return &sockets_connection[i];
-            }
-        }
-        sockets_connection = (socket_connection *)realloc(
-            sockets_connection, (nb_so + 1) * sizeof(*sockets_connection));
-        struct socket_connection *sc = &sockets_connection[nb_so];
-        sc->idx = nb_so;
-        nb_so++;
-        return sc;
-    }
-    void add_write_data_socket(def::DpuManager *DpuManager, def::Event *event, def::process_host *process)
+    
+    void add_write_data_socket(faho::def::DpuManager *DpuManager, faho::def::Event *event, faho::def::process_host *process)
     {
         for (unsigned int i = 0; i < DpuManager->write_socket->nb_data; i++)
         {
@@ -38,7 +21,7 @@ namespace upmem_sim::simulator::faho::socket
         DpuManager->write_socket->data.push_back(ws);
         return;
     }
-    void transfert_from_api(def::DpuManager *DpuManager, int nb_so, struct socket_connection *sockets_connection)
+    void transfert_from_api(faho::def::DpuManager *DpuManager, int nb_so, struct socket_connection *sockets_connection)
 
     {
         DpuManager->dpu_flag->write_socket = 0; // set flag
@@ -81,10 +64,10 @@ namespace upmem_sim::simulator::faho::socket
         
         }
     }
-    int write_in_socket(def::DpuManager *DpuManager, int inode, encoder::ByteStream *buf, int size)
+    int write_in_socket(faho::def::DpuManager *DpuManager, int inode, encoder::ByteStream *buf, int size)
     {
         struct socket_info si;
-        inode::read_inode(DpuManager, inode, &si, sizeof(si), 0);
+        read_inode(DpuManager, inode, &si, sizeof(si), 0);
         uint32_t place = (si.rw < si.rr) ? si.rr - si.rw : (SIZE_SOCKET - si.rr) + si.rw;
         if (si.rw < si.rr)
         {
@@ -95,7 +78,7 @@ namespace upmem_sim::simulator::faho::socket
         void *buf_all = malloc(size_all);
         assert(buf_all != NULL);
         uint8_t off = si.rw % 8;
-        inode::read_inode(DpuManager, inode, buf_all, 8, sizeof(si) + si.rw - off);
+        read_inode(DpuManager, inode, buf_all, 8, sizeof(si) + si.rw - off);
         for (unsigned int i = 0; i < size; i++)
             ((char *)buf_all)[off + i] = buf->byte(i);
 
@@ -103,14 +86,14 @@ namespace upmem_sim::simulator::faho::socket
         {
             uint32_t first_size = SIZE_SOCKET - sizeof(si) - (si.rw - off);
             uint32_t second_size = size - first_size;
-            inode::write_inode(DpuManager, inode, buf_all, first_size, sizeof(si) + si.rw - off);
-            inode::write_inode(DpuManager, inode, buf_all + first_size, second_size, sizeof(si));
+            write_inode(DpuManager, inode, buf_all, first_size, sizeof(si) + si.rw - off);
+            write_inode(DpuManager, inode, buf_all + first_size, second_size, sizeof(si));
         }
         else
-            inode::write_inode(DpuManager, inode, buf_all, size_all, sizeof(si) + si.rw - off);
+            write_inode(DpuManager, inode, buf_all, size_all, sizeof(si) + si.rw - off);
         si.rw = (si.rw + size) % SIZE_SOCKET;
-        inode::write_inode(DpuManager, inode, &si, sizeof(si), 0);
-        def::set_flags(DpuManager, SOCKET_UPDATE);
+        write_inode(DpuManager, inode, &si, sizeof(si), 0);
+        set_flags(DpuManager, SOCKET_UPDATE);
         return 0;
     }
     socket_data::socket_data(int pid)

@@ -13,10 +13,11 @@ namespace upmem_sim::simulator::faho::def
   def::DpuManager::DpuManager(int id, dpu::DPU *dpu)
   {
     dpu_id = id;
+    this->dpu = dpu;
     dpu_flag = new DpuFlag();
-    write_socket = new socket::WriteSocket();
-    write_inode = new inode::WriteInode();
-    read_inode = new inode::ReadInode();
+    write_socket = new WriteSocket();
+    write_inode = new WriteInode();
+    read_inode = new ReadInode();
     processes.resize(MAX_PRG);
   }
 
@@ -27,6 +28,7 @@ namespace upmem_sim::simulator::faho::def
     {
       ((uint8_t *)buf)[i] = byte_stream->byte(i);
     }
+    delete byte_stream;
   }
   void dpu_copy_to_mram_bytes(dpu::DPU *dpu, int offset, encoder::ByteStream *buf, int size)
   {
@@ -77,18 +79,15 @@ namespace upmem_sim::simulator::faho::def
     p->role = role_id;
     for (int j = 0; j < MAX_SD; j++)
       p->sd[j].inode = 0;
-    std::ifstream file(path+"/"+"pointer");
+    std::ifstream file(path+"/"+"pointer.bin");
     std::string Line;
-    std::getline(file, Line);
-    std::cout << "address for main" << Line << std::endl;
-    p->end_value = std::stoi(Line); // 似乎不需要与地址做&操作
-    // 读下一行
-    std::getline(file, Line);
-    // 检查文件是否成功打开
-    assert(file.is_open());
-    // p->end_value来获取main开始的地址
-    p->prg.off_stack = std::stoi(Line);
-    p->begin_stack = p->prg.off_stack;
+    int address_main;
+    int addr_stack;
+    file>>address_main>>addr_stack;
+    
+    p->end_value = address_main; // 这里的end_value是main函数的地址
+    p->prg.off_stack = addr_stack;
+    p->begin_stack = p->prg.off_stack;//TODO
     // close the file
     file.close();
     return 2;

@@ -3,27 +3,23 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include "faho/def.h"
 #include "simulator/rank/rank.h"
 #include <filesystem>
 #include <fstream>
 #include <sstream>
-#include "faho/def.h"
-#include "faho/inode.h"
-#include "faho/socket.h"
 
-using namespace std;
 namespace upmem_sim::simulator::faho::k1
 {
     class K1
     {
     public:
-        K1();
+        K1(std::string bindir, std::string benchmark, int num_tasklets,rank::Rank *rank_);
         ~K1();
         void init();
         void cycle();
-        encoder::ByteStream *load_bin(def::ProcessEvent *event, std::string file);
         int get_inode();
-        void init_K2andK3();
+    
         void init_mram();
         void init_event();
         void read_process(def::DpuManager *dpu_manager);
@@ -44,6 +40,9 @@ namespace upmem_sim::simulator::faho::k1
         void write_inode_handle_evt(def::Event *event);
         void read_inode_handle_evt(def::Event *event);
         void parse_end_process(def::DpuManager *dpu_manager) ;
+        void update_bit_map(encoder::ByteStream* syscall, uint32_t inode_maxe) ;
+        void check_atomic(encoder::ByteStream *buf);
+        struct def::socket_connection *find_free_socket_connection_or_alloc();
 
 
   
@@ -52,14 +51,16 @@ namespace upmem_sim::simulator::faho::k1
     private:
         std::string bindir_;
         int cycle_ = 0;
+        int inode_num_initialization=2;
         int timer_ = 0;
         rank::Rank *rank_;
         std::vector<def::Event *> events_;
         std::vector<def::DpuManager *> dpu_managers_;//在inode::read_inode(dpu_managers_[sc_p->dpu_id], sc_p->inode,要求顺序与初始化顺序必须一致
-        struct socket::socket_connection *sockets_connection;
-        uint32_t nb_so = 0;
         int all_num_process=0;
         std::vector<struct def::process_host *> all_processes;
+        std::string benchmark_;
+        int num_tasklets_ = 0; // 任务数
+        encoder::ByteStream *syscall;
     };
 
 } // namespace upmem_sim::simulator::faho::k1

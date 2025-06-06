@@ -87,7 +87,7 @@ MemoryCommand *RowBuffer::pop() {
   return ready_q_->pop();
 }
 
-void RowBuffer::flush() {
+void RowBuffer::flush() {//才写入的
   if (row_address_ != nullptr) {
     write_to_mram();
     delete row_address_;
@@ -144,7 +144,7 @@ void RowBuffer::cycle() {
 
 void RowBuffer::service_input_q() {
   if (input_q_->can_pop()) {
-    MemoryCommand *memory_command = input_q_->front();
+    MemoryCommand *memory_command = input_q_->front();//没有可以插入的值
 
     if (memory_command->operation() == MemoryCommand::ACTIVATION) {//行激活
       if (activation_q_->empty() and row_address_ == nullptr) {
@@ -189,7 +189,7 @@ void RowBuffer::service_input_q() {
 void RowBuffer::service_activation_q() {
   auto [memory_command, cycle] = activation_q_->front();//距离上次激活的距离实际
   if (cycle == timing_parameters_["t_ras"] - timing_parameters_["t_rcd"]) {//如果行激活队列的计时器达到t_ras-t_rcd
-    // t_ras: Row Active Time（行激活时间）
+    // t_ras: Row Active Time（行激活时间）   78-32=46
     // - 从行激活到预充电的最小时间间隔
     // - 确保行数据稳定
 
@@ -200,7 +200,7 @@ void RowBuffer::service_activation_q() {
     assert(row_address_ == nullptr);
 
     assert(memory_command->address() % wordline_size_ == 0);
-    row_address_ = new abi::word::DataAddressWord();
+    row_address_ = new abi::word::DataAddressWord();//0x5555ae60f650
     row_address_->set_value(memory_command->address());
 
     row_buffer_ = read_from_mram();//从MRAM读取数据到行缓冲区
@@ -311,8 +311,6 @@ std::vector<int> RowBuffer::read_from_row_buffer(Address address,
 
 void RowBuffer::write_to_mram() {
   assert(row_address_ != nullptr);
-
-
   mram_->write(row_address_->address(), std::move(row_buffer_));
 }
 

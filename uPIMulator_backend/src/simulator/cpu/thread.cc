@@ -43,16 +43,16 @@ void Thread::init_dpu_transfer_pointer() {
 
   ifs >> sys_used_mram_end_pointer_ >> dpu_input_arguments_pointer_ >>
       dpu_results_pointer_ >> sys_end_pointer_;//
-  std::cout<<"sys_used_mram_end_pointer_:"<<sys_used_mram_end_pointer_<<std::endl;
 }
 
 void Thread::init_num_executions() {
-  std::string bin_filepath = bindir_ + "/" + benchmark_ + "." +
-                             std::to_string(num_tasklets_) +
-                             "/num_executions.bin";
-  std::ifstream ifs(bin_filepath);
+  // std::string bin_filepath = bindir_ + "/" + benchmark_ + "." +
+  //                            std::to_string(num_tasklets_) +
+  //                            "/num_executions.bin";
+  // std::ifstream ifs(bin_filepath);
 
-  ifs >> num_executions_;
+  //ifs >> num_executions_;
+  num_executions_ = 1; // For now, we assume only one execution.
 }
 
 }  // namespace upmem_sim::simulator::cpu

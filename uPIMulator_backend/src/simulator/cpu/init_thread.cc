@@ -11,11 +11,11 @@ void InitThread::connect_rank(rank::Rank *rank) {
   rank_ = rank;
 }
 
-void InitThread::init() {//在编译阶段已经确定了ram的分配,多次执行的时候不需要重新读取
+void InitThread::init() {//使用初始化kernel
   dma_transfer_to_atomic();
   dma_transfer_to_iram();
   dma_transfer_to_wram();
-  dma_transfer_to_mram();
+  //dma_transfer_to_mram();
 
   std::cout << "init completed..." << std::endl;
 }
@@ -40,7 +40,7 @@ void InitThread::dma_transfer_to_atomic() {
 void InitThread::dma_transfer_to_iram() {
   auto byte_stream = load_byte_stream("iram");//把编译好的指令放入iram
   for (auto &dpu : rank_->dpus()) {//遍历dpu,所有dpu都读入
-    dpu->dma()->transfer_to_iram(util::ConfigLoader::iram_offset(),
+    dpu->dma()->transfer_to_iram(util::ConfigLoader::iram_offset()+util::ConfigLoader::iram_kernel_offset(),
                                  byte_stream);
   }
   delete byte_stream;
@@ -51,7 +51,7 @@ void InitThread::dma_transfer_to_iram() {
 void InitThread::dma_transfer_to_wram() {
   auto byte_stream = load_byte_stream("wram");
   for (auto &dpu : rank_->dpus()) {
-    dpu->dma()->transfer_to_wram(util::ConfigLoader::wram_offset(),
+    dpu->dma()->transfer_to_wram(util::ConfigLoader::wram_offset()+util::ConfigLoader::wram_kernel_offset(),
                                  byte_stream);
   }
   delete byte_stream;

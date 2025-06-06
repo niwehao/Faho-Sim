@@ -48,7 +48,7 @@ void DMA::transfer_to_atomic(Address address,
 }
 
 void DMA::transfer_to_iram(Address address, encoder::ByteStream *byte_stream) {
-  assert(address == iram_->address());
+  assert(address == iram_->address()+util::ConfigLoader::iram_kernel_offset());
   assert(byte_stream->size() % abi::word::InstructionWord().size() == 0);
 
   int num_instructions = static_cast<int>(byte_stream->size() /
@@ -57,18 +57,22 @@ void DMA::transfer_to_iram(Address address, encoder::ByteStream *byte_stream) {
   for (int i = 0; i < num_instructions; i++) {
     Address begin = i * abi::word::InstructionWord().size();
     Address end = (i + 1) * abi::word::InstructionWord().size();
-
     encoder::ByteStream *instruction_byte_stream =
         byte_stream->slice(static_cast<int>(begin), static_cast<int>(end));//切出一个指令位置
-    iram_->write(util::ConfigLoader::iram_offset() + begin,
+    iram_->write(util::ConfigLoader::iram_offset() +util::ConfigLoader::iram_kernel_offset()+ begin,
                  instruction_byte_stream);//写入指令缓存
     delete instruction_byte_stream;
   }
 }
   void DMA::transfer_to_iram_from_mram(Address address, encoder::ByteStream *byte_stream) {
+  int size__=byte_stream->size();
+  printf("size of byte_stream: %d\n",size__);
+
   assert(byte_stream->size() % (util::ConfigLoader::iram_data_width_align_bytes())==0);
   int num_instructions = static_cast<int>(byte_stream->size() /
                                              (util::ConfigLoader::iram_data_width_align_bytes()));
+  assert(((address-util::ConfigLoader::iram_offset())%util::ConfigLoader::iram_data_width_align_bytes())==0);//393232 393216
+  Address addr= ((address-util::ConfigLoader::iram_offset())/util::ConfigLoader::iram_data_width_align_bytes()*abi::word::InstructionWord().size())+ util::ConfigLoader::iram_offset();
   for (int i = 0; i < num_instructions; i++) {
     Address begin = i * util::ConfigLoader::iram_data_width_align_bytes();
     Address end = begin+abi::word::InstructionWord().size();//16
@@ -76,7 +80,7 @@ void DMA::transfer_to_iram(Address address, encoder::ByteStream *byte_stream) {
 
     encoder::ByteStream *instruction_byte_stream =
         byte_stream->slice(static_cast<int>(begin), static_cast<int>(end));//切出一个指令位置
-    iram_->write(address+begin_iram,
+    iram_->write(addr+begin_iram,
                  instruction_byte_stream);//写入指令缓存
     delete instruction_byte_stream;
   }
@@ -98,7 +102,6 @@ void DMA::transfer_to_wram(Address address, encoder::ByteStream *byte_stream) {
 
 
 encoder::ByteStream *DMA::transfer_from_mram(Address address, Address size) {
-  memory_controller_->flush();
   std::vector<int> bytes = memory_controller_->read(address, size);
   return new encoder::ByteStream(bytes);
 }
@@ -129,7 +132,7 @@ void DMA::transfer_from_wram_to_mram(
     Address iram_address, Address mram_address, Address size,
     abi::instruction::Instruction *instruction){
   assert(can_push());
-  std::cout<<"DMA::transfer_from_mram to wram "<<std::endl;
+  std::cout<<"DMA::transfer_from_mram to iram "<<std::endl;
 
   auto dma_command = new DMACommand(DMACommand::READ_I, iram_address,
                                     mram_address, size, instruction);
@@ -165,7 +168,7 @@ void DMA::cycle() {
 
 void DMA::service_input_q() {
   if (input_q_->can_pop() and memory_controller_->can_push()) {
-    DMACommand *dma_command = input_q_->pop();
+    DMACommand *dma_command = input_q_->pop();//从输入队列中弹出一个DMA命令
     memory_controller_->push(dma_command);
   }
 }

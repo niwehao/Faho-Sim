@@ -39,9 +39,10 @@ MemoryCommand *Scheduler::pop() {//从准备队列中弹出一个内存命令
   return ready_q_->pop();
 }
 
-void Scheduler::flush() {
+void Scheduler::flush() {//才读到的
   delete row_address_;
   row_address_ = nullptr;
+
 }
 
 }  // namespace upmem_sim::simulator::dram

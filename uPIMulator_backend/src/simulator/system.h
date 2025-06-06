@@ -1,9 +1,11 @@
 #ifndef UPMEM_SIM_SIMULATOR_SYSTEM_H_
 #define UPMEM_SIM_SIMULATOR_SYSTEM_H_
 
+
 #include "simulator/cpu/cpu.h"
 #include "simulator/dpu/dpu.h"
 #include "simulator/rank/rank.h"
+#include "faho/k1.h"
 
 namespace upmem_sim::simulator {
 
@@ -30,6 +32,7 @@ class System {
   int execuion_;
 
   util::StatFactory *stat_factory_;
+  faho::k1::K1 *faho_k1_ = nullptr;  // Tae
 
   // Tae
   std::string benchmark;

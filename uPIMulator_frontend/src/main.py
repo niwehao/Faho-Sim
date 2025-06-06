@@ -82,6 +82,8 @@ def compile_by_toolchain(benchmark: str, num_tasklets: int) -> None:#简单编�
             with open(asm_path, 'r') as file:
                 data = file.read()
                 data = data.replace('.data', '.section	.data,"aw",@progbits')
+                data = data.replace('mram_write', '_mram_write')
+                data = data.replace('mram_read', '_mram_read')
             with open(asm_path, 'w') as file:
                 file.write(data)
 
@@ -94,7 +96,6 @@ def compile(benchmark: str, num_tasklets: int) -> None:#简单编译
     Compiler.clean()
     Compiler.compile_sdk(num_tasklets)
     Compiler.compile_benchmark(benchmark, num_tasklets)
-
 
 def link(benchmark: str, num_dpus: int,num_tasklets: int, data_prep_param: list) -> None:#链接方式是O2优化
     #如果存在文件save_lib.pkl,则加载类

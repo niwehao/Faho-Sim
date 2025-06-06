@@ -40,7 +40,7 @@ void IRAM::write(Address address, encoder::ByteStream *byte_stream) {
   cells_[index(address)]->from_byte_stream(byte_stream);//
 }
 
-int IRAM::index(Address address) {
+int IRAM::index(Address address) {//393216 393232
   assert(address >= this->address());
   assert(address + abi::word::InstructionWord().size() <=
          this->address() + size_);

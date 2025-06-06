@@ -48,6 +48,8 @@ class LinkerScript:
         assert bootstrap.address() is None
 
         bootstrap.set_address(cur_address)
+        print(f"bootstrap address:{cur_address}")
+    
         cur_address += bootstrap.size()
         assert bootstrap.size() % InstructionWord().size() == 0
 
@@ -56,6 +58,7 @@ class LinkerScript:
             assert text_section.address() is None
 
             text_section.set_address(cur_address)
+            #print(f"section name:{text_section.name()}:"+f"address:{cur_address}")
             cur_address += text_section.size()
 
             assert text_section.size() % InstructionWord().size() == 0
@@ -64,18 +67,24 @@ class LinkerScript:
             assert text_section.address() is None
 
             text_section.set_address(cur_address)
+            #print(f"section name:{text_section.name()}:"+f"address:{cur_address}")
             cur_address += text_section.size()
 
-            assert text_section.size() % InstructionWord().size() == 0
+            assert text_section.size() % InstructionWord().size() == 0#96/8=12
 
         for section in executable.sections(SectionName.TEXT):
             if section.name() != "__bootstrap" and section.name() != "" and section.name() != "main":
+               
                 assert section.address() is None
 
                 section.set_address(cur_address)
+                #print(f"section name:{section.name()}:"+f"address:{cur_address}")
                 cur_address += section.size()
 
                 assert section.size() % InstructionWord().size() == 0
+        # dis=cur_address- ConfigLoader.iram_kernel_offset()- ConfigLoader.iram_offset()
+        # print(f"dis:{dis}")
+        # print(f"cur_address:{cur_address}")
 
         assert cur_address < (ConfigLoader.iram_offset() + ConfigLoader.iram_size())
 
@@ -186,6 +195,9 @@ class LinkerScript:
 
             dpu_host.set_address(cur_address)
             cur_address += dpu_host.size()
+        # dis=cur_address- ConfigLoader.wram_kernel_offset()- ConfigLoader.wram_offset()
+        # print(f"dis:{dis}")
+        #print(f"cur_address:{cur_address}")
 
         for i in range(ConfigLoader.max_num_tasklets()):
             self.symbol(f"__sys_stack_thread_{i}").set_address(cur_address)
@@ -198,6 +210,7 @@ class LinkerScript:
             math.ceil(cur_address / ConfigLoader.min_access_granularity()) * ConfigLoader.min_access_granularity()
         )
         self.symbol("__sys_heap_pointer_reset").set_address(cur_address)
+       
 
         assert cur_address < (ConfigLoader.wram_offset() + ConfigLoader.wram_size())
 

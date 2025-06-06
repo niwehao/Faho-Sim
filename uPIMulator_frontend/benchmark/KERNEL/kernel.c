@@ -110,7 +110,7 @@ void printk(char *buf) {
 int read_flags() {
   mutex_lock(mutex_flag);
   struct kernel_info ki;
-  mram_read((__mram_ptr void const *)0x0, &ki, sizeof(ki));
+  mram_read((__mram_ptr void const *)(0x0+MRAM_OFFSET), &ki, sizeof(ki));
   mutex_unlock(mutex_flag);
   return ki.flag1;
 }
@@ -122,17 +122,17 @@ void write_flags(unsigned int flag) {
   mutex_lock(mutex_flag);
   struct kernel_info ki;
   ki.flag1 = flag;
-  mram_write(&ki, (__mram_ptr void *)0x0, sizeof(ki));
+  mram_write(&ki, (__mram_ptr void *)(0x0+MRAM_OFFSET), sizeof(ki));
   mutex_unlock(mutex_flag);
 }
 
 void set_flag(unsigned int flag1) {
   mutex_lock(mutex_flag);
   struct kernel_info ki;
-  mram_read((__mram_ptr void const *)0x0, &ki, sizeof(ki));
+  mram_read((__mram_ptr void const *)(0x0+MRAM_OFFSET), &ki, sizeof(ki));
   ki.flag1 = ki.flag1 | flag1;
 
-  mram_write(&ki, (__mram_ptr void *)0x0, sizeof(ki));
+  mram_write(&ki, (__mram_ptr void *)(0x0+MRAM_OFFSET), sizeof(ki));
   mutex_unlock(mutex_flag);
 }
 
@@ -236,18 +236,18 @@ void store_big_blocks(void *wram_place, __mram_ptr void *mram_place,
 void load_prg_memory(unsigned int prc_ind) {
   struct prg *p = &processs[prc_ind].prg;
 
-  load_big_blocks((__mram_ptr void const *)(p->inode_data * SIZE_BLOCK),
-                  (void *)(0X0), p->size_data);
+  load_big_blocks((__mram_ptr void const *)(p->inode_data * SIZE_BLOCK)+MRAM_OFFSET,
+                  (void *)(0X0+WRAM_OFFSET), p->size_data);
 
   uint32_t temp = p->size_text;
 
   // printk_int(p->inode_data);
 
   uint32_t off = 16;
-  while (temp >= 0x800) { // write by slot of 255
+  while (temp >= 0x800) { // write by slot of 255 1000 0000 0000 2048=256*8
 
     temp -= 0x800;
-    uint32_t ra = off | (0xff << 24);
+    uint32_t ra = off | (0xff << 24);//15*16+15=255 自带1个数据  255+1=256 256>>3=0x800
 
     __asm__ volatile( // there is no lib fun for IRAM data trasnfert so use the
                       // ldmai
@@ -256,8 +256,8 @@ void load_prg_memory(unsigned int prc_ind) {
         : [ra] "r"(ra), [mram_place] "r"(p->inode_text * SIZE_BLOCK + off));
     off += 0x800;
   }
-  uint32_t ra = off | ((temp >> 3) << 24);
-  __asm__ volatile( // there is no lib fun for IRAM data trasnfert so use the
+  uint32_t ra = off | (((temp-8) >> 3) << 24);//高位存大小低位存偏移
+  __asm__ volatile( // there is no lib fun forIRAM data trasnfert so use the
                     // ldmai
       "\tldmai %[ra], %[mram_place], 0\n"
       :
@@ -269,8 +269,9 @@ void load_prg_memory(unsigned int prc_ind) {
 */
 void save_wram_process(unsigned int prc_ind) {
   struct prg *p = &processs[prc_ind].prg;
-  store_big_blocks((void *)(0x0),
-                   (__mram_ptr void *)(p->inode_data * SIZE_BLOCK),
+  store_big_blocks((void *)(0x0+WRAM_OFFSET),
+                   (__mram_ptr void *)(p->inode_data * SIZE_BLOCK)+
+                       MRAM_OFFSET,
                    p->size_data);
 }
 
@@ -399,14 +400,14 @@ int scheduler(void) {
       }
 
       mram_read((__mram_ptr void const *)sizeof(struct kernel_info) +
-                    idx * (JOB_PER_PROCESS * sizeof(struct job)),
+                    idx * (JOB_PER_PROCESS * sizeof(struct job))+MRAM_OFFSET,
                 jobs, sizeof(jobs)); // launch the jobs (each time because can
                                      // be modify by other process)
 
       launch_proc(idx, ready);
       mram_write(jobs,
                  (__mram_ptr void *)sizeof(struct kernel_info) +
-                     idx * (JOB_PER_PROCESS * sizeof(struct job)),
+                     idx * (JOB_PER_PROCESS * sizeof(struct job))+MRAM_OFFSET,
                  sizeof(jobs));
     }
     idx = 0;

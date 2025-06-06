@@ -34,6 +34,7 @@ class RevolverScheduler {
  private:
   int num_revolver_scheduling_cycles_;
   int issuable_threads_;
+  std::string info_="";
 
   std::vector<Thread *> threads_;
   basic::Queue<Thread> *thread_q_;

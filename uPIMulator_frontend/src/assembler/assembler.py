@@ -45,28 +45,28 @@ class Assembler:
     @staticmethod
     def assemble(
         executable: Executable, linker_script: LinkerScript, data_prep_param: List[int], num_dpus: int
-    ) -> None:
+    ,benchmark) -> None:
         #把executable.sections内容存到t.txt
-
         Assembler._assemble_atomic(executable, num_dpus)
         Assembler._assemble_iram(executable, num_dpus)
         Assembler._assemble_wram(executable, num_dpus)
         Assembler._assemble_mram(executable, num_dpus)
 
-        Assembler._assemble_global_object_symbols(executable, num_dpus)
-        Assembler._assemble_labels(executable, num_dpus)
+
+        #Assembler._assemble_global_object_symbols(executable, num_dpus)
+        #Assembler._assemble_labels(executable, num_dpus)
 
         Assembler._assemble_dpu_transfer_pointer(executable, linker_script, num_dpus)
 
-        benchmark = Assembler._benchmark(executable)
-        num_tasklets = Assembler._num_tasklets(executable)
-        data_prep = Assembler.data_prep(benchmark, num_tasklets, data_prep_param, num_dpus)
+        #benchmark = Assembler._benchmark(executable)
+        #num_tasklets = Assembler._num_tasklets(executable)
+        #data_prep = Assembler.data_prep(benchmark, num_tasklets, data_prep_param, num_dpus)
 
-        Assembler._assemble_input_dpu_mram_heap_pointer_name(executable, data_prep)#
-        Assembler._assemble_output_dpu_mram_heap_pointer_name(executable, data_prep)
-        Assembler._assemble_dpu_input_arguments(executable, data_prep)
-        Assembler._assemble_dpu_results(executable, data_prep)
-        Assembler._assemble_num_executions(executable, data_prep)
+        # Assembler._assemble_input_dpu_mram_heap_pointer_name(executable, data_prep)#
+        # Assembler._assemble_output_dpu_mram_heap_pointer_name(executable, data_prep)
+        # Assembler._assemble_dpu_input_arguments(executable, data_prep)
+        # Assembler._assemble_dpu_results(executable, data_prep)
+        # Assembler._assemble_num_executions(executable, data_prep)
 
     @staticmethod
     def _assemble_atomic(executable: Executable, num_dpus: int) -> None:
@@ -95,6 +95,32 @@ class Assembler:
         iram_filepath = os.path.join(
             PathCollector.bin_path_in_local(), f"{num_dpus}_dpus", f"{benchmark}.{num_tasklets}", "iram.bin"
         )
+        output_file = os.path.join(
+            PathCollector.bin_path_in_local(), f"{num_dpus}_dpus", f"{benchmark}.{num_tasklets}", "iram_labels.bin"
+        )
+
+        with open(output_file, "w") as f:
+        # 写
+        
+            for text_section in text_sections:
+                # 写入段信息
+                
+                for label in text_section.labels():
+                    try:
+                        # 获取标签信息
+                        label_address = label.address() 
+                        label_name = label.name()
+                        
+                        # 格式化输出：地址(16进制) + 标签名
+                        f.write(f"{label_address}    {label_name}\n")
+                        
+                    except AttributeError as e:
+                        # 处理可能的属性错误
+                        print(f"Warning: Could not process label {label}: {e}")
+                        continue
+                        
+
+
 
         bytes_: List[Byte] = []
         for text_section in text_sections:

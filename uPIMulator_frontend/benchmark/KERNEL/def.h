@@ -29,7 +29,7 @@
 //
 
 #define SIZE_BLOCK INODE_BLOCK // size of inode block
-#define SIZE_STACK 512
+#define SIZE_STACK 2*1024
 
 #define SIZE_SOCKET (INODE_BLOCK >> 2)
 
@@ -42,6 +42,8 @@
 #define MAX_SD 3 // max socket descriptor
 
 #define WRAM_MAX_PROCESS 0xE000 // The (maximum) size of the wram of a user
+#define WRAM_OFFSET 512
+#define MRAM_OFFSET 636 * 1024
 
 #define QUANTOM_STOP_DPU 5000000
 #define PROCESS_QUANTOM QUANTOM_STOP_DPU / 100

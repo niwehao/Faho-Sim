@@ -10,6 +10,8 @@ System::System(util::ArgumentParser *argument_parser)
   benchmark = argument_parser->get_string_parameter("benchmark");
 
   cpu_->connect_rank(rank_);
+  faho_k1_ = new faho::k1::K1(argument_parser->get_string_parameter("bindir"),
+                             benchmark, argument_parser->get_int_parameter("num_tasklets"), rank_);
 }
 
 System::~System() {
@@ -34,13 +36,15 @@ util::StatFactory *System::stat_factory() {
 
 void System::init() {
   cpu_->init();//初始化各种ram(模拟系统占用
-  cpu_->sched(execuion_);//
+  //cpu_->sched(execuion_);//
   cpu_->launch();
 }
 
 void System::cycle() {
+  faho_k1_->cycle(); //处理faho的事件
   cpu_->cycle();
   rank_->cycle();
+  
 
   if (is_zombie()) {
     cpu_->check(execuion_);//程序的执行次数

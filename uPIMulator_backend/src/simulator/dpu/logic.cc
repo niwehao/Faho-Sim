@@ -109,14 +109,14 @@ void Logic::
     if (thread != nullptr) {
       int chosen_thread_id = thread->id();
       //打印线程id:
-     std::cout <<"thread id is "<< chosen_thread_id << std::endl;
+      //std::cout<<"num ins "<<thread->reg_file()->read_pc_reg()<<std::endl;
 
       abi::instruction::Instruction *instruction =
           iram_->read(thread->reg_file()->read_pc_reg());//从IRAM中读取指令,每一个thread维护一份指令表,通过修改iram的位置来完成数据传入
       instruction->set_thread(thread);//设置指令的线程
       pipeline_->push(instruction);//将指令加入流水线
-      abi::instruction::Suffix suffix = instruction->suffix();
-      std::cout << instruction->getSuffixName(suffix) << std::endl;
+      std::cout << "{" << dpu_id_ << "}";
+      std::cout << converter::InstructionConverter::to_string(instruction) << std::endl;
 
 
       if (instruction->suffix() != abi::instruction::DMA_RRI) {
@@ -165,6 +165,7 @@ dma_instruction {
         }
       }
     } else {
+      //std::cout<< "{" << dpu_id_ << "} No thread to schedule" << std::endl;
       for (auto &th : scheduler_->threads()) {
         if (th->state() == Thread::BLOCK) {
           th->update_thread_status("WAIT_DATA", 1);
@@ -472,7 +473,7 @@ void Logic::execute_acquire_rici(abi::instruction::Instruction *instruction) {//
   if (instruction->thread()->reg_file()->condition(instruction->condition())) {
     instruction->thread()->reg_file()->write_pc_reg(instruction->pc()->value());
   } else {
-    instruction->thread()->reg_file()->increment_pc_reg();
+    instruction->thread()->reg_file()->increment_pc_reg(); 
   }
 
   set_flags(instruction, not can_acquire, false);//设置flag

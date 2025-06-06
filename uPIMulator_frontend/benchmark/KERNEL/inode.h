@@ -68,7 +68,7 @@ int inode_operation(uint32_t inode, void *buf, size_t size, uint32_t offset,
     if (((int)buf & 7) != 0)
       return PTR_MUST8BIYTEALIGN; */
   __mram_ptr void *mram_place =
-      (__mram_ptr void *)((inode << 16) + offset); //>16 -> * SIZE_BLOCK
+      (__mram_ptr void *)((inode << 16) + offset)+MRAM_OFFSET; //>16 -> * SIZE_BLOCK
 
   /*   if (offset + size > SIZE_BLOCK) {
       return INODE_FULL;
@@ -94,7 +94,7 @@ int alloc_inode() {
                                // in the fun (but need alloc)
   for (int i = 0; i < 10; i++) {
     int off = BIT_MAP + i * 400;
-    mram_read((__mram_ptr void const *)(off), &bit_map[0], 400);
+    mram_read((__mram_ptr void const *)(off+MRAM_OFFSET), &bit_map[0], 400);
     for (int j = 0; j < 400; j++) {
       if (bit_map[j] != 0xff) {
         for (int k = 0; k < 8; k++) {
@@ -104,7 +104,7 @@ int alloc_inode() {
             if (inode == 0 || inode == 1)
               continue;
             bit_map[j] |= (1 << k);
-            mram_write(bit_map, (__mram_ptr void *)(BIT_MAP + i * 400), 400);
+            mram_write(bit_map, (__mram_ptr void *)(BIT_MAP + i * 400+MRAM_OFFSET), 400);
             mutex_unlock(mutex_mram);
 
             return inode;

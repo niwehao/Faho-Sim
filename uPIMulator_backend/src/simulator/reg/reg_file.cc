@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <tuple>
 
+
 namespace upmem_sim::simulator::reg {
 
 RegFile::RegFile(ThreadID id)
@@ -13,6 +14,35 @@ RegFile::RegFile(ThreadID id)
       exception_reg_(new ExceptionReg()) {//异常寄存器
   for (RegIndex index = 0; index < util::ConfigLoader::num_gp_registers();//通用寄存器
        index++) {
+    std::ifstream file("/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus/KERNEL.16/iram_labels.bin");
+    std::string line;
+    int time_ = 0;
+    std::string name_;
+    
+    if (file.is_open()) {
+        while (std::getline(file, line)) {
+           std::istringstream iss(line);
+            iss>>time_>>name_;
+            time_table_.push_back(new timetable(time_, name_));//时间表
+        }
+        file.close();
+    } else {
+        std::cout << "无法打开文件" << std::endl;
+    }
+     file.close();
+    std::ifstream file_b("/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus/HELLOWORLD.16/iram_labels.bin");
+    
+    if (file_b.is_open()) {
+        while (std::getline(file_b, line)) {
+           std::istringstream iss(line);
+            iss>>time_>>name_;
+            time_table_helloworld.push_back(new timetable(time_, name_));//时间表
+        }
+        file_b.close();
+    } else {
+        std::cout << "无法打开文件" << std::endl;
+    }
+    
     gp_regs_.push_back(new GPReg(index));//通用寄存器
   }
 }
@@ -31,6 +61,12 @@ RegFile::~RegFile() {
     delete gp_regs_[index];
   }
   delete sp_reg_;
+  for(auto &timetable : time_table_) {
+    delete timetable;
+  }
+  for(auto &timetable : time_table_helloworld) {
+    delete timetable;
+  }
   delete pc_reg_;
   delete condition_reg_;
   delete flag_reg_;

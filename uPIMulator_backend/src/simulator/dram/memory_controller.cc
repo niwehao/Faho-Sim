@@ -141,8 +141,7 @@ void MemoryController::write(Address address, Address size,
   std::vector<int> bytes = byte_stream->bytes();
 
   Address end_address = address + size;
-  // 打印开始和结束地址
-  std::cout << "MC Writing to address " << address << " to " << end_address - 1 << std::endl;
+ 
 
 
   Address cur_address = address;
@@ -195,7 +194,7 @@ void MemoryController::service_input_q() {
 }
 
 void MemoryController::service_scheduler() {
-  if (scheduler_->can_pop() and memory_command_q_->can_push()) {
+  if (scheduler_->can_pop() and memory_command_q_->can_push()) {//调度器完成调度
     MemoryCommand *memory_command = scheduler_->pop();
     memory_command_q_->push(memory_command);
   }
@@ -203,13 +202,13 @@ void MemoryController::service_scheduler() {
 
 void MemoryController::service_memory_command_q() {
   if (memory_command_q_->can_pop() and row_buffer_->can_push()) {
-    MemoryCommand *memory_command = memory_command_q_->pop();
+    MemoryCommand *memory_command = memory_command_q_->pop();//写入rowbuffer
     row_buffer_->push(memory_command);
   }
 }
 
 void MemoryController::service_row_buffer() {
-  if (row_buffer_->can_pop()) {
+  if (row_buffer_->can_pop()) {//处理
     MemoryCommand *memory_command = row_buffer_->pop();
 
     if (memory_command->operation() == MemoryCommand::ACTIVATION or
@@ -241,7 +240,7 @@ void MemoryController::service_row_buffer() {
 }
 
 void MemoryController::service_wait_q() {
-  if (not wait_q_->empty()) {
+  if (not wait_q_->empty()) {//wait需要进行等待直到dmacommand的ack全部为true
     dpu::DMACommand *dma_command = wait_q_->front();
 
     if (dma_command->is_ready() and ready_q_->can_push()) {

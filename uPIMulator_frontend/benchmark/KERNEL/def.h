@@ -29,7 +29,7 @@
 //
 
 #define SIZE_BLOCK INODE_BLOCK // size of inode block
-#define SIZE_STACK 2*1024
+#define SIZE_STACK 512
 
 #define SIZE_SOCKET (INODE_BLOCK >> 2)
 
@@ -143,6 +143,8 @@ struct socket_info {
   uint32_t __8byte_align;
   // uint32_t __8byte_align;
 };
+extern int me_new(void); // return the tasklet id
+
 
 
 

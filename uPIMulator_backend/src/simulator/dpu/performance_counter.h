@@ -41,8 +41,6 @@ class PerformanceCounter {
             }
             sub_counter++;
         }
-
-
     }
     void set_cfg(int value)
     {
@@ -63,17 +61,11 @@ class PerformanceCounter {
     int get_value()
     {
         int value_t=counter_word->bit_slice(abi::word::UNSIGNED,4,36);
-        return value_t;
+        return 0;
     }
     private:
         abi::word::_BaseWord *counter_word;
         int sub_counter=0;
 };
-
 }
-
-
-
-
-
 #endif //PERFORMANCE_COUNTER_H

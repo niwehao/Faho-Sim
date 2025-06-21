@@ -24,6 +24,7 @@ class Rank {
 
   void read(RankMessage *rank_message);
   void write(RankMessage *rank_message);
+  void reboot();
 
   void cycle();
 

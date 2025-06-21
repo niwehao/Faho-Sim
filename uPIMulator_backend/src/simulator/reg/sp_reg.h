@@ -10,6 +10,7 @@ class SPReg {
  public:
   explicit SPReg(ThreadID id);
   ~SPReg();
+  int thread_id;
 
   int64_t read(abi::reg::SPReg sp_reg,
                abi::word::Representation representation);

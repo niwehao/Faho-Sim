@@ -34,5 +34,6 @@ namespace upmem_sim::simulator::faho::def
     void add_write_data_socket(DpuManager *DpuManager, Event *event, process_host *process);
     void transfert_from_api(DpuManager *DpuManager,int nb_so,struct socket_connection *sockets_connection);
     int write_in_socket(DpuManager *dpu_manager, int node,  encoder::ByteStream *buf,int size);
+    void add_check(faho::def::DpuManager *DpuManager, faho::def::Event *event);
 }
 #endif

@@ -10,7 +10,7 @@
 extern mutex_id_t mutex_jobs;
 extern unsigned char *mutex_l;
 extern char tab[];
-extern struct custom_barriere cp;
+extern  struct custom_barriere cp;
 
 struct lock {
   int owner; // if !=-1 : it is owned by owner (job index)
@@ -65,7 +65,7 @@ int sleep(void *sync_addr, struct lock *l, unsigned char *const hard_mutex);
 int wakeup(void *sync_addr, uint8_t check_cur_only_cur_process,
            uint8_t resume_tasklet);
 int try_lock(struct lock *l) {
-  uint8_t job_idx = cur_jobs[me()];
+  uint8_t job_idx = cur_jobs[me_new()];
 
   mutex_lock(mutex_l); // use hardware lock to avoid race condition
   mutex_lock(mutex_jobs);
@@ -83,7 +83,8 @@ int try_lock(struct lock *l) {
 }
 
 int lock(struct lock *l) {
-  uint8_t job_idx = cur_jobs[me()];
+  
+  uint8_t job_idx = cur_jobs[me_new()];
 
   mutex_lock(mutex_l); // use hardware lock to avoid race condition
   mutex_lock(mutex_jobs);
@@ -97,6 +98,7 @@ int lock(struct lock *l) {
     mutex_unlock(mutex_jobs);
     mutex_unlock(mutex_l);
     swap_scheduler();
+    //__asm__ volatile("\tmove r16, id\n");
     return 0;
   } else {
     l->owner = job_idx;
@@ -132,7 +134,7 @@ int unlock(struct lock *l) {
 
 int sleep(void *sync_addr, struct lock *l, unsigned char *const hard_mutex) {
 
-  uint8_t job_idx = cur_jobs[me()];
+  uint8_t job_idx = cur_jobs[me_new()];
   jobs[job_idx].state = SLEEPING;
   jobs[job_idx].sync_addr = (uint32_t)sync_addr;
 
@@ -142,6 +144,7 @@ int sleep(void *sync_addr, struct lock *l, unsigned char *const hard_mutex) {
     mutex_unlock(hard_mutex);
   }
   swap_scheduler();
+  //__asm__ volatile("\tmove r16, id\n");
   if (l)
     lock(l);
   if (hard_mutex) {

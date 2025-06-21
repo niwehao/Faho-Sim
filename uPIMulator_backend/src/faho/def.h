@@ -4,6 +4,7 @@
 #include "util/config_loader.h"  // util::ConfigLoader
 #include "encoder/byte_stream.h" // ByteStream
 #include "simulator/dpu/dpu.h"
+// 定义一个可控制的输出宏
 
 #define MAX_PRG 10
 #define BUFFER_BIT_MAP 400
@@ -19,10 +20,12 @@
 #define SOCKET_OUT 8
 #define NEW_SOCKET 16
 #define MAX_SD 3
-#define SIZE_STACK util::ConfigLoader::stack_size()
+#define SIZE_STACK 512
 #define SIZE_SOCKET (INODE_BLOCK >> 2)
 #define SIZE_BLOCK INODE_BLOCK
-
+#define JOB_PER_PROCESS 100
+#define __aligned(a) __attribute__((aligned(a)))
+#define __dma_aligned __aligned(8)
 #include <fcntl.h>
 #include <unistd.h>
 #include <unistd.h>    // 用于read, close
@@ -33,10 +36,25 @@
 #include <sys/stat.h>  // 用于文件状态
 #include "faho/inode.h"
 #include "faho/socket.h"
+#include "faho/benchmark/host.h"
 namespace upmem_sim::simulator::faho::def
 {
-
-
+  typedef uint8_t *mutex_id_t;
+  struct custom_barriere {
+  unsigned char nb;
+  unsigned char pending;
+  unsigned char ret_val;
+  mutex_id_t mutex;
+};
+  struct job {
+    uint8_t state;
+    uint8_t jid;
+    uint32_t beginstack; // allow to reuse the stack
+    uint32_t sync_addr;  // if the process is in state WAITING or SLEEPING, it is
+                        // the addr to wakeup it
+    uint32_t time;
+    uint32_t fc;
+  };
   enum STATE
   { // state of a process
     NONE = 0,
@@ -58,6 +76,8 @@ namespace upmem_sim::simulator::faho::def
     WriteSockets = 3, // socket_write_handle_evt
     InodeWrite = 4,
     InodeRead = 5,
+    ReadSocket = 6, 
+    Check = 7, 
   };
 
   struct kernel_info
@@ -75,6 +95,7 @@ namespace upmem_sim::simulator::faho::def
     int kind;
     int offset;
     std::string path;
+    void* pointer;//TODO修改read_inode逻辑
     encoder::ByteStream *buf;
     int size;
   };
@@ -88,7 +109,7 @@ namespace upmem_sim::simulator::faho::def
     unsigned int prc_ix;
     encoder::ByteStream *buf;
     int offset;
-    std::string path;
+    void* pointer; // 用于read_inode
   };
   class WriteInode
   {
@@ -117,6 +138,12 @@ namespace upmem_sim::simulator::faho::def
     unsigned int nb_data = 0;
     std::vector<socket_data *> data;
   };
+  class CheckResult
+  {
+  public:
+    unsigned int nb_data = 0;
+    int rolepids[MAX_PRG] = {0}; // 记录每个进程的pid
+  };
   class DpuFlag
   {
   public:
@@ -126,6 +153,7 @@ namespace upmem_sim::simulator::faho::def
     int read_inode = 0;
     int write_socket = 0;
     int dpu_process_change = 0;
+    int check=0;
   };
 
   class DpuManager
@@ -135,6 +163,7 @@ namespace upmem_sim::simulator::faho::def
     DpuManager(int id, dpu::DPU *dpu);
     dpu::DPU *dpu;
     DpuFlag *dpu_flag;
+
     struct def::kernel_info ki;
     uint32_t dpu_id;
     u_int16_t inode_table[MAX_PRG][4][2]={0};//用于初始填充
@@ -144,8 +173,9 @@ namespace upmem_sim::simulator::faho::def
     std::vector<struct ProcessEvent *> load_processes;
     std::vector<struct ProcessEvent *> unlaunch_processes;
     std::vector<struct ProcessEvent *> launch_processes; // 启动和结束
-    process_host * temp_for_start;
+    __dma_aligned struct def::job jobs[JOB_PER_PROCESS];
     WriteSocket *write_socket;
+    CheckResult *check_result;
     WriteInode *write_inode;
     ReadInode *read_inode;
     int num_process = 0;

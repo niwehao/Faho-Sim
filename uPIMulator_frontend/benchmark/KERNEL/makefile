@@ -15,7 +15,7 @@ all : ${K_ASM}
 
 
 ${K_ASM} : 
-	dpu-upmem-dpurte-clang -ffunction-sections -S -g0 -O0 ${DPU_KERNEL_FLAG} -o $@ ${K_C}
+	dpu-upmem-dpurte-clang -ffunction-sections -S -g0 -O2 ${DPU_KERNEL_FLAG} -o $@ ${K_C}
 
 
 clean:

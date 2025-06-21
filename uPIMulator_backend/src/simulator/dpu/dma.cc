@@ -1,6 +1,7 @@
 #include "simulator/dpu/dma.h"
 
 namespace upmem_sim::simulator::dpu {
+  int count=7;
 
 DMA::~DMA() {
   delete input_q_;
@@ -66,7 +67,6 @@ void DMA::transfer_to_iram(Address address, encoder::ByteStream *byte_stream) {
 }
   void DMA::transfer_to_iram_from_mram(Address address, encoder::ByteStream *byte_stream) {
   int size__=byte_stream->size();
-  printf("size of byte_stream: %d\n",size__);
 
   assert(byte_stream->size() % (util::ConfigLoader::iram_data_width_align_bytes())==0);
   int num_instructions = static_cast<int>(byte_stream->size() /
@@ -145,6 +145,8 @@ void DMA::transfer_from_mram_to_wram(
     abi::instruction::Instruction *instruction) {
   assert(can_push());
   std::cout<<"DMA::transfer_from_mram to wram "<<std::endl;
+  
+  
 
   auto dma_command = new DMACommand(DMACommand::READ, wram_address,
                                     mram_address, size, instruction);

@@ -14,7 +14,7 @@ RegFile::RegFile(ThreadID id)
       exception_reg_(new ExceptionReg()) {//异常寄存器
   for (RegIndex index = 0; index < util::ConfigLoader::num_gp_registers();//通用寄存器
        index++) {
-    std::ifstream file("/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus/KERNEL.16/iram_labels.bin");
+    std::ifstream file("/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus/KERNEL.4/iram_labels.bin");
     std::string line;
     int time_ = 0;
     std::string name_;
@@ -23,6 +23,10 @@ RegFile::RegFile(ThreadID id)
         while (std::getline(file, line)) {
            std::istringstream iss(line);
             iss>>time_>>name_;
+            //如果name里包含_begin或者_end则跳过
+            if(name_.find("_begin") != std::string::npos || name_.find("_end") != std::string::npos) {
+                continue;
+            }
             time_table_.push_back(new timetable(time_, name_));//时间表
         }
         file.close();
@@ -30,12 +34,15 @@ RegFile::RegFile(ThreadID id)
         std::cout << "无法打开文件" << std::endl;
     }
      file.close();
-    std::ifstream file_b("/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus/HELLOWORLD.16/iram_labels.bin");
+    std::ifstream file_b("/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus/VA.16/iram_labels.bin");
     
     if (file_b.is_open()) {
         while (std::getline(file_b, line)) {
            std::istringstream iss(line);
             iss>>time_>>name_;
+            if(name_.find("_begin") != std::string::npos || name_.find("_end") != std::string::npos) {
+                continue;
+            }
             time_table_helloworld.push_back(new timetable(time_, name_));//时间表
         }
         file_b.close();

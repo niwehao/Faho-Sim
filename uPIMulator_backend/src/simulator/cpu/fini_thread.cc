@@ -14,6 +14,7 @@ void FiniThread::cycle() {
     for (auto &thread : dpu->scheduler()->threads()) {
       if (thread->reg_file()->read_pc_reg() == sys_end_pointer() and
           thread->state() == dpu::Thread::SLEEP) {
+            assert(0);
         dpu->scheduler()->shutdown(thread->id());
       }
     }

@@ -112,7 +112,7 @@ def link(benchmark: str, num_dpus: int,num_tasklets: int, data_prep_param: list)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--benchmark", type=str, default="SEL")
+    parser.add_argument("--benchmark", type=str, default="HELLOWORLD")
     parser.add_argument("--num_tasklets", type=int, default=1)
     parser.add_argument("--mode", type=str, default="all")
     parser.add_argument("--data_prep_param", type=str, default="2048")

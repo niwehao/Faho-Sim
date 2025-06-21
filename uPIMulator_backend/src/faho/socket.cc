@@ -1,6 +1,12 @@
 #include "socket.h"
 namespace upmem_sim::simulator::faho::def
 {
+     void add_check(faho::def::DpuManager *DpuManager, faho::def::Event *event){
+        DpuManager->check_result->nb_data++;
+        assert(DpuManager->check_result->nb_data <= MAX_PRG);
+        DpuManager->check_result->rolepids[DpuManager->check_result->nb_data - 1] = event->pid;
+        return;
+     }
     
     void add_write_data_socket(faho::def::DpuManager *DpuManager, faho::def::Event *event, faho::def::process_host *process)
     {
@@ -45,9 +51,12 @@ namespace upmem_sim::simulator::faho::def
 
             for (auto &process : DpuManager->processes)
             {
+                if(process == nullptr)
+                    continue; // 该位置没有进程
                 if (process->pid == sc->pid)
                 {
                     p = process;
+                    break;
                 }
             }
             assert(p != NULL);
@@ -56,12 +65,7 @@ namespace upmem_sim::simulator::faho::def
             
             p->sd[sc->sd].flags |= SOCKET_UPDATE;
             DpuManager->dpu_flag->dpu_process_change = 1;
-            DpuManager->write_socket->nb_data=0;
-            for(auto& data: DpuManager->write_socket->data)
-            {
-                delete data;
-            }
-        
+            DpuManager->write_socket->data[i]->pid == 0;
         }
     }
     int write_in_socket(faho::def::DpuManager *DpuManager, int inode, encoder::ByteStream *buf, int size)

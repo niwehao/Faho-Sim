@@ -85,8 +85,10 @@ class LinkerScript:
         # dis=cur_address- ConfigLoader.iram_kernel_offset()- ConfigLoader.iram_offset()
         # print(f"dis:{dis}")
         # print(f"cur_address:{cur_address}")
-
-        assert cur_address < (ConfigLoader.iram_offset() + ConfigLoader.iram_size())
+        if benchmark == "KERNEL":
+            assert cur_address < (ConfigLoader.iram_offset() + ConfigLoader.iram_size())
+        else:
+            assert cur_address < (ConfigLoader.iram_offset() + ConfigLoader.iram_kernel_offset())
 
     def _assign_atomic(self, executable: Executable,benchmark) -> None:
         cur_address = ConfigLoader.atomic_offset()
@@ -195,12 +197,10 @@ class LinkerScript:
 
             dpu_host.set_address(cur_address)
             cur_address += dpu_host.size()
-        # dis=cur_address- ConfigLoader.wram_kernel_offset()- ConfigLoader.wram_offset()
-        # print(f"dis:{dis}")
-        #print(f"cur_address:{cur_address}")
-
         for i in range(ConfigLoader.max_num_tasklets()):
             self.symbol(f"__sys_stack_thread_{i}").set_address(cur_address)
+            if i==0:
+                print(f"__sys_stack_thread_{i} address:{cur_address}")
             cur_address += self.constant(f"STACK_SIZE_TASKLET_{i}")
 
         self.symbol("__sw_cache_buffer").set_address(cur_address)
@@ -210,9 +210,10 @@ class LinkerScript:
             math.ceil(cur_address / ConfigLoader.min_access_granularity()) * ConfigLoader.min_access_granularity()
         )
         self.symbol("__sys_heap_pointer_reset").set_address(cur_address)
-       
-
-        assert cur_address < (ConfigLoader.wram_offset() + ConfigLoader.wram_size())
+        if benchmark == "KERNEL":
+            assert cur_address < (ConfigLoader.wram_offset() + ConfigLoader.wram_size())
+        else:
+            assert cur_address < (ConfigLoader.wram_offset() + ConfigLoader.wram_kernel_offset())
 
     def _assign_mram(self, executable: Executable,benchmark) -> None:
       

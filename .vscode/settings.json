@@ -66,7 +66,10 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "thread": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "common.h": "c",
+        "stdsys.h": "c",
+        "stdsync.h": "c"
     },
     "cmake.sourceDirectory": "/home/krakos/niwe/Faho_Sim/uPIMulator_backend"
 }

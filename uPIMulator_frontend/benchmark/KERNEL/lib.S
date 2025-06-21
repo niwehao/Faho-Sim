@@ -39,7 +39,7 @@ swap_context: //Save the current flow context inside the stack (and store stack 
 	ld d16, r22, 8
 	ld d18, r22, 16
 	ld d20, r22, 24
-	ld d22, r22, 32
+	ld d22, r22, 32 //恢复到之前的位置
 	jump r23
 .section	.text.first_swap_context,"ax",@progbits
 	.globl	first_swap_context               // -- Begin function 	.globl	first_swap_context           
@@ -64,3 +64,39 @@ first_swap_context: //Same that swap_context but there are 3 parameters the last
 	.type	jmp_mram,@function
 jmp_mram: 
 	jump syscall
+.section	.text.resume_me,"ax",@progbits
+	.globl resume_me
+	.type	resume_me,@function
+resume_me:   //restore the flow context store in r1 and continue the execution after the stop. This function will never returns
+	move r22, r0 
+	move r0, r23
+	ld d14, r22, 0
+	ld d16, r22, 8
+	ld d18, r22, 16
+	ld d20, r22, 24
+	ld d22, r22, 32
+	jump r0
+.section	.text.me_new,"ax",@progbits
+	.globl me_new
+	.type	me_new,@function
+me_new:                                 // @me_new
+// %bb.0:
+	move r0, 0
+	// inline asm
+	move r0, id
+	// inline asm
+	jump r23
+.section	.text.wake_up_one,"ax",@progbits
+	.globl wake_up_one
+	.type	wake_up_one,@function
+wake_up_one:
+	move r1, 0
+wake_up_one_start:
+	jeq r0, r1, wake_up_one_end
+	resume r1, 0, nz, wake_up_one_start+3 
+	jump wake_up_one_end
+	add r1, r1, 1
+	jump wake_up_one_start
+wake_up_one_end:
+	jump r23
+	

@@ -70,7 +70,7 @@ class DMA {
   sram::IRAM *iram_;
   OperandCollector *operand_collector_;
   dram::MemoryController *memory_controller_;
- Address sys_used_mram_end_pointer=0;
+  Address sys_used_mram_end_pointer=0;
 
   basic::Queue<DMACommand> *input_q_;
   basic::Queue<DMACommand> *ready_q_;

@@ -12,15 +12,14 @@
             "console": "integratedTerminal",
             "args": [
                 "--mode", "compile_by_toolchain",
-                "--num_tasklets", "16",
+                "--num_tasklets", "4",
                 "--benchmark", "KERNEL",
-                "--data_prep_param", "1024",
                 "--num_dpus", "16"
             ],
             "cwd": "${workspaceFolder}"
         },
         {
-             "name": "Debug Helloworld",
+             "name": "Debug VA",
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
@@ -28,8 +27,7 @@
             "args": [
                 "--mode", "compile_by_toolchain",
                 "--num_tasklets", "16",
-                "--benchmark", "HELLOWORLD",
-                "--data_prep_param", "1024",
+                "--benchmark", "VA",
                 "--num_dpus", "16"
             ],
             "cwd": "${workspaceFolder}"

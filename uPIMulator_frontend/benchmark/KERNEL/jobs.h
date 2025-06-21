@@ -58,7 +58,7 @@ int scheduler_jobs(void);
  */
 void swap_scheduler(void);
 extern mutex_id_t mutex_jobs;
-extern struct custom_barriere cp;
+extern  struct custom_barriere cp;
 
 struct flow_context *fc_scheduler_job[NR_TASKLETS]
     __attribute__((section(".data"))) = {}; // flow context of scheduler
@@ -70,26 +70,26 @@ __dma_aligned struct job jobs[JOB_PER_PROCESS]
 uint8_t cur_jobs[NR_TASKLETS] __attribute__((section(".data"))) = {};
 extern void swap_context(struct flow_context **old, struct flow_context *new);
 void swap_scheduler() {
-  swap_context(&jobs[cur_jobs[me()]].fc, fc_scheduler_job[me()]);
+  swap_context(&jobs[cur_jobs[me_new()]].fc, fc_scheduler_job[me_new()]);
 }
 extern int wakeup(void *sync_addr, uint8_t check_cur_only_cur_process,
            uint8_t resume_tasklet);
 void __end_child_jobs(void) {
 
   mutex_lock(mutex_jobs); // need to lock for join
-  uint8_t job_idx = cur_jobs[me()];
+  uint8_t job_idx = cur_jobs[me_new()];
   jobs[job_idx].state = FINISHED;
   mutex_unlock(mutex_jobs);
   wakeup(&jobs[0], 1, 1); // wakeup the join_job function
 
-  swap_context(&jobs[cur_jobs[me()]].fc,
-               fc_scheduler_job[me()]); // should never return
+  swap_context(&jobs[cur_jobs[me_new()]].fc,
+               fc_scheduler_job[me_new()]); // should never return
   // halt();
 }
 
 int create_job(unsigned int arg1) {
 
-  uint8_t job_idx = cur_jobs[me()];
+  uint8_t job_idx = cur_jobs[me_new()];
 
   if (jobs[job_idx].jid != 0)
     return CHILD_JOB;
@@ -107,7 +107,7 @@ int create_job(unsigned int arg1) {
       begin_stack = jobs[i].beginstack;
       break;
     }
-  }
+  }//没有可以回收的
   // }
   if (!begin_stack) { // need to alloc a new stack
     if ((begin_stack =
@@ -117,7 +117,7 @@ int create_job(unsigned int arg1) {
       return begin_stack;
     }
 
-    begin_stack -= SIZE_STACK;
+    begin_stack -= SIZE_STACK;//为什么要减去???
   }
   struct process *p = &processs[cur_process_index];
 
@@ -179,22 +179,24 @@ extern void first_swap_context(struct flow_context **old,
 void swap(unsigned int job_idx, uint8_t first) {
   jobs[job_idx].state = RUNNING;
   mutex_unlock(mutex_jobs);
-  cur_jobs[me()] = job_idx;
+  cur_jobs[me_new()] = job_idx;
   unsigned int time = 0;
-  __builtin_time_r(time);
+  //__builtin_time_r(time);
+   __asm__ volatile("\ttime %[time]\n" : [time] "=r"(time));
   jobs[job_idx].time = time;
 
   if (first)
-    first_swap_context(&fc_scheduler_job[me()], jobs[job_idx].fc,
+    first_swap_context(&fc_scheduler_job[me_new()], jobs[job_idx].fc,
                        jobs[job_idx].fc->r21);
   else
-    swap_context(&fc_scheduler_job[me()], jobs[job_idx].fc);
+    swap_context(&fc_scheduler_job[me_new()], jobs[job_idx].fc);
   mutex_lock(mutex_jobs);
 }
 
 uint8_t check_time_process() {
   unsigned int time = 0;
-  __builtin_time_r(time);
+  //__builtin_time_r(time);
+   __asm__ volatile("\ttime %[time]\n" : [time] "=r"(time));
   if (time - processs[cur_process_index].timer > PROCESS_QUANTOM)
     return 1;
   return 0;
@@ -222,7 +224,7 @@ int scheduler_jobs(void) {
         continue;
       }
 
-      swap(last, ready);
+      swap(last, ready);//swap结束以后
       all_end_or_waiting =
           0; // the detection of all_end can be more fast but keep it simple
       stop = check_time_process();
@@ -233,9 +235,11 @@ int scheduler_jobs(void) {
     if (all_end_or_waiting || stop) {
 
       // barrier_wait(&barrier_jobs); // wait the end of everyone before quit
+      
       if (sp_wait(&cp) != 0)
         continue;
-      if (me() == 0)
+      //__asm__ volatile("\tmove r15, id\n");//r15记录的me可能会发生变化
+      if (me_new() == 0)
         return all_end_or_waiting; // return the all_end_or_waiting if it is
                                    // 1 mark the process at waiting
       // barrier_wait(&barrier_jobs);

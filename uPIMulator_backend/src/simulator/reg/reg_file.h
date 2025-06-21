@@ -59,27 +59,62 @@ namespace upmem_sim::simulator::reg
 
     void write_gp_reg(abi::reg::GPReg *gp_reg, int64_t value)
     {
+      if(gp_reg->index() == 0)
+      {
+        std::cout << "write gp_reg 0 value: " << value << std::endl;
+      }
+      if (gp_reg->index() == 1)
+      {
+        std::cout << "write gp_reg 1 value: " << value << std::endl;
+      }
+
+      if (gp_reg->index() == 2)
+      {
+        std::cout << "write gp_reg 2 value: " << value << std::endl;
+      }
+      if (gp_reg->index() == 3)
+      {
+        std::cout << "write gp_reg 3 value: " << value << std::endl;
+      }
+      if (gp_reg->index() == 22)
+      {
+        bool user_flag=(value>=1068 && value< util::ConfigLoader::wram_offset() + util::ConfigLoader::wram_kernel_offset());
+        bool kernel_flag=(value >= sp_reg_->thread_id * 512 + 136063 && value < sp_reg_->thread_id * 512 + 136063 + 512);
+        std::cout << "write gp_reg 22 value: " << value << std::endl;  
+        assert(user_flag || kernel_flag); // 22号寄存器只能是用户态或系统态的栈地址   
+
+      }
+      if (gp_reg->index() == 23)
+      {
+        std::cout << "write gp_reg 23 value: " << value << std::endl;
+      }
       gp_regs_[gp_reg->index()]->write(value);
     }
     void write_pair_reg(abi::reg::PairReg *pair_reg, int64_t even, int64_t odd);
-    void write_pc_reg(int64_t value)
+    void print_jump(int value)
     {
       timetable *timetable_p = nullptr;
+      int found = 0;
       if (value < util::ConfigLoader::iram_offset() + util::ConfigLoader::iram_kernel_offset())
-      {//用户态debug
+      { // 用户态debug
+        state = 1;
+        std::cout << "Thread id: " << sp_reg_->thread_id << "  ";
         for (auto &timetable_n : time_table_helloworld)
         {
-          if(value==393216){
+          if (value == 393216)
+          {
             std::cout << "*** jmp to 0x0" << std::endl;
+            found = 1;
             break;
           }
           if (timetable_n->time == value)
           {
-            std::cout << "*** jmp to user: " << timetable_n->name << std::endl;
-            // if(timetable_n->name == ".LBB40_2") {
-            //   std::cout << "*** .LBB40_2" << std::endl;
-            //   return;
+            // if (timetable_n->name == ".LBB25_2" || timetable_n->name == "text.wakeup" || timetable_n->name == "wakeup")
+            // {
+            //   std::cout << "*** break point" << std::endl;
             // }
+            std::cout << "*** jmp to user: " << timetable_n->name << std::endl;
+            found = 1;
             break;
           }
           else if (timetable_n->time > value)
@@ -87,18 +122,30 @@ namespace upmem_sim::simulator::reg
             assert(timetable_p != nullptr);
 
             assert((value - timetable_p->time) % 12 == 0);
+
             std::cout << "*** jmp to user: " << timetable_p->name << "+" << (value - timetable_p->time) / 12 << std::endl;
+
+            found = 1;
             break;
           }
           timetable_p = timetable_n;
         }
+        if (!found)
+        {
+          // 找到timetable_最后一项
+          std::cout << "  *** jmp to user: " << timetable_p->name << "+" << (value - timetable_p->time) / 12 << std::endl;
+        }
       }
       else
-      {//系统态debug
+      { // 系统态debug
+        state = 0;
+        std::cout << "Thread id: " << sp_reg_->thread_id << "  ";
         for (auto &timetable_n : time_table_)
         {
-          if(value==542100){
+          if (value == 542100)
+          {
             std::cout << "*** jmp to syscall" << std::endl;
+            found = 1;
             break;
           }
           if (timetable_n->time == value)
@@ -108,6 +155,7 @@ namespace upmem_sim::simulator::reg
             //   std::cout << "*** .LBB40_2" << std::endl;
             //   return;
             // }
+            found = 1;
             break;
           }
           else if (timetable_n->time > value)
@@ -115,18 +163,30 @@ namespace upmem_sim::simulator::reg
             assert(timetable_p != nullptr);
 
             assert((value - timetable_p->time) % 12 == 0);
+            found = 1;
             std::cout << "*** jmp to kernel: " << timetable_p->name << "+" << (value - timetable_p->time) / 12 << std::endl;
             break;
           }
           timetable_p = timetable_n;
         }
       }
-
+      if (!found)
+      {
+        // 找到timetable_最后一项
+        std::cout << "  *** jmp to kernel: " << timetable_p->name << "+" << (value - timetable_p->time) / 12 << std::endl;
+      }
+    }
+    void write_pc_reg(int64_t value)
+    {
+      print_jump(value);
       pc_reg_->write(value);
     }
     void increment_pc_reg()
     {
+
       pc_reg_->increment();
+      int64_t pc_value = pc_reg_->read();
+      print_jump(pc_value);
       // if(pc_reg_->read()  == 570432+12) {
       //   std::cout << "pc_reg increment to: " << pc_reg_->read() << std::endl;
       // }
@@ -165,6 +225,7 @@ namespace upmem_sim::simulator::reg
     ConditionReg *condition_reg_; // 条件位
     FlagReg *flag_reg_;           // zero & carry
     ExceptionReg *exception_reg_; // 处理异常
+    int state = 0;
   };
 
 } // namespace upmem_sim::simulator::reg

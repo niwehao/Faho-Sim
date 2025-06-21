@@ -145,6 +145,27 @@ class Assembler:
         wram_filepath = os.path.join(
             PathCollector.bin_path_in_local(), f"{num_dpus}_dpus", f"{benchmark}.{num_tasklets}", "wram.bin"
         )
+        output_file = os.path.join(
+            PathCollector.bin_path_in_local(), f"{num_dpus}_dpus", f"{benchmark}.{num_tasklets}", "wram_var.bin"
+        )
+        with open(output_file, "w") as f:
+    
+            for text_section in sections:
+                # 写入段信息
+                
+                for label in text_section.labels():
+                    try:
+                        # 获取标签信息
+                        label_address = label.address() 
+                        label_name = label.name()
+                        
+                        # 格式化输出：地址(16进制) + 标签名
+                        f.write(f"{label_address}    {label_name}\n")
+                        
+                    except AttributeError as e:
+                        # 处理可能的属性错误
+                        print(f"Warning: Could not process label {label}: {e}")
+                        continue
 
         bytes_: List[Byte] = []
         for section in sections:
@@ -173,6 +194,7 @@ class Assembler:
         mram_filepath = os.path.join(
             PathCollector.bin_path_in_local(), f"{num_dpus}_dpus", f"{benchmark}.{num_tasklets}", "mram.bin"
         )
+        
 
         bytes_: List[Byte] = []
         for section in sections:

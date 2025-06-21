@@ -13,6 +13,7 @@ SPReg::SPReg(ThreadID id)
       id2_(new abi::word::DataWord()),
       id4_(new abi::word::DataWord()),
       id8_(new abi::word::DataWord()) {
+  thread_id = id; // Store the thread ID
   zero_->set_value(0);
   one_->set_value(1);
   lneg_->set_value(-1);

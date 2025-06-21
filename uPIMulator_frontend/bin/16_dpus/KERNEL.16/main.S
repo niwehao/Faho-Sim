@@ -4209,7 +4209,7 @@ launch_proc:                            // @launch_proc
 	$call , r23, scheduler_jobs
 	$sw , r22,  - 16, r0
 	$lw , r0, r22,  - 16
-	$jeq , r0, 0, .LBB42_9
+	$jeq , r0, 0, .LBB42_9//判断 all_end_or_waiting
 	$jump , .LBB42_7
 .LBB42_7:
 	$lw , r1, r22,  - 32
@@ -4235,7 +4235,7 @@ launch_proc:                            // @launch_proc
 	$move , r0, processs
 	$add , r0, r0, r1
 	$lw , r0, r0, 8
-	$jneq , r0, 2, .LBB42_11
+	$jneq , r0, 2, .LBB42_11 //判断状态
 	$jump , .LBB42_10
 .LBB42_10:
 	$lw , r1, r22,  - 32

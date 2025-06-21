@@ -1,5 +1,5 @@
 #ifndef SIMPLE_BARRIER
-#define SIMPLE_BARRIER
+#define SIMPLE_BARRIER 
 
 #include "def.h"
 
@@ -45,6 +45,7 @@ int sp_wait(struct custom_barriere *);
  *
  * @param cp Pointer to the barrier control structure.
  */
+extern void wake_up_one(int i);
 void abnormal_wakeup(struct custom_barriere *);
 
 /**
@@ -57,7 +58,7 @@ void abnormal_wakeup(struct custom_barriere *);
 void abnormal_wakeup_one(struct custom_barriere *cp);
 int sp_wait(struct custom_barriere *cp) {
   mutex_lock(cp->mutex);
-  unsigned char tid = __builtin_dpu_tid(); // me()
+  unsigned char tid = me_new(); // me()
   cp->pending++;
   if (cp->pending == cp->nb) {
     cp->ret_val = 0; // clasic exit
@@ -69,8 +70,8 @@ int sp_wait(struct custom_barriere *cp) {
     return 0;
   } else {
     mutex_unlock(cp->mutex);
+    
     // big big critical section (same in the SKD), solution ?
-    __asm__("move r0,5");
     __stop();
   }
   return cp
@@ -100,10 +101,7 @@ void abnormal_wakeup_one(struct custom_barriere *cp) {
 
   cp->ret_val = 1; // anormal exit
   cp->pending--;
-  for (int i = 0; i < cp->nb; i++) {
-    __resume(i, "0", "2");
-    i = NR_TASKLETS;
-  }
+  wake_up_one(cp->nb);
 end:
   mutex_unlock(cp->mutex);
 }

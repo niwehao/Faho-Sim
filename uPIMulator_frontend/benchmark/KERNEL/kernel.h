@@ -161,7 +161,7 @@ extern void first_swap_context(struct flow_context **old,
 extern void stop_me(struct flow_context **saved);
 //extern void resume(struct flow_context *saved);
 
-
+extern void resume_me(struct flow_context *saved);
 
 /**
  * @brief End the fProc

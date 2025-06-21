@@ -5,14 +5,15 @@
 #include "sync.h"
 #include "inode.h"
 #include "syscall.h"
+#include <perfcounter.h>
 
 __mram_ptr struct kernel_info
     begin_mram; // At 0x0 addr in mram, used by the API K1-K2
 
 extern void boot_me(void);
 
-char __user_space_wram[WRAM_MAX_PROCESS] __attribute__((section(".data"))) =
-    {}; // reserved for the user, data of kernel will be link after.
+// char __user_space_wram[WRAM_MAX_PROCESS] __attribute__((section(".data"))) =
+//     {}; // reserved for the user, data of kernel will be link after.
 
 // unsigned int nb_process __attribute__((section(".data"))) = 0;
 
@@ -36,7 +37,6 @@ mutex_id_t mutex_inode __attribute__((section(".data"))) = 0;
 
 
 struct custom_barriere cp __attribute__((section(".data"))) = {};
-
 __host struct process processs[MAX_PRG]
     __attribute__((section(".dpu_host"))) // process info
     = {};
@@ -110,7 +110,7 @@ void printk(char *buf) {
 int read_flags() {
   mutex_lock(mutex_flag);
   struct kernel_info ki;
-  mram_read((__mram_ptr void const *)(0x0+MRAM_OFFSET), &ki, sizeof(ki));
+  mram_read((__mram_ptr void const *)(MRAM_OFFSET), &ki, sizeof(ki));
   mutex_unlock(mutex_flag);
   return ki.flag1;
 }
@@ -122,17 +122,17 @@ void write_flags(unsigned int flag) {
   mutex_lock(mutex_flag);
   struct kernel_info ki;
   ki.flag1 = flag;
-  mram_write(&ki, (__mram_ptr void *)(0x0+MRAM_OFFSET), sizeof(ki));
+  mram_write(&ki, (__mram_ptr void *)(MRAM_OFFSET), sizeof(ki));
   mutex_unlock(mutex_flag);
 }
 
 void set_flag(unsigned int flag1) {
   mutex_lock(mutex_flag);
   struct kernel_info ki;
-  mram_read((__mram_ptr void const *)(0x0+MRAM_OFFSET), &ki, sizeof(ki));
+  mram_read((__mram_ptr void const *)(MRAM_OFFSET), &ki, sizeof(ki));
   ki.flag1 = ki.flag1 | flag1;
 
-  mram_write(&ki, (__mram_ptr void *)(0x0+MRAM_OFFSET), sizeof(ki));
+  mram_write(&ki, (__mram_ptr void *)(MRAM_OFFSET), sizeof(ki));
   mutex_unlock(mutex_flag);
 }
 
@@ -154,9 +154,9 @@ int sbrk(int n) {
                 // critique
         processs[cur_process_index].prg.off_stack)
       goto err;
-    processs[cur_process_index].prg.size_data += n;
+    processs[cur_process_index].prg.size_data += n;//size_data本身就有栈
   }
-  ret = processs[cur_process_index].prg.size_data;
+  ret = processs[cur_process_index].prg.size_data+WRAM_OFFSET;//因为有偏移
 err:
   mutex_unlock(mutex_sbrk);
   return ret;
@@ -195,7 +195,7 @@ int __end_process(int ret) {
 
   mutex_unlock(mutex_jobs);
 
-  swap_context(&jobs[0].fc, fc_scheduler_job[me()]);
+  swap_context(&jobs[0].fc, fc_scheduler_job[me_new()]);
   // never reach
   halt();
 }
@@ -236,7 +236,7 @@ void store_big_blocks(void *wram_place, __mram_ptr void *mram_place,
 void load_prg_memory(unsigned int prc_ind) {
   struct prg *p = &processs[prc_ind].prg;
 
-  load_big_blocks((__mram_ptr void const *)(p->inode_data * SIZE_BLOCK)+MRAM_OFFSET,
+  load_big_blocks((__mram_ptr void const *)((p->inode_data * SIZE_BLOCK)+MRAM_OFFSET),
                   (void *)(0X0+WRAM_OFFSET), p->size_data);
 
   uint32_t temp = p->size_text;
@@ -270,8 +270,8 @@ void load_prg_memory(unsigned int prc_ind) {
 void save_wram_process(unsigned int prc_ind) {
   struct prg *p = &processs[prc_ind].prg;
   store_big_blocks((void *)(0x0+WRAM_OFFSET),
-                   (__mram_ptr void *)(p->inode_data * SIZE_BLOCK)+
-                       MRAM_OFFSET,
+                   (__mram_ptr void *)((p->inode_data * SIZE_BLOCK)+
+                       MRAM_OFFSET),
                    p->size_data);
 }
 
@@ -302,7 +302,8 @@ void launch_proc(unsigned int prc_idx, uint8_t ready) {
     jobs[0].jid = 0;
   }
   unsigned int time = 0;
-  __builtin_time_r(time);
+  //__builtin_time_r(time);
+   __asm__ volatile("\ttime %[time]\n" : [time] "=r"(time));
   processs[prc_idx].timer = time;
   int all_end_or_waiting = scheduler_jobs();
   if (all_end_or_waiting && processs[prc_idx].state != FINISHED) {
@@ -329,11 +330,14 @@ void stop_dpu() {
   // printk_int(-2);
   // printk_int((int)jobs[0].sync_addr);
   stop_me(&saved_fc_stop);
+  //resume_me(saved_fc_stop); // save the context of the current process
   // printk_int(-1);
   // printk_int((int)jobs[0].sync_addr);
   // boot back
   unsigned int a = 15;
-  __builtin_time_cfg_rr(a, 0x3); // set and reset the timer
+  __asm__ volatile("\ttime_cfg %[time], %[trois]\n"
+                   :
+                   : [time] "r"(a), [trois] "r"(3));
 
 #ifndef DISABLE_SOCKET
   int flags = read_flags();
@@ -353,7 +357,8 @@ Check if the DPU_QUANTOM is over
 */
 void check_timer_stop() {
   unsigned int time = 0;
-  __builtin_time_r(time);
+  //__builtin_time_r(time);
+   __asm__ volatile("\ttime %[time]\n" : [time] "=r"(time));
   if (time > QUANTOM_STOP_DPU) {
     stop_dpu();
   }
@@ -380,7 +385,7 @@ int scheduler(void) {
       else
         continue;
       all_end = 0;
-      if (me() != 0)
+      if (me_new() != 0)
         halt();
 
       cur_pid = processs[idx].pid;
@@ -425,7 +430,7 @@ Kernel start here after booting.
 
 // BARRIER_INIT(barrier_boot, NR_TASKLETS);
 int main(void) {
-  if (me() == 0) {
+  if (me_new() == 0) {
     cp.mutex = &__atomic_bit_mutex_sp;
     cp.nb = NR_TASKLETS;
     cp.pending = 0;
@@ -450,15 +455,12 @@ int main(void) {
   // barrier_wait(&barrier_boot);
 
   boot_me();
-  __user_space_wram[WRAM_MAX_PROCESS - 1] = 0xff;
+  //__user_space_wram[WRAM_MAX_PROCESS - 1] = 0xff;
 
   // int flags = read_flags();
-  write_flags(0); // reset flag
+  //write_flags(0); // reset flag
 
-  unsigned int a = 15;
-  __builtin_time_cfg_rr(
-      a, 0x3); // init the timer mode (count clock cyle) and reset it.
-
+  perfcounter_config(COUNT_CYCLES, true);
   // init_sockets();
   scheduler(); // willl never return
 

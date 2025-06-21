@@ -1,14 +1,12 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
+#include <stdint.h>
+
 
 // Structures used by both the host and the dpu to communicate information
 typedef struct {
     uint32_t size;
     uint32_t transfer_size;
-	enum kernels {
-	    kernel1 = 0,
-	    nr_kernels = 1,
-	} kernel;
 } dpu_arguments_t;
 
 // Transfer size between MRAM and WRAM
@@ -16,7 +14,7 @@ typedef struct {
 #define BLOCK_SIZE_LOG2 BL
 #define BLOCK_SIZE (1 << BLOCK_SIZE_LOG2)
 #else
-#define BLOCK_SIZE_LOG2 8
+#define BLOCK_SIZE_LOG2 10
 #define BLOCK_SIZE (1 << BLOCK_SIZE_LOG2)
 #define BL BLOCK_SIZE_LOG2
 #endif

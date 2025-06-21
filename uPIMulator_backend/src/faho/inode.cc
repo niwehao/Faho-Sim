@@ -207,7 +207,7 @@ namespace upmem_sim::simulator::faho::def
             if (dpu_manager->read_inode->data[i]->pid == 0)
             {
                 dpu_manager->read_inode->data[i]->pid = pid;
-                dpu_manager->read_inode->data[i]->path = event->path;
+                dpu_manager->read_inode->data[i]->pointer = event->pointer;
                 dpu_manager->read_inode->data[i]->size = event->size;
                 dpu_manager->read_inode->data[i]->offset = event->offset;
                 return;
@@ -215,7 +215,7 @@ namespace upmem_sim::simulator::faho::def
         }
         dpu_manager->read_inode->nb_data++;
         inode_data *id = new inode_data(pid);
-        id->path = event->path;
+        id->pointer = event->pointer;
         id->size = event->size;
         id->offset = event->offset;
         dpu_manager->read_inode->data.push_back(id);
@@ -247,7 +247,7 @@ namespace upmem_sim::simulator::faho::def
             return ret;
         inode = ret;
 
-        printf("Inode : %i (%x) at offset %i\n", inode, inode * SIZE_BLOCK, offset);
+        //printf("Inode : %i (%x) at offset %i\n", inode, inode * SIZE_BLOCK, offset);
         read_inode(dpu_manager, inode, buf, cur_size, offset % SIZE_BLOCK);
         size -= cur_size;
         offset += cur_size;

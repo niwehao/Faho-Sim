@@ -314,7 +314,7 @@ class Instruction:
     RIRCOpCodes = {OpCode.SUB, OpCode.SUBC}
     RIRCIOpCodes = {OpCode.SUB, OpCode.SUBC}
 
-    ROpCodes = {OpCode.TIME}
+    ROpCodes = {OpCode.TIME,OpCode.ALLOC}
     RCIOpCodes = {OpCode.TIME}
 
     CIOpCodes = {OpCode.STOP}

@@ -12,6 +12,7 @@
 #include "simulator/sram/wram.h"
 #include "util/argument_parser.h"
 #include "util/stat_factory.h"
+#include "simulator/dpu/mmu.h"
 
 namespace upmem_sim::simulator::dpu {
 
@@ -26,6 +27,9 @@ class DPU {
   DMA *dma() { return dma_; }
   PerformanceCounter *performance_counter() {
     return performance_counter_;
+  }
+  MMU *mmu(){
+    return mmu_;
   }
 
   util::StatFactory *stat_factory();
@@ -46,6 +50,7 @@ class DPU {
   dram::MRAM *mram_;
   Logic *logic_;
   DMA *dma_;
+  MMU *mmu_;
   OperandCollector *operand_collector_;
   PerformanceCounter *performance_counter_;
 

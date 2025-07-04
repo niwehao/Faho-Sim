@@ -57,37 +57,38 @@ namespace upmem_sim::simulator::reg
       return exception_reg_->exception(exception);
     }
 
+
     void write_gp_reg(abi::reg::GPReg *gp_reg, int64_t value)
     {
-      if(gp_reg->index() == 0)
-      {
-        std::cout << "write gp_reg 0 value: " << value << std::endl;
-      }
-      if (gp_reg->index() == 1)
-      {
-        std::cout << "write gp_reg 1 value: " << value << std::endl;
-      }
+      // if(gp_reg->index() == 0)
+      // {
+      //   std::cout << "write gp_reg 0 value: " << value << std::endl;
+      // }
+      // if (gp_reg->index() == 1)
+      // {
+      //   std::cout << "write gp_reg 1 value: " << value << std::endl;
+      // }
 
-      if (gp_reg->index() == 2)
-      {
-        std::cout << "write gp_reg 2 value: " << value << std::endl;
-      }
-      if (gp_reg->index() == 3)
-      {
-        std::cout << "write gp_reg 3 value: " << value << std::endl;
-      }
+      // if (gp_reg->index() == 2)
+      // {
+      //   std::cout << "write gp_reg 2 value: " << value << std::endl;
+      // }
+      // if (gp_reg->index() == 3)
+      // {
+      //   std::cout << "write gp_reg 3 value: " << value << std::endl;
+      // }
       if (gp_reg->index() == 22)
       {
         bool user_flag=(value>=1068 && value< util::ConfigLoader::wram_offset() + util::ConfigLoader::wram_kernel_offset());
-        bool kernel_flag=(value >= sp_reg_->thread_id * 512 + 136063 && value < sp_reg_->thread_id * 512 + 136063 + 512);
+        bool kernel_flag=(value >= sp_reg_->thread_id * 512 + 135499 && value < sp_reg_->thread_id * 512 + 135499 + 512);
         std::cout << "write gp_reg 22 value: " << value << std::endl;  
         assert(user_flag || kernel_flag); // 22号寄存器只能是用户态或系统态的栈地址   
 
       }
-      if (gp_reg->index() == 23)
-      {
-        std::cout << "write gp_reg 23 value: " << value << std::endl;
-      }
+      // if (gp_reg->index() == 23)
+      // {
+      //   std::cout << "write gp_reg 23 value: " << value << std::endl;
+      // }
       gp_regs_[gp_reg->index()]->write(value);
     }
     void write_pair_reg(abi::reg::PairReg *pair_reg, int64_t even, int64_t odd);

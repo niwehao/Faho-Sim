@@ -55,7 +55,7 @@ class Linker:
 
     def find_pointer_kernel(self,executable: Executable, benchmark: str,num_dpus:int) -> None:#收集指针的值
         sectio_pointer = executable.section(SectionName.DPU_HOST, "")
-        pointer=[0]*5;
+        pointer=[0]*4;
         #遍历section中的label
         for label in sectio_pointer.labels():#相对位置
             if label.name() == "dpu_id":
@@ -63,26 +63,24 @@ class Linker:
             elif label.name() == "processs":
                 pointer[1] = label.address()-ConfigLoader.wram_offset()
                 print('process位置:'+str(label.address()))
-            elif label.name() == "inode_table":
-                pointer[2] = label.address()-ConfigLoader.wram_offset()
+
             
         
 
         sectio_pointer = executable.section(SectionName.TEXT, "jmp_mram")
         for label in sectio_pointer.labels():#相对位置
             if label.name() == "jmp_mram":
-                pointer[3] = label.address()-ConfigLoader.iram_kernel_offset()-ConfigLoader.iram_offset()
+                pointer[2] = label.address()-ConfigLoader.iram_kernel_offset()-ConfigLoader.iram_offset()
         sectio_pointer = executable.sections(SectionName.DATA)
         for section in sectio_pointer:
             for label in section.labels():
                 if label.name() == "jobs":
-                    pointer[4] = label.address()-ConfigLoader.wram_offset()
+                    pointer[3] = label.address()-ConfigLoader.wram_offset()
         #assert pointer的值都不为0
         assert pointer[0] != 0
         assert pointer[1] != 0
         assert pointer[2] != 0
         assert pointer[3] != 0
-        assert pointer[4] != 0
         filepath = os.path.join(PathCollector.bin_path_in_local(), f"{num_dpus}_dpus", *executable.filepath().split(os.path.sep)[-2:-1],"pointer.bin")
         #把值一行一行写入文件
         with open(filepath, "w") as file:
@@ -90,7 +88,6 @@ class Linker:
             file.write(f"{pointer[1]}\n")
             file.write(f"{pointer[2]}\n")
             file.write(f"{pointer[3]}\n")
-            file.write(f"{pointer[4]}\n")
     def link(self, filepath: str, data_prep_param: list, num_dpus: int, benchmark: str) -> None:
         num_tasklets = Linker._num_tasklets(filepath)
         linker_script = LinkerScript(num_tasklets)

@@ -53,6 +53,17 @@ namespace upmem_sim::simulator::faho::def
         int end_flag=0;
 
     };
+    class ALLOC : public Host
+    {
+    public:
+
+  
+        def::Event *benchmark(int time_) override;
+        void benchmark_init(std::string bindir) override;
+        void check(int pid) override;
+        int end_flag=0;
+
+    };
 
 }
 #endif

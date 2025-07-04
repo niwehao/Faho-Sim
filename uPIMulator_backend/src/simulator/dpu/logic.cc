@@ -69,6 +69,10 @@ void Logic::connect_dma(DMA *dma) {
 
   dma_ = dma;
 }
+void Logic::connect_mmu(MMU* mmu){
+  mmu_=mmu;
+
+}
   void Logic::connect_performance_counter(PerformanceCounter *performance_counter)
 {
   assert(performance_counter != nullptr);
@@ -240,6 +244,10 @@ void Logic::service_dma() {
     // 2. DMA控制器有完成的命令
   if (wait_instruction_q_->can_pop() and dma_->can_pop()) {
     DMACommand *dma_command = dma_->pop();
+    if(dma_command->notmram_address()!=dma_command->instruction()->ram_flag){
+      delete dma_command;//并非真正的的dma_commend
+      return;
+    }
     abi::instruction::Instruction *instruction = wait_instruction_q_->pop();
 
     assert(dma_command->instruction() == instruction);
@@ -247,7 +255,6 @@ void Logic::service_dma() {
         // 4. 唤醒被阻塞的线程
 
     scheduler_->awake(instruction->thread()->id());
-
     delete dma_command;
     delete instruction;
   }
@@ -4880,6 +4887,16 @@ void Logic::execute_u_rirci(abi::instruction::Instruction *instruction) {
   instruction->thread()->reg_file()->clear_conditions();
   instruction->thread()->reg_file()->increment_pc_reg();
 }
+void Logic::execute_alloc_r(abi::instruction::Instruction *instruction) {
+  assert(abi::instruction::Instruction::alloc_r_op_codes().count(
+      instruction->op_code()));
+  assert(instruction->suffix() == abi::instruction::R);
+
+  int64_t result = mmu_->alloc_inode();
+  instruction->thread()->reg_file()->write_gp_reg(instruction->rc(), result);
+  instruction->thread()->reg_file()->clear_conditions();
+  instruction->thread()->reg_file()->increment_pc_reg();
+}
 
 void Logic::execute_r(abi::instruction::Instruction *instruction) {
   assert(abi::instruction::Instruction::r_op_codes().count(
@@ -4889,6 +4906,11 @@ void Logic::execute_r(abi::instruction::Instruction *instruction) {
     execute_time_r(instruction);
 
   }
+  if(abi::instruction::Instruction::alloc_r_op_codes().count(instruction->op_code()))
+  {
+    execute_alloc_r(instruction);
+  }
+ 
 }
 
 void Logic::execute_rci(abi::instruction::Instruction *instruction) {
@@ -5212,12 +5234,14 @@ void Logic::execute_ldma(abi::instruction::Instruction *instruction) {
   auto mram_end_address_width =
       static_cast<Address>(floor(log2(mram_end_address)) + 1);
   auto mram_mask = static_cast<Address>(pow(2, mram_end_address_width) - 1);
+  mram_mask= (1<<31) + mram_mask; 
   Address mram_address = ALU::and_(rb, mram_mask);
 
   Address min_access_granularity = util::ConfigLoader::min_access_granularity();
   Address size = (1 + ALU::and_(imm + ALU::and_(ALU::lsr(ra, 24), 255), 255)) *
                  min_access_granularity;
-
+  instruction->set_ram_flag(wram_address);
+std::cout<<"rb "<<rb<<std::endl;
   dma_->transfer_from_mram_to_wram(wram_address, mram_address, size,
                                    instruction);
 
@@ -5252,11 +5276,13 @@ void Logic::execute_ldmai(abi::instruction::Instruction *instruction) {//传到i
   auto mram_end_address_width =
       static_cast<Address>(floor(log2(mram_end_address)) + 1);
   auto mram_mask = static_cast<Address>(pow(2, mram_end_address_width) - 1);
+  
   Address mram_address = ALU::and_(rb, mram_mask);
 
   Address min_access_granularity = util::ConfigLoader::min_access_granularity();
   Address size = (1 + ALU::and_(imm + ALU::and_(ALU::lsr(ra, 24), 255), 255)) *
                  min_access_granularity;
+  instruction->set_ram_flag(iram_address+util::ConfigLoader::iram_offset());
 
   dma_->transfer_from_mram_to_iram(iram_address+util::ConfigLoader::iram_offset(), mram_address+util::ConfigLoader::mram_offset(), size,
                                    instruction);
@@ -5292,11 +5318,15 @@ void Logic::execute_sdma(abi::instruction::Instruction *instruction) {
   auto mram_end_address_width =
       static_cast<Address>(floor(log2(mram_end_address)) + 1);
   auto mram_mask = static_cast<Address>(pow(2, mram_end_address_width) - 1);
+  mram_mask= (1<<31) + mram_mask; 
   Address mram_address = ALU::and_(rb, mram_mask);
 
   Address min_access_granularity = util::ConfigLoader::min_access_granularity();
   Address size = (1 + ALU::and_(imm + ALU::and_(ALU::lsr(ra, 24), 255), 255)) *
                  min_access_granularity;
+
+  instruction->set_ram_flag(wram_address);
+
 
   dma_->transfer_from_wram_to_mram(wram_address, mram_address, size,
                                    instruction);

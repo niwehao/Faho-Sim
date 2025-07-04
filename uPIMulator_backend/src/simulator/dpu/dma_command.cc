@@ -37,6 +37,9 @@ DMACommand::DMACommand(Operation operation, Address notmram_address,
     assert(notmram_address >= util::ConfigLoader::iram_offset());
     assert(notmram_address + size_ <=
            util::ConfigLoader::iram_offset() + util::ConfigLoader::iram_size());
+    assert(mram_address >= util::ConfigLoader::mram_offset());
+    assert(mram_address + size_ <=
+          util::ConfigLoader::mram_offset() + util::ConfigLoader::mram_size());
   }
   else{
     assert(notmram_address >= util::ConfigLoader::wram_offset());
@@ -44,9 +47,6 @@ DMACommand::DMACommand(Operation operation, Address notmram_address,
            util::ConfigLoader::wram_offset() + util::ConfigLoader::wram_size());
     assert(instruction->op_code() == abi::instruction::LDMA);
   }
-  assert(mram_address >= util::ConfigLoader::mram_offset());
-  assert(mram_address + size_ <=
-         util::ConfigLoader::mram_offset() + util::ConfigLoader::mram_size());
   assert(size % util::ConfigLoader::min_access_granularity() == 0);
 
 
@@ -90,9 +90,9 @@ DMACommand::DMACommand(Operation operation, Address notmram_address,
   assert(notmram_address >= util::ConfigLoader::wram_offset());
   assert(notmram_address + size_ <=
          util::ConfigLoader::wram_offset() + util::ConfigLoader::wram_size());
-  assert(mram_address >= util::ConfigLoader::mram_offset());
-  assert(mram_address + size_ <=
-         util::ConfigLoader::mram_offset() + util::ConfigLoader::mram_size());
+  // assert(mram_address >= util::ConfigLoader::mram_offset());
+  // assert(mram_address + size_ <=
+  //        util::ConfigLoader::mram_offset() + util::ConfigLoader::mram_size());
   assert(size % util::ConfigLoader::min_access_granularity() == 0);
   assert(size == bytes.size());
   assert(instruction->op_code() == abi::instruction::SDMA);
@@ -115,7 +115,7 @@ abi::instruction::Instruction *DMACommand::instruction() {
 }
 
 std::vector<int> DMACommand::bytes() {
-  if (operation_ == READ) {
+  if (operation_ == READ || operation_ == READ_I) {
     assert(is_ready());
   }
 

@@ -171,7 +171,9 @@ std::string OpCodeConverter::to_string(abi::instruction::OpCode op_code) {
     return "ldmai";
   } else if (op_code == abi::instruction::SDMA) {
     return "sdma";
-  } else {
+  } else if (op_code == abi::instruction::ALLOC) {
+    return "alloc";
+  }else {
     throw std::invalid_argument("");
   }
 }

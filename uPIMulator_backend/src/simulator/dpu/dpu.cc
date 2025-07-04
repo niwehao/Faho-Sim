@@ -13,6 +13,7 @@ DPU::DPU(DPUID dpu_id, util::ArgumentParser *argument_parser)
       mram_(new dram::MRAM(argument_parser)),//内存
       logic_(new Logic(dpu_id, argument_parser)),//逻辑
       dma_(new DMA()),//dma
+      mmu_(new MMU()),
       operand_collector_(new OperandCollector()),//操作收集器
       memory_controller_(new dram::MemoryController(argument_parser)),//内存控制器
       stat_factory_(new util::StatFactory("DPU#" + std::to_string(dpu_id))),
@@ -37,11 +38,14 @@ DPU::DPU(DPUID dpu_id, util::ArgumentParser *argument_parser)
   logic_->connect_operand_collector(operand_collector_);
   logic_->connect_dma(dma_);
   logic_->connect_performance_counter(performance_counter_);
+  logic_->connect_mmu(mmu_);
 
   dma_->connect_atomic(atomic_);
   dma_->connect_iram(iram_);
   dma_->connect_operand_collector(operand_collector_);
   dma_->connect_memory_controller(memory_controller_);
+  dma_->connect_mmu(mmu_);
+  dma_->connect_performance_counter(performance_counter_);
 
   operand_collector_->connect_wram(wram_);
 
@@ -70,6 +74,7 @@ DPU::~DPU() {
   delete operand_collector_;
   delete memory_controller_;
   delete performance_counter_;
+  delete mmu_;
 
   delete stat_factory_;
 }

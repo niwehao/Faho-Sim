@@ -6,6 +6,8 @@
 #include "simulator/sram/atomic.h"
 #include "simulator/sram/iram.h"
 #include "simulator/sram/wram.h"
+#include "simulator/dpu/mmu.h"
+#include "simulator/dpu/performance_counter.h"
 
 namespace upmem_sim::simulator::dpu {
 
@@ -16,6 +18,7 @@ class DMA {
         iram_(nullptr),//指令内存
         operand_collector_(nullptr),//操作数收集器
         memory_controller_(nullptr),//内存控制器
+        mmu_(),
         input_q_(new basic::Queue<DMACommand>(
             util::ConfigLoader::max_num_tasklets())),//输入队列
         ready_q_(new basic::Queue<DMACommand>(
@@ -23,9 +26,11 @@ class DMA {
   ~DMA();
 
   void connect_atomic(sram::Atomic *atomic);
+  void connect_mmu(MMU *mmu);
   void connect_iram(sram::IRAM *iram);
   void connect_operand_collector(OperandCollector *operand_collector);
   void connect_memory_controller(dram::MemoryController *memory_controller);
+  void connect_performance_counter(PerformanceCounter *performance_counter);
 
   void transfer_to_atomic(Address address, encoder::ByteStream *byte_stream);
 
@@ -71,9 +76,11 @@ class DMA {
   OperandCollector *operand_collector_;
   dram::MemoryController *memory_controller_;
   Address sys_used_mram_end_pointer=0;
+  MMU *mmu_;
 
   basic::Queue<DMACommand> *input_q_;
   basic::Queue<DMACommand> *ready_q_;
+  PerformanceCounter *performance_counter_ = nullptr;
 };
 
 }  // namespace upmem_sim::simulator::dpu

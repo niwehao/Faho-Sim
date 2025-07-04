@@ -7,13 +7,10 @@
 // 定义一个可控制的输出宏
 
 #define MAX_PRG 10
-#define BUFFER_BIT_MAP 400
 #define JOB_PER_PROCESS 100
 #define QUANTOM_STOP_DPU 50000000
 #define PROCESS_QUANTOM QUANTOM_STOP_DPU / 100
 #define QUANTOM_JOB PROCESS_QUANTOM / 20
-#define SIZE_BIT_MAP 4000
-#define BIT_MAP (INODE_BLOCK - SIZE_BIT_MAP)
 #define INODE_BLOCK (1 << 16) // 64KB total_inode=64M/64KB=1024
 #define NEW_PROCESS 1
 #define PROCESS_END 2
@@ -195,8 +192,7 @@ namespace upmem_sim::simulator::faho::def
     uint32_t size_text;
     uint32_t off_stack; // where the stack begin (to create the process)
     uint32_t extra_inode;
-
-    int multiple_8;
+    uint32_t page_table_entry;
   };
   struct process_host // must be the same like process
   {

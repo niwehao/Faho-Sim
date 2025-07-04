@@ -40,7 +40,6 @@ namespace upmem_sim::simulator::faho::k1
         void read_inode_handle_evt(def::Event *event);
         void check_handle_evt(def::Event *event);
         void parse_end_process(def::DpuManager *dpu_manager) ;
-        void update_bit_map(encoder::ByteStream* syscall, uint32_t inode_maxe) ;
         void check_atomic(encoder::ByteStream *buf);
         void socket_send_to_main(uint32_t app_id, uint32_t pid, void *buf,uint32_t size);
         void read_jobs(def::DpuManager *dpu_manager);

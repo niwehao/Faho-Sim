@@ -12,6 +12,7 @@ enum OpCode {
   ADDC,
   AND,
   ANDN,
+  ALLOC,
   ASR,
   CAO,
   CLO,

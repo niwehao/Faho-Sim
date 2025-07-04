@@ -19,6 +19,8 @@ class OpCodeConverter:
             return OpCode.AND
         elif op_code == "andn":
             return OpCode.ANDN
+        elif op_code == "alloc":
+            return OpCode.ALLOC
         elif op_code == "asr":
             return OpCode.ASR
         elif op_code == "cao":
@@ -190,6 +192,8 @@ class OpCodeConverter:
             return "and"
         elif op_code == OpCode.ANDN:
             return "andn"
+        elif op_code == OpCode.ALLOC:
+            return "alloc"
         elif op_code == OpCode.ASR:
             return "asr"
         elif op_code == OpCode.CAO:

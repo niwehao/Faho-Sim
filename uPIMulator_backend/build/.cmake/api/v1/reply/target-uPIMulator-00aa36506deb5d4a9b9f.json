@@ -122,7 +122,9 @@
 				56,
 				57,
 				58,
-				59
+				59,
+				60,
+				61
 			]
 		}
 	],
@@ -219,7 +221,9 @@
 				56,
 				57,
 				58,
-				59
+				59,
+				60,
+				61
 			]
 		}
 	],
@@ -319,6 +323,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/faho/benchmark/VA.cc",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/faho/benchmark/alloc.cc",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -433,6 +443,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/simulator/dpu/logic.cc",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/simulator/dpu/mmu.cc",
 			"sourceGroupIndex" : 0
 		},
 		{

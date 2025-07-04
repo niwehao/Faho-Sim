@@ -5,6 +5,7 @@
 
 #include "abi/word/data_address_word.h"
 #include "simulator/dram/wordline.h"
+
 #include "util/argument_parser.h"
 
 namespace upmem_sim::simulator::dram {

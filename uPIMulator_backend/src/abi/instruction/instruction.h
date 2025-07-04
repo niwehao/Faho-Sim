@@ -204,6 +204,8 @@ class Instruction {
   static std::set<OpCode> extsb_rrci_op_codes() {
     return {EXTSB, EXTSH, EXTUB, EXTUH, SATS};
   }
+  static std::set<OpCode> alloc_r_op_codes() { return {ALLOC}; }
+
     static std::set<OpCode> time_r_op_codes() { return {TIME}; }
   static std::set<OpCode> time_cfg_rrci_op_codes() { return {TIME_CFG}; }
   static std::set<OpCode> rrci_op_codes() {
@@ -248,7 +250,7 @@ class Instruction {
   static std::set<OpCode> rirc_op_codes() { return {SUB, SUBC}; }
   static std::set<OpCode> rirci_op_codes() { return {SUB, SUBC}; }
 
-  static std::set<OpCode> r_op_codes() { return {TIME}; }
+  static std::set<OpCode> r_op_codes() { return {TIME,ALLOC}; }
   static std::set<OpCode> rci_op_codes() { return {TIME}; }
 
   static std::set<OpCode> ci_op_codes() { return {STOP}; }
@@ -436,6 +438,9 @@ class Instruction {
 
   simulator::dpu::Thread *thread();
   void set_thread(simulator::dpu::Thread *thread);
+  void set_ram_flag(int flag){
+    ram_flag=flag;
+  }
 
  protected:
   void init_rici(reg::SrcReg *ra, int64_t imm, isa::Condition condition,
@@ -532,6 +537,7 @@ class Instruction {
                  reg::PairReg *db);
   void init_dma_rri(reg::SrcReg *ra, reg::SrcReg *rb, int64_t imm);
     // 方法1：使用映射表（推荐）
+  
 
 
  private:
@@ -554,6 +560,8 @@ class Instruction {
   isa::Endian *endian_;
 
   simulator::dpu::Thread *thread_;
+  public:
+  int ram_flag=0;
 };
 
 }  // namespace upmem_sim::abi::instruction

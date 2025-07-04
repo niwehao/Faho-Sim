@@ -11,6 +11,7 @@ ADD: '$add';
 ADDC: '$addc';
 AND: '$and';
 ANDN: '$andn';
+ALLOC: '$alloc';
 ASR: '$asr';
 CMPB4: '$cmpb4';
 LSL: '$lsl';
@@ -320,6 +321,7 @@ rrri_op_code
 
 r_op_code
 	: TIME
+	| ALLOC
 	| NOP
 	;
 

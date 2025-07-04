@@ -95,6 +95,7 @@ class Parser:
             "addc",
             "and",
             "andn",
+            "alloc",
             "asr",
             "cao",
             "clo",

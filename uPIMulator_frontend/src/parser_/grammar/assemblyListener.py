@@ -1,4 +1,4 @@
-# Generated from assembly.g4 by ANTLR 4.9.2
+# Generated from assembly.g4 by ANTLR 4.7.2
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .assemblyParser import assemblyParser
@@ -502,7 +502,7 @@ class assemblyListener(ParseTreeListener):
     def exitRici_instruction(self, ctx:assemblyParser.Rici_instructionContext):
         pass
 
-#docker
+
     # Enter a parse tree produced by assemblyParser#rri_instruction.
     def enterRri_instruction(self, ctx:assemblyParser.Rri_instructionContext):
         pass
@@ -2024,5 +2024,3 @@ class assemblyListener(ParseTreeListener):
         pass
 
 
-
-del assemblyParser

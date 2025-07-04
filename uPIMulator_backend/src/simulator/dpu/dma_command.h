@@ -29,6 +29,13 @@ class DMACommand {
   Operation operation() { return operation_; }
   Address notmram_address() { return notmram_address_->address(); }
   Address mram_address() { return mram_address_->address(); }
+  void revise_commend(int addr_mram,int addr_wram,int size){
+    mram_address_->set_value(addr_mram);
+    notmram_address_->set_value(addr_wram);
+    size_=size;
+    bytes_.resize(size);
+    acks_.resize(size);
+  }
   Address size() { return size_; }
   bool has_instruction() { return instruction_ != nullptr; }
   abi::instruction::Instruction *instruction();

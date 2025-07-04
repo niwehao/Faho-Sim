@@ -9,6 +9,7 @@ class OpCode(Enum):
     ADDC = auto()
     AND = auto()
     ANDN = auto()
+    ALLOC = auto()
     ASR = auto()
     CAO = auto()
     CLO = auto()

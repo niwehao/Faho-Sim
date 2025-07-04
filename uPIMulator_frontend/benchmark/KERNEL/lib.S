@@ -99,4 +99,9 @@ wake_up_one_start:
 	jump wake_up_one_start
 wake_up_one_end:
 	jump r23
-	
+.section	.text.alloc_mram,"ax",@progbits
+	.globl alloc_mram
+	.type	alloc_mram,@function
+alloc_mram:   //restore the flow context store in r1 and continue the execution after the stop. This function will never returns
+	alloc r0
+	jump r23

@@ -120,75 +120,7 @@ int wakeup_sleepy_socket(void) {
   return 0;
 }
 
-/**
- * @brief Fin free socket in socket list, return -1 if not found
- *
- * @return int16_t
- */
-/* int16_t find_free_socket() {
-  for (uint8_t i = 0; i < MAX_SOCKET; i++) {
-    if (!sockets[i].flag)
-      return i;
-  }
-  return -1;
-} */
 
-/* int create_extern_socket(uint8_t penpal_role) {
-  int16_t s_index = find_free_socket();
-  if (s_index == -1)
-    return SD_SOCKETFULL;
-
-  sockets[s_index].flag = SOCKET_USED | SOCKET_EXTERN | SOCKET_NOINIT;
-  uint32_t inode = alloc_inode();
-  if (inode == 0) {
-    sockets[s_index].flag = 0;
-    return MRAM_FULL;
-  }
-  struct socket *s = &sockets[s_index];
-  s->penpal.inode = inode;
-  s->r = 0;
-  s->w = 0;
-  s->l.owner = 0;
-
-  __dma_aligned struct socket_extern_info sei;
-  sei.penpal_role = penpal_role;
-  sei.pid = processs[cur_process_index].pid;
-  sei.s_index = s_index;
-  sei.w = 0;
-  sei.rr = 0;
-  sei.rw = 0;
-
-  sei.SIZE_BUFFERS = SIZE_SOCKET_EXT;
-
-  // write_inode(inode, &sei, sizeof(sei), 0);
-  inode_operation(inode, &sei, sizeof(sei), 0, INODE_WRITE);
-
-  set_flag(NEW_SOCKET);
-
-  while (s->flag & SOCKET_NOINIT) {
-    if (s->flag & SOCKET_FAIL) {
-      // free
-      free_inode(s->penpal.inode);
-      s->flag = 0;
-      return ERROR_SOCKET_K1;
-    }
-    sleep(&sync_extern_socket, NULL, NULL);
-  }
-
-  for (unsigned int i = 0; i < MAX_SD; i++) {
-    if (processs[cur_process_index].sd[i].id < 0) {
-      processs[cur_process_index].sd[i].id = i;
-      processs[cur_process_index].sd[i].penpal_role = penpal_role;
-      processs[cur_process_index].sd[i].s = s;
-
-      return i;
-    }
-  }
-
-  s->flag = 0;
-
-  return SD_FULL;
-} */
 #include "kernel.h"
 extern void set_flag(unsigned int flag1);
 int socket_open(unsigned int penpal) {
@@ -196,7 +128,7 @@ int socket_open(unsigned int penpal) {
   struct process *p = &processs[cur_process_index];
   for (unsigned int i = 0; i < MAX_SD; i++) {
     if (p->sd[i].inode == 0) {
-      uint32_t inode = alloc_inode();
+      uint32_t inode = alloc_mram();
       if (inode <= 1) {
         mutex_unlock(mutex_sockets);
         return MRAM_FULL;
@@ -256,8 +188,10 @@ int socket_read(unsigned int sd, unsigned int _buf, unsigned int len) {
 
   mutex_lock(mutex_sockets);
   int ret = check_sd(sd);
-  if (ret != 0)
-    goto end;
+  if (ret != 0){
+      goto end;
+  }
+    
   int inode = processs[cur_process_index].sd[sd].inode;
   struct socket_info si;
 

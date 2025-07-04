@@ -17,12 +17,10 @@
 
 #endif
 
-#define SIZE_BIT_MAP 4000
 
 // offset in MRAM of different info
 #define KERNEL_INFO 0
 #define PRG_INFO 1024
-#define BIT_MAP (INODE_BLOCK - SIZE_BIT_MAP)
 #define INODE_BLOCK (1 << 16) // the inode start at this offset
 #define SIZE_BLOCK_CHAINED_INODE (SIZE_BLOCK - 8)
 

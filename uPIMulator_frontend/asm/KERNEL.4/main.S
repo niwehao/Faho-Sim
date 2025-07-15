@@ -95,14 +95,13 @@ wake_up_one:
 	move r1, 0
 wake_up_one_start:
 	jeq r0, r1, wake_up_one_end
-	resume r1, 0, nz, wake_up_one_start+3 //失败以后发生跳转
+	resume r1, 0, nz, wake_up_one_start+3 
 	jump wake_up_one_end
 	add r1, r1, 1
 	jump wake_up_one_start
 wake_up_one_end:
 	jump r23
-
-	.section	.text.sp_wait,"ax",@progbits
+		.section	.text.sp_wait,"ax",@progbits
 	.globl	sp_wait                         // -- Begin function sp_wait
 	.type	sp_wait,@function
 sp_wait:                                // @sp_wait

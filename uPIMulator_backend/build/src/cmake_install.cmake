@@ -1,4 +1,4 @@
-# Install script for directory: /home/krakos/niwe/Faho_Sim/uPIMulator_backend/src
+# Install script for directory: /home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_backend/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,6 +39,6 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "/usr/bin/llvm-objdump")
+  set(CMAKE_OBJDUMP "/usr/bin/objdump")
 endif()
 

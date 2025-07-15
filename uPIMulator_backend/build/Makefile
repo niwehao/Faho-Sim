@@ -57,10 +57,10 @@ RM = /opt/cmake-3.28.1-linux-x86_64/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/krakos/niwe/Faho_Sim/uPIMulator_backend
+CMAKE_SOURCE_DIR = /home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_backend
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/krakos/niwe/Faho_Sim/uPIMulator_backend/build
+CMAKE_BINARY_DIR = /home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_backend/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/krakos/niwe/Faho_Sim/uPIMulator_backend/build/CMakeFiles /home/krakos/niwe/Faho_Sim/uPIMulator_backend/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_backend/build/CMakeFiles /home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_backend/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/krakos/niwe/Faho_Sim/uPIMulator_backend/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_backend/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

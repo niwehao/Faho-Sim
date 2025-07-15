@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/krakos/niwe/Faho_Sim/uPIMulator_backend/src/.
+CXX_INCLUDES = -I/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_backend/src/.
 
 CXX_FLAGS = -g -std=gnu++2a
 

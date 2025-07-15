@@ -12,7 +12,7 @@ System::System(util::ArgumentParser *argument_parser)
 
   cpu_->connect_rank(rank_);
   faho_k1_ = new faho::k1::K1(argument_parser->get_string_parameter("bindir"),
-                             benchmark, argument_parser->get_int_parameter("num_tasklets"), rank_);
+                             benchmark,  argument_parser->get_string_parameter("application"),argument_parser->get_int_parameter("num_tasklets"), rank_,argument_parser->get_int_parameter("data_prep"));
 
 }
 

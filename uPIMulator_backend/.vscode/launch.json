@@ -4,46 +4,21 @@
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        
+       
         {
-            "name": "uPIMulator Debug",
+            "name": "TS",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/src/uPIMulator",
             "args": [
-                "--bindir","/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus/",
+                "--bindir","/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/",
                 "--num_tasklets", "4",
                 "--benchmark", "KERNEL",
+                "--application", "TS",
                 "--logdir", ".",
                 "--num_dpus", "1",
-
-            ],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "为 gdb 启用整齐打印",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "Build uPIMulator",
-            "miDebuggerPath": "/usr/bin/gdb",
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "uPIMulator >txt",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/build/src/uPIMulator",
-            "args": [
-                "--bindir","/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus/",
-                "--num_tasklets", "4",
-                "--benchmark", "KERNEL",
-                "--logdir", ".",
-                "--num_dpus", "1",
+                "--data_prep", "2048",
                 ">","t.txt",
              
             ],

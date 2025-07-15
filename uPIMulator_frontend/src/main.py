@@ -52,33 +52,34 @@ def compile_by_toolchain(benchmark: str, num_tasklets: int) -> None:#简单编�
         for cmd in commands:
             subprocess.run(cmd, check=True)
         #打开文件asm_path,把文件里的.data字符串全部替换.section	.data,"aw",@progbits
-        if benchmark == "KERNEL":
-            # 读取lib.S文件内容
-            lib_path = os.path.join(path, "lib.S")
-            with open(lib_path, 'r') as file:
-                lib_data = file.read()
-            
-            # 读取目标asm文件
-            with open(asm_path, 'r') as file:
-                asm_lines = file.readlines()
-            
-            # 将lib.S的内容按行分割
-            lib_lines = lib_data.splitlines(keepends=True)
-            
-            insert_position = 2  #line of start (first index is 0)
-            
-            # 确保插入位置不超过文件长度
-            if insert_position > len(asm_lines):
-                insert_position = len(asm_lines)
-            
-            # 插入内容
-            result_lines = (asm_lines[:insert_position] + 
-                        lib_lines + 
-                        asm_lines[insert_position:])
-            
-            # 写回文件
-            with open(asm_path, 'w') as file:
-                file.writelines(result_lines)
+        
+        # 读取lib.S文件内容
+        lib_path = os.path.join(path, "lib.S")
+        with open(lib_path, 'r') as file:
+            lib_data = file.read()
+        
+        # 读取目标asm文件
+        with open(asm_path, 'r') as file:
+            asm_lines = file.readlines()
+        
+        # 将lib.S的内容按行分割
+        lib_lines = lib_data.splitlines(keepends=True)
+        
+        insert_position = 2  #line of start (first index is 0)
+        
+        # 确保插入位置不超过文件长度
+        if insert_position > len(asm_lines):
+            insert_position = len(asm_lines)
+        
+        # 插入内容
+        result_lines = (asm_lines[:insert_position] + 
+                    lib_lines + 
+                    asm_lines[insert_position:])
+        
+        # 写回文件
+        with open(asm_path, 'w') as file:
+            file.writelines(result_lines)
+        if benchmark=="KERNEL":
             with open(asm_path, 'r') as file:
                 data = file.read()
                 data = data.replace('.data', '.section	.data,"aw",@progbits')

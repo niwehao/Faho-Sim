@@ -31,6 +31,135 @@
                 "--num_dpus", "16"
             ],
             "cwd": "${workspaceFolder}"
+        },
+        {
+             "name": "Debug TS",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", "compile_by_toolchain",
+                "--num_tasklets", "16",
+                "--benchmark", "TS",
+                "--num_dpus", "16"
+            ],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+             "name": "Debug SEL",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", "compile_by_toolchain",
+                "--num_tasklets", "16",
+                "--benchmark", "SEL",
+                "--num_dpus", "16"
+            ],
+            "cwd": "${workspaceFolder}"
+        },
+         {
+             "name": "Debug RED",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", "compile_by_toolchain",
+                "--num_tasklets", "16",
+                "--benchmark", "RED",
+                "--num_dpus", "16"
+            ],
+            "cwd": "${workspaceFolder}"
+        },
+         {
+             "name": "Debug NW",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", "compile_by_toolchain",
+                "--num_tasklets", "16",
+                "--benchmark", "NW",
+                "--num_dpus", "16"
+            ],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+             "name": "Debug MLP",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", "compile_by_toolchain",
+                "--num_tasklets", "16",
+                "--benchmark", "MLP",
+                "--num_dpus", "16"
+            ],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+             "name": "Debug HSTS",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", "compile_by_toolchain",
+                "--num_tasklets", "16",
+                "--benchmark", "HST-S",
+                "--num_dpus", "16"
+            ],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+             "name": "Debug GEMV",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", "compile_by_toolchain",
+                "--num_tasklets", "16",
+                "--benchmark", "GEMV",
+                "--num_dpus", "16"
+            ],
+            "cwd": "${workspaceFolder}"
         }
+        ,
+        {
+             "name": "Debug BS",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", "compile_by_toolchain",
+                "--num_tasklets", "16",
+                "--benchmark", "BS",
+                "--num_dpus", "16"
+            ],
+            "cwd": "${workspaceFolder}"
+        },
+         
+        {
+             "name": "Debug BFS",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", "compile_by_toolchain",
+                "--num_tasklets", "16",
+                "--benchmark", "BFS",
+                "--num_dpus", "16"
+            ],
+            "cwd": "${workspaceFolder}"
+        },
+        
     ]
 }

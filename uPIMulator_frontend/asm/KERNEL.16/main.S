@@ -41,7 +41,7 @@ swap_context: //Save the current flow context inside the stack (and store stack 
 	ld d16, r22, 8
 	ld d18, r22, 16
 	ld d20, r22, 24
-	ld d22, r22, 32
+	ld d22, r22, 32 //恢复到之前的位置
 	jump r23
 .section	.text.first_swap_context,"ax",@progbits
 	.globl	first_swap_context               // -- Begin function 	.globl	first_swap_context           
@@ -66,239 +66,187 @@ first_swap_context: //Same that swap_context but there are 3 parameters the last
 	.type	jmp_mram,@function
 jmp_mram: 
 	jump syscall
-	.section	.text.sp_wait,"ax",@progbits
+.section	.text.resume_me,"ax",@progbits
+	.globl resume_me
+	.type	resume_me,@function
+resume_me:   //restore the flow context store in r1 and continue the execution after the stop. This function will never returns
+	move r22, r0 
+	move r0, r23
+	ld d14, r22, 0
+	ld d16, r22, 8
+	ld d18, r22, 16
+	ld d20, r22, 24
+	ld d22, r22, 32
+	jump r0
+.section	.text.me_new,"ax",@progbits
+	.globl me_new
+	.type	me_new,@function
+me_new:                                 // @me_new
+// %bb.0:
+	move r0, 0
+	// inline asm
+	move r0, id
+	// inline asm
+	jump r23
+.section	.text.wake_up_one,"ax",@progbits
+	.globl wake_up_one
+	.type	wake_up_one,@function
+wake_up_one:
+	move r1, 0
+wake_up_one_start:
+	jeq r0, r1, wake_up_one_end
+	resume r1, 0, nz, wake_up_one_start+3 
+	jump wake_up_one_end
+	add r1, r1, 1
+	jump wake_up_one_start
+wake_up_one_end:
+	jump r23
+		.section	.text.sp_wait,"ax",@progbits
 	.globl	sp_wait                         // -- Begin function sp_wait
 	.type	sp_wait,@function
 sp_wait:                                // @sp_wait
 .Lfunc_begin0:
 // %bb.0:
-	sd r22, 16, d22
-	add r22, r22, 24
-	sw r22, -20, r0
-	lw r0, r22, -20
-	lw r0, r0, 4
-	call r23, mutex_lock
-	move r0, id
-	sb r22, -16, r0
-	lw r0, r22, -20
-	lbs r1, r0, 1
-	add r1, r1, 1
-	sb r0, 1, r1
-	lw r1, r22, -20
-	lbu r0, r1, 1
-	lbu r1, r1, 0
-	jneq r0, r1, .LBB0_8
-	jump .LBB0_1
-.LBB0_1:
-	lw r0, r22, -20
-	sb r0, 2, 0
-	sw r22, -12, 0
-	jump .LBB0_2
-.LBB0_2:                                // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -12
-	lw r1, r22, -20
-	lbu r1, r1, 0
-	jges r0, r1, .LBB0_7
-	jump .LBB0_3
-.LBB0_3:                                //   in Loop: Header=BB0_2 Depth=1
-	lbu r0, r22, -16
-	lw r1, r22, -12
-	jeq r0, r1, .LBB0_5
-	jump .LBB0_4
-.LBB0_4:                                //   in Loop: Header=BB0_2 Depth=1
-	lw r0, r22, -12
+	sd r22, 8, d22
+	add r22, r22, 16
+	sd r22, -16, d14
+	move r14, r0
+	lw r0, r14, 4
 	// inline asm
 .Ltmp0:
-	resume r0, 0, nz, .Ltmp0+0
+	acquire r0, 0, nz, .Ltmp0
 	// inline asm
+	call r23, me_new
+	lbs r1, r14, 1
+	add r1, r1, 1
+	sb r14, 1, r1
+	lbu r3, r14, 0
+	and r2, r1, 255
+	jneq r2, r3, .LBB0_7
+// %bb.1:
+	sb r14, 2, 0
+	jeq r2, 0, .LBB0_6
+// %bb.2:
+	and r0, r0, 255
+	move r2, 0, true, .LBB0_3
+.LBB0_5:                                //   in Loop: Header=BB0_3 Depth=1
+	add r2, r2, 1
+	and r3, r1, 255
+	jgeu r2, r3, .LBB0_6
+.LBB0_3:                                // =>This Inner Loop Header: Depth=1
+	jeq r0, r2, .LBB0_5
+// %bb.4:                               //   in Loop: Header=BB0_3 Depth=1
+	// inline asm
+.Ltmp1:
+	resume r2, 0, nz, .Ltmp1+0
+	// inline asm
+	lbs r1, r14, 0
 	jump .LBB0_5
-.LBB0_5:                                //   in Loop: Header=BB0_2 Depth=1
-	jump .LBB0_6
-.LBB0_6:                                //   in Loop: Header=BB0_2 Depth=1
-	lw r0, r22, -12
-	add r0, r0, 1
-	sw r22, -12, r0
-	jump .LBB0_2
 .LBB0_7:
-	lw r0, r22, -20
-	sb r0, 1, 0
-	lw r0, r22, -20
-	lw r0, r0, 4
-	call r23, mutex_unlock
-	sw r22, -24, 0
-	jump .LBB0_10
-.LBB0_8:
-	lw r0, r22, -20
-	lw r0, r0, 4
-	call r23, mutex_unlock
+	lw r0, r14, 4
 	// inline asm
-	move r0, 5
+.Ltmp2:
+	release r0, 0, nz, .Ltmp2+1
 	// inline asm
 	// inline asm
 	stop false, 0x0
 	// inline asm
-	jump .LBB0_9
-.LBB0_9:
-	lw r0, r22, -20
-	lbu r0, r0, 2
-	sw r22, -24, r0
-	jump .LBB0_10
-.LBB0_10:
-	lw r0, r22, -24
+	lbu r0, r14, 2
+	jump .LBB0_8
+.LBB0_6:
+	sb r14, 1, 0
+	lw r0, r14, 4
+	// inline asm
+.Ltmp3:
+	release r0, 0, nz, .Ltmp3+1
+	// inline asm
+	move r0, 0
+.LBB0_8:
+	ld d14, r22, -16
 	ld d22, r22, -8
 	jump r23
 .Lfunc_end0:
 	.size	sp_wait, .Lfunc_end0-sp_wait
 	.section	.stack_sizes,"o",@progbits,.text.sp_wait
 	.long	.Lfunc_begin0
-	.byte	24
+	.byte	16
 	.section	.text.sp_wait,"ax",@progbits
-                                        // -- End function
-	.section	.text.mutex_lock,"ax",@progbits
-	.type	mutex_lock,@function            // -- Begin function mutex_lock
-mutex_lock:                             // @mutex_lock
-.Lfunc_begin1:
-// %bb.0:
-	sw r22, 0, r0
-	lw r0, r22, 0
-	// inline asm
-.Ltmp1:
-	acquire r0, 0, nz, .Ltmp1
-	// inline asm
-	jump r23
-.Lfunc_end1:
-	.size	mutex_lock, .Lfunc_end1-mutex_lock
-	.section	.stack_sizes,"o",@progbits,.text.mutex_lock
-	.long	.Lfunc_begin1
-	.byte	4
-	.section	.text.mutex_lock,"ax",@progbits
-                                        // -- End function
-	.section	.text.mutex_unlock,"ax",@progbits
-	.type	mutex_unlock,@function          // -- Begin function mutex_unlock
-mutex_unlock:                           // @mutex_unlock
-.Lfunc_begin2:
-// %bb.0:
-	sw r22, 0, r0
-	lw r0, r22, 0
-	// inline asm
-.Ltmp2:
-	release r0, 0, nz, .Ltmp2+1
-	// inline asm
-	jump r23
-.Lfunc_end2:
-	.size	mutex_unlock, .Lfunc_end2-mutex_unlock
-	.section	.stack_sizes,"o",@progbits,.text.mutex_unlock
-	.long	.Lfunc_begin2
-	.byte	4
-	.section	.text.mutex_unlock,"ax",@progbits
                                         // -- End function
 	.section	.text.abnormal_wakeup,"ax",@progbits
 	.globl	abnormal_wakeup                 // -- Begin function abnormal_wakeup
 	.type	abnormal_wakeup,@function
 abnormal_wakeup:                        // @abnormal_wakeup
-.Lfunc_begin3:
+.Lfunc_begin1:
 // %bb.0:
-	sd r22, 8, d22
-	add r22, r22, 16
-	sw r22, -16, r0
-	lw r0, r22, -16
-	lw r0, r0, 4
-	call r23, mutex_lock
-	lw r0, r22, -16
+	lw r1, r0, 4
+	// inline asm
+.Ltmp4:
+	acquire r1, 0, nz, .Ltmp4
+	// inline asm
 	sb r0, 2, 1
-	sw r22, -12, 0
-	jump .LBB3_1
-.LBB3_1:                                // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -12
-	lw r1, r22, -16
-	lbu r1, r1, 0
-	jges r0, r1, .LBB3_4
-	jump .LBB3_2
-.LBB3_2:                                //   in Loop: Header=BB3_1 Depth=1
-	lw r0, r22, -12
+	lbu r1, r0, 0
+	jeq r1, 0, .LBB1_3
+// %bb.1:
+	move r1, 0
+.LBB1_2:                                // =>This Inner Loop Header: Depth=1
 	// inline asm
-.Ltmp3:
-	resume r0, 0, nz, .Ltmp3+1
+.Ltmp5:
+	resume r1, 0, nz, .Ltmp5+1
 	// inline asm
-	jump .LBB3_3
-.LBB3_3:                                //   in Loop: Header=BB3_1 Depth=1
-	lw r0, r22, -12
-	add r0, r0, 1
-	sw r22, -12, r0
-	jump .LBB3_1
-.LBB3_4:
-	lw r0, r22, -16
+	lbu r2, r0, 0
+	add r1, r1, 1
+	jltu r1, r2, .LBB1_2
+.LBB1_3:
 	sb r0, 1, 0
-	lw r0, r22, -16
 	lw r0, r0, 4
-	call r23, mutex_unlock
-	ld d22, r22, -8
+	// inline asm
+.Ltmp6:
+	release r0, 0, nz, .Ltmp6+1
+	// inline asm
 	jump r23
-.Lfunc_end3:
-	.size	abnormal_wakeup, .Lfunc_end3-abnormal_wakeup
+.Lfunc_end1:
+	.size	abnormal_wakeup, .Lfunc_end1-abnormal_wakeup
 	.section	.stack_sizes,"o",@progbits,.text.abnormal_wakeup
-	.long	.Lfunc_begin3
-	.byte	16
+	.long	.Lfunc_begin1
+	.byte	0
 	.section	.text.abnormal_wakeup,"ax",@progbits
                                         // -- End function
 	.section	.text.abnormal_wakeup_one,"ax",@progbits
 	.globl	abnormal_wakeup_one             // -- Begin function abnormal_wakeup_one
 	.type	abnormal_wakeup_one,@function
 abnormal_wakeup_one:                    // @abnormal_wakeup_one
-.Lfunc_begin4:
+.Lfunc_begin2:
 // %bb.0:
 	sd r22, 8, d22
 	add r22, r22, 16
-	sw r22, -16, r0
-	lw r0, r22, -16
-	lw r0, r0, 4
-	call r23, mutex_lock
-	lw r0, r22, -16
-	lbu r0, r0, 1
-	jneq r0, 0, .LBB4_2
-	jump .LBB4_1
-.LBB4_1:
-	jump .LBB4_7
-.LBB4_2:
-	lw r0, r22, -16
-	sb r0, 2, 1
-	lw r0, r22, -16
-	lbs r1, r0, 1
-	add r1, r1, -1
-	sb r0, 1, r1
-	sw r22, -12, 0
-	jump .LBB4_3
-.LBB4_3:                                // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -12
-	lw r1, r22, -16
-	lbu r1, r1, 0
-	jges r0, r1, .LBB4_6
-	jump .LBB4_4
-.LBB4_4:                                //   in Loop: Header=BB4_3 Depth=1
-	lw r0, r22, -12
+	sd r22, -16, d14
+	move r14, r0
+	lw r0, r14, 4
 	// inline asm
-.Ltmp4:
-	resume r0, 0, nz, .Ltmp4+2
+.Ltmp7:
+	acquire r0, 0, nz, .Ltmp7
 	// inline asm
-	sw r22, -12, 16
-	jump .LBB4_5
-.LBB4_5:                                //   in Loop: Header=BB4_3 Depth=1
-	lw r0, r22, -12
-	add r0, r0, 1
-	sw r22, -12, r0
-	jump .LBB4_3
-.LBB4_6:
-	jump .LBB4_7
-.LBB4_7:
-	lw r0, r22, -16
-	lw r0, r0, 4
-	call r23, mutex_unlock
+	lbu r0, r14, 1
+	jeq r0, 0, .LBB2_2
+// %bb.1:
+	sb r14, 2, 1
+	add r0, r0, -1
+	sb r14, 1, r0
+	lbu r0, r14, 0
+	call r23, wake_up_one
+.LBB2_2:
+	lw r0, r14, 4
+	// inline asm
+.Ltmp8:
+	release r0, 0, nz, .Ltmp8+1
+	// inline asm
+	ld d14, r22, -16
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end4:
-	.size	abnormal_wakeup_one, .Lfunc_end4-abnormal_wakeup_one
+.Lfunc_end2:
+	.size	abnormal_wakeup_one, .Lfunc_end2-abnormal_wakeup_one
 	.section	.stack_sizes,"o",@progbits,.text.abnormal_wakeup_one
-	.long	.Lfunc_begin4
+	.long	.Lfunc_begin2
 	.byte	16
 	.section	.text.abnormal_wakeup_one,"ax",@progbits
                                         // -- End function
@@ -306,30 +254,30 @@ abnormal_wakeup_one:                    // @abnormal_wakeup_one
 	.globl	swap_scheduler                  // -- Begin function swap_scheduler
 	.type	swap_scheduler,@function
 swap_scheduler:                         // @swap_scheduler
-.Lfunc_begin5:
+.Lfunc_begin3:
 // %bb.0:
 	sd r22, 8, d22
 	add r22, r22, 16
-	call r23, me
-	lbu r1, r0, cur_jobs
-	lsl r0, r1, 2
-	lsl_add r1, r0, r1, 4
-	move r0, jobs
-	add r0, r0, r1
-	add r0, r0, 16
-	sw r22, -16, r0
-	call r23, me
-	move r1, r0
-	lw r0, r22, -16
-	lsl r1, r1, 2
-	lw r1, r1, fc_scheduler_job
+	sd r22, -16, d14
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	move r1, jobs
+	add r0, r1, r0
+	add r14, r0, 16
+	call r23, me_new
+	lsl r0, r0, 2
+	lw r1, r0, fc_scheduler_job
+	move r0, r14
 	call r23, swap_context
+	ld d14, r22, -16
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end5:
-	.size	swap_scheduler, .Lfunc_end5-swap_scheduler
+.Lfunc_end3:
+	.size	swap_scheduler, .Lfunc_end3-swap_scheduler
 	.section	.stack_sizes,"o",@progbits,.text.swap_scheduler
-	.long	.Lfunc_begin5
+	.long	.Lfunc_begin3
 	.byte	16
 	.section	.text.swap_scheduler,"ax",@progbits
                                         // -- End function
@@ -337,596 +285,664 @@ swap_scheduler:                         // @swap_scheduler
 	.globl	__end_child_jobs                // -- Begin function __end_child_jobs
 	.type	__end_child_jobs,@function
 __end_child_jobs:                       // @__end_child_jobs
-.Lfunc_begin6:
+.Lfunc_begin4:
 // %bb.0:
-	sd r22, 16, d22
-	add r22, r22, 24
+	sd r22, 8, d22
+	add r22, r22, 16
+	sd r22, -16, d14
 	lw r0, zero, mutex_jobs
-	call r23, mutex_lock
-	call r23, me
-	lbs r0, r0, cur_jobs
-	sb r22, -24, r0
-	lbu r1, r22, -24
-	lsl r0, r1, 2
-	lsl_add r0, r0, r1, 4
-	move r1, jobs
-	sw r22, -16, r1
+	// inline asm
+.Ltmp9:
+	acquire r0, 0, nz, .Ltmp9
+	// inline asm
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lw r2, zero, mutex_jobs
+	lsl_add r0, r1, r0, 4
 	move r1, 4
 	sb r0, jobs, r1
+	// inline asm
+.Ltmp10:
+	release r2, 0, nz, .Ltmp10+1
+	// inline asm
 	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
-	lw r0, r22, -16
-	move r2, 1
-	move r1, r2
-	call r23, wakeup
-	call r23, me
-	move r1, r0
-	lw r0, r22, -16
-	lbu r2, r1, cur_jobs
-	lsl r1, r2, 2
-	lsl_add r1, r1, r2, 4
-	add r0, r0, r1
-	add r0, r0, 16
-	sw r22, -20, r0
-	call r23, me
-	move r1, r0
-	lw r0, r22, -20
-	lsl r1, r1, 2
-	lw r1, r1, fc_scheduler_job
+	// inline asm
+.Ltmp11:
+	acquire r0, 0, nz, .Ltmp11
+	// inline asm
+	lw r0, zero, cur_process_index
+	jeq r0, 0, .LBB4_1
+// %bb.13:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp12:
+	acquire r0, 0, nz, .Ltmp12
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 1
+	jeq r1, 1, .LBB4_2
+// %bb.14:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp13:
+	acquire r0, 0, nz, .Ltmp13
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 2
+	jeq r1, 2, .LBB4_2
+// %bb.15:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp14:
+	acquire r0, 0, nz, .Ltmp14
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 3
+	jeq r1, 3, .LBB4_2
+// %bb.16:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp15:
+	acquire r0, 0, nz, .Ltmp15
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 4
+	jeq r1, 4, .LBB4_2
+// %bb.17:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp16:
+	acquire r0, 0, nz, .Ltmp16
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 5
+	jeq r1, 5, .LBB4_2
+// %bb.18:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp17:
+	acquire r0, 0, nz, .Ltmp17
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 6
+	jeq r1, 6, .LBB4_2
+// %bb.19:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp18:
+	acquire r0, 0, nz, .Ltmp18
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 7
+	jeq r1, 7, .LBB4_2
+// %bb.20:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp19:
+	acquire r0, 0, nz, .Ltmp19
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 8
+	jeq r1, 8, .LBB4_2
+// %bb.21:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp20:
+	acquire r0, 0, nz, .Ltmp20
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 9
+	jeq r1, 9, .LBB4_2
+// %bb.22:
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r1, r1, r0, 11
+	lsl_sub r0, r1, r0, 6
+	add r0, r0, 651280
+	move r1, jobs
+	ldma r1, r0, 249
+	jump .LBB4_9
+.LBB4_1:
+	move r0, 0
+.LBB4_2:
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
+	move r1, processs
+	add r0, r1, r0
+	lbu r0, r0, 2
+	jeq r0, 0, .LBB4_8
+// %bb.3:
+	move r1, 0, true, .LBB4_4
+.LBB4_7:                                //   in Loop: Header=BB4_4 Depth=1
+	add r1, r1, 1
+	jgeu r1, r0, .LBB4_8
+.LBB4_4:                                // =>This Inner Loop Header: Depth=1
+	lsl r2, r1, 2
+	lsl_add r2, r2, r1, 4
+	lbu r3, r2, jobs
+	jneq r3, 6, .LBB4_7
+// %bb.5:                               //   in Loop: Header=BB4_4 Depth=1
+	move r3, jobs
+	add r2, r3, r2
+	lw r2, r2, 8
+	jneq r2, r3, .LBB4_7
+// %bb.6:                               //   in Loop: Header=BB4_4 Depth=1
+	lsl r2, r1, 2
+	lsl_add r2, r2, r1, 4
+	move r3, 3
+	sb r2, jobs, r3
+	jump .LBB4_7
+.LBB4_8:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp21:
+	release r0, 0, nz, .Ltmp21+1
+	// inline asm
+.LBB4_9:
+	move r0, cp
+	lw r1, r0, 4
+	// inline asm
+.Ltmp22:
+	acquire r1, 0, nz, .Ltmp22
+	// inline asm
+	sb r0, 2, 1
+	lbu r1, zero, cp
+	jeq r1, 0, .LBB4_12
+// %bb.10:
+	move r1, 0
+.LBB4_11:                               // =>This Inner Loop Header: Depth=1
+	// inline asm
+.Ltmp23:
+	resume r1, 0, nz, .Ltmp23+1
+	// inline asm
+	lbu r2, zero, cp
+	add r1, r1, 1
+	jltu r1, r2, .LBB4_11
+.LBB4_12:
+	sb r0, 1, 0
+	lw r0, r0, 4
+	// inline asm
+.Ltmp24:
+	release r0, 0, nz, .Ltmp24+1
+	// inline asm
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	move r1, jobs
+	add r0, r1, r0
+	add r14, r0, 16
+	call r23, me_new
+	lsl r0, r0, 2
+	lw r1, r0, fc_scheduler_job
+	move r0, r14
 	call r23, swap_context
+	ld d14, r22, -16
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end6:
-	.size	__end_child_jobs, .Lfunc_end6-__end_child_jobs
+.Lfunc_end4:
+	.size	__end_child_jobs, .Lfunc_end4-__end_child_jobs
 	.section	.stack_sizes,"o",@progbits,.text.__end_child_jobs
-	.long	.Lfunc_begin6
-	.byte	24
+	.long	.Lfunc_begin4
+	.byte	16
 	.section	.text.__end_child_jobs,"ax",@progbits
                                         // -- End function
 	.section	.text.wakeup,"ax",@progbits
 	.globl	wakeup                          // -- Begin function wakeup
 	.type	wakeup,@function
 wakeup:                                 // @wakeup
-.Lfunc_begin7:
+.Lfunc_begin5:
 // %bb.0:
-	sd r22, 24, d22
-	add r22, r22, 32
-                                        // kill: def $r3 killed $r2
-                                        // kill: def $r3 killed $r1
-	sw r22, -32, r0
-	sb r22, -28, r1
-	sb r22, -24, r2
-	sw r22, -20, 0
-	jump .LBB7_1
-.LBB7_1:                                // =>This Loop Header: Depth=1
-                                        //     Child Loop BB7_8 Depth 2
-	lw r0, r22, -20
-	jgtu r0, 9, .LBB7_21
-	jump .LBB7_2
-.LBB7_2:                                //   in Loop: Header=BB7_1 Depth=1
-	lw r0, zero, mutex_jobs
-	call r23, mutex_lock
-	lbu r0, r22, -28
-	jneq r0, 0, .LBB7_4
-	jump .LBB7_3
-.LBB7_3:                                //   in Loop: Header=BB7_1 Depth=1
-	lw r1, r22, -20
-	lsl r0, r1, 4
-	lsl_add r0, r0, r1, 11
-	lsl_sub r0, r0, r1, 6
-	add r0, r0, 651280
-	move r1, jobs
-	move r2, 2000
-	call r23, _mram_read
-	jump .LBB7_7
-.LBB7_4:                                //   in Loop: Header=BB7_1 Depth=1
-	lw r0, r22, -20
-	lw r1, zero, cur_process_index
-	jeq r0, r1, .LBB7_6
-	jump .LBB7_5
-.LBB7_5:                                //   in Loop: Header=BB7_1 Depth=1
-	jump .LBB7_20
-.LBB7_6:                                //   in Loop: Header=BB7_1 Depth=1
-	jump .LBB7_7
-.LBB7_7:                                //   in Loop: Header=BB7_1 Depth=1
-	sw r22, -16, 0
-	jump .LBB7_8
-.LBB7_8:                                //   Parent Loop BB7_1 Depth=1
+	move r3, 0, true, .LBB5_1
+.LBB5_14:                               //   in Loop: Header=BB5_1 Depth=1
+	add r3, r3, 1
+	jeq r3, 10, .LBB5_15
+.LBB5_1:                                // =>This Loop Header: Depth=1
+                                        //     Child Loop BB5_6 Depth 2
+	lw r4, zero, mutex_jobs
+	// inline asm
+.Ltmp25:
+	acquire r4, 0, nz, .Ltmp25
+	// inline asm
+	jeq r1, 0, .LBB5_2
+// %bb.3:                               //   in Loop: Header=BB5_1 Depth=1
+	lw r4, zero, cur_process_index
+	jneq r3, r4, .LBB5_14
+	jump .LBB5_4
+.LBB5_2:                                //   in Loop: Header=BB5_1 Depth=1
+	lsl r4, r3, 4
+	lsl_add r4, r4, r3, 11
+	lsl_sub r4, r4, r3, 6
+	add r4, r4, 651280
+	move r5, jobs
+	ldma r5, r4, 249
+.LBB5_4:                                //   in Loop: Header=BB5_1 Depth=1
+	lsl r4, r3, 4
+	lsl_add r4, r4, r3, 6
+	move r5, processs
+	add r4, r5, r4
+	lbu r4, r4, 2
+	jeq r4, 0, .LBB5_12
+// %bb.5:                               //   in Loop: Header=BB5_1 Depth=1
+	move r5, 0, true, .LBB5_6
+.LBB5_11:                               //   in Loop: Header=BB5_6 Depth=2
+	add r5, r5, 1
+	jgeu r5, r4, .LBB5_12
+.LBB5_6:                                //   Parent Loop BB5_1 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
-	lw r0, r22, -16
-	lw r2, r22, -20
-	lsl r1, r2, 4
-	lsl_add r2, r1, r2, 6
-	move r1, processs
-	add r1, r1, r2
-	lbu r1, r1, 2
-	jgeu r0, r1, .LBB7_17
-	jump .LBB7_9
-.LBB7_9:                                //   in Loop: Header=BB7_8 Depth=2
-	lw r1, r22, -16
-	lsl r0, r1, 2
-	lsl_add r0, r0, r1, 4
-	lbu r0, r0, jobs
-	jneq r0, 6, .LBB7_15
-	jump .LBB7_10
-.LBB7_10:                               //   in Loop: Header=BB7_8 Depth=2
-	lw r1, r22, -16
-	lsl r0, r1, 2
-	lsl_add r1, r0, r1, 4
-	move r0, jobs
-	add r0, r0, r1
-	lw r0, r0, 8
-	lw r1, r22, -32
-	jneq r0, r1, .LBB7_15
-	jump .LBB7_11
-.LBB7_11:                               //   in Loop: Header=BB7_8 Depth=2
-	lw r1, r22, -16
-	lsl r0, r1, 2
-	lsl_add r0, r0, r1, 4
-	move r1, 3
-	sb r0, jobs, r1
-	lbu r0, r22, -28
-	jneq r0, 0, .LBB7_14
-	jump .LBB7_12
-.LBB7_12:                               //   in Loop: Header=BB7_8 Depth=2
-	lw r1, r22, -20
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r0, r0, 8
-	jneq r0, 5, .LBB7_14
-	jump .LBB7_13
-.LBB7_13:                               //   in Loop: Header=BB7_8 Depth=2
-	lw r1, r22, -20
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	sw r0, 8, 3
-	jump .LBB7_14
-.LBB7_14:                               //   in Loop: Header=BB7_8 Depth=2
-	jump .LBB7_15
-.LBB7_15:                               //   in Loop: Header=BB7_8 Depth=2
-	jump .LBB7_16
-.LBB7_16:                               //   in Loop: Header=BB7_8 Depth=2
-	lw r0, r22, -16
-	add r0, r0, 1
-	sw r22, -16, r0
-	jump .LBB7_8
-.LBB7_17:                               //   in Loop: Header=BB7_1 Depth=1
-	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
-	lbu r0, r22, -28
-	jeq r0, 0, .LBB7_19
-	jump .LBB7_18
-.LBB7_18:
-	jump .LBB7_22
-.LBB7_19:                               //   in Loop: Header=BB7_1 Depth=1
-	lw r1, r22, -20
-	lsl r0, r1, 4
-	lsl_add r0, r0, r1, 11
-	lsl_sub r0, r0, r1, 6
-	add r1, r0, 651280
-	move r0, jobs
-	move r2, 2000
-	call r23, _mram_write
-	jump .LBB7_20
-.LBB7_20:                               //   in Loop: Header=BB7_1 Depth=1
-	lw r0, r22, -20
-	add r0, r0, 1
-	sw r22, -20, r0
-	jump .LBB7_1
-.LBB7_21:
-	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r0, r0, r1, 11
-	lsl_sub r0, r0, r1, 6
+	lsl r6, r5, 2
+	lsl_add r6, r6, r5, 4
+	lbu r7, r6, jobs
+	jneq r7, 6, .LBB5_11
+// %bb.7:                               //   in Loop: Header=BB5_6 Depth=2
+	move r7, jobs
+	add r6, r7, r6
+	lw r6, r6, 8
+	jneq r6, r0, .LBB5_11
+// %bb.8:                               //   in Loop: Header=BB5_6 Depth=2
+	lsl r6, r5, 2
+	lsl_add r6, r6, r5, 4
+	move r7, 3
+	sb r6, jobs, r7
+	jneq r1, 0, .LBB5_11
+// %bb.9:                               //   in Loop: Header=BB5_6 Depth=2
+	lsl r6, r3, 4
+	lsl_add r6, r6, r3, 6
+	move r7, processs
+	add r6, r7, r6
+	lw r7, r6, 8
+	jneq r7, 5, .LBB5_11
+// %bb.10:                              //   in Loop: Header=BB5_6 Depth=2
+	sw r6, 8, 3
+	jump .LBB5_11
+.LBB5_12:                               //   in Loop: Header=BB5_1 Depth=1
+	lw r4, zero, mutex_jobs
+	// inline asm
+.Ltmp26:
+	release r4, 0, nz, .Ltmp26+1
+	// inline asm
+	jneq r1, 0, .LBB5_16
+// %bb.13:                              //   in Loop: Header=BB5_1 Depth=1
+	lsl r4, r3, 4
+	lsl_add r4, r4, r3, 11
+	lsl_sub r4, r4, r3, 6
+	add r4, r4, 651280
+	move r5, jobs
+	sdma r5, r4, 249
+	jump .LBB5_14
+.LBB5_15:
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r1, r1, r0, 11
+	lsl_sub r0, r1, r0, 6
 	add r0, r0, 651280
 	move r1, jobs
-	move r2, 2000
-	call r23, _mram_read
-	jump .LBB7_22
-.LBB7_22:
-	lbu r0, r22, -24
-	jeq r0, 0, .LBB7_24
-	jump .LBB7_23
-.LBB7_23:
+	ldma r1, r0, 249
+.LBB5_16:
+	jeq r2, 0, .LBB5_21
+// %bb.17:
 	move r0, cp
-	call r23, abnormal_wakeup
-	jump .LBB7_24
-.LBB7_24:
+	lw r1, r0, 4
+	// inline asm
+.Ltmp27:
+	acquire r1, 0, nz, .Ltmp27
+	// inline asm
+	sb r0, 2, 1
+	lbu r1, zero, cp
+	jeq r1, 0, .LBB5_20
+// %bb.18:
+	move r1, 0
+.LBB5_19:                               // =>This Inner Loop Header: Depth=1
+	// inline asm
+.Ltmp28:
+	resume r1, 0, nz, .Ltmp28+1
+	// inline asm
+	lbu r2, zero, cp
+	add r1, r1, 1
+	jltu r1, r2, .LBB5_19
+.LBB5_20:
+	sb r0, 1, 0
+	lw r0, r0, 4
+	// inline asm
+.Ltmp29:
+	release r0, 0, nz, .Ltmp29+1
+	// inline asm
+.LBB5_21:
 	move r0, 0
-	ld d22, r22, -8
 	jump r23
-.Lfunc_end7:
-	.size	wakeup, .Lfunc_end7-wakeup
+.Lfunc_end5:
+	.size	wakeup, .Lfunc_end5-wakeup
 	.section	.stack_sizes,"o",@progbits,.text.wakeup
-	.long	.Lfunc_begin7
-	.byte	32
+	.long	.Lfunc_begin5
+	.byte	0
 	.section	.text.wakeup,"ax",@progbits
                                         // -- End function
 	.section	.text.create_job,"ax",@progbits
 	.globl	create_job                      // -- Begin function create_job
 	.type	create_job,@function
 create_job:                             // @create_job
-.Lfunc_begin8:
+.Lfunc_begin6:
 // %bb.0:
-	sd r22, 40, d22
-	add r22, r22, 48
-	sw r22, -44, r0
-	call r23, me
-	lbs r0, r0, cur_jobs
-	sb r22, -40, r0
-	lbu r1, r22, -40
-	lsl r0, r1, 2
-	lsl_add r1, r0, r1, 4
-	move r0, jobs
-	add r0, r0, r1
+	sd r22, 8, d22
+	add r22, r22, 16
+	sd r22, -16, d14
+	move r14, r0
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	move r1, jobs
+	add r0, r1, r0
 	lbu r0, r0, 1
-	jeq r0, 0, .LBB8_2
-	jump .LBB8_1
-.LBB8_1:
-	sw r22, -48, -15
-	jump .LBB8_23
-.LBB8_2:
+	move r15, -15
+	jneq r0, 0, .LBB6_18
+// %bb.1:
 	lw r0, zero, mutex_jobs
-	call r23, mutex_lock
-	sw r22, -36, 0
-	sw r22, -32, -1
-	sw r22, -28, 0
-	jump .LBB8_3
-.LBB8_3:                                // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -28
-	jgts r0, 99, .LBB8_8
-	jump .LBB8_4
-.LBB8_4:                                //   in Loop: Header=BB8_3 Depth=1
-	lw r1, r22, -28
-	lsl r0, r1, 2
-	lsl_add r0, r0, r1, 4
-	lbu r0, r0, jobs
-	jneq r0, 8, .LBB8_6
-	jump .LBB8_5
-.LBB8_5:
-	lw r0, r22, -28
-	sw r22, -32, r0
-	lw r1, r22, -28
-	lsl r0, r1, 2
-	lsl_add r1, r0, r1, 4
-	move r0, jobs
-	add r0, r0, r1
-	lw r0, r0, 4
-	sw r22, -36, r0
-	jump .LBB8_8
-.LBB8_6:                                //   in Loop: Header=BB8_3 Depth=1
-	jump .LBB8_7
-.LBB8_7:                                //   in Loop: Header=BB8_3 Depth=1
-	lw r0, r22, -28
+	// inline asm
+.Ltmp30:
+	acquire r0, 0, nz, .Ltmp30
+	// inline asm
+	move r0, 0
+.LBB6_2:                                // =>This Inner Loop Header: Depth=1
+	lsl r1, r0, 2
+	lsl_add r1, r1, r0, 4
+	lbu r2, r1, jobs
+	jeq r2, 8, .LBB6_5
+// %bb.3:                               //   in Loop: Header=BB6_2 Depth=1
 	add r0, r0, 1
-	sw r22, -28, r0
-	jump .LBB8_3
-.LBB8_8:
-	lw r0, r22, -36
-	jneq r0, 0, .LBB8_12
-	jump .LBB8_9
-.LBB8_9:
-	move r0, 2048
-	call r23, sbrk
-	sw r22, -36, r0
-	jgeu r0, 0, .LBB8_11
-	jump .LBB8_10
-.LBB8_10:
-	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
-	lw r0, r22, -36
-	sw r22, -48, r0
-	jump .LBB8_23
-.LBB8_11:
-	lw r0, r22, -36
-	add r0, r0, -2048
-	sw r22, -36, r0
-	jump .LBB8_12
-.LBB8_12:
+	jneq r0, 100, .LBB6_2
+// %bb.4:
+	move r0, -1, true, .LBB6_6
+.LBB6_5:
+	move r2, jobs
+	add r1, r1, r2
+	lw r1, r1, 4
+	jneq r1, 0, .LBB6_9
+.LBB6_6:
+	lw r1, zero, mutex_sbrk
+	// inline asm
+.Ltmp31:
+	acquire r1, 0, nz, .Ltmp31
+	// inline asm
 	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	sw r22, -24, r0
-	lw r0, r22, -24
-	lbs r0, r0, 2
-	sb r22, -20, r0
-	lw r0, r22, -24
-	lbs r1, r0, 2
-	add r1, r1, 1
-	sb r0, 2, r1
-	sw r22, -16, 0
-	jump .LBB8_13
-.LBB8_13:                               // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -16
-	move r1, 0
-	sw r22, -12, r1
-	jgts r0, 99, .LBB8_15
-	jump .LBB8_14
-.LBB8_14:                               //   in Loop: Header=BB8_13 Depth=1
-	lw r0, r22, -32
-	move r1, -1
-	sub r0, r0, r1, eq
-	sw r22, -12, r0
-	jump .LBB8_15
-.LBB8_15:                               //   in Loop: Header=BB8_13 Depth=1
-	lw r0, r22, -12
-	and r0, r0, 1
-	jeq r0, 0, .LBB8_20
-	jump .LBB8_16
-.LBB8_16:                               //   in Loop: Header=BB8_13 Depth=1
-	lw r1, r22, -16
-	lsl r0, r1, 2
-	lsl_add r0, r0, r1, 4
-	lbu r0, r0, jobs
-	jneq r0, 0, .LBB8_18
-	jump .LBB8_17
-.LBB8_17:                               //   in Loop: Header=BB8_13 Depth=1
-	lw r0, r22, -16
-	sw r22, -32, r0
-	jump .LBB8_18
-.LBB8_18:                               //   in Loop: Header=BB8_13 Depth=1
-	jump .LBB8_19
-.LBB8_19:                               //   in Loop: Header=BB8_13 Depth=1
-	lw r0, r22, -16
-	add r0, r0, 1
-	sw r22, -16, r0
-	jump .LBB8_13
-.LBB8_20:
-	lw r0, r22, -32
-	jeq r0, -1, .LBB8_22
-	jump .LBB8_21
-.LBB8_21:
-	lw r1, r22, -32
-	lsl r0, r1, 2
-	lsl_add r1, r0, r1, 4
-	move r0, jobs
-	move r2, 1
-	sb r1, jobs, r2
-	lbs r2, r22, -20
-	lw r3, r22, -32
-	lsl r1, r3, 2
-	lsl_add r1, r1, r3, 4
-	add r1, r0, r1
-	sb r1, 1, r2
-	lw r2, r22, -36
-	lw r3, r22, -32
-	lsl r1, r3, 2
-	lsl_add r1, r1, r3, 4
-	add r1, r0, r1
-	sw r1, 16, r2
-	lw r2, r22, -36
-	lw r3, r22, -32
-	lsl r1, r3, 2
-	lsl_add r1, r1, r3, 4
-	add r1, r0, r1
-	sw r1, 4, r2
-	lw r2, r22, -32
-	lsl r1, r2, 2
-	lsl_add r1, r1, r2, 4
-	add r1, r0, r1
-	lw r1, r1, 16
+	lsl r2, r1, 4
+	lsl_add r1, r2, r1, 6
+	move r2, processs
+	add r1, r2, r1
+	lw r1, r1, 32
+	add r3, r1, 512
+	move r1, -514
+	lsr r3, r3, 8
+	jgtu r3, 222, .LBB6_8
+// %bb.7:
+	lw r1, zero, cur_process_index
+	lsl r3, r1, 4
+	lsl_add r1, r3, r1, 6
+	add r1, r2, r1
+	lw r3, r1, 32
+	add r3, r3, 512
+	sw r1, 32, r3
+	lw r1, zero, cur_process_index
+	lsl r3, r1, 4
+	lsl_add r1, r3, r1, 6
+	add r1, r2, r1
+	lw r1, r1, 32
+.LBB6_8:
+	lw r2, zero, mutex_sbrk
+	// inline asm
+.Ltmp32:
+	release r2, 0, nz, .Ltmp32+1
+	// inline asm
+.LBB6_9:
+	lw r2, zero, cur_process_index
+	lsl r3, r2, 4
+	lsl_add r2, r3, r2, 6
+	move r3, processs
+	add r2, r3, r2
+	lbu r15, r2, 2
+	add r3, r15, 1
+	sb r2, 2, r3
+	jeq r0, -1, .LBB6_10
+.LBB6_14:
+	lsl r2, r0, 2
+	lsl_add r0, r2, r0, 4
+	move r2, jobs
+	add r2, r2, r0
+	move r3, 1
+	sb r0, jobs, r3
+	sb r2, 1, r15
+	sw r2, 16, r1
+	sw r2, 4, r1
 	sw r1, 36, r1
-	lw r2, r22, -32
-	lsl r1, r2, 2
-	lsl_add r1, r1, r2, 4
-	add r1, r0, r1
-	lw r1, r1, 16
-	move r2, __end_child_jobs
-	sw r1, 32, r2
-	lw r1, r22, -44
-	lw r3, r22, -32
-	lsl r2, r3, 2
-	lsl_add r2, r2, r3, 4
-	add r0, r0, r2
-	lw r0, r0, 16
-	sw r0, 24, r1
+	move r0, __end_child_jobs
+	sw r1, 32, r0
+	sw r1, 24, r14
 	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
-	move r0, cp
-	call r23, abnormal_wakeup_one
-	lbu r0, r22, -20
-	sw r22, -48, r0
-	jump .LBB8_23
-.LBB8_22:
+	// inline asm
+.Ltmp33:
+	release r0, 0, nz, .Ltmp33+1
+	// inline asm
+	move r14, cp
+	lw r0, r14, 4
+	// inline asm
+.Ltmp34:
+	acquire r0, 0, nz, .Ltmp34
+	// inline asm
+	lbu r0, r14, 1
+	jeq r0, 0, .LBB6_16
+// %bb.15:
+	sb r14, 2, 1
+	add r0, r0, -1
+	sb r14, 1, r0
+	lbu r0, zero, cp
+	call r23, wake_up_one
+.LBB6_16:
+	lw r0, r14, 4
+	// inline asm
+.Ltmp35:
+	release r0, 0, nz, .Ltmp35+1
+	// inline asm
+	jump .LBB6_18
+.LBB6_10:
+	move r0, -1
+	move r3, jobs
+.LBB6_11:                               // =>This Inner Loop Header: Depth=1
+	lsl r2, r0, 2
+	lsl_add r2, r2, r0, 4
+	add r2, r3, r2
+	lbu r2, r2, 20
+	add r0, r0, 1
+	jeq r2, 0, .LBB6_13
+// %bb.12:                              //   in Loop: Header=BB6_11 Depth=1
+	jltu r0, 99, .LBB6_11
+.LBB6_13:
+	jeq r2, 0, .LBB6_14
+// %bb.17:
 	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
-	sw r22, -48, -16
-	jump .LBB8_23
-.LBB8_23:
-	lw r0, r22, -48
+	// inline asm
+.Ltmp36:
+	release r0, 0, nz, .Ltmp36+1
+	// inline asm
+	move r15, -16
+.LBB6_18:
+	move r0, r15
+	ld d14, r22, -16
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end8:
-	.size	create_job, .Lfunc_end8-create_job
+.Lfunc_end6:
+	.size	create_job, .Lfunc_end6-create_job
 	.section	.stack_sizes,"o",@progbits,.text.create_job
-	.long	.Lfunc_begin8
-	.byte	48
+	.long	.Lfunc_begin6
+	.byte	16
 	.section	.text.create_job,"ax",@progbits
                                         // -- End function
 	.section	.text.sbrk,"ax",@progbits
 	.globl	sbrk                            // -- Begin function sbrk
 	.type	sbrk,@function
 sbrk:                                   // @sbrk
-.Lfunc_begin9:
+.Lfunc_begin7:
 // %bb.0:
-	sd r22, 8, d22
-	add r22, r22, 16
-	sw r22, -16, r0
-	lw r0, zero, mutex_sbrk
-	call r23, mutex_lock
-	lw r0, r22, -16
-	jlts r0, 1, .LBB9_4
-	jump .LBB9_1
-.LBB9_1:
-	sw r22, -12, -2
+	lw r1, zero, mutex_sbrk
+	// inline asm
+.Ltmp37:
+	acquire r1, 0, nz, .Ltmp37
+	// inline asm
+	jlts r0, 1, .LBB7_2
+// %bb.1:
 	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r0, r0, 32
-	lw r1, r22, -16
-	add r0, r0, r1
-	lsr r0, r0, 8
-	jltu r0, 223, .LBB9_3
-	jump .LBB9_2
-.LBB9_2:
-	jump .LBB9_10
-.LBB9_3:
-	lw r2, r22, -16
+	lsl r2, r1, 4
+	lsl_add r1, r2, r1, 6
+	move r2, processs
+	add r1, r2, r1
+	lw r1, r1, 32
+	add r2, r1, r0
+	move r1, -2
+	lsr r2, r2, 8
+	jleu r2, 222, .LBB7_4
+	jump .LBB7_6
+.LBB7_2:
+	jgts r0, -1, .LBB7_5
+// %bb.3:
 	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r1, r0, 32
-	add r1, r1, r2
-	sw r0, 32, r1
-	jump .LBB9_9
-.LBB9_4:
-	lw r0, r22, -16
-	jgts r0, -1, .LBB9_8
-	jump .LBB9_5
-.LBB9_5:
-	sw r22, -12, -3
+	lsl r2, r1, 4
+	lsl_add r1, r2, r1, 6
+	move r2, processs
+	add r1, r2, r1
+	lw r1, r1, 32
+	lw r3, zero, cur_process_index
+	lsl r4, r3, 4
+	lsl_add r3, r4, r3, 6
+	add r2, r2, r3
+	lw r2, r2, 44
+	add r3, r1, r0
+	move r1, -3
+	jltu r3, r2, .LBB7_6
+.LBB7_4:
 	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r0, r0, r1, 6
+	lsl r2, r1, 4
+	lsl_add r1, r2, r1, 6
+	move r2, processs
+	add r1, r2, r1
+	lw r2, r1, 32
+	add r0, r2, r0
+	sw r1, 32, r0
+.LBB7_5:
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
 	move r1, processs
 	add r0, r1, r0
 	lw r0, r0, 32
-	lw r2, r22, -16
-	add r0, r0, r2
-	lw r3, zero, cur_process_index
-	lsl r2, r3, 4
-	lsl_add r2, r2, r3, 6
-	add r1, r1, r2
-	lw r1, r1, 44
-	jgeu r0, r1, .LBB9_7
-	jump .LBB9_6
-.LBB9_6:
-	jump .LBB9_10
-.LBB9_7:
-	lw r2, r22, -16
-	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r1, r0, 32
-	add r1, r1, r2
-	sw r0, 32, r1
-	jump .LBB9_8
-.LBB9_8:
-	jump .LBB9_9
-.LBB9_9:
-	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r0, r0, 32
-	sw r22, -12, r0
-	jump .LBB9_10
-.LBB9_10:
+	add r1, r0, 512
+.LBB7_6:
 	lw r0, zero, mutex_sbrk
-	call r23, mutex_unlock
-	lw r0, r22, -12
-	ld d22, r22, -8
+	// inline asm
+.Ltmp38:
+	release r0, 0, nz, .Ltmp38+1
+	// inline asm
+	move r0, r1
 	jump r23
-.Lfunc_end9:
-	.size	sbrk, .Lfunc_end9-sbrk
+.Lfunc_end7:
+	.size	sbrk, .Lfunc_end7-sbrk
 	.section	.stack_sizes,"o",@progbits,.text.sbrk
-	.long	.Lfunc_begin9
-	.byte	16
+	.long	.Lfunc_begin7
+	.byte	0
 	.section	.text.sbrk,"ax",@progbits
                                         // -- End function
 	.section	.text.join_job,"ax",@progbits
 	.globl	join_job                        // -- Begin function join_job
 	.type	join_job,@function
 join_job:                               // @join_job
-.Lfunc_begin10:
+.Lfunc_begin8:
 // %bb.0:
 	sd r22, 16, d22
 	add r22, r22, 24
-	sb r22, -20, 0
+	sd r22, -16, d14
+	sd r22, -24, d16
 	lw r0, zero, mutex_jobs
-	call r23, mutex_lock
-	jump .LBB10_1
-.LBB10_1:                               // =>This Loop Header: Depth=1
-                                        //     Child Loop BB10_3 Depth 2
-	lbu r0, r22, -20
-	jneq r0, 0, .LBB10_10
-	jump .LBB10_2
-.LBB10_2:                               //   in Loop: Header=BB10_1 Depth=1
-	sb r22, -20, 1
-	sw r22, -16, 0
-	jump .LBB10_3
-.LBB10_3:                               //   Parent Loop BB10_1 Depth=1
+	move r15, 0
+	// inline asm
+.Ltmp39:
+	acquire r0, 0, nz, .Ltmp39
+	// inline asm
+	jump .LBB8_1
+.LBB8_6:                                //   in Loop: Header=BB8_1 Depth=1
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	add r0, r14, r0
+	add r14, r0, 16
+	call r23, me_new
+	lsl r0, r0, 2
+	lw r1, r0, fc_scheduler_job
+	move r0, r14
+	call r23, swap_context
+.LBB8_1:                                // =>This Loop Header: Depth=1
+                                        //     Child Loop BB8_2 Depth 2
+	move r0, r15
+.LBB8_2:                                //   Parent Loop BB8_1 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
-	lw r0, r22, -16
-	jgts r0, 99, .LBB10_9
-	jump .LBB10_4
-.LBB10_4:                               //   in Loop: Header=BB10_3 Depth=2
-	lw r1, r22, -16
-	lsl r0, r1, 2
-	lsl_add r0, r0, r1, 4
-	lbu r0, r0, jobs
-	jneq r0, 4, .LBB10_6
-	jump .LBB10_5
-.LBB10_5:
-	lw r1, r22, -16
-	lsl r0, r1, 2
-	lsl_add r1, r0, r1, 4
+	lsl r1, r0, 2
+	lsl_add r1, r1, r0, 4
+	lbu r2, r1, jobs
+	jeq r2, 4, .LBB8_7
+// %bb.3:                               //   in Loop: Header=BB8_2 Depth=2
+	add r0, r0, 1
+	jneq r0, 100, .LBB8_2
+// %bb.4:                               //   in Loop: Header=BB8_1 Depth=1
+	lw r16, zero, mutex_jobs
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	move r14, jobs
+	add r1, r14, r0
+	move r2, 6
+	sb r0, jobs, r2
+	sw r1, 8, r14
+	jeq r16, 0, .LBB8_6
+// %bb.5:                               //   in Loop: Header=BB8_1 Depth=1
+	// inline asm
+.Ltmp40:
+	release r16, 0, nz, .Ltmp40+1
+	// inline asm
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	add r0, r14, r0
+	add r14, r0, 16
+	call r23, me_new
+	lsl r0, r0, 2
+	lw r1, r0, fc_scheduler_job
+	move r0, r14
+	call r23, swap_context
+	// inline asm
+.Ltmp41:
+	acquire r16, 0, nz, .Ltmp41
+	// inline asm
+	jump .LBB8_1
+.LBB8_7:
 	move r0, jobs
+	add r0, r0, r1
 	move r2, 8
 	sb r1, jobs, r2
-	lw r2, r22, -16
-	lsl r1, r2, 2
-	lsl_add r1, r1, r2, 4
-	add r0, r0, r1
-	lbs r0, r0, 1
-	sb r22, -12, r0
-	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
-	lbu r0, r22, -12
-	sw r22, -24, r0
-	jump .LBB10_11
-.LBB10_6:                               //   in Loop: Header=BB10_3 Depth=2
-	sb r22, -20, 0
-	jump .LBB10_7
-.LBB10_7:                               //   in Loop: Header=BB10_3 Depth=2
-	jump .LBB10_8
-.LBB10_8:                               //   in Loop: Header=BB10_3 Depth=2
-	lw r0, r22, -16
-	add r0, r0, 1
-	sw r22, -16, r0
-	jump .LBB10_3
-.LBB10_9:                               //   in Loop: Header=BB10_1 Depth=1
-	lw r2, zero, mutex_jobs
-	move r0, jobs
-	move r1, 0
-	call r23, sleep
-	jump .LBB10_1
-.LBB10_10:
-	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
-	sw r22, -24, 0
-	jump .LBB10_11
-.LBB10_11:
-	lw r0, r22, -24
+	lbu r0, r0, 1
+	lw r1, zero, mutex_jobs
+	// inline asm
+.Ltmp42:
+	release r1, 0, nz, .Ltmp42+1
+	// inline asm
+	ld d16, r22, -24
+	ld d14, r22, -16
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end10:
-	.size	join_job, .Lfunc_end10-join_job
+.Lfunc_end8:
+	.size	join_job, .Lfunc_end8-join_job
 	.section	.stack_sizes,"o",@progbits,.text.join_job
-	.long	.Lfunc_begin10
+	.long	.Lfunc_begin8
 	.byte	24
 	.section	.text.join_job,"ax",@progbits
                                         // -- End function
@@ -934,68 +950,69 @@ join_job:                               // @join_job
 	.globl	sleep                           // -- Begin function sleep
 	.type	sleep,@function
 sleep:                                  // @sleep
-.Lfunc_begin11:
+.Lfunc_begin9:
 // %bb.0:
 	sd r22, 16, d22
 	add r22, r22, 24
-	sw r22, -24, r0
-	sw r22, -20, r1
-	sw r22, -16, r2
-	call r23, me
-	lbs r0, r0, cur_jobs
-	sb r22, -12, r0
-	lbu r1, r22, -12
-	lsl r0, r1, 2
-	lsl_add r1, r0, r1, 4
-	move r0, jobs
+	sd r22, -16, d14
+	sd r22, -24, d16
+	move r14, r2
+	move r15, r1
+	move r16, r0
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	move r1, jobs
+	add r1, r1, r0
 	move r2, 6
-	sb r1, jobs, r2
-	lw r1, r22, -24
-	lbu r3, r22, -12
-	lsl r2, r3, 2
-	lsl_add r2, r2, r3, 4
-	add r0, r0, r2
-	sw r0, 8, r1
-	lw r0, r22, -20
-	jeq r0, 0, .LBB11_2
-	jump .LBB11_1
-.LBB11_1:
-	lw r0, r22, -20
+	sb r0, jobs, r2
+	sw r1, 8, r16
+	jeq r15, 0, .LBB9_2
+// %bb.1:
+	move r0, r15
 	call r23, unlock
-	jump .LBB11_2
-.LBB11_2:
-	lw r0, r22, -16
-	jeq r0, 0, .LBB11_4
-	jump .LBB11_3
-.LBB11_3:
-	lw r0, r22, -16
-	call r23, mutex_unlock
-	jump .LBB11_4
-.LBB11_4:
-	call r23, swap_scheduler
-	lw r0, r22, -20
-	jeq r0, 0, .LBB11_6
-	jump .LBB11_5
-.LBB11_5:
-	lw r0, r22, -20
+.LBB9_2:
+	jeq r14, 0, .LBB9_4
+// %bb.3:
+	// inline asm
+.Ltmp43:
+	release r14, 0, nz, .Ltmp43+1
+	// inline asm
+.LBB9_4:
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	move r1, jobs
+	add r0, r1, r0
+	add r16, r0, 16
+	call r23, me_new
+	lsl r0, r0, 2
+	lw r1, r0, fc_scheduler_job
+	move r0, r16
+	call r23, swap_context
+	jeq r15, 0, .LBB9_6
+// %bb.5:
+	move r0, r15
 	call r23, lock
-	jump .LBB11_6
-.LBB11_6:
-	lw r0, r22, -16
-	jeq r0, 0, .LBB11_8
-	jump .LBB11_7
-.LBB11_7:
-	lw r0, r22, -16
-	call r23, mutex_lock
-	jump .LBB11_8
-.LBB11_8:
+.LBB9_6:
+	jeq r14, 0, .LBB9_8
+// %bb.7:
+	// inline asm
+.Ltmp44:
+	acquire r14, 0, nz, .Ltmp44
+	// inline asm
+.LBB9_8:
 	move r0, 0
+	ld d16, r22, -24
+	ld d14, r22, -16
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end11:
-	.size	sleep, .Lfunc_end11-sleep
+.Lfunc_end9:
+	.size	sleep, .Lfunc_end9-sleep
 	.section	.stack_sizes,"o",@progbits,.text.sleep
-	.long	.Lfunc_begin11
+	.long	.Lfunc_begin9
 	.byte	24
 	.section	.text.sleep,"ax",@progbits
                                         // -- End function
@@ -1003,995 +1020,1129 @@ sleep:                                  // @sleep
 	.globl	swap                            // -- Begin function swap
 	.type	swap,@function
 swap:                                   // @swap
-.Lfunc_begin12:
+.Lfunc_begin10:
 // %bb.0:
-	sd r22, 24, d22
-	add r22, r22, 32
-                                        // kill: def $r2 killed $r1
-	sw r22, -32, r0
-	sb r22, -28, r1
-	lw r1, r22, -32
-	lsl r0, r1, 2
-	lsl_add r0, r0, r1, 4
+	sd r22, 16, d22
+	add r22, r22, 24
+	sd r22, -16, d14
+	sd r22, -24, d16
+	move r14, r1
+	move r15, r0
+	lsl r0, r15, 2
+	lsl_add r0, r0, r15, 4
 	move r1, jobs
-	sw r22, -20, r1
+	lw r2, zero, mutex_jobs
+	add r16, r1, r0
 	move r1, 2
 	sb r0, jobs, r1
-	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
-	lw r0, r22, -32
-	sw r22, -16, r0
-	call r23, me
-	lw r2, r22, -16
-	move r1, r0
-	lw r0, r22, -20
-	sb r1, cur_jobs, r2
-	sw r22, -24, 0
 	// inline asm
-	time r1
+.Ltmp45:
+	release r2, 0, nz, .Ltmp45+1
 	// inline asm
-	sw r22, -24, r1
-	lw r1, r22, -24
-	lw r3, r22, -32
-	lsl r2, r3, 2
-	lsl_add r2, r2, r3, 4
-	add r0, r0, r2
-	sw r0, 12, r1
-	lbu r0, r22, -28
-	jeq r0, 0, .LBB12_2
-	jump .LBB12_1
-.LBB12_1:
-	call r23, me
-	move r1, r0
-	move r0, fc_scheduler_job
-	lsl_add r0, r0, r1, 2
-	lw r2, r22, -32
-	lsl r1, r2, 2
-	lsl_add r2, r1, r2, 4
-	move r1, jobs
-	add r1, r1, r2
-	lw r1, r1, 16
+	call r23, me_new
+	sb r0, cur_jobs, r15
+	// inline asm
+	time r0
+
+	// inline asm
+	sw r16, 12, r0
+	call r23, me_new
+	lw r1, r16, 16
+	move r2, fc_scheduler_job
+	lsl_add r0, r2, r0, 2
+	jeq r14, 0, .LBB10_2
+// %bb.1:
 	lw r2, r1, 24
 	call r23, first_swap_context
-	jump .LBB12_3
-.LBB12_2:
-	call r23, me
-	move r1, r0
-	move r0, fc_scheduler_job
-	lsl_add r0, r0, r1, 2
-	lw r2, r22, -32
-	lsl r1, r2, 2
-	lsl_add r2, r1, r2, 4
-	move r1, jobs
-	add r1, r1, r2
-	lw r1, r1, 16
+	jump .LBB10_3
+.LBB10_2:
 	call r23, swap_context
-	jump .LBB12_3
-.LBB12_3:
+.LBB10_3:
 	lw r0, zero, mutex_jobs
-	call r23, mutex_lock
+	// inline asm
+.Ltmp46:
+	acquire r0, 0, nz, .Ltmp46
+	// inline asm
+	ld d16, r22, -24
+	ld d14, r22, -16
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end12:
-	.size	swap, .Lfunc_end12-swap
+.Lfunc_end10:
+	.size	swap, .Lfunc_end10-swap
 	.section	.stack_sizes,"o",@progbits,.text.swap
-	.long	.Lfunc_begin12
-	.byte	32
+	.long	.Lfunc_begin10
+	.byte	24
 	.section	.text.swap,"ax",@progbits
                                         // -- End function
 	.section	.text.check_time_process,"ax",@progbits
 	.globl	check_time_process              // -- Begin function check_time_process
 	.type	check_time_process,@function
 check_time_process:                     // @check_time_process
-.Lfunc_begin13:
+.Lfunc_begin11:
 // %bb.0:
-	sw r22, 4, 0
 	// inline asm
 	time r0
+
 	// inline asm
-	sw r22, 4, r0
-	lw r0, r22, 4
-	lw r2, zero, cur_process_index
-	lsl r1, r2, 4
-	lsl_add r2, r1, r2, 6
-	move r1, processs
-	add r1, r1, r2
+	lw r1, zero, cur_process_index
+	lsl r2, r1, 4
+	lsl_add r1, r2, r1, 6
+	move r2, processs
+	add r1, r2, r1
 	lw r1, r1, 20
 	sub r0, r0, r1
-	move r1, 50001
-	jltu r0, r1, .LBB13_2
-	jump .LBB13_1
-.LBB13_1:
-	sb r22, 0, 1
-	jump .LBB13_3
-.LBB13_2:
-	sb r22, 0, 0
-	jump .LBB13_3
-.LBB13_3:
-	lbu r0, r22, 0
+	move r1, 50000
+	sub r0, r0, r1, gtu
 	jump r23
-.Lfunc_end13:
-	.size	check_time_process, .Lfunc_end13-check_time_process
+.Lfunc_end11:
+	.size	check_time_process, .Lfunc_end11-check_time_process
 	.section	.stack_sizes,"o",@progbits,.text.check_time_process
-	.long	.Lfunc_begin13
-	.byte	8
+	.long	.Lfunc_begin11
+	.byte	0
 	.section	.text.check_time_process,"ax",@progbits
                                         // -- End function
 	.section	.text.scheduler_jobs,"ax",@progbits
 	.globl	scheduler_jobs                  // -- Begin function scheduler_jobs
 	.type	scheduler_jobs,@function
 scheduler_jobs:                         // @scheduler_jobs
-.Lfunc_begin14:
+.Lfunc_begin12:
 // %bb.0:
-	sd r22, 16, d22
-	add r22, r22, 24
-	sw r22, -24, 0
-	sb r22, -20, 0
+	sd r22, 24, d22
+	add r22, r22, 32
+	sd r22, -16, d14
+	sd r22, -24, d16
+	sd r22, -32, d18
+	move r14, cp
+	lw r0, r14, 4
+	// inline asm
+.Ltmp47:
+	acquire r0, 0, nz, .Ltmp47
+	// inline asm
+	call r23, me_new
+	lbs r1, r14, 1
+	add r1, r1, 1
+	sb r14, 1, r1
+	lbu r3, zero, cp
+	and r2, r1, 255
+	jneq r2, r3, .LBB12_7
+// %bb.1:
+	sb r14, 2, 0
+	jeq r2, 0, .LBB12_6
+// %bb.2:
+	and r0, r0, 255
+	move r2, 0, true, .LBB12_3
+.LBB12_5:                               //   in Loop: Header=BB12_3 Depth=1
+	add r2, r2, 1
+	and r3, r1, 255
+	jgeu r2, r3, .LBB12_6
+.LBB12_3:                               // =>This Inner Loop Header: Depth=1
+	jeq r0, r2, .LBB12_5
+// %bb.4:                               //   in Loop: Header=BB12_3 Depth=1
+	// inline asm
+.Ltmp48:
+	resume r2, 0, nz, .Ltmp48+0
+	// inline asm
+	lbs r1, zero, cp
+	jump .LBB12_5
+.LBB12_7:
+	lw r0, r14, 4
+	// inline asm
+.Ltmp49:
+	release r0, 0, nz, .Ltmp49+1
+	// inline asm
+	// inline asm
+	stop false, 0x0
+	// inline asm
+	jump .LBB12_8
+.LBB12_6:
 	move r0, cp
-	call r23, sp_wait
-	jump .LBB14_1
-.LBB14_1:                               // =>This Loop Header: Depth=1
-                                        //     Child Loop BB14_2 Depth 2
+	sb r0, 1, 0
+	lw r0, r0, 4
+	// inline asm
+.Ltmp50:
+	release r0, 0, nz, .Ltmp50+1
+	// inline asm
+.LBB12_8:
+	move r14, 0, true, .LBB12_9
+.LBB12_10:                              //   Parent Loop BB12_9 Depth=1
+                                        // =>  This Loop Header: Depth=2
+                                        //       Child Loop BB12_13 Depth 3
+	lw r1, zero, mutex_jobs
+	// inline asm
+.Ltmp51:
+	acquire r1, 0, nz, .Ltmp51
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r15, processs
+	and r0, r0, 255
+	jneq r0, 0, .LBB12_20
+// %bb.11:                              //   in Loop: Header=BB12_10 Depth=2
+	lsl r0, r1, 4
+	lsl_add r0, r0, r1, 6
+	add r0, r15, r0
+	lbs r0, r0, 2
+	and r0, r0, 255
+	jeq r0, 0, .LBB12_20
+// %bb.12:                              //   in Loop: Header=BB12_10 Depth=2
+	move r0, 1
+.LBB12_13:                              //   Parent Loop BB12_9 Depth=1
+                                        //     Parent Loop BB12_10 Depth=2
+                                        // =>    This Inner Loop Header: Depth=3
+	move r16, r0
+	lsl r0, r16, 2
+	lsl_add r0, r0, r16, 4
+	move r1, jobs
+	add r18, r1, r0
+	lbu r1, r18, -20
+	add r17, r16, -1
+	jeq r1, 3, .LBB12_16
+// %bb.14:                              //   in Loop: Header=BB12_13 Depth=3
+	move r0, 0
+	jneq r1, 1, .LBB12_18
+// %bb.15:                              //   in Loop: Header=BB12_13 Depth=3
+	lsl r0, r16, 2
+	lsl_add r0, r0, r16, 4
+	lw r1, zero, mutex_jobs
+	move r2, jobs
+	add r18, r2, r0
+	sb r18, -20, 2
+	// inline asm
+.Ltmp52:
+	release r1, 0, nz, .Ltmp52+1
+	// inline asm
+	call r23, me_new
+	sb r0, cur_jobs, r17
+	// inline asm
+	time r0
+
+	// inline asm
+	sw r18, -8, r0
+	call r23, me_new
+	lw r1, r18, -4
+	lw r2, r1, 24
+	move r3, fc_scheduler_job
+	lsl_add r0, r3, r0, 2
+	call r23, first_swap_context
+	jump .LBB12_17
+.LBB12_16:                              //   in Loop: Header=BB12_13 Depth=3
 	lw r0, zero, mutex_jobs
-	call r23, mutex_lock
-	jump .LBB14_2
-.LBB14_2:                               //   Parent Loop BB14_1 Depth=1
-                                        // =>  This Inner Loop Header: Depth=2
-	lw r0, r22, -24
-	lw r2, zero, cur_process_index
-	lsl r1, r2, 4
-	lsl_add r2, r1, r2, 6
-	move r1, processs
-	add r1, r1, r2
-	lbu r1, r1, 2
-	move r2, 0
-	sw r22, -12, r2
-	jgeu r0, r1, .LBB14_4
-	jump .LBB14_3
-.LBB14_3:                               //   in Loop: Header=BB14_2 Depth=2
-	lbu r0, r22, -20
-	move r1, 0
-	sub r0, r0, r1, eq
-	sw r22, -12, r0
-	jump .LBB14_4
-.LBB14_4:                               //   in Loop: Header=BB14_2 Depth=2
-	lw r0, r22, -12
-	and r0, r0, 1
-	jeq r0, 0, .LBB14_13
-	jump .LBB14_5
-.LBB14_5:                               //   in Loop: Header=BB14_2 Depth=2
-	lw r1, r22, -24
-	lsl r0, r1, 2
-	lsl_add r0, r0, r1, 4
-	lbu r0, r0, jobs
-	jneq r0, 3, .LBB14_7
-	jump .LBB14_6
-.LBB14_6:                               //   in Loop: Header=BB14_2 Depth=2
-	sb r22, -16, 0
-	jump .LBB14_11
-.LBB14_7:                               //   in Loop: Header=BB14_2 Depth=2
-	lw r1, r22, -24
-	lsl r0, r1, 2
-	lsl_add r0, r0, r1, 4
-	lbu r0, r0, jobs
-	jneq r0, 1, .LBB14_9
-	jump .LBB14_8
-.LBB14_8:                               //   in Loop: Header=BB14_2 Depth=2
-	sb r22, -16, 1
-	jump .LBB14_10
-.LBB14_9:                               //   in Loop: Header=BB14_2 Depth=2
-	jump .LBB14_12
-.LBB14_10:                              //   in Loop: Header=BB14_2 Depth=2
-	jump .LBB14_11
-.LBB14_11:                              //   in Loop: Header=BB14_2 Depth=2
-	lw r0, r22, -24
-	lbu r1, r22, -16
-	call r23, swap
+	sb r18, -20, 2
+	// inline asm
+.Ltmp53:
+	release r0, 0, nz, .Ltmp53+1
+	// inline asm
+	call r23, me_new
+	sb r0, cur_jobs, r17
+	// inline asm
+	time r0
+
+	// inline asm
+	sw r18, -8, r0
+	call r23, me_new
+	lw r1, r18, -4
+	move r2, fc_scheduler_job
+	lsl_add r0, r2, r0, 2
+	call r23, swap_context
+.LBB12_17:                              //   in Loop: Header=BB12_13 Depth=3
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp54:
+	acquire r0, 0, nz, .Ltmp54
+	// inline asm
 	move r0, all_end_or_waiting
 	sb r0, 0, 0
-	call r23, check_time_process
-	sb r22, -20, r0
-	jump .LBB14_12
-.LBB14_12:                              //   in Loop: Header=BB14_2 Depth=2
-	lw r0, r22, -24
-	add r0, r0, 1
-	sw r22, -24, r0
-	jump .LBB14_2
-.LBB14_13:                              //   in Loop: Header=BB14_1 Depth=1
-	call r23, check_time_process
-	sb r22, -20, r0
-	sw r22, -24, 0
-	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
-	lbu r0, zero, all_end_or_waiting
-	jneq r0, 0, .LBB14_15
-	jump .LBB14_14
-.LBB14_14:                              //   in Loop: Header=BB14_1 Depth=1
-	lbu r0, r22, -20
-	jeq r0, 0, .LBB14_20
-	jump .LBB14_15
-.LBB14_15:                              //   in Loop: Header=BB14_1 Depth=1
+	// inline asm
+	time r0
+
+	// inline asm
+	lw r1, zero, cur_process_index
+	lsl r2, r1, 4
+	lsl_add r1, r2, r1, 6
+	move r2, processs
+	add r1, r2, r1
+	lw r1, r1, 20
+	sub r0, r0, r1
+	move r1, 50000
+	sub r0, r0, r1, gtu
+.LBB12_18:                              //   in Loop: Header=BB12_13 Depth=3
+	lw r1, zero, cur_process_index
+	and r0, r0, 255
+	jneq r0, 0, .LBB12_20
+// %bb.19:                              //   in Loop: Header=BB12_13 Depth=3
+	lsl r0, r1, 4
+	lsl_add r0, r0, r1, 6
+	move r1, processs
+	add r0, r1, r0
+	lbu r1, r0, 2
+	add r0, r16, 1
+	jltu r16, r1, .LBB12_13
+.LBB12_20:                              //   in Loop: Header=BB12_10 Depth=2
+	// inline asm
+	time r0
+
+	// inline asm
+	lw r1, zero, cur_process_index
+	lsl r2, r1, 4
+	lsl_add r1, r2, r1, 6
+	add r1, r15, r1
+	lw r1, r1, 20
+	lw r2, zero, mutex_jobs
+	sub r15, r0, r1
+	move r16, 50000
+	// inline asm
+.Ltmp55:
+	release r2, 0, nz, .Ltmp55+1
+	// inline asm
+	jgtu r15, r16, .LBB12_22
+// %bb.21:                              //   in Loop: Header=BB12_10 Depth=2
+	lbs r0, zero, all_end_or_waiting
+	and r0, r0, 255
+	jeq r0, 0, .LBB12_39
+.LBB12_22:                              //   in Loop: Header=BB12_10 Depth=2
+	move r17, cp
+	lw r0, r17, 4
+	// inline asm
+.Ltmp56:
+	acquire r0, 0, nz, .Ltmp56
+	// inline asm
+	call r23, me_new
+	lbs r1, r17, 1
+	add r1, r1, 1
+	sb r17, 1, r1
+	lbu r3, zero, cp
+	and r2, r1, 255
+	jeq r2, r3, .LBB12_23
+// %bb.29:                              //   in Loop: Header=BB12_10 Depth=2
+	lw r0, r17, 4
+	// inline asm
+.Ltmp57:
+	release r0, 0, nz, .Ltmp57+1
+	// inline asm
+	// inline asm
+	stop false, 0x0
+	// inline asm
+	lbu r1, r17, 2
+	sub r0, r15, r16, gtu
+	jneq r1, 0, .LBB12_10
+// %bb.30:                              //   in Loop: Header=BB12_9 Depth=1
+	call r23, me_new
+	jneq r0, 0, .LBB12_31
+	jump .LBB12_40
+.LBB12_23:                              //   in Loop: Header=BB12_9 Depth=1
+	sb r17, 2, 0
+	jeq r2, 0, .LBB12_28
+// %bb.24:                              //   in Loop: Header=BB12_9 Depth=1
+	and r0, r0, 255
+	move r2, 0, true, .LBB12_25
+.LBB12_27:                              //   in Loop: Header=BB12_25 Depth=2
+	add r2, r2, 1
+	and r3, r1, 255
+	jgeu r2, r3, .LBB12_28
+.LBB12_25:                              //   Parent Loop BB12_9 Depth=1
+                                        // =>  This Inner Loop Header: Depth=2
+	jeq r0, r2, .LBB12_27
+// %bb.26:                              //   in Loop: Header=BB12_25 Depth=2
+	// inline asm
+.Ltmp58:
+	resume r2, 0, nz, .Ltmp58+0
+	// inline asm
+	lbs r1, zero, cp
+	jump .LBB12_27
+.LBB12_28:                              //   in Loop: Header=BB12_9 Depth=1
 	move r0, cp
-	call r23, sp_wait
-	jeq r0, 0, .LBB14_17
-	jump .LBB14_16
-.LBB14_16:                              //   in Loop: Header=BB14_1 Depth=1
-	jump .LBB14_1
-.LBB14_17:                              //   in Loop: Header=BB14_1 Depth=1
-	call r23, me
-	jneq r0, 0, .LBB14_19
-	jump .LBB14_18
-.LBB14_18:
-	lbu r0, zero, all_end_or_waiting
-	ld d22, r22, -8
-	jump r23
-.LBB14_19:                              //   in Loop: Header=BB14_1 Depth=1
+	sb r0, 1, 0
+	lw r0, r0, 4
+	// inline asm
+.Ltmp59:
+	release r0, 0, nz, .Ltmp59+1
+	// inline asm
+	call r23, me_new
+	jeq r0, 0, .LBB12_40
+.LBB12_31:                              //   in Loop: Header=BB12_9 Depth=1
+	move r15, cp
+	lw r0, r15, 4
+	// inline asm
+.Ltmp60:
+	acquire r0, 0, nz, .Ltmp60
+	// inline asm
+	call r23, me_new
+	lbs r1, r15, 1
+	add r1, r1, 1
+	sb r15, 1, r1
+	lbu r3, zero, cp
+	and r2, r1, 255
+	jneq r2, r3, .LBB12_38
+// %bb.32:                              //   in Loop: Header=BB12_9 Depth=1
+	sb r15, 2, 0
+	jeq r2, 0, .LBB12_37
+// %bb.33:                              //   in Loop: Header=BB12_9 Depth=1
+	and r0, r0, 255
+	move r2, 0, true, .LBB12_34
+.LBB12_36:                              //   in Loop: Header=BB12_34 Depth=2
+	add r2, r2, 1
+	and r3, r1, 255
+	jgeu r2, r3, .LBB12_37
+.LBB12_34:                              //   Parent Loop BB12_9 Depth=1
+                                        // =>  This Inner Loop Header: Depth=2
+	jeq r0, r2, .LBB12_36
+// %bb.35:                              //   in Loop: Header=BB12_34 Depth=2
+	// inline asm
+.Ltmp61:
+	resume r2, 0, nz, .Ltmp61+0
+	// inline asm
+	lbs r1, zero, cp
+	jump .LBB12_36
+.LBB12_38:                              //   in Loop: Header=BB12_9 Depth=1
+	lw r0, r15, 4
+	// inline asm
+.Ltmp62:
+	release r0, 0, nz, .Ltmp62+1
+	// inline asm
+	// inline asm
+	stop false, 0x0
+	// inline asm
+	jump .LBB12_39
+.LBB12_37:                              //   in Loop: Header=BB12_9 Depth=1
 	move r0, cp
-	call r23, sp_wait
-	sb r22, -20, 0
-	jump .LBB14_20
-.LBB14_20:                              //   in Loop: Header=BB14_1 Depth=1
+	sb r0, 1, 0
+	lw r0, r0, 4
+	// inline asm
+.Ltmp63:
+	release r0, 0, nz, .Ltmp63+1
+	// inline asm
+.LBB12_39:                              //   in Loop: Header=BB12_9 Depth=1
 	move r0, all_end_or_waiting
 	sb r0, 0, 1
-	jump .LBB14_1
-.Lfunc_end14:
-	.size	scheduler_jobs, .Lfunc_end14-scheduler_jobs
+.LBB12_9:                               // =>This Loop Header: Depth=1
+                                        //     Child Loop BB12_10 Depth 2
+                                        //       Child Loop BB12_13 Depth 3
+                                        //     Child Loop BB12_25 Depth 2
+                                        //     Child Loop BB12_34 Depth 2
+	move r0, r14, true, .LBB12_10
+.LBB12_40:
+	lbu r0, zero, all_end_or_waiting
+	ld d18, r22, -32
+	ld d16, r22, -24
+	ld d14, r22, -16
+	ld d22, r22, -8
+	jump r23
+.Lfunc_end12:
+	.size	scheduler_jobs, .Lfunc_end12-scheduler_jobs
 	.section	.stack_sizes,"o",@progbits,.text.scheduler_jobs
-	.long	.Lfunc_begin14
-	.byte	24
+	.long	.Lfunc_begin12
+	.byte	32
 	.section	.text.scheduler_jobs,"ax",@progbits
                                         // -- End function
 	.section	.text.try_lock,"ax",@progbits
 	.globl	try_lock                        // -- Begin function try_lock
 	.type	try_lock,@function
 try_lock:                               // @try_lock
-.Lfunc_begin15:
+.Lfunc_begin13:
 // %bb.0:
-	sd r22, 16, d22
-	add r22, r22, 24
-	sw r22, -20, r0
-	call r23, me
-	lbs r0, r0, cur_jobs
-	sb r22, -16, r0
-	lw r0, zero, mutex_l
-	call r23, mutex_lock
+	sd r22, 8, d22
+	add r22, r22, 16
+	sd r22, -16, d14
+	move r14, r0
+	call r23, me_new
+	lw r1, zero, mutex_l
+	// inline asm
+.Ltmp64:
+	acquire r1, 0, nz, .Ltmp64
+	// inline asm
+	lw r1, zero, mutex_jobs
+	// inline asm
+.Ltmp65:
+	acquire r1, 0, nz, .Ltmp65
+	// inline asm
+	lw r1, r14, 0
+	jeq r1, -1, .LBB13_2
+// %bb.1:
 	lw r0, zero, mutex_jobs
-	call r23, mutex_lock
-	lw r0, r22, -20
-	lw r0, r0, 0
-	jeq r0, -1, .LBB15_2
-	jump .LBB15_1
-.LBB15_1:
-	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
+	// inline asm
+.Ltmp66:
+	release r0, 0, nz, .Ltmp66+1
+	// inline asm
 	lw r0, zero, mutex_l
-	call r23, mutex_unlock
-	sw r22, -24, 1
-	jump .LBB15_3
-.LBB15_2:
-	lbu r1, r22, -16
-	lw r0, r22, -20
-	sw r0, 0, r1
+	// inline asm
+.Ltmp67:
+	release r0, 0, nz, .Ltmp67+1
+	// inline asm
+	move r0, 1, true, .LBB13_3
+.LBB13_2:
+	lbu r0, r0, cur_jobs
+	sw r14, 0, r0
 	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
+	// inline asm
+.Ltmp68:
+	release r0, 0, nz, .Ltmp68+1
+	// inline asm
 	lw r0, zero, mutex_l
-	call r23, mutex_unlock
-	sw r22, -24, 0
-	jump .LBB15_3
-.LBB15_3:
-	lw r0, r22, -24
+	// inline asm
+.Ltmp69:
+	release r0, 0, nz, .Ltmp69+1
+	// inline asm
+	move r0, 0
+.LBB13_3:
+	ld d14, r22, -16
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end15:
-	.size	try_lock, .Lfunc_end15-try_lock
+.Lfunc_end13:
+	.size	try_lock, .Lfunc_end13-try_lock
 	.section	.stack_sizes,"o",@progbits,.text.try_lock
-	.long	.Lfunc_begin15
-	.byte	24
+	.long	.Lfunc_begin13
+	.byte	16
 	.section	.text.try_lock,"ax",@progbits
                                         // -- End function
 	.section	.text.lock,"ax",@progbits
 	.globl	lock                            // -- Begin function lock
 	.type	lock,@function
 lock:                                   // @lock
-.Lfunc_begin16:
+.Lfunc_begin14:
 // %bb.0:
-	sd r22, 16, d22
-	add r22, r22, 24
-	sw r22, -20, r0
-	call r23, me
-	lbs r0, r0, cur_jobs
-	sb r22, -16, r0
+	sd r22, 8, d22
+	add r22, r22, 16
+	sd r22, -16, d14
+	move r14, r0
+	call r23, me_new
+	lw r1, zero, mutex_l
+	lbu r0, r0, cur_jobs
+	// inline asm
+.Ltmp70:
+	acquire r1, 0, nz, .Ltmp70
+	// inline asm
+	lw r1, zero, mutex_jobs
+	// inline asm
+.Ltmp71:
+	acquire r1, 0, nz, .Ltmp71
+	// inline asm
+	lw r1, r14, 0
+	jeq r1, -1, .LBB14_2
+// %bb.1:
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	move r15, jobs
+	add r1, r15, r0
+	lw r2, zero, mutex_jobs
+	move r3, 5
+	sb r0, jobs, r3
+	sw r1, 8, r14
+	// inline asm
+.Ltmp72:
+	release r2, 0, nz, .Ltmp72+1
+	// inline asm
 	lw r0, zero, mutex_l
-	call r23, mutex_lock
+	// inline asm
+.Ltmp73:
+	release r0, 0, nz, .Ltmp73+1
+	// inline asm
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	add r0, r15, r0
+	add r14, r0, 16
+	call r23, me_new
+	lsl r0, r0, 2
+	lw r1, r0, fc_scheduler_job
+	move r0, r14
+	call r23, swap_context
+	jump .LBB14_3
+.LBB14_2:
+	sw r14, 0, r0
 	lw r0, zero, mutex_jobs
-	call r23, mutex_lock
-	lw r0, r22, -20
-	lw r0, r0, 0
-	jeq r0, -1, .LBB16_2
-	jump .LBB16_1
-.LBB16_1:
-	lbu r1, r22, -16
-	lsl r0, r1, 2
-	lsl_add r1, r0, r1, 4
-	move r0, jobs
-	move r2, 5
-	sb r1, jobs, r2
-	lw r1, r22, -20
-	lbu r3, r22, -16
-	lsl r2, r3, 2
-	lsl_add r2, r2, r3, 4
-	add r0, r0, r2
-	sw r0, 8, r1
-	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
+	// inline asm
+.Ltmp74:
+	release r0, 0, nz, .Ltmp74+1
+	// inline asm
 	lw r0, zero, mutex_l
-	call r23, mutex_unlock
-	call r23, swap_scheduler
-	sw r22, -24, 0
-	jump .LBB16_3
-.LBB16_2:
-	lbu r1, r22, -16
-	lw r0, r22, -20
-	sw r0, 0, r1
-	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
-	lw r0, zero, mutex_l
-	call r23, mutex_unlock
-	sw r22, -24, 0
-	jump .LBB16_3
-.LBB16_3:
-	lw r0, r22, -24
+	// inline asm
+.Ltmp75:
+	release r0, 0, nz, .Ltmp75+1
+	// inline asm
+.LBB14_3:
+	move r0, 0
+	ld d14, r22, -16
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end16:
-	.size	lock, .Lfunc_end16-lock
+.Lfunc_end14:
+	.size	lock, .Lfunc_end14-lock
 	.section	.stack_sizes,"o",@progbits,.text.lock
-	.long	.Lfunc_begin16
-	.byte	24
+	.long	.Lfunc_begin14
+	.byte	16
 	.section	.text.lock,"ax",@progbits
                                         // -- End function
 	.section	.text.unlock,"ax",@progbits
 	.globl	unlock                          // -- Begin function unlock
 	.type	unlock,@function
 unlock:                                 // @unlock
-.Lfunc_begin17:
+.Lfunc_begin15:
 // %bb.0:
-	sd r22, 16, d22
-	add r22, r22, 24
-	sw r22, -20, r0
-	lw r0, zero, mutex_l
-	call r23, mutex_lock
-	lw r0, zero, mutex_jobs
-	call r23, mutex_lock
-	lw r0, r22, -20
+	sd r22, 8, d22
+	add r22, r22, 16
+	sd r22, -16, d14
+	lw r1, zero, mutex_l
+	// inline asm
+.Ltmp76:
+	acquire r1, 0, nz, .Ltmp76
+	// inline asm
+	lw r1, zero, mutex_jobs
+	// inline asm
+.Ltmp77:
+	acquire r1, 0, nz, .Ltmp77
+	// inline asm
 	sw r0, 0, -1
-	sw r22, -16, 0
-	jump .LBB17_1
-.LBB17_1:                               // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -16
-	lw r2, zero, cur_process_index
-	lsl r1, r2, 4
-	lsl_add r2, r1, r2, 6
-	move r1, processs
-	add r1, r1, r2
+	lw r1, zero, cur_process_index
+	lsl r2, r1, 4
+	lsl_add r1, r2, r1, 6
+	move r2, processs
+	add r1, r2, r1
 	lbu r1, r1, 2
-	jgeu r0, r1, .LBB17_7
-	jump .LBB17_2
-.LBB17_2:                               //   in Loop: Header=BB17_1 Depth=1
-	lw r1, r22, -16
-	lsl r0, r1, 2
-	lsl_add r0, r0, r1, 4
-	lbu r0, r0, jobs
-	jneq r0, 5, .LBB17_5
-	jump .LBB17_3
-.LBB17_3:                               //   in Loop: Header=BB17_1 Depth=1
-	lw r1, r22, -16
-	lsl r0, r1, 2
-	lsl_add r1, r0, r1, 4
-	move r0, jobs
-	add r0, r0, r1
-	lw r0, r0, 8
-	lw r1, r22, -20
-	jneq r0, r1, .LBB17_5
-	jump .LBB17_4
-.LBB17_4:
-	lw r1, r22, -16
-	lw r0, r22, -20
+	jeq r1, 0, .LBB15_8
+// %bb.1:
+	move r1, 0, true, .LBB15_2
+.LBB15_7:                               //   in Loop: Header=BB15_2 Depth=1
+	lw r2, zero, cur_process_index
+	lsl r3, r2, 4
+	lsl_add r2, r3, r2, 6
+	move r3, processs
+	add r2, r3, r2
+	lbu r2, r2, 2
+	add r1, r1, 1
+	jgeu r1, r2, .LBB15_8
+.LBB15_2:                               // =>This Inner Loop Header: Depth=1
+	lsl r2, r1, 2
+	lsl_add r2, r2, r1, 4
+	lbu r3, r2, jobs
+	jneq r3, 5, .LBB15_7
+// %bb.3:                               //   in Loop: Header=BB15_2 Depth=1
+	move r3, jobs
+	add r2, r3, r2
+	lw r2, r2, 8
+	jneq r2, r0, .LBB15_7
+// %bb.4:
+	lsl r2, r1, 2
+	lsl_add r2, r2, r1, 4
 	sw r0, 0, r1
-	lw r1, r22, -16
-	lsl r0, r1, 2
-	lsl_add r0, r0, r1, 4
-	move r1, 3
-	sb r0, jobs, r1
+	move r0, 3
+	sb r2, jobs, r0
 	lw r0, zero, mutex_l
-	call r23, mutex_unlock
+	// inline asm
+.Ltmp78:
+	release r0, 0, nz, .Ltmp78+1
+	// inline asm
 	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
-	move r0, cp
-	call r23, abnormal_wakeup_one
-	sw r22, -24, 0
-	jump .LBB17_8
-.LBB17_5:                               //   in Loop: Header=BB17_1 Depth=1
-	jump .LBB17_6
-.LBB17_6:                               //   in Loop: Header=BB17_1 Depth=1
-	lw r0, r22, -16
-	add r0, r0, 1
-	sw r22, -16, r0
-	jump .LBB17_1
-.LBB17_7:
+	// inline asm
+.Ltmp79:
+	release r0, 0, nz, .Ltmp79+1
+	// inline asm
+	move r14, cp
+	lw r0, r14, 4
+	// inline asm
+.Ltmp80:
+	acquire r0, 0, nz, .Ltmp80
+	// inline asm
+	lbu r0, r14, 1
+	jeq r0, 0, .LBB15_6
+// %bb.5:
+	sb r14, 2, 1
+	add r0, r0, -1
+	sb r14, 1, r0
+	lbu r0, zero, cp
+	call r23, wake_up_one
+.LBB15_6:
+	lw r0, r14, 4
+	// inline asm
+.Ltmp81:
+	release r0, 0, nz, .Ltmp81+1
+	// inline asm
+	jump .LBB15_9
+.LBB15_8:
 	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
+	// inline asm
+.Ltmp82:
+	release r0, 0, nz, .Ltmp82+1
+	// inline asm
 	lw r0, zero, mutex_l
-	call r23, mutex_unlock
-	sw r22, -24, 0
-	jump .LBB17_8
-.LBB17_8:
-	lw r0, r22, -24
+	// inline asm
+.Ltmp83:
+	release r0, 0, nz, .Ltmp83+1
+	// inline asm
+.LBB15_9:
+	move r0, 0
+	ld d14, r22, -16
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end17:
-	.size	unlock, .Lfunc_end17-unlock
+.Lfunc_end15:
+	.size	unlock, .Lfunc_end15-unlock
 	.section	.stack_sizes,"o",@progbits,.text.unlock
-	.long	.Lfunc_begin17
-	.byte	24
+	.long	.Lfunc_begin15
+	.byte	16
 	.section	.text.unlock,"ax",@progbits
-                                        // -- End function
-	.section	.text._mram_read,"ax",@progbits
-	.type	_mram_read,@function             // -- Begin function _mram_read
-_mram_read:                              // @_mram_read
-.Lfunc_begin18:
-// %bb.0:
-	sw r22, 0, r0
-	sw r22, 4, r1
-	sw r22, 8, r2
-	lw r0, r22, 4
-	lw r1, r22, 0
-	lw r3, r22, 8
-	move r2, -1
-	lsr_add r2, r2, r3, 3
-	lsl_add r0, r0, r2, 24
-	ldma r0, r1, 0
-	jump r23
-.Lfunc_end18:
-	.size	_mram_read, .Lfunc_end18-_mram_read
-	.section	.stack_sizes,"o",@progbits,.text._mram_read
-	.long	.Lfunc_begin18
-	.byte	12
-	.section	.text._mram_read,"ax",@progbits
-                                        // -- End function
-	.section	.text._mram_write,"ax",@progbits
-	.type	_mram_write,@function            // -- Begin function _mram_write
-_mram_write:                             // @_mram_write
-.Lfunc_begin19:
-// %bb.0:
-	sw r22, 0, r0
-	sw r22, 4, r1
-	sw r22, 8, r2
-	lw r0, r22, 0
-	lw r1, r22, 4
-	lw r3, r22, 8
-	move r2, -1
-	lsr_add r2, r2, r3, 3
-	lsl_add r0, r0, r2, 24
-	sdma r0, r1, 0
-	jump r23
-.Lfunc_end19:
-	.size	_mram_write, .Lfunc_end19-_mram_write
-	.section	.stack_sizes,"o",@progbits,.text._mram_write
-	.long	.Lfunc_begin19
-	.byte	12
-	.section	.text._mram_write,"ax",@progbits
                                         // -- End function
 	.section	.text.inode_operation,"ax",@progbits
 	.globl	inode_operation                 // -- Begin function inode_operation
 	.type	inode_operation,@function
 inode_operation:                        // @inode_operation
-.Lfunc_begin20:
+.Lfunc_begin16:
 // %bb.0:
-	sd r22, 24, d22
-	add r22, r22, 32
-	sw r22, -32, r0
-	sw r22, -28, r1
-	sw r22, -24, r2
-	sw r22, -20, r3
-	sw r22, -16, r4
-	lw r1, r22, -32
-	lw r0, r22, -20
-	lsl_add r0, r0, r1, 16
+	lsl_add r0, r3, r0, 16
 	add r0, r0, 651264
-	sw r22, -12, r0
-	lw r0, r22, -16
-	jneq r0, 0, .LBB20_2
-	jump .LBB20_1
-.LBB20_1:
-	lw r0, r22, -12
-	lw r1, r22, -28
-	lw r2, r22, -24
-	call r23, load_big_blocks
-	jump .LBB20_3
-.LBB20_2:
-	lw r0, r22, -28
-	lw r1, r22, -12
-	lw r2, r22, -24
-	call r23, store_big_blocks
-	jump .LBB20_3
-.LBB20_3:
+	lsr r3, r2, 11
+	jeq r4, 0, .LBB16_1
+// %bb.8:
+	jeq r3, 0, .LBB16_9
+// %bb.10:
+	move r4, r1
+	move r5, r0
+.LBB16_11:                              // =>This Inner Loop Header: Depth=1
+	sdma r4, r5, 255
+	add r5, r5, 2048
+	add r4, r4, 2048
+	add r3, r3, -1, nz, .LBB16_11
+// %bb.12:
+	and r3, r2, -2048
+	and r2, r2, 2047
+	jneq r2, 0, .LBB16_14
+.LBB16_15:
 	move r0, 0
-	ld d22, r22, -8
 	jump r23
-.Lfunc_end20:
-	.size	inode_operation, .Lfunc_end20-inode_operation
+.LBB16_1:
+	jeq r3, 0, .LBB16_2
+// %bb.3:
+	move r4, r0
+	move r5, r1
+.LBB16_4:                               // =>This Inner Loop Header: Depth=1
+	ldma r5, r4, 255
+	add r5, r5, 2048
+	add r4, r4, 2048
+	add r3, r3, -1, nz, .LBB16_4
+// %bb.5:
+	and r3, r2, -2048
+	and r2, r2, 2047
+	jneq r2, 0, .LBB16_7
+	jump .LBB16_15
+.LBB16_9:
+	move r3, 0
+	and r2, r2, 2047
+	jeq r2, 0, .LBB16_15
+.LBB16_14:
+	add r1, r1, r3
+	add r0, r0, r3
+	move r3, -1
+	lsr_add r2, r3, r2, 3
+	lsl_add r1, r1, r2, 24
+	sdma r1, r0, 0
+	move r0, 0
+	jump r23
+.LBB16_2:
+	move r3, 0
+	and r2, r2, 2047
+	jeq r2, 0, .LBB16_15
+.LBB16_7:
+	add r0, r0, r3
+	add r1, r1, r3
+	move r3, -1
+	lsr_add r2, r3, r2, 3
+	lsl_add r1, r1, r2, 24
+	ldma r1, r0, 0
+	move r0, 0
+	jump r23
+.Lfunc_end16:
+	.size	inode_operation, .Lfunc_end16-inode_operation
 	.section	.stack_sizes,"o",@progbits,.text.inode_operation
-	.long	.Lfunc_begin20
-	.byte	32
+	.long	.Lfunc_begin16
+	.byte	0
 	.section	.text.inode_operation,"ax",@progbits
                                         // -- End function
 	.section	.text.load_big_blocks,"ax",@progbits
 	.globl	load_big_blocks                 // -- Begin function load_big_blocks
 	.type	load_big_blocks,@function
 load_big_blocks:                        // @load_big_blocks
-.Lfunc_begin21:
+.Lfunc_begin17:
 // %bb.0:
-	sd r22, 16, d22
-	add r22, r22, 24
-	sw r22, -24, r0
-	sw r22, -20, r1
-	sw r22, -16, r2
-	sw r22, -12, 0
-	jump .LBB21_1
-.LBB21_1:                               // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -12
-	lw r1, r22, -16
-	lsr r1, r1, 11
-	jgeu r0, r1, .LBB21_4
-	jump .LBB21_2
-.LBB21_2:                               //   in Loop: Header=BB21_1 Depth=1
-	lw r0, r22, -24
-	lw r2, r22, -12
-	lsl_add r0, r0, r2, 11
-	lw r1, r22, -20
-	lsl_add r1, r1, r2, 11
-	move r2, 2048
-	call r23, _mram_read
-	jump .LBB21_3
-.LBB21_3:                               //   in Loop: Header=BB21_1 Depth=1
-	lw r0, r22, -12
-	add r0, r0, 1
-	sw r22, -12, r0
-	jump .LBB21_1
-.LBB21_4:
-	lhu r0, r22, -16
-	and r0, r0, 2047
-	jeq r0, 0, .LBB21_6
-	jump .LBB21_5
-.LBB21_5:
-	lw r0, r22, -24
-	lw r2, r22, -12
-	lsl_add r0, r0, r2, 11
-	lw r1, r22, -20
-	lsl_add r1, r1, r2, 11
-	lw r2, r22, -16
+	lsr r3, r2, 11, z, .LBB17_1
+// %bb.2:
+	move r4, r0
+	move r5, r1
+.LBB17_3:                               // =>This Inner Loop Header: Depth=1
+	ldma r5, r4, 255
+	add r5, r5, 2048
+	add r4, r4, 2048
+	add r3, r3, -1, nz, .LBB17_3
+// %bb.4:
+	and r3, r2, -2048
 	and r2, r2, 2047
-	call r23, _mram_read
-	jump .LBB21_6
-.LBB21_6:
-	ld d22, r22, -8
+	jeq r2, 0, .LBB17_7
+.LBB17_6:
+	add r0, r0, r3
+	add r1, r1, r3
+	move r3, -1
+	lsr_add r2, r3, r2, 3
+	lsl_add r1, r1, r2, 24
+	ldma r1, r0, 0
+.LBB17_7:
 	jump r23
-.Lfunc_end21:
-	.size	load_big_blocks, .Lfunc_end21-load_big_blocks
+.LBB17_1:
+	move r3, 0
+	and r2, r2, 2047
+	jneq r2, 0, .LBB17_6
+	jump .LBB17_7
+.Lfunc_end17:
+	.size	load_big_blocks, .Lfunc_end17-load_big_blocks
 	.section	.stack_sizes,"o",@progbits,.text.load_big_blocks
-	.long	.Lfunc_begin21
-	.byte	24
+	.long	.Lfunc_begin17
+	.byte	0
 	.section	.text.load_big_blocks,"ax",@progbits
                                         // -- End function
 	.section	.text.store_big_blocks,"ax",@progbits
 	.globl	store_big_blocks                // -- Begin function store_big_blocks
 	.type	store_big_blocks,@function
 store_big_blocks:                       // @store_big_blocks
-.Lfunc_begin22:
+.Lfunc_begin18:
 // %bb.0:
-	sd r22, 16, d22
-	add r22, r22, 24
-	sw r22, -24, r0
-	sw r22, -20, r1
-	sw r22, -16, r2
-	sw r22, -12, 0
-	jump .LBB22_1
-.LBB22_1:                               // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -12
-	lw r1, r22, -16
-	lsr r1, r1, 11
-	jgeu r0, r1, .LBB22_4
-	jump .LBB22_2
-.LBB22_2:                               //   in Loop: Header=BB22_1 Depth=1
-	lw r0, r22, -24
-	lw r2, r22, -12
-	lsl_add r0, r0, r2, 11
-	lw r1, r22, -20
-	lsl_add r1, r1, r2, 11
-	move r2, 2048
-	call r23, _mram_write
-	jump .LBB22_3
-.LBB22_3:                               //   in Loop: Header=BB22_1 Depth=1
-	lw r0, r22, -12
-	add r0, r0, 1
-	sw r22, -12, r0
-	jump .LBB22_1
-.LBB22_4:
-	lhu r0, r22, -16
-	and r0, r0, 2047
-	jeq r0, 0, .LBB22_6
-	jump .LBB22_5
-.LBB22_5:
-	lw r0, r22, -24
-	lw r2, r22, -12
-	lsl_add r0, r0, r2, 11
-	lw r1, r22, -20
-	lsl_add r1, r1, r2, 11
-	lw r2, r22, -16
+	lsr r3, r2, 11, z, .LBB18_1
+// %bb.2:
+	move r4, r0
+	move r5, r1
+.LBB18_3:                               // =>This Inner Loop Header: Depth=1
+	sdma r4, r5, 255
+	add r5, r5, 2048
+	add r4, r4, 2048
+	add r3, r3, -1, nz, .LBB18_3
+// %bb.4:
+	and r3, r2, -2048
 	and r2, r2, 2047
-	call r23, _mram_write
-	jump .LBB22_6
-.LBB22_6:
-	ld d22, r22, -8
+	jeq r2, 0, .LBB18_7
+.LBB18_6:
+	add r0, r0, r3
+	add r1, r1, r3
+	move r3, -1
+	lsr_add r2, r3, r2, 3
+	lsl_add r0, r0, r2, 24
+	sdma r0, r1, 0
+.LBB18_7:
 	jump r23
-.Lfunc_end22:
-	.size	store_big_blocks, .Lfunc_end22-store_big_blocks
+.LBB18_1:
+	move r3, 0
+	and r2, r2, 2047
+	jneq r2, 0, .LBB18_6
+	jump .LBB18_7
+.Lfunc_end18:
+	.size	store_big_blocks, .Lfunc_end18-store_big_blocks
 	.section	.stack_sizes,"o",@progbits,.text.store_big_blocks
-	.long	.Lfunc_begin22
-	.byte	24
+	.long	.Lfunc_begin18
+	.byte	0
 	.section	.text.store_big_blocks,"ax",@progbits
                                         // -- End function
 	.section	.text.alloc_inode,"ax",@progbits
 	.globl	alloc_inode                     // -- Begin function alloc_inode
 	.type	alloc_inode,@function
 alloc_inode:                            // @alloc_inode
-.Lfunc_begin23:
+.Lfunc_begin19:
 // %bb.0:
-	sd r22, 24, d22
-	add r22, r22, 32
 	lw r0, zero, mutex_mram
-	call r23, mutex_lock
-	sw r22, -28, 0
-	jump .LBB23_1
-.LBB23_1:                               // =>This Loop Header: Depth=1
-                                        //     Child Loop BB23_3 Depth 2
-                                        //       Child Loop BB23_6 Depth 3
-	lw r0, r22, -28
-	jgts r0, 9, .LBB23_19
-	jump .LBB23_2
-.LBB23_2:                               //   in Loop: Header=BB23_1 Depth=1
-	lw r1, r22, -28
-	lsl r0, r1, 4
-	lsl_add r0, r0, r1, 7
-	lsl_add r0, r0, r1, 8
-	add r0, r0, 61536
-	sw r22, -24, r0
-	lw r0, r22, -24
-	add r0, r0, 651264
-	move r1, alloc_inode.bit_map
-	move r2, 400
-	call r23, _mram_read
-	sw r22, -20, 0
-	jump .LBB23_3
-.LBB23_3:                               //   Parent Loop BB23_1 Depth=1
-                                        // =>  This Loop Header: Depth=2
-                                        //       Child Loop BB23_6 Depth 3
-	lw r0, r22, -20
-	jgts r0, 399, .LBB23_17
-	jump .LBB23_4
-.LBB23_4:                               //   in Loop: Header=BB23_3 Depth=2
-	lw r0, r22, -20
-	lbu r0, r0, alloc_inode.bit_map
-	jeq r0, 255, .LBB23_15
-	jump .LBB23_5
-.LBB23_5:                               //   in Loop: Header=BB23_3 Depth=2
-	sw r22, -16, 0
-	jump .LBB23_6
-.LBB23_6:                               //   Parent Loop BB23_1 Depth=1
-                                        //     Parent Loop BB23_3 Depth=2
-                                        // =>    This Inner Loop Header: Depth=3
-	lw r0, r22, -16
-	jgts r0, 7, .LBB23_14
-	jump .LBB23_7
-.LBB23_7:                               //   in Loop: Header=BB23_6 Depth=3
-	lw r0, r22, -20
-	lbu r0, r0, alloc_inode.bit_map
-	lw r1, r22, -16
-	lsr r0, r0, r1
-	and r0, r0, 1
-	jneq r0, 0, .LBB23_12
-	jump .LBB23_8
-.LBB23_8:                               //   in Loop: Header=BB23_6 Depth=3
-	lw r1, r22, -28
-	lsl r0, r1, 4
-	lsl_add r0, r0, r1, 7
-	lsl_add r0, r0, r1, 8
-	lw r1, r22, -20
-	add r1, r0, r1
-	lw r0, r22, -16
-	lsl_add r0, r0, r1, 3
-	sw r22, -12, r0
-	lw r0, r22, -12
-	jeq r0, 0, .LBB23_10
-	jump .LBB23_9
-.LBB23_9:                               //   in Loop: Header=BB23_6 Depth=3
-	lw r0, r22, -12
-	jneq r0, 1, .LBB23_11
-	jump .LBB23_10
-.LBB23_10:                              //   in Loop: Header=BB23_6 Depth=3
-	jump .LBB23_13
-.LBB23_11:
-	lw r0, r22, -16
-	move r1, 1
-	lsl r3, one, r0
-	lw r1, r22, -20
-	move r0, alloc_inode.bit_map
-	lbs r2, r1, alloc_inode.bit_map
-	or r2, r2, r3
-	sb r1, alloc_inode.bit_map, r2
-	lw r2, r22, -28
-	lsl r1, r2, 4
-	lsl_add r1, r1, r2, 7
-	lsl_add r1, r1, r2, 8
+	move r4, 0
+	// inline asm
+.Ltmp84:
+	acquire r0, 0, nz, .Ltmp84
+	// inline asm
+	move r0, r4
+	move r5, r4
+.LBB19_1:                               // =>This Loop Header: Depth=1
+                                        //     Child Loop BB19_2 Depth 2
+	lsl r1, r5, 4
+	lsl_add r1, r1, r5, 7
+	lsl_add r1, r1, r5, 8
 	add r1, r1, 712800
-	move r2, 400
-	call r23, _mram_write
+	move r2, alloc_inode.bit_map
+	ldma r2, r1, 49
+	move r6, r4, true, .LBB19_2
+.LBB19_8:                               //   in Loop: Header=BB19_2 Depth=2
+	add r6, r6, 8
+	move r3, 3200
+	add r2, r2, 1
+	jeq r6, r3, .LBB19_9
+.LBB19_2:                               //   Parent Loop BB19_1 Depth=1
+                                        // =>  This Inner Loop Header: Depth=2
+	lbu r3, r2, 0
+	jeq r3, 255, .LBB19_8
+// %bb.3:                               //   in Loop: Header=BB19_2 Depth=2
+	and r7, r3, 1, nz, .LBB19_5
+// %bb.4:                               //   in Loop: Header=BB19_2 Depth=2
+	jneq r0, r6, .LBB19_16
+.LBB19_5:                               //   in Loop: Header=BB19_2 Depth=2
+	and r7, r3, 2, nz, .LBB19_19
+// %bb.6:                               //   in Loop: Header=BB19_2 Depth=2
+	jneq r0, r6, .LBB19_7
+.LBB19_19:                              //   in Loop: Header=BB19_2 Depth=2
+	and r7, r3, 4, z, .LBB19_15
+// %bb.20:                              //   in Loop: Header=BB19_2 Depth=2
+	and r7, r3, 8, z, .LBB19_14
+// %bb.21:                              //   in Loop: Header=BB19_2 Depth=2
+	and r7, r3, 16, z, .LBB19_13
+// %bb.22:                              //   in Loop: Header=BB19_2 Depth=2
+	and r7, r3, 32, z, .LBB19_12
+// %bb.23:                              //   in Loop: Header=BB19_2 Depth=2
+	and r7, r3, 64, z, .LBB19_11
+// %bb.24:                              //   in Loop: Header=BB19_2 Depth=2
+	and r7, r3, 128
+	jneq r7, 0, .LBB19_8
+	jump .LBB19_25
+.LBB19_9:                               //   in Loop: Header=BB19_1 Depth=1
+	add r0, r0, -3200
+	add r5, r5, 1
+	jneq r5, 10, .LBB19_1
+// %bb.10:
 	lw r0, zero, mutex_mram
-	call r23, mutex_unlock
-	lw r0, r22, -12
-	sw r22, -32, r0
-	jump .LBB23_20
-.LBB23_12:                              //   in Loop: Header=BB23_6 Depth=3
-	jump .LBB23_13
-.LBB23_13:                              //   in Loop: Header=BB23_6 Depth=3
-	lw r0, r22, -16
-	add r0, r0, 1
-	sw r22, -16, r0
-	jump .LBB23_6
-.LBB23_14:                              //   in Loop: Header=BB23_3 Depth=2
-	jump .LBB23_15
-.LBB23_15:                              //   in Loop: Header=BB23_3 Depth=2
-	jump .LBB23_16
-.LBB23_16:                              //   in Loop: Header=BB23_3 Depth=2
-	lw r0, r22, -20
-	add r0, r0, 1
-	sw r22, -20, r0
-	jump .LBB23_3
-.LBB23_17:                              //   in Loop: Header=BB23_1 Depth=1
-	jump .LBB23_18
-.LBB23_18:                              //   in Loop: Header=BB23_1 Depth=1
-	lw r0, r22, -28
-	add r0, r0, 1
-	sw r22, -28, r0
-	jump .LBB23_1
-.LBB23_19:
-	lw r0, zero, mutex_mram
-	call r23, mutex_unlock
-	sw r22, -32, -11
-	jump .LBB23_20
-.LBB23_20:
-	lw r0, r22, -32
-	ld d22, r22, -8
+	// inline asm
+.Ltmp85:
+	release r0, 0, nz, .Ltmp85+1
+	// inline asm
+	move r0, -11
 	jump r23
-.Lfunc_end23:
-	.size	alloc_inode, .Lfunc_end23-alloc_inode
+.LBB19_16:
+	sub r0, r6, r0
+	move r4, 1, true, .LBB19_17
+.LBB19_7:
+	sub r0, r6, r0
+	add r0, r0, 1
+	move r4, 2, true, .LBB19_17
+.LBB19_15:
+	sub r0, r6, r0
+	add r0, r0, 2
+	move r4, 4, true, .LBB19_17
+.LBB19_14:
+	sub r0, r6, r0
+	add r0, r0, 3
+	move r4, 8, true, .LBB19_17
+.LBB19_13:
+	sub r0, r6, r0
+	add r0, r0, 4
+	move r4, 16, true, .LBB19_17
+.LBB19_12:
+	sub r0, r6, r0
+	add r0, r0, 5
+	move r4, 32, true, .LBB19_17
+.LBB19_11:
+	sub r0, r6, r0
+	add r0, r0, 6
+	move r4, 64, true, .LBB19_17
+.LBB19_25:
+	sub r0, r6, r0
+	add r0, r0, 7
+	move r4, 128
+.LBB19_17:
+	or r3, r3, r4
+	sb r2, 0, r3
+	move r2, alloc_inode.bit_map
+	sdma r2, r1, 49
+	lw r1, zero, mutex_mram
+	// inline asm
+.Ltmp86:
+	release r1, 0, nz, .Ltmp86+1
+	// inline asm
+	jump r23
+.Lfunc_end19:
+	.size	alloc_inode, .Lfunc_end19-alloc_inode
 	.section	.stack_sizes,"o",@progbits,.text.alloc_inode
-	.long	.Lfunc_begin23
-	.byte	32
+	.long	.Lfunc_begin19
+	.byte	0
 	.section	.text.alloc_inode,"ax",@progbits
                                         // -- End function
 	.section	.text.find_inode,"ax",@progbits
 	.globl	find_inode                      // -- Begin function find_inode
 	.type	find_inode,@function
 find_inode:                             // @find_inode
-.Lfunc_begin24:
+.Lfunc_begin20:
 // %bb.0:
-	sd r22, 24, d22
-	add r22, r22, 32
-	sw r22, -28, r0
-	sw r22, -24, r1
-	lhu r0, r22, -22
-	sw r22, -20, r0
-	lw r0, zero, mutex_inode
-	call r23, mutex_lock
-	sw r22, -16, 0
-	jump .LBB24_1
-.LBB24_1:                               // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -16
-	jgts r0, 3, .LBB24_20
-	jump .LBB24_2
-.LBB24_2:                               //   in Loop: Header=BB24_1 Depth=1
-	lw r1, r22, -28
-	move r0, inode_table
-	lsl_add r0, r0, r1, 4
-	lw r1, r22, -16
-	lsl_add r0, r0, r1, 2
-	lhu r0, r0, 0
-	jeq r0, 0, .LBB24_7
-	jump .LBB24_3
-.LBB24_3:                               //   in Loop: Header=BB24_1 Depth=1
-	lw r0, r22, -20
-	lw r2, r22, -28
+	sd r22, 16, d22
+	add r22, r22, 24
+	sd r22, -16, d14
+	sd r22, -24, d16
+	lw r2, zero, mutex_inode
+	move r14, r0
+	// inline asm
+.Ltmp87:
+	acquire r2, 0, nz, .Ltmp87
+	// inline asm
+	lsl r0, r14, 4
+	lhu r2, r0, inode_table
+	lsr r0, r1, 16
+	jeq r2, 0, .LBB20_1
+// %bb.2:
 	move r1, inode_table
-	lsl_add r1, r1, r2, 4
-	lw r2, r22, -16
-	lsl_add r1, r1, r2, 2
-	lhu r1, r1, 2
-	jges r0, r1, .LBB24_5
-	jump .LBB24_4
-.LBB24_4:
-	lw r0, zero, mutex_inode
-	call r23, mutex_unlock
-	lw r1, r22, -28
-	move r0, inode_table
-	lsl_add r0, r0, r1, 4
-	lw r1, r22, -16
-	lsl_add r0, r0, r1, 2
-	lhu r0, r0, 0
-	lw r1, r22, -20
-	add r0, r0, r1
-	sw r22, -32, r0
-	jump .LBB24_21
-.LBB24_5:                               //   in Loop: Header=BB24_1 Depth=1
-	lw r1, r22, -28
-	move r0, inode_table
-	lsl_add r0, r0, r1, 4
-	lw r1, r22, -16
-	lsl_add r0, r0, r1, 2
-	lhu r1, r0, 2
-	lw r0, r22, -20
-	sub r0, r0, r1
-	sw r22, -20, r0
-	jump .LBB24_6
-.LBB24_6:                               //   in Loop: Header=BB24_1 Depth=1
-	jump .LBB24_18
-.LBB24_7:
-	lw r0, r22, -16
-	add r0, r0, -1
-	sw r22, -16, r0
-	jump .LBB24_8
-.LBB24_8:                               // =>This Inner Loop Header: Depth=1
-	call r23, alloc_inode
-	sw r22, -12, r0
-	lw r0, r22, -12
-	jgts r0, -1, .LBB24_10
-	jump .LBB24_9
-.LBB24_9:
-	lw r0, zero, mutex_inode
-	call r23, mutex_unlock
-	lw r0, r22, -12
-	sw r22, -32, r0
-	jump .LBB24_21
-.LBB24_10:                              //   in Loop: Header=BB24_8 Depth=1
-	lw r0, r22, -12
-	lw r2, r22, -28
-	move r1, inode_table
-	lsl_add r1, r1, r2, 4
-	lw r2, r22, -16
-	lsl_add r2, r1, r2, 2
-	lhu r1, r2, 0
+	lsl_add r2, r1, r14, 4
 	lhu r2, r2, 2
-	add r1, r1, r2
-	jneq r0, r1, .LBB24_12
-	jump .LBB24_11
-.LBB24_11:                              //   in Loop: Header=BB24_8 Depth=1
-	lw r1, r22, -28
-	move r0, inode_table
-	lsl_add r0, r0, r1, 4
-	lw r1, r22, -16
-	lsl_add r0, r0, r1, 2
-	lhs r1, r0, 2
-	add r1, r1, 1
-	sh r0, 2, r1
-	jump .LBB24_15
-.LBB24_12:                              //   in Loop: Header=BB24_8 Depth=1
-	lw r0, r22, -16
-	add r0, r0, 1
-	sw r22, -16, r0
-	lw r0, r22, -16
-	jlts r0, 4, .LBB24_14
-	jump .LBB24_13
-.LBB24_13:
+	lsl_add r1, r1, r14, 4
+	jltu r0, r2, .LBB20_3
+// %bb.4:
+	move r1, inode_table
+	lsl_add r1, r1, r14, 4
+	lhu r3, r1, 4
+	sub r0, r0, r2
+	jeq r3, 0, .LBB20_5
+// %bb.16:
+	lhu r2, r1, 6
+	add r1, r1, 4
+	jlts r0, r2, .LBB20_3
+// %bb.17:
+	move r1, inode_table
+	lsl_add r1, r1, r14, 4
+	lhu r3, r1, 8
+	sub r0, r0, r2
+	jeq r3, 0, .LBB20_18
+// %bb.19:
+	lhu r2, r1, 10
+	add r1, r1, 8
+	jlts r0, r2, .LBB20_3
+// %bb.20:
+	move r1, inode_table
+	lsl_add r1, r1, r14, 4
+	lhu r3, r1, 12
+	sub r0, r0, r2
+	jeq r3, 0, .LBB20_21
+// %bb.22:
+	lhu r2, r1, 14
+	add r1, r1, 12
+	jges r0, r2, .LBB20_23
+.LBB20_3:
+	lw r2, zero, mutex_inode
+	// inline asm
+.Ltmp88:
+	release r2, 0, nz, .Ltmp88+1
+	// inline asm
+	lhu r1, r1, 0
+	add r0, r0, r1, true, .LBB20_15
+.LBB20_1:
+	move r15, -1, true, .LBB20_6
+.LBB20_5:
+	move r15, 0, true, .LBB20_6
+.LBB20_18:
+	move r15, 1, true, .LBB20_6
+.LBB20_21:
+	move r15, 2
+.LBB20_6:
+	add r16, r0, 1, true, .LBB20_7
+.LBB20_10:                              //   in Loop: Header=BB20_7 Depth=1
+	add r1, r1, 2
+	add r2, r2, 1
+	sh r1, 0, r2
+	add r16, r16, -1, z, .LBB20_14
+.LBB20_7:                               // =>This Inner Loop Header: Depth=1
+	call r23, alloc_inode
+	jles r0, -1, .LBB20_8
+// %bb.9:                               //   in Loop: Header=BB20_7 Depth=1
+	move r1, inode_table
+	lsl_add r1, r1, r14, 4
+	lsl_add r1, r1, r15, 2
+	lhu r3, r1, 0
+	lhu r2, r1, 2
+	add r3, r2, r3
+	jeq r0, r3, .LBB20_10
+// %bb.11:                              //   in Loop: Header=BB20_7 Depth=1
+	jges r15, 3, .LBB20_24
+// %bb.12:                              //   in Loop: Header=BB20_7 Depth=1
+	add r15, r15, 1
+	move r1, inode_table
+	lsl_add r1, r1, r14, 4
+	lsl_add r1, r1, r15, 2
+	sh r1, 0, r0
+	sh r1, 2, 1
+	add r16, r16, -1, nz, .LBB20_7
+.LBB20_14:
+	lw r1, zero, mutex_inode
+	// inline asm
+.Ltmp89:
+	release r1, 0, nz, .Ltmp89+1
+	// inline asm
+	jump .LBB20_15
+.LBB20_8:
+	lw r1, zero, mutex_inode
+	// inline asm
+.Ltmp90:
+	release r1, 0, nz, .Ltmp90+1
+	// inline asm
+.LBB20_15:
+	ld d16, r22, -24
+	ld d14, r22, -16
+	ld d22, r22, -8
+	jump r23
+.LBB20_23:
+	lw r0, zero, mutex_inode
+	// inline asm
+.Ltmp91:
+	release r0, 0, nz, .Ltmp91+1
+	// inline asm
+	move r0, -54, true, .LBB20_15
+.LBB20_24:
 	move r0, 4444
 	call r23, printk_int
 	lw r0, zero, mutex_inode
-	call r23, mutex_unlock
-	call r23, halt
-.LBB24_14:                              //   in Loop: Header=BB24_8 Depth=1
-	lw r2, r22, -12
-	lw r1, r22, -28
-	move r0, inode_table
-	lsl_add r1, r0, r1, 4
-	lw r3, r22, -16
-	lsl_add r1, r1, r3, 2
-	sh r1, 0, r2
-	lw r1, r22, -28
-	lsl_add r0, r0, r1, 4
-	lw r1, r22, -16
-	lsl_add r0, r0, r1, 2
-	sh r0, 2, 1
-	jump .LBB24_15
-.LBB24_15:                              //   in Loop: Header=BB24_8 Depth=1
-	jump .LBB24_16
-.LBB24_16:                              //   in Loop: Header=BB24_8 Depth=1
-	lw r0, r22, -20
-	add r1, r0, -1
-	sw r22, -20, r1
-	jneq r0, 0, .LBB24_8
-	jump .LBB24_17
-.LBB24_17:
-	lw r0, zero, mutex_inode
-	call r23, mutex_unlock
-	lw r0, r22, -12
-	sw r22, -32, r0
-	jump .LBB24_21
-.LBB24_18:                              //   in Loop: Header=BB24_1 Depth=1
-	jump .LBB24_19
-.LBB24_19:                              //   in Loop: Header=BB24_1 Depth=1
-	lw r0, r22, -16
-	add r0, r0, 1
-	sw r22, -16, r0
-	jump .LBB24_1
-.LBB24_20:
-	lw r0, zero, mutex_inode
-	call r23, mutex_unlock
-	sw r22, -32, -54
-	jump .LBB24_21
-.LBB24_21:
-	lw r0, r22, -32
-	ld d22, r22, -8
-	jump r23
-.Lfunc_end24:
-	.size	find_inode, .Lfunc_end24-find_inode
+	// inline asm
+.Ltmp92:
+	release r0, 0, nz, .Ltmp92+1
+	// inline asm
+	fault 4
+.Lfunc_end20:
+	.size	find_inode, .Lfunc_end20-find_inode
 	.section	.stack_sizes,"o",@progbits,.text.find_inode
-	.long	.Lfunc_begin24
-	.byte	32
+	.long	.Lfunc_begin20
+	.byte	24
 	.section	.text.find_inode,"ax",@progbits
                                         // -- End function
 	.section	.text.printk_int,"ax",@progbits
 	.globl	printk_int                      // -- Begin function printk_int
 	.type	printk_int,@function
 printk_int:                             // @printk_int
-.Lfunc_begin25:
+.Lfunc_begin21:
 // %bb.0:
-	sd r22, 16, d22
-	add r22, r22, 24
-	sw r22, -24, r0
+	lw r1, zero, log_w
+	add r1, r1, 8
+	move r2, 65536
+	jgtu r1, r2, .LBB21_2
+// %bb.1:
+	lw r1, zero, mutex_printk
+	// inline asm
+.Ltmp93:
+	acquire r1, 0, nz, .Ltmp93
+	// inline asm
+	lw r1, zero, log_w
+	sw r22, 16, 1
+	sw r22, 20, r0
+	add r0, r1, 716800
+	add r1, r22, 16
+	sdma r1, r0, 0
 	lw r0, zero, log_w
-	add r0, r0, 8
-	move r1, 65537
-	jltu r0, r1, .LBB25_2
-	jump .LBB25_1
-.LBB25_1:
-	jump .LBB25_3
-.LBB25_2:
-	lw r0, zero, mutex_printk
-	call r23, mutex_lock
-	sw r22, -16, 1
-	lw r0, r22, -24
-	sw r22, -12, r0
-	lw r3, zero, log_w
-	add r1, r22, -16
-	move r2, 8
-	move r4, 1
-	move r0, r4
-	call r23, inode_operation
-	lw r0, zero, log_w
+	lw r1, zero, mutex_flag
 	add r0, r0, 8
 	sw zero, log_w, r0
-	move r0, 64
-	call r23, set_flag
+	// inline asm
+.Ltmp94:
+	acquire r1, 0, nz, .Ltmp94
+	// inline asm
+	move r0, 651264
+	add r1, r22, 0
+	ldma r1, r0, 1
+	lw r2, r22, 8
+	or r2, r2, 64
+	sw r22, 8, r2
+	sdma r1, r0, 1
+	lw r0, zero, mutex_flag
+	// inline asm
+.Ltmp95:
+	release r0, 0, nz, .Ltmp95+1
+	// inline asm
 	lw r0, zero, mutex_printk
-	call r23, mutex_unlock
-	jump .LBB25_3
-.LBB25_3:
-	ld d22, r22, -8
+	// inline asm
+.Ltmp96:
+	release r0, 0, nz, .Ltmp96+1
+	// inline asm
+.LBB21_2:
 	jump r23
-.Lfunc_end25:
-	.size	printk_int, .Lfunc_end25-printk_int
+.Lfunc_end21:
+	.size	printk_int, .Lfunc_end21-printk_int
 	.section	.stack_sizes,"o",@progbits,.text.printk_int
-	.long	.Lfunc_begin25
+	.long	.Lfunc_begin21
 	.byte	24
 	.section	.text.printk_int,"ax",@progbits
                                         // -- End function
@@ -1999,1909 +2150,2636 @@ printk_int:                             // @printk_int
 	.globl	chained_inode_operation         // -- Begin function chained_inode_operation
 	.type	chained_inode_operation,@function
 chained_inode_operation:                // @chained_inode_operation
-.Lfunc_begin26:
+.Lfunc_begin22:
 // %bb.0:
-	sd r22, 48, d22
-	add r22, r22, 56
-	sw r22, -52, r0
-	sw r22, -48, r1
-	sw r22, -44, r2
-	sw r22, -40, r3
-	lw r0, r22, -48
-	move r1, 65537
-	jltu r0, r1, .LBB26_2
-	jump .LBB26_1
-.LBB26_1:
-	sw r22, -56, -20
-	jump .LBB26_23
-.LBB26_2:
-	lhu r0, r22, -44
-	sw r22, -32, r0
-	lw r0, r22, -32
-	sub r0, 65536, r0
-	sw r22, -28, r0
-	lw r0, r22, -28
-	lw r1, r22, -48
-	jleu r0, r1, .LBB26_4
-	jump .LBB26_3
-.LBB26_3:
-	lw r0, r22, -48
-	sw r22, -16, r0
-	jump .LBB26_5
-.LBB26_4:
-	lw r0, r22, -28
-	sw r22, -16, r0
-	jump .LBB26_5
-.LBB26_5:
-	lw r0, r22, -16
-	sw r22, -24, r0
-	lhu r0, r22, -42
-	sw r22, -20, r0
-	lw r0, r22, -20
-	lw r2, zero, cur_process_index
-	move r1, inode_table
-	lsl_add r1, r1, r2, 4
-	lhu r1, r1, 2
-	jges r0, r1, .LBB26_7
-	jump .LBB26_6
-.LBB26_6:
+	sd r22, 32, d22
+	add r22, r22, 40
+	sd r22, -16, d14
+	sd r22, -24, d16
+	sd r22, -32, d18
+	sd r22, -40, d20
+	move r15, r3
+	move r17, r2
+	move r18, r1
+	move r16, r0
+	move r0, 65536
+	move r14, -20
+	jgtu r18, r0, .LBB22_40
+// %bb.1:
+	and r20, r17, 65535
+	sub r0, 65536, r20
+	move r19, r18
+	jgtu r0, r18, .LBB22_3
+// %bb.2:
+	move r19, r0
+.LBB22_3:
 	lw r0, zero, cur_process_index
+	move r1, inode_table
+	lsl_add r0, r1, r0, 4
+	lhu r2, r0, 2
+	lw r0, zero, cur_process_index
+	lsr r1, r17, 16
+	jgeu r1, r2, .LBB22_5
+// %bb.4:
 	lsl r0, r0, 4
 	lhu r0, r0, inode_table
-	lw r1, r22, -20
-	add r0, r0, r1
-	sw r22, -36, r0
-	jump .LBB26_8
-.LBB26_7:
-	lw r0, zero, cur_process_index
-	lw r1, r22, -44
+	add r0, r1, r0
+	move r14, -11
+	jleu r0, 1023, .LBB22_7
+	jump .LBB22_40
+.LBB22_5:
+	move r1, r17
 	call r23, find_inode
-	sw r22, -36, r0
-	jump .LBB26_8
-.LBB26_8:
-	lw r0, r22, -36
-	jgts r0, 1023, .LBB26_10
-	jump .LBB26_9
-.LBB26_9:
-	lw r0, r22, -36
-	jgts r0, -1, .LBB26_11
-	jump .LBB26_10
-.LBB26_10:
-	sw r22, -56, -11
-	jump .LBB26_23
-.LBB26_11:
-	lw r0, r22, -36
-	lw r1, r22, -52
-	lw r2, r22, -24
-	lw r3, r22, -32
-	lw r4, r22, -40
-	call r23, inode_operation
-	sw r22, -36, r0
-	jgts r0, -1, .LBB26_13
-	jump .LBB26_12
-.LBB26_12:
-	lw r0, r22, -36
-	sw r22, -56, r0
-	jump .LBB26_23
-.LBB26_13:
-	lw r1, r22, -24
-	lw r0, r22, -48
-	sub r0, r0, r1
-	sw r22, -48, r0
-	lw r0, r22, -48
-	jneq r0, 0, .LBB26_15
-	jump .LBB26_14
-.LBB26_14:
-	sw r22, -56, 0
-	jump .LBB26_23
-.LBB26_15:
-	lw r1, r22, -24
-	lw r0, r22, -44
+	move r14, -11
+	jgtu r0, 1023, .LBB22_40
+.LBB22_7:
+	lsl_add r0, r20, r0, 16
+	add r0, r0, 651264
+	lsr r1, r19, 11
+	jeq r15, 0, .LBB22_8
+// %bb.15:
+	jeq r1, 0, .LBB22_16
+// %bb.17:
+	move r2, r16
+	move r3, r0
+.LBB22_18:                              // =>This Inner Loop Header: Depth=1
+	sdma r2, r3, 255
+	add r3, r3, 2048
+	add r2, r2, 2048
+	add r1, r1, -1, nz, .LBB22_18
+// %bb.19:
+	and r1, r19, 129024
+	and r2, r19, 2047
+	jneq r2, 0, .LBB22_21
+	jump .LBB22_22
+.LBB22_8:
+	jeq r1, 0, .LBB22_9
+// %bb.10:
+	move r2, r0
+	move r3, r16
+.LBB22_11:                              // =>This Inner Loop Header: Depth=1
+	ldma r3, r2, 255
+	add r3, r3, 2048
+	add r2, r2, 2048
+	add r1, r1, -1, nz, .LBB22_11
+// %bb.12:
+	and r1, r19, 129024
+	and r2, r19, 2047
+	jneq r2, 0, .LBB22_14
+	jump .LBB22_22
+.LBB22_16:
+	move r1, 0
+	and r2, r19, 2047
+	jeq r2, 0, .LBB22_22
+.LBB22_21:
+	add r3, r16, r1
 	add r0, r0, r1
-	sw r22, -44, r0
-	lw r1, r22, -24
-	lw r0, r22, -52
+	move r1, -1
+	lsr_add r1, r1, r2, 3
+	lsl_add r1, r3, r1, 24
+	sdma r1, r0, 0
+	jump .LBB22_22
+.LBB22_9:
+	move r1, 0
+	and r2, r19, 2047
+	jeq r2, 0, .LBB22_22
+.LBB22_14:
 	add r0, r0, r1
-	sw r22, -52, r0
+	add r1, r16, r1
+	move r3, -1
+	lsr_add r2, r3, r2, 3
+	lsl_add r1, r1, r2, 24
+	ldma r1, r0, 0
+.LBB22_22:
+	sub r18, r18, r19, z, .LBB22_23
+// %bb.24:
 	lw r0, zero, cur_process_index
-	lw r1, r22, -44
+	add r1, r19, r17
 	call r23, find_inode
-	sw r22, -36, r0
-	jgts r0, -1, .LBB26_17
-	jump .LBB26_16
-.LBB26_16:
-	lw r0, r22, -36
-	sw r22, -56, r0
-	jump .LBB26_23
-.LBB26_17:
-	lw r0, r22, -36
-	jgts r0, 1023, .LBB26_19
-	jump .LBB26_18
-.LBB26_18:
-	lw r0, r22, -36
-	jgts r0, -1, .LBB26_20
-	jump .LBB26_19
-.LBB26_19:
-	sw r22, -56, -11
-	jump .LBB26_23
-.LBB26_20:
-	lw r0, r22, -36
-	lw r1, r22, -52
-	lw r2, r22, -48
-	lw r4, r22, -40
-	move r3, 0
-	call r23, inode_operation
-	sw r22, -36, r0
-	jgts r0, -1, .LBB26_22
-	jump .LBB26_21
-.LBB26_21:
-	lw r0, r22, -36
-	sw r22, -56, r0
-	jump .LBB26_23
-.LBB26_22:
-	sw r22, -56, 0
-	jump .LBB26_23
-.LBB26_23:
-	lw r0, r22, -56
+	jlts r0, 0, .LBB22_25
+// %bb.26:
+	jgts r0, 1023, .LBB22_40
+// %bb.27:
+	add r1, r16, r19
+	move r2, 651264
+	lsl_add r0, r2, r0, 16
+	lsr r2, r18, 11
+	move r14, 0
+	move r3, r14
+	jeq r15, 0, .LBB22_28
+// %bb.34:
+	jeq r2, 0, .LBB22_38
+// %bb.35:
+	move r3, r1
+	move r4, r0
+.LBB22_36:                              // =>This Inner Loop Header: Depth=1
+	sdma r3, r4, 255
+	add r4, r4, 2048
+	add r3, r3, 2048
+	add r2, r2, -1, nz, .LBB22_36
+// %bb.37:
+	and r3, r18, -2048
+.LBB22_38:
+	and r2, r18, 2047
+	jeq r2, 0, .LBB22_40
+// %bb.39:
+	add r1, r1, r3
+	add r0, r0, r3
+	move r3, -1
+	lsr_add r2, r3, r2, 3
+	lsl_add r1, r1, r2, 24
+	sdma r1, r0, 0
+	jump .LBB22_40
+.LBB22_23:
+	move r14, 0, true, .LBB22_40
+.LBB22_25:
+	move r14, r0
+.LBB22_40:
+	move r0, r14
+	ld d20, r22, -40
+	ld d18, r22, -32
+	ld d16, r22, -24
+	ld d14, r22, -16
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end26:
-	.size	chained_inode_operation, .Lfunc_end26-chained_inode_operation
+.LBB22_28:
+	jeq r2, 0, .LBB22_32
+// %bb.29:
+	move r3, r0
+	move r4, r1
+.LBB22_30:                              // =>This Inner Loop Header: Depth=1
+	ldma r4, r3, 255
+	add r4, r4, 2048
+	add r3, r3, 2048
+	add r2, r2, -1, nz, .LBB22_30
+// %bb.31:
+	and r3, r18, -2048
+.LBB22_32:
+	and r2, r18, 2047
+	jeq r2, 0, .LBB22_40
+// %bb.33:
+	add r0, r0, r3
+	add r1, r1, r3
+	move r3, -1
+	lsr_add r2, r3, r2, 3
+	lsl_add r1, r1, r2, 24
+	ldma r1, r0, 0
+	jump .LBB22_40
+.Lfunc_end22:
+	.size	chained_inode_operation, .Lfunc_end22-chained_inode_operation
 	.section	.stack_sizes,"o",@progbits,.text.chained_inode_operation
-	.long	.Lfunc_begin26
-	.byte	56
+	.long	.Lfunc_begin22
+	.byte	40
 	.section	.text.chained_inode_operation,"ax",@progbits
                                         // -- End function
 	.section	.text.free_inode,"ax",@progbits
 	.globl	free_inode                      // -- Begin function free_inode
 	.type	free_inode,@function
 free_inode:                             // @free_inode
-.Lfunc_begin27:
+.Lfunc_begin23:
 // %bb.0:
-	sd r22, 8, d22
-	add r22, r22, 16
-	sw r22, -16, r0
+	sd r22, 0, d22
+	add r22, r22, 8
 	move r0, 75698
 	call r23, printk_int
-	call r23, halt
-.Lfunc_end27:
-	.size	free_inode, .Lfunc_end27-free_inode
+	fault 4
+.Lfunc_end23:
+	.size	free_inode, .Lfunc_end23-free_inode
 	.section	.stack_sizes,"o",@progbits,.text.free_inode
-	.long	.Lfunc_begin27
-	.byte	16
+	.long	.Lfunc_begin23
+	.byte	8
 	.section	.text.free_inode,"ax",@progbits
                                         // -- End function
 	.section	.text.wakeup_sleepy_socket,"ax",@progbits
 	.globl	wakeup_sleepy_socket            // -- Begin function wakeup_sleepy_socket
 	.type	wakeup_sleepy_socket,@function
 wakeup_sleepy_socket:                   // @wakeup_sleepy_socket
-.Lfunc_begin28:
+.Lfunc_begin24:
 // %bb.0:
-	sd r22, 8, d22
-	add r22, r22, 16
-	sw r22, -16, 0
-	jump .LBB28_1
-.LBB28_1:                               // =>This Loop Header: Depth=1
-                                        //     Child Loop BB28_3 Depth 2
-	lw r0, r22, -16
-	jgtu r0, 9, .LBB28_10
-	jump .LBB28_2
-.LBB28_2:                               //   in Loop: Header=BB28_1 Depth=1
-	sw r22, -12, 0
-	jump .LBB28_3
-.LBB28_3:                               //   Parent Loop BB28_1 Depth=1
-                                        // =>  This Inner Loop Header: Depth=2
-	lw r0, r22, -12
-	jgtu r0, 2, .LBB28_8
-	jump .LBB28_4
-.LBB28_4:                               //   in Loop: Header=BB28_3 Depth=2
-	lw r1, r22, -16
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r1, r22, -12
-	lsl_add r0, r0, r1, 3
-	lbu r0, r0, 60
-	and r0, r0, 32
-	jeq r0, 0, .LBB28_6
-	jump .LBB28_5
-.LBB28_5:                               //   in Loop: Header=BB28_3 Depth=2
-	lw r1, r22, -16
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r1, r0, r1
-	lw r2, r22, -12
-	lsl_add r1, r1, r2, 3
-	lw r2, r1, 60
-	and r2, r2, -33
-	sw r1, 60, r2
-	lw r2, r22, -16
-	lsl r1, r2, 4
-	lsl_add r1, r1, r2, 6
-	add r0, r0, r1
-	lw r1, r22, -12
-	lsl_add r0, r0, r1, 3
-	add r0, r0, 56
-	move r2, 0
-	move r1, r2
-	call r23, wakeup
-	jump .LBB28_6
-.LBB28_6:                               //   in Loop: Header=BB28_3 Depth=2
-	jump .LBB28_7
-.LBB28_7:                               //   in Loop: Header=BB28_3 Depth=2
-	lw r0, r22, -12
+	move r0, 0, true, .LBB24_1
+.LBB24_33:                              //   in Loop: Header=BB24_1 Depth=1
+	lw r1, zero, cur_process_index
+	lsl r2, r1, 4
+	lsl_add r2, r2, r1, 11
+	lsl_sub r1, r2, r1, 6
+	add r1, r1, 651280
+	move r2, jobs
+	ldma r2, r1, 249
+.LBB24_34:                              //   in Loop: Header=BB24_1 Depth=1
 	add r0, r0, 1
-	sw r22, -12, r0
-	jump .LBB28_3
-.LBB28_8:                               //   in Loop: Header=BB28_1 Depth=1
-	jump .LBB28_9
-.LBB28_9:                               //   in Loop: Header=BB28_1 Depth=1
-	lw r0, r22, -16
-	add r0, r0, 1
-	sw r22, -16, r0
-	jump .LBB28_1
-.LBB28_10:
+	jeq r0, 10, .LBB24_35
+.LBB24_1:                               // =>This Loop Header: Depth=1
+                                        //     Child Loop BB24_3 Depth 2
+                                        //       Child Loop BB24_5 Depth 3
+                                        //     Child Loop BB24_14 Depth 2
+                                        //       Child Loop BB24_16 Depth 3
+                                        //     Child Loop BB24_25 Depth 2
+                                        //       Child Loop BB24_27 Depth 3
+	lsl r1, r0, 4
+	lsl_add r1, r1, r0, 6
+	move r2, processs
+	add r1, r2, r1
+	lw r3, r1, 60
+	and r2, r3, 32, z, .LBB24_12
+// %bb.2:                               //   in Loop: Header=BB24_1 Depth=1
+	add r2, r1, 56
+	and r3, r3, -33
+	sw r1, 60, r3
+	move r3, 0, true, .LBB24_3
+.LBB24_10:                              //   in Loop: Header=BB24_3 Depth=2
+	lw r6, zero, mutex_jobs
+	// inline asm
+.Ltmp97:
+	release r6, 0, nz, .Ltmp97+1
+	// inline asm
+	sdma r5, r4, 249
+	add r3, r3, 1
+	jeq r3, 10, .LBB24_11
+.LBB24_3:                               //   Parent Loop BB24_1 Depth=1
+                                        // =>  This Loop Header: Depth=2
+                                        //       Child Loop BB24_5 Depth 3
+	lw r4, zero, mutex_jobs
+	// inline asm
+.Ltmp98:
+	acquire r4, 0, nz, .Ltmp98
+	// inline asm
+	lsl r6, r3, 4
+	lsl_add r4, r6, r3, 11
+	lsl_sub r4, r4, r3, 6
+	add r4, r4, 651280
+	move r5, jobs
+	ldma r5, r4, 249
+	lsl_add r6, r6, r3, 6
+	move r7, processs
+	add r6, r7, r6
+	lbu r6, r6, 2
+	jeq r6, 0, .LBB24_10
+// %bb.4:                               //   in Loop: Header=BB24_3 Depth=2
+	move r7, 0, true, .LBB24_5
+.LBB24_9:                               //   in Loop: Header=BB24_5 Depth=3
+	add r7, r7, 1
+	jgeu r7, r6, .LBB24_10
+.LBB24_5:                               //   Parent Loop BB24_1 Depth=1
+                                        //     Parent Loop BB24_3 Depth=2
+                                        // =>    This Inner Loop Header: Depth=3
+	lsl r8, r7, 2
+	lsl_add r8, r8, r7, 4
+	lbu r9, r8, jobs
+	jneq r9, 6, .LBB24_9
+// %bb.6:                               //   in Loop: Header=BB24_5 Depth=3
+	move r9, jobs
+	add r8, r9, r8
+	lw r8, r8, 8
+	jneq r8, r2, .LBB24_9
+// %bb.7:                               //   in Loop: Header=BB24_5 Depth=3
+	lsl r8, r3, 4
+	lsl_add r8, r8, r3, 6
+	move r9, processs
+	add r8, r9, r8
+	lw r9, r8, 8
+	lsl r10, r7, 2
+	lsl_add r10, r10, r7, 4
+	move r11, 3
+	sb r10, jobs, r11
+	jneq r9, 5, .LBB24_9
+// %bb.8:                               //   in Loop: Header=BB24_5 Depth=3
+	sw r8, 8, 3
+	jump .LBB24_9
+.LBB24_11:                              //   in Loop: Header=BB24_1 Depth=1
+	lw r2, zero, cur_process_index
+	lsl r3, r2, 4
+	lsl_add r3, r3, r2, 11
+	lsl_sub r2, r3, r2, 6
+	add r2, r2, 651280
+	move r3, jobs
+	ldma r3, r2, 249
+.LBB24_12:                              //   in Loop: Header=BB24_1 Depth=1
+	lw r3, r1, 68
+	and r1, r3, 32, z, .LBB24_23
+// %bb.13:                              //   in Loop: Header=BB24_1 Depth=1
+	lsl r1, r0, 4
+	lsl_add r2, r1, r0, 6
+	move r1, processs
+	add r4, r1, r2
+	add r2, r4, 64
+	and r3, r3, -33
+	sw r4, 68, r3
+	move r3, 0, true, .LBB24_14
+.LBB24_21:                              //   in Loop: Header=BB24_14 Depth=2
+	lw r6, zero, mutex_jobs
+	// inline asm
+.Ltmp99:
+	release r6, 0, nz, .Ltmp99+1
+	// inline asm
+	sdma r5, r4, 249
+	add r3, r3, 1
+	jeq r3, 10, .LBB24_22
+.LBB24_14:                              //   Parent Loop BB24_1 Depth=1
+                                        // =>  This Loop Header: Depth=2
+                                        //       Child Loop BB24_16 Depth 3
+	lw r4, zero, mutex_jobs
+	// inline asm
+.Ltmp100:
+	acquire r4, 0, nz, .Ltmp100
+	// inline asm
+	lsl r6, r3, 4
+	lsl_add r4, r6, r3, 11
+	lsl_sub r4, r4, r3, 6
+	add r4, r4, 651280
+	move r5, jobs
+	ldma r5, r4, 249
+	lsl_add r6, r6, r3, 6
+	add r6, r1, r6
+	lbu r6, r6, 2
+	jeq r6, 0, .LBB24_21
+// %bb.15:                              //   in Loop: Header=BB24_14 Depth=2
+	move r7, 0, true, .LBB24_16
+.LBB24_20:                              //   in Loop: Header=BB24_16 Depth=3
+	add r7, r7, 1
+	jgeu r7, r6, .LBB24_21
+.LBB24_16:                              //   Parent Loop BB24_1 Depth=1
+                                        //     Parent Loop BB24_14 Depth=2
+                                        // =>    This Inner Loop Header: Depth=3
+	lsl r8, r7, 2
+	lsl_add r8, r8, r7, 4
+	lbu r9, r8, jobs
+	jneq r9, 6, .LBB24_20
+// %bb.17:                              //   in Loop: Header=BB24_16 Depth=3
+	move r9, jobs
+	add r8, r9, r8
+	lw r8, r8, 8
+	jneq r8, r2, .LBB24_20
+// %bb.18:                              //   in Loop: Header=BB24_16 Depth=3
+	lsl r8, r3, 4
+	lsl_add r8, r8, r3, 6
+	move r9, processs
+	add r8, r9, r8
+	lw r9, r8, 8
+	lsl r10, r7, 2
+	lsl_add r10, r10, r7, 4
+	move r11, 3
+	sb r10, jobs, r11
+	jneq r9, 5, .LBB24_20
+// %bb.19:                              //   in Loop: Header=BB24_16 Depth=3
+	sw r8, 8, 3
+	jump .LBB24_20
+.LBB24_22:                              //   in Loop: Header=BB24_1 Depth=1
+	lw r1, zero, cur_process_index
+	lsl r2, r1, 4
+	lsl_add r2, r2, r1, 11
+	lsl_sub r1, r2, r1, 6
+	add r1, r1, 651280
+	move r2, jobs
+	ldma r2, r1, 249
+.LBB24_23:                              //   in Loop: Header=BB24_1 Depth=1
+	lsl r1, r0, 4
+	lsl_add r1, r1, r0, 6
+	move r2, processs
+	add r2, r2, r1
+	lw r3, r2, 76
+	and r1, r3, 32, z, .LBB24_34
+// %bb.24:                              //   in Loop: Header=BB24_1 Depth=1
+	add r1, r2, 72
+	and r3, r3, -33
+	sw r2, 76, r3
+	move r2, 0, true, .LBB24_25
+.LBB24_32:                              //   in Loop: Header=BB24_25 Depth=2
+	lw r5, zero, mutex_jobs
+	// inline asm
+.Ltmp101:
+	release r5, 0, nz, .Ltmp101+1
+	// inline asm
+	sdma r4, r3, 249
+	add r2, r2, 1
+	jeq r2, 10, .LBB24_33
+.LBB24_25:                              //   Parent Loop BB24_1 Depth=1
+                                        // =>  This Loop Header: Depth=2
+                                        //       Child Loop BB24_27 Depth 3
+	lw r3, zero, mutex_jobs
+	// inline asm
+.Ltmp102:
+	acquire r3, 0, nz, .Ltmp102
+	// inline asm
+	lsl r5, r2, 4
+	lsl_add r3, r5, r2, 11
+	lsl_sub r3, r3, r2, 6
+	add r3, r3, 651280
+	move r4, jobs
+	ldma r4, r3, 249
+	lsl_add r5, r5, r2, 6
+	move r6, processs
+	add r5, r6, r5
+	lbu r5, r5, 2
+	jeq r5, 0, .LBB24_32
+// %bb.26:                              //   in Loop: Header=BB24_25 Depth=2
+	move r6, 0, true, .LBB24_27
+.LBB24_31:                              //   in Loop: Header=BB24_27 Depth=3
+	add r6, r6, 1
+	jgeu r6, r5, .LBB24_32
+.LBB24_27:                              //   Parent Loop BB24_1 Depth=1
+                                        //     Parent Loop BB24_25 Depth=2
+                                        // =>    This Inner Loop Header: Depth=3
+	lsl r7, r6, 2
+	lsl_add r7, r7, r6, 4
+	lbu r8, r7, jobs
+	jneq r8, 6, .LBB24_31
+// %bb.28:                              //   in Loop: Header=BB24_27 Depth=3
+	move r8, jobs
+	add r7, r8, r7
+	lw r7, r7, 8
+	jneq r7, r1, .LBB24_31
+// %bb.29:                              //   in Loop: Header=BB24_27 Depth=3
+	lsl r7, r2, 4
+	lsl_add r7, r7, r2, 6
+	move r8, processs
+	add r7, r8, r7
+	lw r8, r7, 8
+	lsl r9, r6, 2
+	lsl_add r9, r9, r6, 4
+	move r10, 3
+	sb r9, jobs, r10
+	jneq r8, 5, .LBB24_31
+// %bb.30:                              //   in Loop: Header=BB24_27 Depth=3
+	sw r7, 8, 3
+	jump .LBB24_31
+.LBB24_35:
 	move r0, 0
-	ld d22, r22, -8
 	jump r23
-.Lfunc_end28:
-	.size	wakeup_sleepy_socket, .Lfunc_end28-wakeup_sleepy_socket
+.Lfunc_end24:
+	.size	wakeup_sleepy_socket, .Lfunc_end24-wakeup_sleepy_socket
 	.section	.stack_sizes,"o",@progbits,.text.wakeup_sleepy_socket
-	.long	.Lfunc_begin28
-	.byte	16
+	.long	.Lfunc_begin24
+	.byte	0
 	.section	.text.wakeup_sleepy_socket,"ax",@progbits
                                         // -- End function
 	.section	.text.socket_open,"ax",@progbits
 	.globl	socket_open                     // -- Begin function socket_open
 	.type	socket_open,@function
 socket_open:                            // @socket_open
-.Lfunc_begin29:
+.Lfunc_begin25:
 // %bb.0:
-	sd r22, 56, d22
-	add r22, r22, 64
-	sw r22, -60, r0
+	sd r22, 40, d22
+	add r22, r22, 48
+	sd r22, -40, d14
+	sd r22, -48, d16
+	lw r1, zero, mutex_sockets
+	// inline asm
+.Ltmp103:
+	acquire r1, 0, nz, .Ltmp103
+	// inline asm
+	lw r16, zero, cur_process_index
+	lsl r1, r16, 4
+	lsl_add r1, r1, r16, 6
+	move r2, processs
+	add r1, r2, r1
+	lw r2, r1, 56
+	move r15, r0
+	jeq r2, 0, .LBB25_1
+// %bb.4:
+	lw r0, r1, 64
+	jeq r0, 0, .LBB25_5
+// %bb.8:
+	lsl r0, r16, 4
+	lsl_add r0, r0, r16, 6
+	move r1, processs
+	add r0, r1, r0
+	lw r1, r0, 72
+	jeq r1, 0, .LBB25_9
+// %bb.10:
 	lw r0, zero, mutex_sockets
-	call r23, mutex_lock
-	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	sw r22, -56, r0
-	sw r22, -52, 0
-	jump .LBB29_1
-.LBB29_1:                               // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -52
-	jgtu r0, 2, .LBB29_12
-	jump .LBB29_2
-.LBB29_2:                               //   in Loop: Header=BB29_1 Depth=1
-	lw r0, r22, -56
-	lw r1, r22, -52
-	lsl_add r0, r0, r1, 3
-	lw r0, r0, 56
-	jneq r0, 0, .LBB29_10
-	jump .LBB29_3
-.LBB29_3:
+	// inline asm
+.Ltmp104:
+	release r0, 0, nz, .Ltmp104+1
+	// inline asm
+	move r14, -7, true, .LBB25_7
+.LBB25_1:
+	add r17, r1, 56
+	move r14, 0
 	call r23, alloc_inode
-	sw r22, -48, r0
-	lw r0, r22, -48
-	jgtu r0, 1, .LBB29_5
-	jump .LBB29_4
-.LBB29_4:
+	jleu r0, 1, .LBB25_3
+	jump .LBB25_6
+.LBB25_5:
+	add r17, r1, 64
+	move r14, 1
+	call r23, alloc_inode
+	jgtu r0, 1, .LBB25_6
+.LBB25_3:
 	lw r0, zero, mutex_sockets
-	call r23, mutex_unlock
-	sw r22, -64, -11
-	jump .LBB29_13
-.LBB29_5:
-	lw r1, r22, -48
-	lw r0, r22, -56
-	lw r2, r22, -52
-	lsl_add r0, r0, r2, 3
-	sw r0, 56, r1
-	lw r0, r22, -56
-	lw r1, r22, -52
-	lsl_add r0, r0, r1, 3
-	sw r0, 60, 5
-	move r0, 16
-	sw r22, -16, r0
-	call r23, set_flag
-	lw r2, r22, -16
+	// inline asm
+.Ltmp105:
+	release r0, 0, nz, .Ltmp105+1
+	// inline asm
+	move r14, -11, true, .LBB25_7
+.LBB25_9:
+	add r17, r0, 72
+	move r14, 2
+	call r23, alloc_inode
+	jleu r0, 1, .LBB25_3
+.LBB25_6:
+	sw r17, 0, r0
+	lsl r1, r16, 4
+	lsl_add r1, r1, r16, 6
+	move r2, processs
+	lw r3, zero, mutex_flag
+	add r1, r2, r1
+	lsl_add r1, r1, r14, 3
+	sw r1, 60, 5
+	// inline asm
+.Ltmp106:
+	acquire r3, 0, nz, .Ltmp106
+	// inline asm
+	move r1, 651264
+	add r2, r22, -32
+	ldma r2, r1, 1
+	lw r3, r22, -24
+	or r3, r3, 16
+	sw r22, -24, r3
+	sdma r2, r1, 1
+	lw r3, zero, mutex_flag
+	// inline asm
+.Ltmp107:
+	release r3, 0, nz, .Ltmp107+1
+	// inline asm
+	sd r22, -24, 0
 	sd r22, -32, 0
-	sd r22, -40, 0
-	lw r0, r22, -60
-	sw r22, -24, r0
-	sw r22, -20, 0
-	lw r0, r22, -48
-	add r1, r22, -40
-	move r3, 0
-	move r4, 1
-	call r23, inode_operation
-	jeq r0, 0, .LBB29_7
-	jump .LBB29_6
-.LBB29_6:
-	call r23, halt
-.LBB29_7:
-	lw r0, r22, -48
-	add r1, r22, -24
-	move r2, 8
-	move r3, 16
-	move r4, 1
-	call r23, inode_operation
-	jeq r0, 0, .LBB29_9
-	jump .LBB29_8
-.LBB29_8:
-	call r23, halt
-.LBB29_9:
+	sw r22, -16, r15
+	sw r22, -12, 0
+	lsl_add r1, r1, r0, 16
+	sdma r2, r1, 1
+	move r1, 651280
+	lsl_add r0, r1, r0, 16
+	add r1, r22, -16
+	sdma r1, r0, 0
 	lw r0, zero, mutex_sockets
-	call r23, mutex_unlock
-	lw r0, r22, -52
-	sw r22, -64, r0
-	jump .LBB29_13
-.LBB29_10:                              //   in Loop: Header=BB29_1 Depth=1
-	jump .LBB29_11
-.LBB29_11:                              //   in Loop: Header=BB29_1 Depth=1
-	lw r0, r22, -52
-	add r0, r0, 1
-	sw r22, -52, r0
-	jump .LBB29_1
-.LBB29_12:
-	lw r0, zero, mutex_sockets
-	call r23, mutex_unlock
-	sw r22, -64, -7
-	jump .LBB29_13
-.LBB29_13:
-	lw r0, r22, -64
+	// inline asm
+.Ltmp108:
+	release r0, 0, nz, .Ltmp108+1
+	// inline asm
+.LBB25_7:
+	move r0, r14
+	ld d16, r22, -48
+	ld d14, r22, -40
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end29:
-	.size	socket_open, .Lfunc_end29-socket_open
+.Lfunc_end25:
+	.size	socket_open, .Lfunc_end25-socket_open
 	.section	.stack_sizes,"o",@progbits,.text.socket_open
-	.long	.Lfunc_begin29
-	.byte	64
+	.long	.Lfunc_begin25
+	.byte	48
 	.section	.text.socket_open,"ax",@progbits
                                         // -- End function
 	.section	.text.set_flag,"ax",@progbits
 	.globl	set_flag                        // -- Begin function set_flag
 	.type	set_flag,@function
 set_flag:                               // @set_flag
-.Lfunc_begin30:
+.Lfunc_begin26:
 // %bb.0:
-	sd r22, 40, d22
-	add r22, r22, 48
-	sw r22, -48, r0
+	lw r1, zero, mutex_flag
+	// inline asm
+.Ltmp109:
+	acquire r1, 0, nz, .Ltmp109
+	// inline asm
+	move r1, 651264
+	add r2, r22, 0
+	ldma r2, r1, 1
+	lw r3, r22, 8
+	or r0, r3, r0
+	sw r22, 8, r0
+	sdma r2, r1, 1
 	lw r0, zero, mutex_flag
-	call r23, mutex_lock
-	move r0, 651264
-	sw r22, -20, r0
-	add r1, r22, -40
-	sw r22, -16, r1
-	move r2, 16
-	sw r22, -24, r2
-	call r23, _mram_read
-	lw r0, r22, -16
-	lw r1, r22, -20
-	lw r2, r22, -24
-	lw r3, r22, -32
-	lw r4, r22, -48
-	or r3, r3, r4
-	sw r22, -32, r3
-	call r23, _mram_write
-	lw r0, zero, mutex_flag
-	call r23, mutex_unlock
-	ld d22, r22, -8
+	// inline asm
+.Ltmp110:
+	release r0, 0, nz, .Ltmp110+1
+	// inline asm
 	jump r23
-.Lfunc_end30:
-	.size	set_flag, .Lfunc_end30-set_flag
+.Lfunc_end26:
+	.size	set_flag, .Lfunc_end26-set_flag
 	.section	.stack_sizes,"o",@progbits,.text.set_flag
-	.long	.Lfunc_begin30
-	.byte	48
+	.long	.Lfunc_begin26
+	.byte	16
 	.section	.text.set_flag,"ax",@progbits
                                         // -- End function
 	.section	.text.check_sd,"ax",@progbits
 	.globl	check_sd                        // -- Begin function check_sd
 	.type	check_sd,@function
 check_sd:                               // @check_sd
-.Lfunc_begin31:
+.Lfunc_begin27:
 // %bb.0:
-	sw r22, 4, r0
-	lw r0, r22, 4
-	jgtu r0, 3, .LBB31_2
-	jump .LBB31_1
-.LBB31_1:
+	jgtu r0, 3, .LBB27_4
+// %bb.2:
 	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r1, r22, 4
-	lsl_add r0, r0, r1, 3
+	lsl r2, r1, 4
+	lsl_add r1, r2, r1, 6
+	move r2, processs
+	add r1, r2, r1
+	lsl_add r0, r1, r0, 3
 	lw r0, r0, 56
-	jneq r0, 0, .LBB31_3
-	jump .LBB31_2
-.LBB31_2:
-	sw r22, 0, -8
-	jump .LBB31_4
-.LBB31_3:
-	sw r22, 0, 0
-	jump .LBB31_4
-.LBB31_4:
-	lw r0, r22, 0
+	jeq r0, 0, .LBB27_4
+// %bb.3:
+	move r0, 0
 	jump r23
-.Lfunc_end31:
-	.size	check_sd, .Lfunc_end31-check_sd
+.LBB27_4:
+	move r0, -8
+	jump r23
+.Lfunc_end27:
+	.size	check_sd, .Lfunc_end27-check_sd
 	.section	.stack_sizes,"o",@progbits,.text.check_sd
-	.long	.Lfunc_begin31
-	.byte	8
+	.long	.Lfunc_begin27
+	.byte	0
 	.section	.text.check_sd,"ax",@progbits
                                         // -- End function
 	.section	.text.socket_close,"ax",@progbits
 	.globl	socket_close                    // -- Begin function socket_close
 	.type	socket_close,@function
 socket_close:                           // @socket_close
-.Lfunc_begin32:
+.Lfunc_begin28:
 // %bb.0:
-	sd r22, 16, d22
-	add r22, r22, 24
-	sw r22, -24, r0
-	lw r0, zero, mutex_sockets
-	call r23, mutex_lock
-	lw r0, r22, -24
-	call r23, check_sd
-	sw r22, -20, r0
-	lw r0, r22, -20
-	jeq r0, 0, .LBB32_2
-	jump .LBB32_1
-.LBB32_1:
-	jump .LBB32_3
-.LBB32_2:
+	sd r22, 0, d22
+	add r22, r22, 8
+	lw r1, zero, mutex_sockets
+	// inline asm
+.Ltmp111:
+	acquire r1, 0, nz, .Ltmp111
+	// inline asm
+	jgtu r0, 3, .LBB28_2
+// %bb.1:
 	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	sw r22, -16, r0
-	add r0, r0, r1
-	lw r1, r22, -24
-	lsl_add r0, r0, r1, 3
+	lsl r2, r1, 4
+	lsl_add r1, r2, r1, 6
+	move r2, processs
+	add r1, r2, r1
+	lsl_add r0, r1, r0, 3
 	lw r0, r0, 56
-	call r23, free_inode
-	lw r0, r22, -16
-	lw r2, zero, cur_process_index
-	lsl r1, r2, 4
-	lsl_add r1, r1, r2, 6
-	add r0, r0, r1
-	lw r1, r22, -24
-	lsl_add r0, r0, r1, 3
-	sw r0, 56, 0
-	jump .LBB32_3
-.LBB32_3:
-	lw r0, zero, mutex_sockets
-	call r23, mutex_unlock
-	lw r0, r22, -20
+	jneq r0, 0, .LBB28_3
+.LBB28_2:
+	lw r1, zero, mutex_sockets
+	move r0, -8
+	// inline asm
+.Ltmp112:
+	release r1, 0, nz, .Ltmp112+1
+	// inline asm
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end32:
-	.size	socket_close, .Lfunc_end32-socket_close
+.LBB28_3:
+	lw r0, zero, cur_process_index
+	call r23, free_inode
+.Lfunc_end28:
+	.size	socket_close, .Lfunc_end28-socket_close
 	.section	.stack_sizes,"o",@progbits,.text.socket_close
-	.long	.Lfunc_begin32
-	.byte	24
+	.long	.Lfunc_begin28
+	.byte	8
 	.section	.text.socket_close,"ax",@progbits
                                         // -- End function
 	.section	.text.socket_read,"ax",@progbits
 	.globl	socket_read                     // -- Begin function socket_read
 	.type	socket_read,@function
 socket_read:                            // @socket_read
-.Lfunc_begin33:
+.Lfunc_begin29:
 // %bb.0:
-	sd r22, 88, d22
-	add r22, r22, 96
-	sw r22, -96, r0
-	sw r22, -92, r1
-	sw r22, -88, r2
-	lw r0, r22, -92
-	sw r22, -84, r0
-	lw r0, zero, mutex_sockets
-	call r23, mutex_lock
-	lw r0, r22, -96
-	call r23, check_sd
-	sw r22, -80, r0
-	lw r0, r22, -80
-	jeq r0, 0, .LBB33_2
-	jump .LBB33_1
-.LBB33_1:
-	jump .LBB33_22
-.LBB33_2:
+	sd r22, 48, d22
+	add r22, r22, 56
+	sd r22, -32, d14
+	sd r22, -40, d16
+	sd r22, -48, d18
+	sd r22, -56, d20
+	lw r3, zero, mutex_sockets
+	move r14, r2
+	move r15, r1
+	move r16, r0
+	// inline asm
+.Ltmp113:
+	acquire r3, 0, nz, .Ltmp113
+	// inline asm
+	move r0, -8
+	jgtu r16, 3, .LBB29_37
+// %bb.1:
 	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r1, r22, -96
-	lsl_add r0, r0, r1, 3
+	lsl r2, r1, 4
+	lsl_add r2, r2, r1, 6
+	move r1, processs
+	add r2, r1, r2
+	lsl_add r2, r2, r16, 3
+	lw r2, r2, 56
+	jeq r2, 0, .LBB29_37
+// %bb.2:
+	lw r0, zero, cur_process_index
+	lsl r2, r0, 4
+	lsl_add r0, r2, r0, 6
+	add r0, r1, r0
+	lsl_add r0, r0, r16, 3
 	lw r0, r0, 56
-	sw r22, -76, r0
-	lw r0, r22, -76
-	add r1, r22, -72
-	move r2, 16
-	move r4, 0
-	move r3, r4
-	call r23, inode_operation
-	jeq r0, 0, .LBB33_4
-	jump .LBB33_3
-.LBB33_3:
-	call r23, halt
-.LBB33_4:
-	jump .LBB33_5
-.LBB33_5:                               // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -64
-	lw r1, r22, -68
-	jltu r0, r1, .LBB33_7
-	jump .LBB33_6
-.LBB33_6:                               //   in Loop: Header=BB33_5 Depth=1
-	lw r0, r22, -64
-	lw r1, r22, -68
-	sub r0, r0, r1
-	lw r1, r22, -88
-	move r2, 1
-	sw r22, -32, r2
-	jltu r0, r1, .LBB33_10
-	jump .LBB33_7
-.LBB33_7:                               //   in Loop: Header=BB33_5 Depth=1
-	lw r0, r22, -64
-	lw r1, r22, -68
-	move r2, 0
-	sw r22, -28, r2
-	jgeu r0, r1, .LBB33_9
-	jump .LBB33_8
-.LBB33_8:                               //   in Loop: Header=BB33_5 Depth=1
-	lw r1, r22, -68
-	lw r0, r22, -64
-	sub r0, r0, r1
+	lsl r19, r0, 16
+	move r1, 651264
+	lsl_add r18, r1, r0, 16, true, .LBB29_3
+.LBB29_8:                               //   in Loop: Header=BB29_3 Depth=1
+	// inline asm
+.Ltmp114:
+	release r20, 0, nz, .Ltmp114+1
+	// inline asm
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	add r0, r17, r0
+	add r17, r0, 16
+	call r23, me_new
+	lsl r0, r0, 2
+	lw r1, r0, fc_scheduler_job
+	move r0, r17
+	call r23, swap_context
+	// inline asm
+.Ltmp115:
+	acquire r20, 0, nz, .Ltmp115
+	// inline asm
+.LBB29_3:                               // =>This Inner Loop Header: Depth=1
+	add r0, r22, -24
+	ldma r0, r18, 1
+	lw r0, r22, -16
+	lw r2, r22, -20
+	jltu r0, r2, .LBB29_5
+// %bb.4:                               //   in Loop: Header=BB29_3 Depth=1
+	sub r1, r0, r2
+	jltu r1, r14, .LBB29_7
+.LBB29_5:                               //   in Loop: Header=BB29_3 Depth=1
+	jgeu r0, r2, .LBB29_10
+// %bb.6:                               //   in Loop: Header=BB29_3 Depth=1
+	sub r0, r0, r2
 	add r0, r0, 16384
-	lw r1, r22, -88
-	sub r0, r0, r1, ltu
-	sw r22, -28, r0
-	jump .LBB33_9
-.LBB33_9:                               //   in Loop: Header=BB33_5 Depth=1
-	lw r0, r22, -28
-	sw r22, -32, r0
-	jump .LBB33_10
-.LBB33_10:                              //   in Loop: Header=BB33_5 Depth=1
-	lw r0, r22, -32
-	and r0, r0, 1
-	jeq r0, 0, .LBB33_14
-	jump .LBB33_11
-.LBB33_11:                              //   in Loop: Header=BB33_5 Depth=1
-	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r1, r22, -96
-	lsl_add r0, r0, r1, 3
-	add r0, r0, 56
-	lw r2, zero, mutex_sockets
-	move r1, 0
-	sw r22, -24, r1
-	call r23, sleep
-	lw r4, r22, -24
-	lw r0, r22, -76
-	add r1, r22, -72
-	move r2, 16
-	move r3, r4
-	call r23, inode_operation
-	jeq r0, 0, .LBB33_13
-	jump .LBB33_12
-.LBB33_12:
-	call r23, halt
-.LBB33_13:                              //   in Loop: Header=BB33_5 Depth=1
-	jump .LBB33_5
-.LBB33_14:
-	lw r0, r22, -68
-	lw r1, r22, -88
-	add r0, r0, r1
-	and r0, r0, -8
+	jgeu r0, r14, .LBB29_10
+.LBB29_7:                               //   in Loop: Header=BB29_3 Depth=1
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
+	move r1, processs
+	add r0, r1, r0
+	lw r20, zero, mutex_sockets
+	lsl_add r0, r0, r16, 3
+	add r21, r0, 56
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	move r17, jobs
+	add r1, r17, r0
+	move r2, 6
+	sb r0, jobs, r2
+	sw r1, 8, r21
+	jneq r20, 0, .LBB29_8
+// %bb.9:                               //   in Loop: Header=BB29_3 Depth=1
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	add r0, r17, r0
+	add r17, r0, 16
+	call r23, me_new
+	lsl r0, r0, 2
+	lw r1, r0, fc_scheduler_job
+	move r0, r17
+	call r23, swap_context
+	jump .LBB29_3
+.LBB29_10:
+	add r0, r14, r2
 	add r0, r0, 8
-	sw r22, -56, r0
-	lw r0, r22, -68
-	and r0, r0, -8
-	add r0, r0, 16
-	sw r22, -52, r0
-	lw r0, r22, -52
-	lw r1, r22, -56
-	add r0, r0, r1
-	move r1, 16384
-	jgtu r0, r1, .LBB33_16
-	jump .LBB33_15
-.LBB33_15:
-	lw r0, r22, -76
-	lw r2, r22, -56
-	lw r3, r22, -52
-	move r1, buf_socket
-	move r4, 0
-	call r23, inode_operation
-	jump .LBB33_17
-.LBB33_16:
-	lw r0, r22, -52
-	sub r0, 16384, r0
-	sw r22, -48, r0
-	lw r0, r22, -56
-	lw r1, r22, -48
-	sub r0, r0, r1
-	sw r22, -44, r0
-	lw r0, r22, -76
-	lw r2, r22, -48
-	lw r3, r22, -52
-	move r1, buf_socket
-	sw r22, -16, r1
-	move r4, 0
-	sw r22, -20, r4
-	call r23, inode_operation
-	lw r1, r22, -16
-	lw r4, r22, -20
-	lw r0, r22, -76
-	lw r2, r22, -48
+	and r1, r0, -8
+	add r2, r2, 16
+	and r2, r2, -8
+	add r3, r2, r1
+	move r4, 16384
+	jgtu r3, r4, .LBB29_18
+// %bb.11:
+	add r1, r2, r19
+	add r1, r1, 651264
+	lsr r2, r0, 11, z, .LBB29_12
+// %bb.13:
+	move r3, buf_socket
+	move r4, r1
+.LBB29_14:                              // =>This Inner Loop Header: Depth=1
+	ldma r3, r4, 255
+	add r3, r3, 2048
+	add r4, r4, 2048
+	add r2, r2, -1, nz, .LBB29_14
+// %bb.15:
+	and r2, r0, -2048
+	and r0, r0, 2040
+	jneq r0, 0, .LBB29_17
+	jump .LBB29_32
+.LBB29_18:
+	sub r0, 16384, r2
+	add r2, r2, r19
+	add r2, r2, 651264
+	lsr r3, r0, 11, z, .LBB29_19
+// %bb.20:
+	move r4, buf_socket
+	move r5, r2
+.LBB29_21:                              // =>This Inner Loop Header: Depth=1
+	ldma r4, r5, 255
+	add r4, r4, 2048
+	add r5, r5, 2048
+	add r3, r3, -1, nz, .LBB29_21
+// %bb.22:
+	and r3, r0, -2048
+	jump .LBB29_23
+.LBB29_12:
+	move r2, 0
+	and r0, r0, 2040
+	jeq r0, 0, .LBB29_32
+.LBB29_17:
 	add r1, r1, r2
-	lw r2, r22, -44
-	move r3, 16
-	call r23, inode_operation
-	jump .LBB33_17
-.LBB33_17:
-	lw r0, r22, -68
-	and r0, r0, 7
-	sb r22, -40, r0
-	sw r22, -36, 0
-	jump .LBB33_18
-.LBB33_18:                              // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -36
-	lw r1, r22, -88
-	jgeu r0, r1, .LBB33_21
-	jump .LBB33_19
-.LBB33_19:                              //   in Loop: Header=BB33_18 Depth=1
-	lw r2, r22, -36
-	lbu r0, r22, -40
-	add r0, r2, r0
-	lbs r1, r0, buf_socket
-	lw r0, r22, -84
-	add r0, r0, r2
-	sb r0, 0, r1
-	jump .LBB33_20
-.LBB33_20:                              //   in Loop: Header=BB33_18 Depth=1
-	lw r0, r22, -36
-	add r0, r0, 1
-	sw r22, -36, r0
-	jump .LBB33_18
-.LBB33_21:
-	lw r0, r22, -68
-	lw r1, r22, -88
-	add r0, r0, r1
-	and r0, r0, 16383
-	sw r22, -68, r0
-	lw r0, r22, -76
-	add r1, r22, -72
-	move r2, 16
+	move r3, buf_socket
+	add r2, r3, r2
+	move r3, -1
+	lsr_add r0, r3, r0, 3
+	lsl_add r0, r2, r0, 24
+	ldma r0, r1, 0
+	jump .LBB29_32
+.LBB29_19:
 	move r3, 0
-	move r4, 1
-	call r23, inode_operation
-	jump .LBB33_22
-.LBB33_22:
-	lw r0, zero, mutex_sockets
-	call r23, mutex_unlock
-	lw r0, r22, -80
+.LBB29_23:
+	sub r1, r1, r0
+	and r4, r0, 2040
+	jeq r4, 0, .LBB29_25
+// %bb.24:
+	add r2, r2, r3
+	move r5, buf_socket
+	add r3, r5, r3
+	move r5, -1
+	lsr_add r4, r5, r4, 3
+	lsl_add r3, r3, r4, 24
+	ldma r3, r2, 0
+.LBB29_25:
+	move r2, buf_socket
+	or r3, r19, 16
+	add r3, r3, 651264
+	lsr r4, r1, 11, z, .LBB29_26
+// %bb.27:
+	add r5, r0, r2
+	move r6, r3
+.LBB29_28:                              // =>This Inner Loop Header: Depth=1
+	ldma r5, r6, 255
+	add r5, r5, 2048
+	add r6, r6, 2048
+	add r4, r4, -1, nz, .LBB29_28
+// %bb.29:
+	and r4, r1, -2048
+	and r1, r1, 2040
+	jeq r1, 0, .LBB29_32
+.LBB29_31:
+	add r0, r2, r0
+	add r2, r3, r4
+	add r0, r0, r4
+	move r3, -1
+	lsr_add r1, r3, r1, 3
+	lsl_add r0, r0, r1, 24
+	ldma r0, r2, 0
+.LBB29_32:
+	lw r0, r22, -20
+	jeq r14, 0, .LBB29_36
+// %bb.33:
+	and r0, r0, 7
+	move r1, buf_socket
+	add r0, r1, r0
+	move r1, r14
+.LBB29_34:                              // =>This Inner Loop Header: Depth=1
+	lbs r2, r0, 0
+	sb r15, 0, r2
+	add r15, r15, 1
+	add r0, r0, 1
+	add r1, r1, -1, nz, .LBB29_34
+// %bb.35:
+	lw r0, r22, -20
+.LBB29_36:
+	add r0, r0, r14
+	and r0, r0, 16383
+	sw r22, -20, r0
+	add r0, r22, -24
+	sdma r0, r18, 1
+	move r0, 0
+.LBB29_37:
+	lw r1, zero, mutex_sockets
+	// inline asm
+.Ltmp116:
+	release r1, 0, nz, .Ltmp116+1
+	// inline asm
+	ld d20, r22, -56
+	ld d18, r22, -48
+	ld d16, r22, -40
+	ld d14, r22, -32
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end33:
-	.size	socket_read, .Lfunc_end33-socket_read
+.LBB29_26:
+	move r4, 0
+	and r1, r1, 2040
+	jneq r1, 0, .LBB29_31
+	jump .LBB29_32
+.Lfunc_end29:
+	.size	socket_read, .Lfunc_end29-socket_read
 	.section	.stack_sizes,"o",@progbits,.text.socket_read
-	.long	.Lfunc_begin33
-	.byte	96
+	.long	.Lfunc_begin29
+	.byte	56
 	.section	.text.socket_read,"ax",@progbits
                                         // -- End function
 	.section	.text.socket_write,"ax",@progbits
 	.globl	socket_write                    // -- Begin function socket_write
 	.type	socket_write,@function
 socket_write:                           // @socket_write
-.Lfunc_begin34:
+.Lfunc_begin30:
 // %bb.0:
-	sd r22, 72, d22
-	add r22, r22, 80
-	sw r22, -76, r0
-	sw r22, -72, r1
-	sw r22, -68, r2
-	lw r0, r22, -72
-	sw r22, -64, r0
-	lw r0, r22, -68
-	jltu r0, 265, .LBB34_2
-	jump .LBB34_1
-.LBB34_1:
-	sw r22, -80, -20
-	jump .LBB34_19
-.LBB34_2:
+	sd r22, 64, d22
+	add r22, r22, 72
+	sd r22, -48, d14
+	sd r22, -56, d16
+	sd r22, -64, d18
+	sd r22, -72, d20
+	move r15, r2
+	move r16, r1
+	move r14, r0
+	move r0, -20
+	jgtu r15, 264, .LBB30_23
+// %bb.1:
 	lw r0, zero, mutex_sockets
-	call r23, mutex_lock
-	lw r0, r22, -76
-	call r23, check_sd
-	sw r22, -60, r0
-	lw r0, r22, -60
-	jeq r0, 0, .LBB34_4
-	jump .LBB34_3
-.LBB34_3:
-	jump .LBB34_18
-.LBB34_4:
+	// inline asm
+.Ltmp117:
+	acquire r0, 0, nz, .Ltmp117
+	// inline asm
+	move r0, -8
+	jgtu r14, 3, .LBB30_22
+// %bb.2:
 	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r1, r22, -76
-	lsl_add r0, r0, r1, 3
-	lw r0, r0, 56
-	sw r22, -56, r0
-	lw r0, r22, -56
-	add r1, r22, -48
-	move r2, 16
-	move r4, 0
-	move r3, r4
-	call r23, inode_operation
-	jeq r0, 0, .LBB34_6
-	jump .LBB34_5
-.LBB34_5:
-	call r23, halt
-.LBB34_6:
-	jump .LBB34_7
-.LBB34_7:                               // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -48
-	lw r1, r22, -68
-	add r0, r0, r1
-	lsr r0, r0, 14
-	jeq r0, 0, .LBB34_11
-	jump .LBB34_8
-.LBB34_8:                               //   in Loop: Header=BB34_7 Depth=1
-	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r1, r22, -76
-	lsl_add r0, r0, r1, 3
-	add r0, r0, 56
-	lw r2, zero, mutex_sockets
-	move r1, 0
-	sw r22, -20, r1
-	call r23, sleep
-	lw r4, r22, -20
-	lw r0, r22, -56
-	add r1, r22, -48
-	move r2, 16
-	move r3, r4
-	call r23, inode_operation
-	jeq r0, 0, .LBB34_10
-	jump .LBB34_9
-.LBB34_9:
-	call r23, halt
-.LBB34_10:                              //   in Loop: Header=BB34_7 Depth=1
-	jump .LBB34_7
-.LBB34_11:
-	lbu r0, r22, -48
-	and r0, r0, 7
-	jeq r0, 0, .LBB34_13
-	jump .LBB34_12
-.LBB34_12:
-	lw r0, r22, -56
-	lw r1, r22, -48
-	and r1, r1, -8
-	add r3, r1, 16400
-	move r1, buf_socket
-	move r2, 8
-	move r4, 0
-	call r23, inode_operation
-	jump .LBB34_13
-.LBB34_13:
-	lw r0, r22, -48
-	and r0, r0, 7
-	sb r22, -32, r0
-	sw r22, -28, 0
-	jump .LBB34_14
-.LBB34_14:                              // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -28
-	lw r1, r22, -68
-	jgeu r0, r1, .LBB34_17
-	jump .LBB34_15
-.LBB34_15:                              //   in Loop: Header=BB34_14 Depth=1
-	lw r1, r22, -64
-	lw r0, r22, -28
-	add r1, r1, r0
-	lbs r1, r1, 0
-	lbu r2, r22, -32
-	add r0, r0, r2
-	sb r0, buf_socket, r1
-	jump .LBB34_16
-.LBB34_16:                              //   in Loop: Header=BB34_14 Depth=1
-	lw r0, r22, -28
-	add r0, r0, 1
-	sw r22, -28, r0
-	jump .LBB34_14
-.LBB34_17:
-	lw r0, r22, -48
-	lw r1, r22, -68
-	add r0, r0, r1
+	lsl r2, r1, 4
+	lsl_add r2, r2, r1, 6
+	move r1, processs
+	add r2, r1, r2
+	lsl_add r2, r2, r14, 3
+	lw r2, r2, 56
+	jeq r2, 0, .LBB30_22
+// %bb.3:
+	lw r0, zero, cur_process_index
+	lsl r2, r0, 4
+	lsl_add r0, r2, r0, 6
+	add r0, r1, r0
+	lsl_add r0, r0, r14, 3
+	lw r19, r0, 56
+	move r0, 651264
+	lsl_add r18, r0, r19, 16, true, .LBB30_4
+.LBB30_7:                               //   in Loop: Header=BB30_4 Depth=1
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	add r0, r17, r0
+	add r17, r0, 16
+	call r23, me_new
+	lsl r0, r0, 2
+	lw r1, r0, fc_scheduler_job
+	move r0, r17
+	call r23, swap_context
+.LBB30_4:                               // =>This Inner Loop Header: Depth=1
+	add r0, r22, -24
+	ldma r0, r18, 1
+	lw r0, r22, -24
+	add r1, r0, r15
+	lsr r1, r1, 14, z, .LBB30_8
+// %bb.5:                               //   in Loop: Header=BB30_4 Depth=1
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
+	move r1, processs
+	add r0, r1, r0
+	lw r20, zero, mutex_sockets
+	lsl_add r0, r0, r14, 3
+	add r21, r0, 56
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	move r17, jobs
+	add r1, r17, r0
+	move r2, 6
+	sb r0, jobs, r2
+	sw r1, 8, r21
+	jeq r20, 0, .LBB30_7
+// %bb.6:                               //   in Loop: Header=BB30_4 Depth=1
+	// inline asm
+.Ltmp118:
+	release r20, 0, nz, .Ltmp118+1
+	// inline asm
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	add r0, r17, r0
+	add r17, r0, 16
+	call r23, me_new
+	lsl r0, r0, 2
+	lw r1, r0, fc_scheduler_job
+	move r0, r17
+	call r23, swap_context
+	// inline asm
+.Ltmp119:
+	acquire r20, 0, nz, .Ltmp119
+	// inline asm
+	jump .LBB30_4
+.LBB30_8:
+	lsl r1, r19, 16
+	and r2, r0, 7, z, .LBB30_9
+// %bb.10:
+	add r0, r0, 16400
 	and r0, r0, -8
-	add r0, r0, 8
+	add r0, r0, r1
+	add r0, r0, 651264
+	move r2, buf_socket
+	ldma r2, r0, 0
+	lw r0, r22, -24
+	and r2, r0, 7
+	jneq r15, 0, .LBB30_12
+	jump .LBB30_14
+.LBB30_9:
+	move r2, 0
+	jeq r15, 0, .LBB30_14
+.LBB30_12:
+	move r3, buf_socket
+	add r2, r3, r2
+	move r3, r15
+.LBB30_13:                              // =>This Inner Loop Header: Depth=1
+	lbs r4, r16, 0
+	sb r2, 0, r4
+	add r2, r2, 1
+	add r16, r16, 1
+	add r3, r3, -1, nz, .LBB30_13
+.LBB30_14:
+	add r2, r15, r0
+	add r2, r2, 8
+	add r0, r0, 16400
+	and r0, r0, -8
+	add r0, r0, r1
+	add r0, r0, 651264
+	lsr r1, r2, 11, z, .LBB30_15
+// %bb.16:
+	move r3, buf_socket
+	move r4, r0
+.LBB30_17:                              // =>This Inner Loop Header: Depth=1
+	sdma r3, r4, 255
+	add r3, r3, 2048
+	add r4, r4, 2048
+	add r1, r1, -1, nz, .LBB30_17
+// %bb.18:
+	and r1, r2, -2048
+	and r2, r2, 2040
+	jeq r2, 0, .LBB30_21
+.LBB30_20:
+	move r3, buf_socket
+	add r3, r3, r1
+	add r0, r0, r1
+	move r1, -1
+	lsr_add r1, r1, r2, 3
+	lsl_add r1, r3, r1, 24
+	sdma r1, r0, 0
+.LBB30_21:
+	lw r0, r22, -24
+	add r0, r0, r15
 	sw r22, -24, r0
-	lw r0, r22, -56
-	lw r2, r22, -24
-	lw r1, r22, -48
-	and r1, r1, -8
-	add r3, r1, 16400
-	move r1, buf_socket
-	move r4, 1
-	sw r22, -16, r4
-	call r23, inode_operation
-	lw r4, r22, -16
-	lw r1, r22, -68
-	lw r0, r22, -48
-	add r0, r0, r1
-	sw r22, -48, r0
-	lw r0, r22, -56
-	add r1, r22, -48
-	move r2, 16
-	move r3, 0
-	call r23, inode_operation
-	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r1, r22, -76
-	lsl_add r0, r0, r1, 3
+	add r0, r22, -24
+	sdma r0, r18, 1
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
+	move r1, processs
+	add r0, r1, r0
+	lsl_add r0, r0, r14, 3
 	lw r1, r0, 60
+	lw r2, zero, mutex_flag
 	or r1, r1, 64
 	sw r0, 60, r1
-	move r0, 8
-	call r23, set_flag
-	jump .LBB34_18
-.LBB34_18:
-	lw r0, zero, mutex_sockets
-	call r23, mutex_unlock
-	lw r0, r22, -60
-	sw r22, -80, r0
-	jump .LBB34_19
-.LBB34_19:
-	lw r0, r22, -80
+	// inline asm
+.Ltmp120:
+	acquire r2, 0, nz, .Ltmp120
+	// inline asm
+	move r0, 651264
+	add r1, r22, -40
+	ldma r1, r0, 1
+	lw r2, r22, -32
+	or r2, r2, 8
+	sw r22, -32, r2
+	sdma r1, r0, 1
+	lw r0, zero, mutex_flag
+	// inline asm
+.Ltmp121:
+	release r0, 0, nz, .Ltmp121+1
+	// inline asm
+	move r0, 0
+.LBB30_22:
+	lw r1, zero, mutex_sockets
+	// inline asm
+.Ltmp122:
+	release r1, 0, nz, .Ltmp122+1
+	// inline asm
+.LBB30_23:
+	ld d20, r22, -72
+	ld d18, r22, -64
+	ld d16, r22, -56
+	ld d14, r22, -48
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end34:
-	.size	socket_write, .Lfunc_end34-socket_write
+.LBB30_15:
+	move r1, 0
+	and r2, r2, 2040
+	jneq r2, 0, .LBB30_20
+	jump .LBB30_21
+.Lfunc_end30:
+	.size	socket_write, .Lfunc_end30-socket_write
 	.section	.stack_sizes,"o",@progbits,.text.socket_write
-	.long	.Lfunc_begin34
-	.byte	80
+	.long	.Lfunc_begin30
+	.byte	72
 	.section	.text.socket_write,"ax",@progbits
                                         // -- End function
 	.section	.text.syscall,"ax",@progbits
 	.globl	syscall                         // -- Begin function syscall
 	.type	syscall,@function
 syscall:                                // @syscall
-.Lfunc_begin35:
+.Lfunc_begin31:
 // %bb.0:
-	sd r22, 40, d22
-	add r22, r22, 48
-	sw r22, -44, r0
-	sw r22, -40, r1
-	sw r22, -36, r2
-	sw r22, -32, r3
-	sw r22, -28, r4
-	lw r0, r22, -28
-	jneq r0, 0, .LBB35_2
-	jump .LBB35_1
-.LBB35_1:
-	sw r22, -48, 0
-	jump .LBB35_56
-.LBB35_2:
-	sw r22, -24, 0
-	call r23, me
-	lbs r0, r0, cur_jobs
-	sb r22, -20, r0
+	sd r22, 56, d22
+	add r22, r22, 64
+	sd r22, -40, d14
+	sd r22, -48, d16
+	sd r22, -56, d18
+	sd r22, -64, d20
+	move r18, r4
+	move r17, r2
+	move r16, r1
+	move r14, r0
+	move r15, 0
+	jeq r18, 0, .LBB31_59
+// %bb.1:
+	call r23, me_new
+	lbu r20, r0, cur_jobs
 	// inline asm
-	time r0
+	time r1
+
 	// inline asm
-	sw r22, -24, r0
-	lw r0, r22, -24
-	lbu r2, r22, -20
-	lsl r1, r2, 2
-	lsl_add r2, r1, r2, 4
-	move r1, jobs
-	add r1, r1, r2
-	lw r1, r1, 12
-	sub r0, r0, r1
-	move r1, 2501
-	jltu r0, r1, .LBB35_4
-	jump .LBB35_3
-.LBB35_3:
-	lbu r1, r22, -20
-	lsl r0, r1, 2
-	lsl_add r0, r0, r1, 4
+	lsl r0, r20, 2
+	lsl_add r0, r0, r20, 4
+	move r19, jobs
+	add r2, r19, r0
+	lw r2, r2, 12
+	sub r1, r1, r2
+	move r2, 2501
+	jltu r1, r2, .LBB31_3
+// %bb.2:
 	move r1, 3
 	sb r0, jobs, r1
-	call r23, swap_scheduler
-	jump .LBB35_4
-.LBB35_4:
-	lw r0, r22, -28
-	jneq r0, 24, .LBB35_6
-	jump .LBB35_5
-.LBB35_5:
-	lw r0, r22, -44
-	call r23, try_lock
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_6:
-	lw r0, r22, -28
-	jeq r0, 22, .LBB35_8
-	jump .LBB35_7
-.LBB35_7:
-	lw r0, r22, -28
-	jneq r0, 23, .LBB35_15
-	jump .LBB35_8
-.LBB35_8:
-	lw r0, r22, -44
-	jneq r0, 0, .LBB35_10
-	jump .LBB35_9
-.LBB35_9:
-	sw r22, -48, 0
-	jump .LBB35_56
-.LBB35_10:
-	lbu r0, r22, -40
-	and r0, r0, 7
-	jeq r0, 0, .LBB35_12
-	jump .LBB35_11
-.LBB35_11:
-	sw r22, -48, -19
-	jump .LBB35_56
-.LBB35_12:
-	lbu r0, r22, -36
-	and r0, r0, 7
-	jeq r0, 0, .LBB35_14
-	jump .LBB35_13
-.LBB35_13:
-	sw r22, -48, -21
-	jump .LBB35_56
-.LBB35_14:
-	lw r0, r22, -44
-	lw r1, r22, -40
-	lw r2, r22, -36
-	lw r3, r22, -28
-	move r4, 22
-	sub r3, r3, r4, neq
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	add r0, r19, r0
+	add r19, r0, 16
+	call r23, me_new
+	lsl r0, r0, 2
+	lw r1, r0, fc_scheduler_job
+	move r0, r19
+	call r23, swap_context
+.LBB31_3:
+	jneq r18, 24, .LBB31_7
+// %bb.4:
+	call r23, me_new
+	lw r1, zero, mutex_l
+	// inline asm
+.Ltmp123:
+	acquire r1, 0, nz, .Ltmp123
+	// inline asm
+	lw r1, zero, mutex_jobs
+	// inline asm
+.Ltmp124:
+	acquire r1, 0, nz, .Ltmp124
+	// inline asm
+	lw r1, r14, 0
+	jeq r1, -1, .LBB31_6
+// %bb.5:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp125:
+	release r0, 0, nz, .Ltmp125+1
+	// inline asm
+	lw r0, zero, mutex_l
+	// inline asm
+.Ltmp126:
+	release r0, 0, nz, .Ltmp126+1
+	// inline asm
+	move r15, 1, true, .LBB31_59
+.LBB31_7:
+	and r0, r18, -2
+	jneq r0, 22, .LBB31_12
+// %bb.8:
+	jeq r14, 0, .LBB31_59
+// %bb.9:
+	move r15, -19
+	and r0, r16, 7, nz, .LBB31_59
+// %bb.10:
+	move r15, -21
+	and r0, r17, 7, nz, .LBB31_59
+// %bb.11:
+	move r0, 22
+	sub r3, r18, r0, neq
+	move r0, r14
+	move r1, r16
+	move r2, r17
 	call r23, chained_inode_operation
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_15:
-	lw r0, r22, -28
-	jneq r0, 15, .LBB35_17
-	jump .LBB35_16
-.LBB35_16:
-	lw r0, r22, -44
-	call r23, lock
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_17:
-	lw r0, r22, -28
-	jneq r0, 16, .LBB35_19
-	jump .LBB35_18
-.LBB35_18:
-	lw r0, r22, -44
-	call r23, unlock
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_19:
-	lw r0, r22, -28
-	jneq r0, 17, .LBB35_21
-	jump .LBB35_20
-.LBB35_20:
-	lw r0, r22, -44
-	lw r1, r22, -40
-	move r2, 0
-	call r23, sleep
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_21:
-	lw r0, r22, -28
-	jneq r0, 18, .LBB35_23
-	jump .LBB35_22
-.LBB35_22:
-	lw r0, r22, -44
-	move r2, 1
-	move r1, r2
-	call r23, wakeup
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_23:
-	lw r0, r22, -28
-	jneq r0, 14, .LBB35_25
-	jump .LBB35_24
-.LBB35_24:
-	lw r0, r22, -44
-	sw r22, -16, r0
-	lw r0, r22, -16
-	sw r0, 0, -1
-	sw r22, -48, 0
-	jump .LBB35_56
-.LBB35_25:
-	lw r0, r22, -28
-	jneq r0, 1, .LBB35_27
-	jump .LBB35_26
-.LBB35_26:
-	sw r22, -48, 0
-	jump .LBB35_56
-.LBB35_27:
-	lw r0, r22, -28
-	jneq r0, 2, .LBB35_29
-	jump .LBB35_28
-.LBB35_28:
-	lw r0, r22, -44
-	call r23, sbrk
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_29:
-	lw r0, r22, -28
-	jneq r0, 3, .LBB35_31
-	jump .LBB35_30
-.LBB35_30:
-	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r0, r0, 4
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_31:
-	lw r0, r22, -28
-	jneq r0, 4, .LBB35_33
-	jump .LBB35_32
-.LBB35_32:
-	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lbu r0, r0, 1
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_33:
-	lw r0, r22, -28
-	jneq r0, 5, .LBB35_35
-	jump .LBB35_34
-.LBB35_34:
-	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r0, r0, r1, 6
-	lbu r0, r0, processs
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_35:
-	lw r0, r22, -28
-	jneq r0, 6, .LBB35_37
-	jump .LBB35_36
-.LBB35_36:
-	lbu r1, r22, -20
-	lsl r0, r1, 2
-	lsl_add r1, r0, r1, 4
-	move r0, jobs
-	add r0, r0, r1
-	lbu r0, r0, 1
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_37:
-	lw r0, r22, -28
-	jneq r0, 7, .LBB35_39
-	jump .LBB35_38
-.LBB35_38:
-	lw r0, r22, -44
-	call r23, __end_process
-	jump .LBB35_39
-.LBB35_39:
-	lw r0, r22, -28
-	jneq r0, 8, .LBB35_41
-	jump .LBB35_40
-.LBB35_40:
-	move r0, beg
-	call r23, printk
-	lw r0, r22, -44
-	call r23, printk
-	move r0, end
-	call r23, printk
-	sw r22, -48, 0
-	jump .LBB35_56
-.LBB35_41:
-	lw r0, r22, -28
-	jneq r0, 9, .LBB35_43
-	jump .LBB35_42
-.LBB35_42:
-	move r0, beg
-	call r23, printk
-	lw r0, r22, -44
-	call r23, printk_int
-	move r0, end
-	call r23, printk
-	sw r22, -48, 0
-	jump .LBB35_56
-.LBB35_43:
-	lw r0, r22, -28
-	jneq r0, 10, .LBB35_45
-	jump .LBB35_44
-.LBB35_44:
-	lw r0, r22, -44
-	call r23, socket_open
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_45:
-	lw r0, r22, -28
-	jneq r0, 11, .LBB35_47
-	jump .LBB35_46
-.LBB35_46:
-	lw r0, r22, -44
-	lw r1, r22, -40
-	lw r2, r22, -36
-	call r23, socket_read
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_47:
-	lw r0, r22, -28
-	jneq r0, 12, .LBB35_49
-	jump .LBB35_48
-.LBB35_48:
-	lw r0, r22, -44
-	lw r1, r22, -40
-	lw r2, r22, -36
-	call r23, socket_write
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_49:
-	lw r0, r22, -28
-	jneq r0, 13, .LBB35_51
-	jump .LBB35_50
-.LBB35_50:
-	lw r0, r22, -44
-	call r23, socket_close
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_51:
-	lw r0, r22, -28
-	jneq r0, 20, .LBB35_53
-	jump .LBB35_52
-.LBB35_52:
-	lw r0, r22, -44
-	call r23, create_job
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_53:
-	lw r0, r22, -28
-	jneq r0, 21, .LBB35_55
-	jump .LBB35_54
-.LBB35_54:
-	call r23, join_job
-	sw r22, -48, r0
-	jump .LBB35_56
-.LBB35_55:
-	sw r22, -48, -1
-	jump .LBB35_56
-.LBB35_56:
-	lw r0, r22, -48
+	move r15, r0, true, .LBB31_59
+.LBB31_12:
+	add r0, r18, -1
+	jgtu r0, 20, .LBB31_57
+// %bb.13:
+	lsl r0, r0, 2
+	lw r0, r0, .LJTI31_0
+	jump r0
+.LBB31_32:
+	lw r0, zero, mutex_sbrk
+	// inline asm
+.Ltmp127:
+	acquire r0, 0, nz, .Ltmp127
+	// inline asm
+	jlts r14, 1, .LBB31_34
+// %bb.33:
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
+	move r1, processs
+	add r0, r1, r0
+	lw r0, r0, 32
+	add r0, r0, r14
+	move r15, -2
+	lsr r0, r0, 8
+	jgtu r0, 222, .LBB31_38
+.LBB31_36:
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
+	move r1, processs
+	add r0, r1, r0
+	lw r1, r0, 32
+	add r1, r1, r14
+	sw r0, 32, r1
+	jump .LBB31_37
+.LBB31_6:
+	lbu r0, r0, cur_jobs
+	sw r14, 0, r0
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp128:
+	release r0, 0, nz, .Ltmp128+1
+	// inline asm
+	lw r0, zero, mutex_l
+	// inline asm
+.Ltmp129:
+	release r0, 0, nz, .Ltmp129+1
+	// inline asm
+.LBB31_59:
+	move r0, r15
+	ld d20, r22, -64
+	ld d18, r22, -56
+	ld d16, r22, -48
+	ld d14, r22, -40
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end35:
-	.size	syscall, .Lfunc_end35-syscall
-	.section	.stack_sizes,"o",@progbits,.text.syscall
-	.long	.Lfunc_begin35
-	.byte	48
-	.section	.text.syscall,"ax",@progbits
+.LBB31_50:
+	move r0, r14
+	move r1, r16
+	move r2, r17
+	call r23, socket_read
+	move r15, r0, true, .LBB31_59
+.LBB31_31:
+	sw r14, 0, -1
+	jump .LBB31_59
+.LBB31_27:
+	move r0, r14
+	call r23, lock
+	jump .LBB31_59
+.LBB31_28:
+	move r0, r14
+	call r23, unlock
+	jump .LBB31_59
+.LBB31_29:
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	move r17, jobs
+	add r1, r17, r0
+	move r2, 6
+	sb r0, jobs, r2
+	sw r1, 8, r14
+	jeq r16, 0, .LBB31_58
+// %bb.30:
+	move r0, r16
+	call r23, unlock
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	add r0, r17, r0
+	add r14, r0, 16
+	call r23, me_new
+	lsl r0, r0, 2
+	lw r1, r0, fc_scheduler_job
+	move r0, r14
+	call r23, swap_context
+	move r0, r16
+	call r23, lock
+	jump .LBB31_59
+.LBB31_14:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp130:
+	acquire r0, 0, nz, .Ltmp130
+	// inline asm
+	lw r0, zero, cur_process_index
+	jeq r0, 0, .LBB31_15
+// %bb.60:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp131:
+	acquire r0, 0, nz, .Ltmp131
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 1
+	jeq r1, 1, .LBB31_16
+// %bb.61:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp132:
+	acquire r0, 0, nz, .Ltmp132
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 2
+	jeq r1, 2, .LBB31_16
+// %bb.62:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp133:
+	acquire r0, 0, nz, .Ltmp133
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 3
+	jeq r1, 3, .LBB31_16
+// %bb.63:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp134:
+	acquire r0, 0, nz, .Ltmp134
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 4
+	jeq r1, 4, .LBB31_16
+// %bb.64:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp135:
+	acquire r0, 0, nz, .Ltmp135
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 5
+	jeq r1, 5, .LBB31_16
+// %bb.65:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp136:
+	acquire r0, 0, nz, .Ltmp136
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 6
+	jeq r1, 6, .LBB31_16
+// %bb.66:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp137:
+	acquire r0, 0, nz, .Ltmp137
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 7
+	jeq r1, 7, .LBB31_16
+// %bb.67:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp138:
+	acquire r0, 0, nz, .Ltmp138
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 8
+	jeq r1, 8, .LBB31_16
+// %bb.68:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp139:
+	acquire r0, 0, nz, .Ltmp139
+	// inline asm
+	lw r1, zero, cur_process_index
+	move r0, 9
+	jeq r1, 9, .LBB31_16
+// %bb.69:
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r1, r1, r0, 11
+	lsl_sub r0, r1, r0, 6
+	add r0, r0, 651280
+	move r1, jobs
+	ldma r1, r0, 249
+	jump .LBB31_23
+.LBB31_39:
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
+	move r1, processs
+	add r0, r1, r0
+	lw r15, r0, 4
+	jump .LBB31_59
+.LBB31_40:
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
+	move r1, processs
+	jump .LBB31_43
+.LBB31_41:
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
+	lbu r15, r0, processs
+	jump .LBB31_59
+.LBB31_42:
+	lsl r0, r20, 2
+	lsl_add r0, r0, r20, 4
+	move r1, jobs
+.LBB31_43:
+	add r0, r1, r0
+	lbu r15, r0, 1
+	jump .LBB31_59
+.LBB31_45:
+	move r0, beg
+	call r23, printk
+	move r0, r14
+	call r23, printk
+	jump .LBB31_48
+.LBB31_46:
+	move r0, beg
+	call r23, printk
+	lw r0, zero, log_w
+	add r0, r0, 8
+	move r1, 65536
+	jgtu r0, r1, .LBB31_48
+// %bb.47:
+	lw r0, zero, mutex_printk
+	// inline asm
+.Ltmp140:
+	acquire r0, 0, nz, .Ltmp140
+	// inline asm
+	lw r0, zero, log_w
+	sw r22, -16, 1
+	sw r22, -12, r14
+	add r0, r0, 716800
+	add r1, r22, -16
+	sdma r1, r0, 0
+	lw r0, zero, log_w
+	lw r1, zero, mutex_flag
+	add r0, r0, 8
+	sw zero, log_w, r0
+	// inline asm
+.Ltmp141:
+	acquire r1, 0, nz, .Ltmp141
+	// inline asm
+	move r0, 651264
+	add r1, r22, -32
+	ldma r1, r0, 1
+	lw r2, r22, -24
+	or r2, r2, 64
+	sw r22, -24, r2
+	sdma r1, r0, 1
+	lw r0, zero, mutex_flag
+	// inline asm
+.Ltmp142:
+	release r0, 0, nz, .Ltmp142+1
+	// inline asm
+	lw r0, zero, mutex_printk
+	// inline asm
+.Ltmp143:
+	release r0, 0, nz, .Ltmp143+1
+	// inline asm
+.LBB31_48:
+	move r0, end
+	call r23, printk
+	jump .LBB31_59
+.LBB31_49:
+	move r0, r14
+	call r23, socket_open
+	move r15, r0, true, .LBB31_59
+.LBB31_51:
+	move r0, r14
+	move r1, r16
+	move r2, r17
+	call r23, socket_write
+	move r15, r0, true, .LBB31_59
+.LBB31_52:
+	lw r0, zero, mutex_sockets
+	// inline asm
+.Ltmp144:
+	acquire r0, 0, nz, .Ltmp144
+	// inline asm
+	jgtu r14, 3, .LBB31_54
+// %bb.53:
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
+	move r1, processs
+	add r0, r1, r0
+	lsl_add r0, r0, r14, 3
+	lw r0, r0, 56
+	jneq r0, 0, .LBB31_70
+.LBB31_54:
+	lw r0, zero, mutex_sockets
+	// inline asm
+.Ltmp145:
+	release r0, 0, nz, .Ltmp145+1
+	// inline asm
+	move r15, -8, true, .LBB31_59
+.LBB31_57:
+	move r15, -1, true, .LBB31_59
+.LBB31_55:
+	move r0, r14
+	call r23, create_job
+	move r15, r0, true, .LBB31_59
+.LBB31_56:
+	call r23, join_job
+	move r15, r0, true, .LBB31_59
+.LBB31_58:
+	call r23, me_new
+	lbu r0, r0, cur_jobs
+	lsl r1, r0, 2
+	lsl_add r0, r1, r0, 4
+	add r0, r17, r0
+	add r14, r0, 16
+	call r23, me_new
+	lsl r0, r0, 2
+	lw r1, r0, fc_scheduler_job
+	move r0, r14
+	call r23, swap_context
+	jump .LBB31_59
+.LBB31_15:
+	move r0, 0
+.LBB31_16:
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
+	move r1, processs
+	add r0, r1, r0
+	lbu r0, r0, 2
+	jeq r0, 0, .LBB31_22
+// %bb.17:
+	move r1, 0, true, .LBB31_18
+.LBB31_21:                              //   in Loop: Header=BB31_18 Depth=1
+	add r1, r1, 1
+	jgeu r1, r0, .LBB31_22
+.LBB31_18:                              // =>This Inner Loop Header: Depth=1
+	lsl r2, r1, 2
+	lsl_add r2, r2, r1, 4
+	lbu r3, r2, jobs
+	jneq r3, 6, .LBB31_21
+// %bb.19:                              //   in Loop: Header=BB31_18 Depth=1
+	move r3, jobs
+	add r2, r3, r2
+	lw r2, r2, 8
+	jneq r2, r14, .LBB31_21
+// %bb.20:                              //   in Loop: Header=BB31_18 Depth=1
+	lsl r2, r1, 2
+	lsl_add r2, r2, r1, 4
+	move r3, 3
+	sb r2, jobs, r3
+	jump .LBB31_21
+.LBB31_22:
+	lw r0, zero, mutex_jobs
+	// inline asm
+.Ltmp146:
+	release r0, 0, nz, .Ltmp146+1
+	// inline asm
+.LBB31_23:
+	move r0, cp
+	lw r1, r0, 4
+	// inline asm
+.Ltmp147:
+	acquire r1, 0, nz, .Ltmp147
+	// inline asm
+	sb r0, 2, 1
+	lbu r1, zero, cp
+	jeq r1, 0, .LBB31_26
+// %bb.24:
+	move r1, 0
+.LBB31_25:                              // =>This Inner Loop Header: Depth=1
+	// inline asm
+.Ltmp148:
+	resume r1, 0, nz, .Ltmp148+1
+	// inline asm
+	lbu r2, zero, cp
+	add r1, r1, 1
+	jltu r1, r2, .LBB31_25
+.LBB31_26:
+	sb r0, 1, 0
+	lw r0, r0, 4
+	// inline asm
+.Ltmp149:
+	release r0, 0, nz, .Ltmp149+1
+	// inline asm
+	move r15, 0, true, .LBB31_59
+.LBB31_34:
+	jles r14, -1, .LBB31_35
+.LBB31_37:
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
+	move r1, processs
+	add r0, r1, r0
+	lw r0, r0, 32
+	add r15, r0, 512
+.LBB31_38:
+	lw r0, zero, mutex_sbrk
+	// inline asm
+.Ltmp150:
+	release r0, 0, nz, .Ltmp150+1
+	// inline asm
+	jump .LBB31_59
+.LBB31_35:
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
+	move r1, processs
+	add r0, r1, r0
+	lw r0, r0, 32
+	lw r2, zero, cur_process_index
+	lsl r3, r2, 4
+	lsl_add r2, r3, r2, 6
+	add r1, r1, r2
+	lw r1, r1, 44
+	add r0, r0, r14
+	move r15, -3
+	jgeu r0, r1, .LBB31_36
+	jump .LBB31_38
+.LBB31_44:
+	move r0, r14
+	call r23, __end_process
+.LBB31_70:
+	lw r0, zero, cur_process_index
+	call r23, free_inode
+.Lfunc_end31:
+	.size	syscall, .Lfunc_end31-syscall
+	.section	.rodata.syscall,"a",@progbits
+	.p2align	2
+.LJTI31_0:
+	.long	.LBB31_59
+	.long	.LBB31_32
+	.long	.LBB31_39
+	.long	.LBB31_40
+	.long	.LBB31_41
+	.long	.LBB31_42
+	.long	.LBB31_44
+	.long	.LBB31_45
+	.long	.LBB31_46
+	.long	.LBB31_49
+	.long	.LBB31_50
+	.long	.LBB31_51
+	.long	.LBB31_52
+	.long	.LBB31_31
+	.long	.LBB31_27
+	.long	.LBB31_28
+	.long	.LBB31_29
+	.long	.LBB31_14
+	.long	.LBB31_57
+	.long	.LBB31_55
+	.long	.LBB31_56
+	.section	.stack_sizes,"o",@progbits,.rodata.syscall
+	.long	.Lfunc_begin31
+	.byte	64
+	.section	.rodata.syscall,"a",@progbits
                                         // -- End function
 	.section	.text.__end_process,"ax",@progbits
 	.globl	__end_process                   // -- Begin function __end_process
 	.type	__end_process,@function
 __end_process:                          // @__end_process
-.Lfunc_begin36:
+.Lfunc_begin32:
 // %bb.0:
-	sd r22, 8, d22
-	add r22, r22, 16
-	sw r22, -16, r0
-	lw r0, zero, mutex_jobs
-	call r23, mutex_lock
+	sd r22, 16, d22
+	add r22, r22, 24
+	lw r1, zero, mutex_jobs
+	// inline asm
+.Ltmp151:
+	acquire r1, 0, nz, .Ltmp151
+	// inline asm
 	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r1, r0, r1
+	lsl r2, r1, 4
+	lsl_add r1, r2, r1, 6
+	move r2, processs
+	add r1, r2, r1
 	sw r1, 8, 4
-	lw r1, r22, -16
-	lw r3, zero, cur_process_index
-	lsl r2, r3, 4
-	lsl_add r2, r2, r3, 6
-	add r0, r0, r2
-	sw r0, 12, r1
-	move r0, 2
-	call r23, set_flag
-	sw r22, -12, 0
-	jump .LBB36_1
-.LBB36_1:                               // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -12
-	lw r2, zero, cur_process_index
-	lsl r1, r2, 4
-	lsl_add r2, r1, r2, 6
-	move r1, processs
-	add r1, r1, r2
+	lw r1, zero, cur_process_index
+	lsl r3, r1, 4
+	lw r4, zero, mutex_flag
+	lsl_add r1, r3, r1, 6
+	add r1, r2, r1
+	sw r1, 12, r0
+	// inline asm
+.Ltmp152:
+	acquire r4, 0, nz, .Ltmp152
+	// inline asm
+	move r0, 651264
+	add r1, r22, -24
+	ldma r1, r0, 1
+	lw r3, r22, -16
+	or r3, r3, 2
+	sw r22, -16, r3
+	sdma r1, r0, 1
+	lw r0, zero, mutex_flag
+	// inline asm
+.Ltmp153:
+	release r0, 0, nz, .Ltmp153+1
+	// inline asm
+	lw r0, zero, cur_process_index
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
+	add r0, r2, r0
+	lbu r0, r0, 2
+	jeq r0, 0, .LBB32_3
+// %bb.1:
+	move r0, 0
+.LBB32_2:                               // =>This Inner Loop Header: Depth=1
+	lsl r1, r0, 2
+	lsl_add r1, r1, r0, 4
+	move r2, 4
+	sb r1, jobs, r2
+	lw r1, zero, cur_process_index
+	lsl r2, r1, 4
+	lsl_add r1, r2, r1, 6
+	move r2, processs
+	add r1, r2, r1
 	lbu r1, r1, 2
-	jges r0, r1, .LBB36_4
-	jump .LBB36_2
-.LBB36_2:                               //   in Loop: Header=BB36_1 Depth=1
-	lw r1, r22, -12
-	lsl r0, r1, 2
-	lsl_add r0, r0, r1, 4
-	move r1, 4
-	sb r0, jobs, r1
-	jump .LBB36_3
-.LBB36_3:                               //   in Loop: Header=BB36_1 Depth=1
-	lw r0, r22, -12
 	add r0, r0, 1
-	sw r22, -12, r0
-	jump .LBB36_1
-.LBB36_4:
+	jltu r0, r1, .LBB32_2
+.LBB32_3:
 	lw r0, zero, mutex_jobs
-	call r23, mutex_unlock
-	call r23, me
+	// inline asm
+.Ltmp154:
+	release r0, 0, nz, .Ltmp154+1
+	// inline asm
+	call r23, me_new
 	lsl r0, r0, 2
 	lw r1, r0, fc_scheduler_job
 	move r0, jobs
 	add r0, r0, 16
 	call r23, swap_context
-	call r23, halt
-.Lfunc_end36:
-	.size	__end_process, .Lfunc_end36-__end_process
+	fault 4
+.Lfunc_end32:
+	.size	__end_process, .Lfunc_end32-__end_process
 	.section	.stack_sizes,"o",@progbits,.text.__end_process
-	.long	.Lfunc_begin36
-	.byte	16
+	.long	.Lfunc_begin32
+	.byte	24
 	.section	.text.__end_process,"ax",@progbits
                                         // -- End function
 	.section	.text.printk,"ax",@progbits
 	.globl	printk                          // -- Begin function printk
 	.type	printk,@function
 printk:                                 // @printk
-.Lfunc_begin37:
+.Lfunc_begin33:
 // %bb.0:
-	sd r22, 24, d22
-	add r22, r22, 32
-	sw r22, -32, r0
-	sw r22, -28, 0
-	lw r0, r22, -32
-	sw r22, -24, r0
-	jump .LBB37_1
-.LBB37_1:                               // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -24
-	lbs r0, r0, 0
-	jeq r0, 0, .LBB37_3
-	jump .LBB37_2
-.LBB37_2:                               //   in Loop: Header=BB37_1 Depth=1
-	lw r0, r22, -24
-	add r0, r0, 1
-	sw r22, -24, r0
-	lw r0, r22, -28
-	add r0, r0, 1
-	sw r22, -28, r0
-	jump .LBB37_1
-.LBB37_3:
-	lw r0, zero, log_w
-	lw r1, r22, -28
-	add r0, r0, r1
-	move r1, 65537
-	jltu r0, r1, .LBB37_5
-	jump .LBB37_4
-.LBB37_4:
-	jump .LBB37_15
-.LBB37_5:
-	sb r22, -20, 0
-	lw r0, zero, mutex_printk
-	call r23, mutex_lock
-	sw r22, -16, 0
-	jump .LBB37_6
-.LBB37_6:                               // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -16
-	lw r1, r22, -28
-	jges r0, r1, .LBB37_11
-	jump .LBB37_7
-.LBB37_7:                               //   in Loop: Header=BB37_6 Depth=1
-	lw r0, r22, -32
-	lw r1, r22, -16
-	add r0, r0, r1
-	lbs r1, r0, 0
-	lbu r0, r22, -20
-	sb r0, buf_aligned, r1
-	lbs r0, r22, -20
-	add r0, r0, 1
-	sb r22, -20, r0
-	lbu r0, r22, -20
-	jneq r0, 128, .LBB37_9
-	jump .LBB37_8
-.LBB37_8:                               //   in Loop: Header=BB37_6 Depth=1
-	lw r3, zero, log_w
-	move r1, buf_aligned
-	move r2, 128
-	move r4, 1
-	move r0, r4
-	call r23, inode_operation
-	lw r0, zero, log_w
-	add r0, r0, 128
-	sw zero, log_w, r0
-	sb r22, -20, 0
-	jump .LBB37_9
-.LBB37_9:                               //   in Loop: Header=BB37_6 Depth=1
-	jump .LBB37_10
-.LBB37_10:                              //   in Loop: Header=BB37_6 Depth=1
-	lw r0, r22, -16
-	add r0, r0, 1
-	sw r22, -16, r0
-	jump .LBB37_6
-.LBB37_11:
-	jump .LBB37_12
-.LBB37_12:                              // =>This Inner Loop Header: Depth=1
-	lbu r0, r22, -20
-	and r0, r0, 7
-	jeq r0, 0, .LBB37_14
-	jump .LBB37_13
-.LBB37_13:                              //   in Loop: Header=BB37_12 Depth=1
-	lbu r0, r22, -20
+	lbu r1, r0, 0
+	jeq r1, 0, .LBB33_1
+// %bb.2:
 	move r1, 0
-	sb r0, buf_aligned, r1
-	lbs r0, r22, -20
+.LBB33_3:                               // =>This Inner Loop Header: Depth=1
+	add r2, r0, r1
+	lbu r3, r2, 1
+	add r2, r1, 1
+	move r1, r2
+	jneq r3, 0, .LBB33_3
+	jump .LBB33_4
+.LBB33_1:
+	move r2, 0
+.LBB33_4:
+	lw r1, zero, log_w
+	add r1, r1, r2
+	move r3, 65536
+	jgtu r1, r3, .LBB33_12
+// %bb.5:
+	lw r1, zero, mutex_printk
+	// inline asm
+.Ltmp155:
+	acquire r1, 0, nz, .Ltmp155
+	// inline asm
+	jeq r2, 0, .LBB33_6
+// %bb.13:
+	move r1, 0, true, .LBB33_14
+.LBB33_16:                              //   in Loop: Header=BB33_14 Depth=1
 	add r0, r0, 1
-	sb r22, -20, r0
-	jump .LBB37_12
-.LBB37_14:
-	lbu r2, r22, -20
-	lw r3, zero, log_w
-	move r1, buf_aligned
-	move r4, 1
-	move r0, r4
-	call r23, inode_operation
-	lbu r1, r22, -20
-	lw r0, zero, log_w
-	add r0, r0, r1
+	add r2, r2, -1, z, .LBB33_8
+.LBB33_14:                              // =>This Inner Loop Header: Depth=1
+	lbs r3, r0, 0
+	and r4, r1, 255
+	sb r4, buf_aligned, r3
+	add r1, r1, 1
+	and r3, r1, 255
+	jneq r3, 128, .LBB33_16
+// %bb.15:                              //   in Loop: Header=BB33_14 Depth=1
+	lw r1, zero, log_w
+	add r1, r1, 716800
+	move r3, buf_aligned
+	sdma r3, r1, 15
+	lw r1, zero, log_w
+	add r1, r1, 128
+	sw zero, log_w, r1
+	move r1, 0, true, .LBB33_16
+.LBB33_7:                               //   in Loop: Header=BB33_8 Depth=1
+	move r2, 0
+	sb r0, buf_aligned, r2
+	add r1, r1, 1
+.LBB33_8:                               // =>This Inner Loop Header: Depth=1
+	and r0, r1, 255
+	and r2, r1, 7, nz, .LBB33_7
+// %bb.9:
+	and r1, r1, 255
+	jeq r1, 0, .LBB33_11
+// %bb.10:
+	lw r1, zero, log_w
+	add r1, r1, 716800
+	move r2, -1
+	lsr_add r2, r2, r0, 3
+	move r3, buf_aligned
+	lsl_add r2, r3, r2, 24
+	sdma r2, r1, 0
+	jump .LBB33_11
+.LBB33_6:
+	move r0, 0
+.LBB33_11:
+	lw r1, zero, log_w
+	lw r2, zero, mutex_flag
+	add r0, r1, r0
 	sw zero, log_w, r0
-	move r0, 64
-	call r23, set_flag
+	// inline asm
+.Ltmp156:
+	acquire r2, 0, nz, .Ltmp156
+	// inline asm
+	move r0, 651264
+	add r1, r22, 0
+	ldma r1, r0, 1
+	lw r2, r22, 8
+	or r2, r2, 64
+	sw r22, 8, r2
+	sdma r1, r0, 1
+	lw r0, zero, mutex_flag
+	// inline asm
+.Ltmp157:
+	release r0, 0, nz, .Ltmp157+1
+	// inline asm
 	lw r0, zero, mutex_printk
-	call r23, mutex_unlock
-	jump .LBB37_15
-.LBB37_15:
-	ld d22, r22, -8
+	// inline asm
+.Ltmp158:
+	release r0, 0, nz, .Ltmp158+1
+	// inline asm
+.LBB33_12:
 	jump r23
-.Lfunc_end37:
-	.size	printk, .Lfunc_end37-printk
+.Lfunc_end33:
+	.size	printk, .Lfunc_end33-printk
 	.section	.stack_sizes,"o",@progbits,.text.printk
-	.long	.Lfunc_begin37
-	.byte	32
+	.long	.Lfunc_begin33
+	.byte	16
 	.section	.text.printk,"ax",@progbits
                                         // -- End function
 	.section	.text.read_flags,"ax",@progbits
 	.globl	read_flags                      // -- Begin function read_flags
 	.type	read_flags,@function
 read_flags:                             // @read_flags
-.Lfunc_begin38:
+.Lfunc_begin34:
 // %bb.0:
-	sd r22, 16, d22
-	add r22, r22, 24
 	lw r0, zero, mutex_flag
-	call r23, mutex_lock
+	// inline asm
+.Ltmp159:
+	acquire r0, 0, nz, .Ltmp159
+	// inline asm
 	move r0, 651264
-	add r1, r22, -24
-	move r2, 16
-	call r23, _mram_read
+	add r1, r22, 0
+	ldma r1, r0, 1
 	lw r0, zero, mutex_flag
-	call r23, mutex_unlock
-	lw r0, r22, -16
-	ld d22, r22, -8
+	// inline asm
+.Ltmp160:
+	release r0, 0, nz, .Ltmp160+1
+	// inline asm
+	lw r0, r22, 8
 	jump r23
-.Lfunc_end38:
-	.size	read_flags, .Lfunc_end38-read_flags
+.Lfunc_end34:
+	.size	read_flags, .Lfunc_end34-read_flags
 	.section	.stack_sizes,"o",@progbits,.text.read_flags
-	.long	.Lfunc_begin38
-	.byte	24
+	.long	.Lfunc_begin34
+	.byte	16
 	.section	.text.read_flags,"ax",@progbits
                                         // -- End function
 	.section	.text.write_flags,"ax",@progbits
 	.globl	write_flags                     // -- Begin function write_flags
 	.type	write_flags,@function
 write_flags:                            // @write_flags
-.Lfunc_begin39:
+.Lfunc_begin35:
 // %bb.0:
-	sd r22, 24, d22
-	add r22, r22, 32
-	sw r22, -32, r0
+	lw r1, zero, mutex_flag
+	// inline asm
+.Ltmp161:
+	acquire r1, 0, nz, .Ltmp161
+	// inline asm
+	sw r22, 8, r0
+	move r0, 651264
+	add r1, r22, 0
+	sdma r1, r0, 1
 	lw r0, zero, mutex_flag
-	call r23, mutex_lock
-	lw r0, r22, -32
-	sw r22, -16, r0
-	add r0, r22, -24
-	move r1, 651264
-	move r2, 16
-	call r23, _mram_write
-	lw r0, zero, mutex_flag
-	call r23, mutex_unlock
-	ld d22, r22, -8
+	// inline asm
+.Ltmp162:
+	release r0, 0, nz, .Ltmp162+1
+	// inline asm
 	jump r23
-.Lfunc_end39:
-	.size	write_flags, .Lfunc_end39-write_flags
+.Lfunc_end35:
+	.size	write_flags, .Lfunc_end35-write_flags
 	.section	.stack_sizes,"o",@progbits,.text.write_flags
-	.long	.Lfunc_begin39
-	.byte	32
+	.long	.Lfunc_begin35
+	.byte	16
 	.section	.text.write_flags,"ax",@progbits
                                         // -- End function
 	.section	.text.load_prg_memory,"ax",@progbits
 	.globl	load_prg_memory                 // -- Begin function load_prg_memory
 	.type	load_prg_memory,@function
 load_prg_memory:                        // @load_prg_memory
-.Lfunc_begin40:
+.Lfunc_begin36:
 // %bb.0:
-	sd r22, 24, d22
-	add r22, r22, 32
-	sw r22, -32, r0
-	lw r1, r22, -32
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	add r0, r0, 28
-	sw r22, -28, r0
-	lw r1, r22, -28
-	lw r2, r1, 0
-	move r0, 651264
-	lsl_add r0, r0, r2, 16
-	lw r2, r1, 4
-	move r1, 512
-	call r23, load_big_blocks
-	lw r0, r22, -28
-	lw r0, r0, 12
-	sw r22, -24, r0
-	sw r22, -20, 16
-	jump .LBB40_1
-.LBB40_1:                               // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -24
-	lsr r0, r0, 11
-	jeq r0, 0, .LBB40_3
-	jump .LBB40_2
-.LBB40_2:                               //   in Loop: Header=BB40_1 Depth=1
-	lw r0, r22, -24
-	add r0, r0, -2048
-	sw r22, -24, r0
-	lw r0, r22, -20
-	or r0, r0, -16777216
-	sw r22, -16, r0
-	lw r0, r22, -16
-	lw r1, r22, -28
-	lw r2, r1, 8
-	lw r1, r22, -20
-	lsl_add r1, r1, r2, 16
+	lsl r1, r0, 4
+	lsl_add r1, r1, r0, 6
+	move r2, processs
+	add r1, r2, r1
+	lw r3, r1, 28
+	lw r2, r1, 32
+	move r1, 651264
+	lsl_add r1, r1, r3, 16
+	lsr r3, r2, 11, z, .LBB36_1
+// %bb.2:
+	move r4, 512
+	move r5, r1
+.LBB36_3:                               // =>This Inner Loop Header: Depth=1
+	ldma r4, r5, 255
+	add r4, r4, 2048
+	add r5, r5, 2048
+	add r3, r3, -1, nz, .LBB36_3
+// %bb.4:
+	and r3, r2, -2048
+	and r2, r2, 2047
+	jeq r2, 0, .LBB36_7
+.LBB36_6:
+	add r1, r1, r3
+	add r3, r3, 512
+	move r4, -1
+	lsr_add r2, r4, r2, 3
+	lsl_add r2, r3, r2, 24
+	ldma r2, r1, 0
+.LBB36_7:
+	lsl r1, r0, 4
+	lsl_add r1, r1, r0, 6
+	move r2, processs
+	add r1, r2, r1
+	lw r2, r1, 40
+	move r3, 16
+	lsr r4, r2, 11, z, .LBB36_10
+// %bb.8:
+	move r3, 16
+.LBB36_9:                               // =>This Inner Loop Header: Depth=1
+	lsl r4, r0, 4
+	lsl_add r4, r4, r0, 6
+	move r5, processs
+	add r4, r5, r4
+	lw r4, r4, 36
+	add r2, r2, -2048
+	or r5, r3, -16777216
+	lsl_add r4, r3, r4, 16
+	// inline asm
+	ldmai r5, r4, 0
+
+	// inline asm
+	add r3, r3, 2048
+	lsr r4, r2, 11, nz, .LBB36_9
+.LBB36_10:
+	move r0, -16777216
+	lw r1, r1, 36
+	lsl_add r0, r0, r2, 21
+	and r0, r0, -16777216
+	or r0, r0, r3
+	lsl_add r1, r3, r1, 16
 	// inline asm
 	ldmai r0, r1, 0
 
 	// inline asm
-	lw r0, r22, -20
-	add r0, r0, 2048
-	sw r22, -20, r0
-	jump .LBB40_1
-.LBB40_3:
-	lw r0, r22, -20
-	lw r2, r22, -24
-	move r1, -16777216
-	lsl_add r1, r1, r2, 21
-	and r1, r1, -16777216
-	or r0, r0, r1
-	sw r22, -12, r0
-	lw r0, r22, -12
-	lw r1, r22, -28
-	lw r2, r1, 8
-	lw r1, r22, -20
-	lsl_add r1, r1, r2, 16
-	// inline asm
-	ldmai r0, r1, 0
-
-	// inline asm
-	ld d22, r22, -8
 	jump r23
-.Lfunc_end40:
-	.size	load_prg_memory, .Lfunc_end40-load_prg_memory
+.LBB36_1:
+	move r3, 0
+	and r2, r2, 2047
+	jneq r2, 0, .LBB36_6
+	jump .LBB36_7
+.Lfunc_end36:
+	.size	load_prg_memory, .Lfunc_end36-load_prg_memory
 	.section	.stack_sizes,"o",@progbits,.text.load_prg_memory
-	.long	.Lfunc_begin40
-	.byte	32
+	.long	.Lfunc_begin36
+	.byte	0
 	.section	.text.load_prg_memory,"ax",@progbits
                                         // -- End function
 	.section	.text.save_wram_process,"ax",@progbits
 	.globl	save_wram_process               // -- Begin function save_wram_process
 	.type	save_wram_process,@function
 save_wram_process:                      // @save_wram_process
-.Lfunc_begin41:
+.Lfunc_begin37:
 // %bb.0:
-	sd r22, 8, d22
-	add r22, r22, 16
-	sw r22, -16, r0
-	lw r1, r22, -16
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	add r0, r0, 28
-	sw r22, -12, r0
-	lw r0, r22, -12
-	lw r2, r0, 0
-	move r1, 651264
-	lsl_add r1, r1, r2, 16
-	lw r2, r0, 4
-	move r0, 512
-	call r23, store_big_blocks
-	ld d22, r22, -8
+	lsl r1, r0, 4
+	lsl_add r0, r1, r0, 6
+	move r1, processs
+	add r0, r1, r0
+	lw r2, r0, 28
+	lw r1, r0, 32
+	move r0, 651264
+	lsl_add r0, r0, r2, 16
+	lsr r2, r1, 11, z, .LBB37_1
+// %bb.2:
+	move r3, 512
+	move r4, r0
+.LBB37_3:                               // =>This Inner Loop Header: Depth=1
+	sdma r3, r4, 255
+	add r4, r4, 2048
+	add r3, r3, 2048
+	add r2, r2, -1, nz, .LBB37_3
+// %bb.4:
+	and r2, r1, -2048
+	and r1, r1, 2047
+	jeq r1, 0, .LBB37_7
+.LBB37_6:
+	add r3, r2, 512
+	add r0, r0, r2
+	move r2, -1
+	lsr_add r1, r2, r1, 3
+	lsl_add r1, r3, r1, 24
+	sdma r1, r0, 0
+.LBB37_7:
 	jump r23
-.Lfunc_end41:
-	.size	save_wram_process, .Lfunc_end41-save_wram_process
+.LBB37_1:
+	move r2, 0
+	and r1, r1, 2047
+	jneq r1, 0, .LBB37_6
+	jump .LBB37_7
+.Lfunc_end37:
+	.size	save_wram_process, .Lfunc_end37-save_wram_process
 	.section	.stack_sizes,"o",@progbits,.text.save_wram_process
-	.long	.Lfunc_begin41
-	.byte	16
+	.long	.Lfunc_begin37
+	.byte	0
 	.section	.text.save_wram_process,"ax",@progbits
                                         // -- End function
 	.section	.text.launch_proc,"ax",@progbits
 	.globl	launch_proc                     // -- Begin function launch_proc
 	.type	launch_proc,@function
 launch_proc:                            // @launch_proc
-.Lfunc_begin42:
+.Lfunc_begin38:
 // %bb.0:
-	sd r22, 24, d22
-	add r22, r22, 32
-                                        // kill: def $r2 killed $r1
-	sw r22, -32, r0
-	sb r22, -28, r1
-	lw r1, r22, -32
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	sw r0, 8, 2
-	lw r0, r22, -32
-	sw zero, cur_process_index, r0
-	lbu r0, r22, -28
-	jeq r0, 0, .LBB42_6
-	jump .LBB42_1
-.LBB42_1:
-	sw r22, -24, 0
-	jump .LBB42_2
-.LBB42_2:                               // =>This Inner Loop Header: Depth=1
-	lw r0, r22, -24
-	jgts r0, 99, .LBB42_5
-	jump .LBB42_3
-.LBB42_3:                               //   in Loop: Header=BB42_2 Depth=1
-	lw r1, r22, -24
+	sd r22, 8, d22
+	add r22, r22, 16
+	sd r22, -16, d14
+	move r14, r0
+	lsl r0, r14, 4
+	lsl_add r0, r0, r14, 6
+	move r2, processs
+	add r15, r2, r0
+	sw r15, 8, 2
+	sw zero, cur_process_index, r14
+	jeq r1, 0, .LBB38_4
+// %bb.1:
+	move r1, 100
+.LBB38_2:                               // =>This Inner Loop Header: Depth=1
 	lsl r0, r1, 2
-	lsl_add r0, r0, r1, 4
-	move r1, 0
-	sb r0, jobs, r1
-	jump .LBB42_4
-.LBB42_4:                               //   in Loop: Header=BB42_2 Depth=1
-	lw r0, r22, -24
-	add r0, r0, 1
-	sw r22, -24, r0
-	jump .LBB42_2
-.LBB42_5:
-	lw r1, r22, -32
-	lsl r0, r1, 4
-	lsl_add r0, r0, r1, 6
-	move r1, processs
-	add r0, r1, r0
-	sb r0, 2, 1
-	lw r2, r22, -32
-	lsl r0, r2, 4
-	lsl_add r0, r0, r2, 6
-	add r0, r1, r0
-	lw r2, r0, 24
+	lsl_add r2, r0, r1, 4
 	move r0, jobs
+	sub r2, r0, r2
+	sb r2, 2000, 0
+	add r1, r1, -1, nz, .LBB38_2
+// %bb.3:
+	lsl r1, r14, 4
+	lsl_add r1, r1, r14, 6
+	move r2, processs
+	add r1, r2, r1
+	sb r1, 2, 1
+	lw r2, r1, 24
 	sw r0, 16, r2
-	lw r2, r0, 16
 	sw r2, 36, r2
-	lw r2, r0, 16
 	move r3, __end_process
 	sw r2, 32, r3
-	lw r3, r22, -32
-	lsl r2, r3, 4
-	lsl_add r2, r2, r3, 6
-	add r1, r1, r2
-	lw r2, r1, 12
-	lw r1, r0, 16
-	sw r1, 24, r2
-	sb r0, 0, 1
-	sb r0, 1, 0
-	jump .LBB42_6
-.LBB42_6:
-	sw r22, -20, 0
+	lw r1, r1, 12
+	sw r2, 24, r1
+	sh r0, 0, 1
+.LBB38_4:
 	// inline asm
 	time r0
+
 	// inline asm
-	sw r22, -20, r0
-	lw r1, r22, -20
-	lw r2, r22, -32
-	lsl r0, r2, 4
-	lsl_add r2, r0, r2, 6
-	move r0, processs
-	add r0, r0, r2
-	sw r0, 20, r1
+	sw r15, 20, r0
 	call r23, scheduler_jobs
-	sw r22, -16, r0
-	lw r0, r22, -16
-	jeq r0, 0, .LBB42_9
-	jump .LBB42_7
-.LBB42_7:
-	lw r1, r22, -32
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r0, r0, 8
-	jeq r0, 4, .LBB42_9
-	jump .LBB42_8
-.LBB42_8:
-	lw r1, r22, -32
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
+	lw r1, r15, 8
+	jeq r0, 0, .LBB38_7
+// %bb.5:
+	jeq r1, 4, .LBB38_9
+// %bb.6:
+	lsl r0, r14, 4
+	lsl_add r0, r0, r14, 6
+	move r1, processs
+	add r0, r1, r0
 	sw r0, 8, 5
-	jump .LBB42_9
-.LBB42_9:
-	lw r1, r22, -32
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r0, r0, 8
-	jneq r0, 2, .LBB42_11
-	jump .LBB42_10
-.LBB42_10:
-	lw r1, r22, -32
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
+	jump .LBB38_9
+.LBB38_7:
+	jneq r1, 2, .LBB38_9
+// %bb.8:
+	lsl r0, r14, 4
+	lsl_add r0, r0, r14, 6
+	move r1, processs
+	add r0, r1, r0
 	sw r0, 8, 3
-	jump .LBB42_11
-.LBB42_11:
+.LBB38_9:
+	ld d14, r22, -16
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end42:
-	.size	launch_proc, .Lfunc_end42-launch_proc
+.Lfunc_end38:
+	.size	launch_proc, .Lfunc_end38-launch_proc
 	.section	.stack_sizes,"o",@progbits,.text.launch_proc
-	.long	.Lfunc_begin42
-	.byte	32
+	.long	.Lfunc_begin38
+	.byte	16
 	.section	.text.launch_proc,"ax",@progbits
                                         // -- End function
 	.section	.text.stop_dpu,"ax",@progbits
 	.globl	stop_dpu                        // -- Begin function stop_dpu
 	.type	stop_dpu,@function
 stop_dpu:                               // @stop_dpu
-.Lfunc_begin43:
+.Lfunc_begin39:
 // %bb.0:
-	sd r22, 8, d22
-	add r22, r22, 16
+	sd r22, 16, d22
+	add r22, r22, 24
 	move r0, saved_fc_stop
 	call r23, stop_me
-	sw r22, -16, 15
-	move r0, 3
+	move r0, 15
+	move r1, 3
 	// inline asm
-	time_cfg r0, r0
+	time_cfg r0, r1
+
 	// inline asm
-	sw r22, -16, r0
-	call r23, read_flags
-	sw r22, -12, r0
-	move r0, 0
-	call r23, write_flags
-	lbu r0, r22, -12
-	and r0, r0, 32
-	jeq r0, 0, .LBB43_2
-	jump .LBB43_1
-.LBB43_1:
+	lw r0, zero, mutex_flag
+	// inline asm
+.Ltmp163:
+	acquire r0, 0, nz, .Ltmp163
+	// inline asm
+	move r0, 651264
+	add r1, r22, -24
+	ldma r1, r0, 1
+	lw r2, zero, mutex_flag
+	// inline asm
+.Ltmp164:
+	release r2, 0, nz, .Ltmp164+1
+	// inline asm
+	lw r2, zero, mutex_flag
+	lw r3, r22, -16
+	// inline asm
+.Ltmp165:
+	acquire r2, 0, nz, .Ltmp165
+	// inline asm
+	sw r22, -16, 0
+	sdma r1, r0, 1
+	lw r0, zero, mutex_flag
+	// inline asm
+.Ltmp166:
+	release r0, 0, nz, .Ltmp166+1
+	// inline asm
+	and r0, r3, 32, z, .LBB39_2
+// %bb.1:
 	call r23, wakeup_sleepy_socket
-	jump .LBB43_2
-.LBB43_2:
+.LBB39_2:
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end43:
-	.size	stop_dpu, .Lfunc_end43-stop_dpu
+.Lfunc_end39:
+	.size	stop_dpu, .Lfunc_end39-stop_dpu
 	.section	.stack_sizes,"o",@progbits,.text.stop_dpu
-	.long	.Lfunc_begin43
-	.byte	16
+	.long	.Lfunc_begin39
+	.byte	24
 	.section	.text.stop_dpu,"ax",@progbits
                                         // -- End function
 	.section	.text.check_timer_stop,"ax",@progbits
 	.globl	check_timer_stop                // -- Begin function check_timer_stop
 	.type	check_timer_stop,@function
 check_timer_stop:                       // @check_timer_stop
-.Lfunc_begin44:
+.Lfunc_begin40:
 // %bb.0:
-	sd r22, 8, d22
-	add r22, r22, 16
-	sw r22, -16, 0
+	sd r22, 16, d22
+	add r22, r22, 24
 	// inline asm
 	time r0
+
 	// inline asm
-	sw r22, -16, r0
-	lw r0, r22, -16
 	move r1, 5000001
-	jltu r0, r1, .LBB44_2
-	jump .LBB44_1
-.LBB44_1:
-	call r23, stop_dpu
-	jump .LBB44_2
-.LBB44_2:
+	jltu r0, r1, .LBB40_3
+// %bb.1:
+	move r0, saved_fc_stop
+	call r23, stop_me
+	move r0, 15
+	move r1, 3
+	// inline asm
+	time_cfg r0, r1
+
+	// inline asm
+	lw r0, zero, mutex_flag
+	// inline asm
+.Ltmp167:
+	acquire r0, 0, nz, .Ltmp167
+	// inline asm
+	move r0, 651264
+	add r1, r22, -24
+	ldma r1, r0, 1
+	lw r2, zero, mutex_flag
+	// inline asm
+.Ltmp168:
+	release r2, 0, nz, .Ltmp168+1
+	// inline asm
+	lw r2, zero, mutex_flag
+	lw r3, r22, -16
+	// inline asm
+.Ltmp169:
+	acquire r2, 0, nz, .Ltmp169
+	// inline asm
+	sw r22, -16, 0
+	sdma r1, r0, 1
+	lw r0, zero, mutex_flag
+	// inline asm
+.Ltmp170:
+	release r0, 0, nz, .Ltmp170+1
+	// inline asm
+	and r0, r3, 32, z, .LBB40_3
+// %bb.2:
+	call r23, wakeup_sleepy_socket
+.LBB40_3:
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end44:
-	.size	check_timer_stop, .Lfunc_end44-check_timer_stop
+.Lfunc_end40:
+	.size	check_timer_stop, .Lfunc_end40-check_timer_stop
 	.section	.stack_sizes,"o",@progbits,.text.check_timer_stop
-	.long	.Lfunc_begin44
-	.byte	16
+	.long	.Lfunc_begin40
+	.byte	24
 	.section	.text.check_timer_stop,"ax",@progbits
                                         // -- End function
 	.section	.text.scheduler,"ax",@progbits
 	.globl	scheduler                       // -- Begin function scheduler
 	.type	scheduler,@function
 scheduler:                              // @scheduler
-.Lfunc_begin45:
+.Lfunc_begin41:
 // %bb.0:
-	sd r22, 32, d22
-	add r22, r22, 40
-	sb r22, -40, 0
-	sw r22, -36, 0
-	sw r22, -32, 0
-	sw r22, -28, 0
-	jump .LBB45_1
-.LBB45_1:                               // =>This Loop Header: Depth=1
-                                        //     Child Loop BB45_2 Depth 2
-	jump .LBB45_2
-.LBB45_2:                               //   Parent Loop BB45_1 Depth=1
+	sd r22, 40, d22
+	add r22, r22, 48
+	sd r22, -32, d14
+	sd r22, -40, d16
+	sd r22, -48, d18
+	move r17, 0
+	move r14, 1
+	move r19, r14
+	move r18, r17
+	move r15, r17, true, .LBB41_1
+.LBB41_44:                              //   in Loop: Header=BB41_1 Depth=1
+	move r19, 0
+	move r15, r19
+.LBB41_1:                               // =>This Loop Header: Depth=1
+                                        //     Child Loop BB41_2 Depth 2
+                                        //     Child Loop BB41_15 Depth 2
+                                        //     Child Loop BB41_22 Depth 2
+                                        //     Child Loop BB41_28 Depth 2
+                                        //     Child Loop BB41_32 Depth 2
+	lsl r0, r15, 4
+	lsl_add r0, r0, r15, 11
+	lsl_sub r0, r0, r15, 6
+	add r15, r15, 1
+	add r16, r0, 651280
+.LBB41_2:                               //   Parent Loop BB41_1 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
-	lw r0, r22, -36
-	jgtu r0, 9, .LBB45_17
-	jump .LBB45_3
-.LBB45_3:                               //   in Loop: Header=BB45_2 Depth=2
-	call r23, check_timer_stop
-	lw r1, r22, -36
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r0, r0, 8
-	jneq r0, 1, .LBB45_5
-	jump .LBB45_4
-.LBB45_4:                               //   in Loop: Header=BB45_2 Depth=2
-	sb r22, -20, 1
-	jump .LBB45_9
-.LBB45_5:                               //   in Loop: Header=BB45_2 Depth=2
-	lw r1, r22, -36
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r0, r0, 8
-	jneq r0, 3, .LBB45_7
-	jump .LBB45_6
-.LBB45_6:                               //   in Loop: Header=BB45_2 Depth=2
-	sb r22, -20, 0
-	jump .LBB45_8
-.LBB45_7:                               //   in Loop: Header=BB45_2 Depth=2
-	jump .LBB45_16
-.LBB45_8:                               //   in Loop: Header=BB45_2 Depth=2
-	jump .LBB45_9
-.LBB45_9:                               //   in Loop: Header=BB45_2 Depth=2
-	sb r22, -40, 0
-	call r23, me
-	jeq r0, 0, .LBB45_11
-	jump .LBB45_10
-.LBB45_10:
-	call r23, halt
-.LBB45_11:                              //   in Loop: Header=BB45_2 Depth=2
-	lw r1, r22, -36
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r0, r0, 4
-	sw r22, -24, r0
-	lw r0, r22, -28
-	lw r1, r22, -24
-	jeq r0, r1, .LBB45_15
-	jump .LBB45_12
-.LBB45_12:                              //   in Loop: Header=BB45_2 Depth=2
-	lw r1, r22, -32
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r0, r0, 4
-	lw r1, r22, -28
-	jneq r0, r1, .LBB45_14
-	jump .LBB45_13
-.LBB45_13:                              //   in Loop: Header=BB45_2 Depth=2
-	lw r0, r22, -32
-	call r23, save_wram_process
-	jump .LBB45_14
-.LBB45_14:                              //   in Loop: Header=BB45_2 Depth=2
-	lw r0, r22, -36
-	call r23, load_prg_memory
-	lw r0, r22, -36
-	sw r22, -32, r0
-	lw r0, r22, -24
-	sw r22, -28, r0
-	jump .LBB45_15
-.LBB45_15:                              //   in Loop: Header=BB45_2 Depth=2
-	lw r1, r22, -36
-	lsl r0, r1, 4
-	lsl_add r0, r0, r1, 11
-	lsl_sub r0, r0, r1, 6
-	add r0, r0, 651280
-	move r1, jobs
-	sw r22, -12, r1
-	move r2, 2000
-	sw r22, -16, r2
-	call r23, _mram_read
-	lw r0, r22, -36
-	lbu r1, r22, -20
-	call r23, launch_proc
-	lw r0, r22, -12
-	lw r2, r22, -16
-	lw r3, r22, -36
-	lsl r1, r3, 4
-	lsl_add r1, r1, r3, 11
-	lsl_sub r1, r1, r3, 6
-	add r1, r1, 651280
-	call r23, _mram_write
-	jump .LBB45_16
-.LBB45_16:                              //   in Loop: Header=BB45_2 Depth=2
-	lw r0, r22, -36
-	add r0, r0, 1
-	sw r22, -36, r0
-	jump .LBB45_2
-.LBB45_17:                              //   in Loop: Header=BB45_1 Depth=1
-	sw r22, -36, 0
-	lbu r0, r22, -40
-	jeq r0, 0, .LBB45_19
-	jump .LBB45_18
-.LBB45_18:                              //   in Loop: Header=BB45_1 Depth=1
-	call r23, stop_dpu
-	jump .LBB45_19
-.LBB45_19:                              //   in Loop: Header=BB45_1 Depth=1
-	sb r22, -40, 1
-	jump .LBB45_1
-.Lfunc_end45:
-	.size	scheduler, .Lfunc_end45-scheduler
+	// inline asm
+	time r0
+
+	// inline asm
+	move r1, 5000001
+	jltu r0, r1, .LBB41_5
+// %bb.3:                               //   in Loop: Header=BB41_2 Depth=2
+	move r0, saved_fc_stop
+	call r23, stop_me
+	move r0, 15
+	move r1, 3
+	// inline asm
+	time_cfg r0, r1
+
+	// inline asm
+	lw r0, zero, mutex_flag
+	// inline asm
+.Ltmp171:
+	acquire r0, 0, nz, .Ltmp171
+	// inline asm
+	move r0, 651264
+	add r1, r22, -24
+	ldma r1, r0, 1
+	lw r2, zero, mutex_flag
+	// inline asm
+.Ltmp172:
+	release r2, 0, nz, .Ltmp172+1
+	// inline asm
+	lw r2, zero, mutex_flag
+	lw r3, r22, -16
+	// inline asm
+.Ltmp173:
+	acquire r2, 0, nz, .Ltmp173
+	// inline asm
+	sw r22, -16, 0
+	sdma r1, r0, 1
+	lw r0, zero, mutex_flag
+	// inline asm
+.Ltmp174:
+	release r0, 0, nz, .Ltmp174+1
+	// inline asm
+	and r0, r3, 32, z, .LBB41_5
+// %bb.4:                               //   in Loop: Header=BB41_2 Depth=2
+	call r23, wakeup_sleepy_socket
+.LBB41_5:                               //   in Loop: Header=BB41_2 Depth=2
+	lsl r0, r15, 4
+	lsl_add r0, r0, r15, 6
+	move r1, processs
+	add r0, r1, r0
+	lw r0, r0, -72
+	jeq r0, 1, .LBB41_8
+// %bb.6:                               //   in Loop: Header=BB41_2 Depth=2
+	jeq r0, 3, .LBB41_7
+// %bb.40:                              //   in Loop: Header=BB41_2 Depth=2
+	add r16, r16, 2000
+	add r15, r15, 1
+	jneq r15, 11, .LBB41_2
+// %bb.41:                              //   in Loop: Header=BB41_1 Depth=1
+	and r0, r19, 1
+	jnz r0, .LBB41_44
+// %bb.42:                              //   in Loop: Header=BB41_1 Depth=1
+	move r0, saved_fc_stop
+	call r23, stop_me
+	move r0, 15
+	move r1, 3
+	// inline asm
+	time_cfg r0, r1
+
+	// inline asm
+	lw r0, zero, mutex_flag
+	// inline asm
+.Ltmp175:
+	acquire r0, 0, nz, .Ltmp175
+	// inline asm
+	move r0, 651264
+	add r1, r22, -24
+	ldma r1, r0, 1
+	lw r2, zero, mutex_flag
+	// inline asm
+.Ltmp176:
+	release r2, 0, nz, .Ltmp176+1
+	// inline asm
+	lw r2, zero, mutex_flag
+	lw r3, r22, -16
+	// inline asm
+.Ltmp177:
+	acquire r2, 0, nz, .Ltmp177
+	// inline asm
+	sw r22, -16, 0
+	sdma r1, r0, 1
+	lw r0, zero, mutex_flag
+	// inline asm
+.Ltmp178:
+	release r0, 0, nz, .Ltmp178+1
+	// inline asm
+	and r0, r3, 32, z, .LBB41_44
+// %bb.43:                              //   in Loop: Header=BB41_1 Depth=1
+	call r23, wakeup_sleepy_socket
+	jump .LBB41_44
+.LBB41_7:                               //   in Loop: Header=BB41_1 Depth=1
+	move r19, 1
+	call r23, me_new
+	jeq r0, 0, .LBB41_10
+	jump .LBB41_45
+.LBB41_8:                               //   in Loop: Header=BB41_1 Depth=1
+	move r19, 0
+	call r23, me_new
+	jneq r0, 0, .LBB41_45
+.LBB41_10:                              //   in Loop: Header=BB41_1 Depth=1
+	lsl r0, r15, 4
+	lsl_add r0, r0, r15, 6
+	move r3, processs
+	add r0, r3, r0
+	lw r2, r0, -76
+	add r1, r15, -1
+	jeq r17, r2, .LBB41_30
+// %bb.11:                              //   in Loop: Header=BB41_1 Depth=1
+	lsl r4, r18, 4
+	lsl_add r4, r4, r18, 6
+	add r3, r3, r4
+	lw r3, r3, 4
+	jneq r3, r17, .LBB41_19
+// %bb.12:                              //   in Loop: Header=BB41_1 Depth=1
+	move r3, processs
+	add r3, r3, r4
+	lw r5, r3, 28
+	lw r4, r3, 32
+	move r3, 651264
+	lsl_add r3, r3, r5, 16
+	lsr r5, r4, 11, z, .LBB41_13
+// %bb.14:                              //   in Loop: Header=BB41_1 Depth=1
+	move r6, 512
+	move r7, r3
+.LBB41_15:                              //   Parent Loop BB41_1 Depth=1
+                                        // =>  This Inner Loop Header: Depth=2
+	sdma r6, r7, 255
+	add r7, r7, 2048
+	add r6, r6, 2048
+	add r5, r5, -1, nz, .LBB41_15
+// %bb.16:                              //   in Loop: Header=BB41_1 Depth=1
+	and r5, r4, -2048
+	and r4, r4, 2047
+	jeq r4, 0, .LBB41_19
+.LBB41_18:                              //   in Loop: Header=BB41_1 Depth=1
+	add r6, r5, 512
+	add r3, r3, r5
+	move r5, -1
+	lsr_add r4, r5, r4, 3
+	lsl_add r4, r6, r4, 24
+	sdma r4, r3, 0
+.LBB41_19:                              //   in Loop: Header=BB41_1 Depth=1
+	lsl r3, r15, 4
+	lsl_add r3, r3, r15, 6
+	move r4, processs
+	add r3, r4, r3
+	lw r5, r3, -52
+	lw r4, r3, -48
+	move r3, 651264
+	lsl_add r3, r3, r5, 16
+	lsr r5, r4, 11, z, .LBB41_20
+// %bb.21:                              //   in Loop: Header=BB41_1 Depth=1
+	move r6, 512
+	move r7, r3
+.LBB41_22:                              //   Parent Loop BB41_1 Depth=1
+                                        // =>  This Inner Loop Header: Depth=2
+	ldma r6, r7, 255
+	add r6, r6, 2048
+	add r7, r7, 2048
+	add r5, r5, -1, nz, .LBB41_22
+// %bb.23:                              //   in Loop: Header=BB41_1 Depth=1
+	and r5, r4, -2048
+	and r4, r4, 2047
+	jeq r4, 0, .LBB41_26
+.LBB41_25:                              //   in Loop: Header=BB41_1 Depth=1
+	add r3, r3, r5
+	add r5, r5, 512
+	move r6, -1
+	lsr_add r4, r6, r4, 3
+	lsl_add r4, r5, r4, 24
+	ldma r4, r3, 0
+.LBB41_26:                              //   in Loop: Header=BB41_1 Depth=1
+	lsl r3, r15, 4
+	lsl_add r3, r3, r15, 6
+	move r4, processs
+	add r3, r4, r3
+	lw r4, r3, -40
+	move r5, 16
+	lsr r6, r4, 11, z, .LBB41_29
+// %bb.27:                              //   in Loop: Header=BB41_1 Depth=1
+	move r5, 16
+.LBB41_28:                              //   Parent Loop BB41_1 Depth=1
+                                        // =>  This Inner Loop Header: Depth=2
+	lsl r6, r15, 4
+	lsl_add r6, r6, r15, 6
+	move r7, processs
+	add r6, r7, r6
+	lw r6, r6, -44
+	add r4, r4, -2048
+	or r7, r5, -16777216
+	lsl_add r6, r5, r6, 16
+	// inline asm
+	ldmai r7, r6, 0
+
+	// inline asm
+	add r5, r5, 2048
+	lsr r6, r4, 11, nz, .LBB41_28
+.LBB41_29:                              //   in Loop: Header=BB41_1 Depth=1
+	move r6, -16777216
+	lw r3, r3, -44
+	lsl_add r4, r6, r4, 21
+	and r4, r4, -16777216
+	or r4, r4, r5
+	lsl_add r3, r5, r3, 16
+	// inline asm
+	ldmai r4, r3, 0
+
+	// inline asm
+	move r18, r1
+	move r17, r2
+.LBB41_30:                              //   in Loop: Header=BB41_1 Depth=1
+	move r2, jobs
+	ldma r2, r16, 249
+	sw r0, -72, 2
+	sw zero, cur_process_index, r1
+	jnz r19, .LBB41_34
+// %bb.31:                              //   in Loop: Header=BB41_1 Depth=1
+	move r1, 100
+.LBB41_32:                              //   Parent Loop BB41_1 Depth=1
+                                        // =>  This Inner Loop Header: Depth=2
+	lsl r0, r1, 2
+	lsl_add r2, r0, r1, 4
+	move r0, jobs
+	sub r2, r0, r2
+	sb r2, 2000, 0
+	add r1, r1, -1, nz, .LBB41_32
+// %bb.33:                              //   in Loop: Header=BB41_1 Depth=1
+	lsl r1, r15, 4
+	lsl_add r1, r1, r15, 6
+	move r2, processs
+	add r1, r2, r1
+	sb r1, -78, 1
+	lw r2, r1, -56
+	sw r0, 16, r2
+	sw r2, 36, r2
+	move r3, __end_process
+	sw r2, 32, r3
+	lw r1, r1, -68
+	sw r2, 24, r1
+	sh r0, 0, 1
+.LBB41_34:                              //   in Loop: Header=BB41_1 Depth=1
+	// inline asm
+	time r0
+
+	// inline asm
+	lsl r1, r15, 4
+	lsl_add r1, r1, r15, 6
+	move r2, processs
+	add r19, r2, r1
+	sw r19, -60, r0
+	call r23, scheduler_jobs
+	lw r1, r19, -72
+	jeq r0, 0, .LBB41_37
+// %bb.35:                              //   in Loop: Header=BB41_1 Depth=1
+	jeq r1, 4, .LBB41_39
+// %bb.36:                              //   in Loop: Header=BB41_1 Depth=1
+	lsl r0, r15, 4
+	lsl_add r0, r0, r15, 6
+	move r1, processs
+	add r0, r1, r0
+	sw r0, -72, 5
+	jump .LBB41_39
+.LBB41_37:                              //   in Loop: Header=BB41_1 Depth=1
+	jneq r1, 2, .LBB41_39
+// %bb.38:                              //   in Loop: Header=BB41_1 Depth=1
+	lsl r0, r15, 4
+	lsl_add r0, r0, r15, 6
+	move r1, processs
+	add r0, r1, r0
+	sw r0, -72, 3
+.LBB41_39:                              //   in Loop: Header=BB41_1 Depth=1
+	move r0, jobs
+	sdma r0, r16, 249
+	move r19, r14
+	jneq r15, 10, .LBB41_1
+	jump .LBB41_44
+.LBB41_20:                              //   in Loop: Header=BB41_1 Depth=1
+	move r5, 0
+	and r4, r4, 2047
+	jneq r4, 0, .LBB41_25
+	jump .LBB41_26
+.LBB41_13:                              //   in Loop: Header=BB41_1 Depth=1
+	move r5, 0
+	and r4, r4, 2047
+	jneq r4, 0, .LBB41_18
+	jump .LBB41_19
+.LBB41_45:
+	fault 4
+.Lfunc_end41:
+	.size	scheduler, .Lfunc_end41-scheduler
 	.section	.stack_sizes,"o",@progbits,.text.scheduler
-	.long	.Lfunc_begin45
-	.byte	40
+	.long	.Lfunc_begin41
+	.byte	48
 	.section	.text.scheduler,"ax",@progbits
                                         // -- End function
 	.section	.text.main,"ax",@progbits
 	.globl	main                            // -- Begin function main
 	.type	main,@function
 main:                                   // @main
-.Lfunc_begin46:
+.Lfunc_begin42:
 // %bb.0:
-	sd r22, 16, d22
-	add r22, r22, 24
-	sw r22, -24, 0
-	call r23, me
-	jneq r0, 0, .LBB46_2
-	jump .LBB46_1
-.LBB46_1:
-	move r1, __atomic_bit_mutex_sp
-	move r0, cp
-	sw r0, 4, r1
-	sb r0, 0, 16
-	sb r0, 1, 0
-	sb r0, 2, 0
+	sd r22, 0, d22
+	add r22, r22, 8
+	call r23, me_new
+	jneq r0, 0, .LBB42_2
+// %bb.1:
+	move r0, __atomic_bit_mutex_sp
+	move r1, cp
+	sw r1, 4, r0
+	sh r1, 0, 16
+	sb r1, 2, 0
 	move r0, __atomic_bit_mutex_mutex_flag
 	sw zero, mutex_flag, r0
 	move r0, __atomic_bit_mutex_mutex_l
@@ -3914,140 +4792,179 @@ main:                                   // @main
 	sw zero, mutex_sockets, r0
 	move r0, __atomic_bit_mutex_mutex_mram
 	sw zero, mutex_mram, r0
-	jump .LBB46_6
-.LBB46_2:
-	jump .LBB46_3
-.LBB46_3:                               // =>This Inner Loop Header: Depth=1
-	lbu r0, zero, cp
-	jneq r0, 0, .LBB46_5
-	jump .LBB46_4
-.LBB46_4:                               //   in Loop: Header=BB46_3 Depth=1
-	jump .LBB46_3
-.LBB46_5:
+	jump .LBB42_3
+.LBB42_2:
 	call r23, scheduler_jobs
-	jump .LBB46_6
-.LBB46_6:
+.LBB42_3:
 	call r23, boot_me
-	move r0, __user_space_wram
-	move r1, 255
-	sb r0, 57343, r1
-	move r0, 0
-	sw r22, -16, r0
-	call r23, write_flags
-	sw r22, -20, 15
-	move r0, 3
-	// inline asm
-	time_cfg r0, r0
-	// inline asm
-	sw r22, -20, r0
+	move r0, 1
+	move r1, r0
+	call r23, perfcounter_config
 	call r23, scheduler
-                                        // kill: def $r1 killed $r0
-	lw r0, r22, -16
-	ld d22, r22, -8
-	jump r23
-.Lfunc_end46:
-	.size	main, .Lfunc_end46-main
+.Lfunc_end42:
+	.size	main, .Lfunc_end42-main
 	.section	.stack_sizes,"o",@progbits,.text.main
-	.long	.Lfunc_begin46
-	.byte	24
+	.long	.Lfunc_begin42
+	.byte	8
 	.section	.text.main,"ax",@progbits
                                         // -- End function
 	.section	.text.index_from_roleid,"ax",@progbits
 	.globl	index_from_roleid               // -- Begin function index_from_roleid
 	.type	index_from_roleid,@function
 index_from_roleid:                      // @index_from_roleid
-.Lfunc_begin47:
+.Lfunc_begin43:
 // %bb.0:
-                                        // kill: def $r1 killed $r0
-	sb r22, 4, r0
 	lw r1, zero, cur_process_index
-	lsl r0, r1, 4
-	lsl_add r0, r0, r1, 6
-	lbs r0, r0, processs
-	sb r22, 8, r0
-	sw r22, 12, 0
-	jump .LBB47_1
-.LBB47_1:                               // =>This Inner Loop Header: Depth=1
-	lw r0, r22, 12
-	jgtu r0, 9, .LBB47_8
-	jump .LBB47_2
-.LBB47_2:                               //   in Loop: Header=BB47_1 Depth=1
-	lw r1, r22, 12
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lw r0, r0, 4
-	jeq r0, 0, .LBB47_6
-	jump .LBB47_3
-.LBB47_3:                               //   in Loop: Header=BB47_1 Depth=1
-	lw r1, r22, 12
-	lsl r0, r1, 4
-	lsl_add r0, r0, r1, 6
-	lbu r0, r0, processs
-	lbu r1, r22, 8
-	jneq r0, r1, .LBB47_6
-	jump .LBB47_4
-.LBB47_4:                               //   in Loop: Header=BB47_1 Depth=1
-	lw r1, r22, 12
-	lsl r0, r1, 4
-	lsl_add r1, r0, r1, 6
-	move r0, processs
-	add r0, r0, r1
-	lbu r0, r0, 1
-	lbu r1, r22, 4
-	jneq r0, r1, .LBB47_6
-	jump .LBB47_5
-.LBB47_5:
-	lw r0, r22, 12
-	sw r22, 0, r0
-	jump .LBB47_9
-.LBB47_6:                               //   in Loop: Header=BB47_1 Depth=1
-	jump .LBB47_7
-.LBB47_7:                               //   in Loop: Header=BB47_1 Depth=1
-	lw r0, r22, 12
-	add r0, r0, 1
-	sw r22, 12, r0
-	jump .LBB47_1
-.LBB47_8:
-	sw r22, 0, -1
-	jump .LBB47_9
-.LBB47_9:
-	lw r0, r22, 0
+	lsl r2, r1, 4
+	lsl_add r1, r2, r1, 6
+	move r3, processs
+	lw r4, r3, 4
+	lbs r2, r1, processs
+	jeq r4, 0, .LBB43_3
+// %bb.1:
+	lbs r1, zero, processs
+	and r4, r2, 255
+	and r1, r1, 255
+	jneq r1, r4, .LBB43_3
+// %bb.2:
+	lbs r1, r3, 1
+	and r4, r1, 255
+	move r1, 0
+	jeq r4, r0, .LBB43_30
+.LBB43_3:
+	lw r1, r3, 84
+	jeq r1, 0, .LBB43_6
+// %bb.4:
+	lbs r1, r3, 80
+	and r4, r2, 255
+	and r1, r1, 255
+	jneq r1, r4, .LBB43_6
+// %bb.5:
+	lbs r1, r3, 81
+	and r3, r1, 255
+	move r1, 1
+	jeq r3, r0, .LBB43_30
+.LBB43_6:
+	move r3, processs
+	lw r1, r3, 164
+	jeq r1, 0, .LBB43_9
+// %bb.7:
+	lbs r1, r3, 160
+	and r4, r2, 255
+	and r1, r1, 255
+	jneq r1, r4, .LBB43_9
+// %bb.8:
+	lbs r1, r3, 161
+	and r4, r1, 255
+	move r1, 2
+	jeq r4, r0, .LBB43_30
+.LBB43_9:
+	lw r1, r3, 244
+	jeq r1, 0, .LBB43_12
+// %bb.10:
+	lbs r1, r3, 240
+	and r4, r2, 255
+	and r1, r1, 255
+	jneq r1, r4, .LBB43_12
+// %bb.11:
+	lbs r1, r3, 241
+	and r3, r1, 255
+	move r1, 3
+	jeq r3, r0, .LBB43_30
+.LBB43_12:
+	move r3, processs
+	lw r1, r3, 324
+	jeq r1, 0, .LBB43_15
+// %bb.13:
+	lbs r1, r3, 320
+	and r4, r2, 255
+	and r1, r1, 255
+	jneq r1, r4, .LBB43_15
+// %bb.14:
+	lbs r1, r3, 321
+	and r4, r1, 255
+	move r1, 4
+	jeq r4, r0, .LBB43_30
+.LBB43_15:
+	lw r1, r3, 404
+	jeq r1, 0, .LBB43_18
+// %bb.16:
+	lbs r1, r3, 400
+	and r4, r2, 255
+	and r1, r1, 255
+	jneq r1, r4, .LBB43_18
+// %bb.17:
+	lbs r1, r3, 401
+	and r3, r1, 255
+	move r1, 5
+	jeq r3, r0, .LBB43_30
+.LBB43_18:
+	move r3, processs
+	lw r1, r3, 484
+	jeq r1, 0, .LBB43_21
+// %bb.19:
+	lbs r1, r3, 480
+	and r4, r2, 255
+	and r1, r1, 255
+	jneq r1, r4, .LBB43_21
+// %bb.20:
+	lbs r1, r3, 481
+	and r4, r1, 255
+	move r1, 6
+	jeq r4, r0, .LBB43_30
+.LBB43_21:
+	lw r1, r3, 564
+	jeq r1, 0, .LBB43_24
+// %bb.22:
+	lbs r1, r3, 560
+	and r4, r2, 255
+	and r1, r1, 255
+	jneq r1, r4, .LBB43_24
+// %bb.23:
+	lbs r1, r3, 561
+	and r3, r1, 255
+	move r1, 7
+	jeq r3, r0, .LBB43_30
+.LBB43_24:
+	move r3, processs
+	lw r1, r3, 644
+	jeq r1, 0, .LBB43_27
+// %bb.25:
+	lbs r1, r3, 640
+	and r4, r2, 255
+	and r1, r1, 255
+	jneq r1, r4, .LBB43_27
+// %bb.26:
+	lbs r1, r3, 641
+	and r4, r1, 255
+	move r1, 8
+	jneq r4, r0, .LBB43_27
+.LBB43_30:
+	move r0, r1
 	jump r23
-.Lfunc_end47:
-	.size	index_from_roleid, .Lfunc_end47-index_from_roleid
+.LBB43_27:
+	lw r1, r3, 724
+	move r4, 0
+	lbu r5, r3, 720
+	sub r1, r1, r4, neq
+	lbu r3, r3, 721
+	and r2, r2, 255
+	sub r2, r5, r2, eq
+	and r1, r1, r2
+	sub r0, r3, r0, eq
+	and r1, r1, r0
+	move r0, 9
+	jnz r1, .LBB43_29
+// %bb.28:
+	move r0, -1
+.LBB43_29:
+	jump r23
+.Lfunc_end43:
+	.size	index_from_roleid, .Lfunc_end43-index_from_roleid
 	.section	.stack_sizes,"o",@progbits,.text.index_from_roleid
-	.long	.Lfunc_begin47
-	.byte	16
+	.long	.Lfunc_begin43
+	.byte	0
 	.section	.text.index_from_roleid,"ax",@progbits
-                                        // -- End function
-	.section	.text.me,"ax",@progbits
-	.type	me,@function                    // -- Begin function me
-me:                                     // @me
-.Lfunc_begin48:
-// %bb.0:
-	move r0, id
-	jump r23
-.Lfunc_end48:
-	.size	me, .Lfunc_end48-me
-	.section	.stack_sizes,"o",@progbits,.text.me
-	.long	.Lfunc_begin48
-	.byte	0
-	.section	.text.me,"ax",@progbits
-                                        // -- End function
-	.section	.text.halt,"ax",@progbits
-	.type	halt,@function                  // -- Begin function halt
-halt:                                   // @halt
-.Lfunc_begin49:
-// %bb.0:
-	fault 4
-.Lfunc_end49:
-	.size	halt, .Lfunc_end49-halt
-	.section	.stack_sizes,"o",@progbits,.text.halt
-	.long	.Lfunc_begin49
-	.byte	0
-	.section	.text.halt,"ax",@progbits
                                         // -- End function
 	.type	fc_scheduler_job,@object        // @fc_scheduler_job
 	.section	.data,"aw",@progbits
@@ -4188,12 +5105,6 @@ global:
 	.long	0                               // 0x0
 	.size	global, 4
 
-	.type	__user_space_wram,@object       // @__user_space_wram
-	.globl	__user_space_wram
-__user_space_wram:
-	.zero	57344
-	.size	__user_space_wram, 57344
-
 	.type	mutex_printk,@object            // @mutex_printk
 	.globl	mutex_printk
 	.p2align	2
@@ -4310,78 +5221,17 @@ __atomic_bit_mutex_mutex_inode:
 	.size	__atomic_bit_mutex_mutex_inode, 1
 
 	.addrsig
-	.addrsig_sym sp_wait
-	.addrsig_sym mutex_lock
-	.addrsig_sym mutex_unlock
-	.addrsig_sym abnormal_wakeup
-	.addrsig_sym abnormal_wakeup_one
-	.addrsig_sym swap_scheduler
-	.addrsig_sym swap_context
 	.addrsig_sym __end_child_jobs
-	.addrsig_sym wakeup
-	.addrsig_sym create_job
-	.addrsig_sym sbrk
-	.addrsig_sym join_job
-	.addrsig_sym sleep
-	.addrsig_sym swap
-	.addrsig_sym first_swap_context
-	.addrsig_sym check_time_process
-	.addrsig_sym scheduler_jobs
-	.addrsig_sym try_lock
-	.addrsig_sym lock
-	.addrsig_sym unlock
-	.addrsig_sym _mram_read
-	.addrsig_sym _mram_write
-	.addrsig_sym inode_operation
-	.addrsig_sym load_big_blocks
-	.addrsig_sym store_big_blocks
-	.addrsig_sym alloc_inode
-	.addrsig_sym find_inode
-	.addrsig_sym printk_int
-	.addrsig_sym chained_inode_operation
-	.addrsig_sym free_inode
-	.addrsig_sym wakeup_sleepy_socket
-	.addrsig_sym socket_open
-	.addrsig_sym set_flag
-	.addrsig_sym check_sd
-	.addrsig_sym socket_close
-	.addrsig_sym socket_read
-	.addrsig_sym socket_write
 	.addrsig_sym __end_process
-	.addrsig_sym printk
-	.addrsig_sym read_flags
-	.addrsig_sym write_flags
-	.addrsig_sym load_prg_memory
-	.addrsig_sym save_wram_process
-	.addrsig_sym launch_proc
-	.addrsig_sym stop_dpu
-	.addrsig_sym stop_me
-	.addrsig_sym check_timer_stop
-	.addrsig_sym scheduler
-	.addrsig_sym boot_me
-	.addrsig_sym me
-	.addrsig_sym halt
 	.addrsig_sym fc_scheduler_job
 	.addrsig_sym jobs
-	.addrsig_sym cur_jobs
-	.addrsig_sym mutex_jobs
 	.addrsig_sym processs
 	.addrsig_sym cur_process_index
-	.addrsig_sym cp
-	.addrsig_sym all_end_or_waiting
-	.addrsig_sym mutex_l
 	.addrsig_sym inode_table
-	.addrsig_sym mutex_mram
 	.addrsig_sym alloc_inode.bit_map
-	.addrsig_sym mutex_inode
 	.addrsig_sym buf_socket
-	.addrsig_sym mutex_sockets
 	.addrsig_sym beg
 	.addrsig_sym end
-	.addrsig_sym __user_space_wram
-	.addrsig_sym mutex_printk
-	.addrsig_sym mutex_flag
-	.addrsig_sym mutex_sbrk
 	.addrsig_sym saved_fc_stop
 	.addrsig_sym dpu_id
 	.addrsig_sym log_w

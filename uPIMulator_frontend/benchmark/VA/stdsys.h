@@ -51,17 +51,8 @@ int join_job(void);
 
 int umram_read(void *buf, unsigned int size, unsigned int offset);
 int umram_write(void *buf, unsigned int size, unsigned int offset);
-int syscall(unsigned int value, unsigned int arg1, unsigned int arg2,
-            unsigned int arg3, unsigned int arg4) {
-  (void)value;
-  (void)arg1;
-  (void)arg2;
-  (void)arg3;
-  (void)arg4;
-  __asm__ volatile("\tjump 0x60000");
-
-  return 0;
-}
+extern int syscall(unsigned int value, unsigned int arg1, unsigned int arg2,
+            unsigned int arg3, unsigned int arg4) ;
 
 int socket_read(unsigned int d, void *buf, unsigned int len) {
   return syscall(d, (int)buf, len, 0, 11);

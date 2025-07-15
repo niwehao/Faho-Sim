@@ -6,7 +6,7 @@
 
 namespace upmem_sim::simulator::reg {
 
-RegFile::RegFile(ThreadID id)
+RegFile::RegFile(ThreadID id,std::string benchmark,std::string bindir)
     : sp_reg_(new SPReg(id)),//sp寄存器
       pc_reg_(new PCReg()),//pc寄存器
       condition_reg_(new ConditionReg()),//条件寄存器
@@ -14,7 +14,7 @@ RegFile::RegFile(ThreadID id)
       exception_reg_(new ExceptionReg()) {//异常寄存器
   for (RegIndex index = 0; index < util::ConfigLoader::num_gp_registers();//通用寄存器
        index++) {
-    std::ifstream file("/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus/KERNEL.4/iram_labels.bin");
+    std::ifstream file(bindir+"KERNEL.4/iram_labels.bin");
     std::string line;
     int time_ = 0;
     std::string name_;
@@ -34,7 +34,7 @@ RegFile::RegFile(ThreadID id)
         std::cout << "无法打开文件" << std::endl;
     }
      file.close();
-    std::ifstream file_b("/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus/VA.16/iram_labels.bin");
+    std::ifstream file_b(bindir+benchmark+".16/iram_labels.bin");
     
     if (file_b.is_open()) {
         while (std::getline(file_b, line)) {

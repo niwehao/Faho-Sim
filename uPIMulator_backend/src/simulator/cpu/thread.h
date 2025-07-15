@@ -11,6 +11,7 @@ class Thread {
   ~Thread() = default;
 
   std::string benchmark() { return benchmark_; }
+  std::string app() { return app_; }
   int num_dpus() { return num_dpus_; }
   int num_tasklets() { return num_tasklets_; }
 
@@ -30,6 +31,7 @@ class Thread {
  private:
   std::string bindir_;
   std::string benchmark_;
+  std::string app_;
 
   int num_dpus_;
   int num_tasklets_;

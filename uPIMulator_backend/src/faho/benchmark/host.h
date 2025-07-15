@@ -13,11 +13,7 @@ namespace upmem_sim::simulator::faho::def
         void *buf = nullptr;
      
     };
-    typedef struct
-    {
-        uint32_t size;
-        uint32_t transfer_size;
-    } dpu_arguments_t;
+   
 
     class Host
     {
@@ -39,7 +35,7 @@ namespace upmem_sim::simulator::faho::def
         std::vector<def::ReadBuffer *> ReadBuffer_;
         std::string bindir_;
         virtual def::Event *benchmark(int time_) = 0; // 基准测试
-        virtual void benchmark_init(std::string bindir) = 0;            // 初始化基准测试
+        virtual void benchmark_init(std::string bindir,int data_prep) = 0;            // 初始化基准测试
         virtual void check(int pid) = 0; // 检查事件
     };
     class VA : public Host
@@ -48,7 +44,108 @@ namespace upmem_sim::simulator::faho::def
 
   
         def::Event *benchmark(int time_) override;
-        void benchmark_init(std::string bindir) override;
+        void benchmark_init(std::string bindir,int data_prep) override;
+        void check(int pid) override;
+        int end_flag=0;
+
+    };
+     class BFS : public Host
+    {
+    public:
+
+  
+        def::Event *benchmark(int time_) override;
+        void benchmark_init(std::string bindir,int data_prep) override;
+        void check(int pid) override;
+        int end_flag=0;
+
+    };
+    class SEL : public Host
+    {
+    public:
+
+  
+        def::Event *benchmark(int time_) override;
+        void benchmark_init(std::string bindir,int data_prep) override;
+        void check(int pid) override;
+        int end_flag=0;
+
+    };
+    class GEMV : public Host
+    {
+    public:
+
+  
+        def::Event *benchmark(int time_) override;
+        void benchmark_init(std::string bindir,int data_prep) override;
+        void check(int pid) override;
+        int end_flag=0;
+
+    };
+     class NW : public Host
+    {
+    public:
+
+  
+        def::Event *benchmark(int time_) override;
+        void benchmark_init(std::string bindir,int data_prep) override;
+        void check(int pid) override;
+        int end_flag=0;
+
+    };
+    class BS : public Host
+    {
+        
+    public:
+
+
+  
+        def::Event *benchmark(int time_) override;
+        void benchmark_init(std::string bindir,int data_prep) override;
+        void check(int pid) override;
+        int end_flag=0;
+
+    };
+    class MLP: public Host
+    {
+    public:
+
+  
+        def::Event *benchmark(int time_) override;
+        void benchmark_init(std::string bindir,int data_prep) override;
+        void check(int pid) override;
+        int end_flag=0;
+
+    };
+    class TS: public Host
+    {
+    public:
+
+  
+        def::Event *benchmark(int time_) override;
+        void benchmark_init(std::string bindir,int data_prep) override;
+        void check(int pid) override;
+        int end_flag=0;
+
+    };
+    class HSTS: public Host
+    {
+    public:
+
+  
+        def::Event *benchmark(int time_) override;
+        void benchmark_init(std::string bindir,int data_prep) override;
+        void check(int pid) override;
+        int end_flag=0;
+
+    };
+    class RED: public Host
+    {
+    public:
+
+  
+        def::Event *benchmark(int time_) override;
+        void benchmark_init(std::string bindir,int data_prep) override;
         void check(int pid) override;
         int end_flag=0;
 

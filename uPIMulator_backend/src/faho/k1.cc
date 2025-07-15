@@ -8,20 +8,40 @@
 
 namespace upmem_sim::simulator::faho::k1
 {
-    //struct def::custom_barriere cp;
+    // struct def::custom_barriere cp;
     int dpu_id_address;
     int processs_address;
     int inode_table_address;
     int jobs_address;
     struct def::socket_connection *sockets_connection;
     uint32_t nb_so = 0;
-    K1::K1(std::string bindir, std::string benchmark, int num_tasklets, rank::Rank *rank)
+    K1::K1(std::string bindir, std::string benchmark, std::string app, int num_tasklets, rank::Rank *rank,int data_prep)
     {
         bindir_ = bindir;
         benchmark_ = benchmark;
         num_tasklets_ = num_tasklets;
-        host_ = new def::VA();
-        host_->benchmark_init(bindir);
+        if (app == "VA")
+            host_ = new def::VA();
+        else if (app == "TS")
+            host_ = new def::TS();
+        else if (app == "SEL")
+            host_ = new def::SEL();
+        else if (app == "RED")
+            host_ = new def::RED();
+        else if (app == "NW")
+            host_ = new def::NW();
+        else if (app == "MLP")
+            host_ = new def::MLP();
+        else if (app == "HST-S")
+            host_ = new def::HSTS();
+        else if (app == "GEMV")
+            host_ = new def::GEMV();
+        else if (app == "BS")
+            host_ = new def::BS();
+        else if (app == "BFS")
+            host_ = new def::BFS();
+        else assert(0 && "Unknown application");
+        host_->benchmark_init(bindir,data_prep);
         rank_state = 1;
         connect_rank(rank);
         init();
@@ -34,8 +54,9 @@ namespace upmem_sim::simulator::faho::k1
     }
     void K1::api_retrieve()
     {
-         def::Event *event = host_->benchmark(timer_);
-         while(event!=nullptr){
+        def::Event *event = host_->benchmark(timer_);
+        while (event != nullptr)
+        {
             switch (event->kind)
             {
             case def::KIND::NewProcess:
@@ -66,18 +87,17 @@ namespace upmem_sim::simulator::faho::k1
             default:
                 assert(0);
             }
-            events_.push_back(event); // 将事件添加到事件列表中
+            events_.push_back(event);         // 将事件添加到事件列表中
             event = host_->benchmark(timer_); // 获取下一个事件
-         }
-        
+        }
     }
 
     void K1::cycle()
     {
-        timer_++; 
-        //def::dpu_copy_from_wram(rank_->dpus()[0], &cp, 134228-512, sizeof(struct def::custom_barriere));
-        //std::cout<<"  ******barrier nb: "<<(int)cp.nb<<" pending: "<<(int)cp.pending<<std::endl;
-        
+        timer_++;
+        // def::dpu_copy_from_wram(rank_->dpus()[0], &cp, 134228-512, sizeof(struct def::custom_barriere));
+        // std::cout<<"  ******barrier nb: "<<(int)cp.nb<<" pending: "<<(int)cp.pending<<std::endl;
+
         if (!K1::check_dpu_stop())
         { // 如果没有停止
             rank_state = 1;
@@ -103,15 +123,17 @@ namespace upmem_sim::simulator::faho::k1
             //     def::write_flags(dpumanager, 0);//清空flag
             // }
         }
-        else{
+        else
+        {
             assert(0);
         }
+        std::cout << "********" << "time:" << timer_ << "*******" << std::endl;
         for (size_t i = 0; i < dpu_managers_.size(); i++)
         {
             auto &dpumanager = dpu_managers_[i];
 
             dpumanager->ki.flag1 = def::read_flag(dpumanager);
-            std::cout<<"k1 cycle "<<i<<"  ******flag" << dpumanager->ki.flag1 <<  std::endl;
+            // std::cout<<"k1 cycle "<<i<<"  ******flag" << dpumanager->ki.flag1 <<  std::endl;
             K1::read_jobs(dpumanager); // 读取job状态
             def::write_flags(dpumanager, 0);
             if (dpumanager->ki.flag1 & (PROCESS_END | NEW_SOCKET | SOCKET_OUT) ||
@@ -141,6 +163,10 @@ namespace upmem_sim::simulator::faho::k1
             {
                 parse_new_socket(dpumanager);
             }
+            if (dpumanager->ki.flag1 & SOCKET_OUT)
+            {
+                rank_state = 1;
+            }
             if ((dpumanager->ki.flag1 & SOCKET_OUT) ||
                 dpumanager->dpu_flag->write_socket)
             {
@@ -155,12 +181,12 @@ namespace upmem_sim::simulator::faho::k1
             {
                 write_process(dpumanager);
             }
-            if( dpumanager->dpu_flag->check)
+            if (dpumanager->dpu_flag->check)
             {
-                for(int i=0;i<dpumanager->check_result->nb_data;i++)
+                for (int i = 0; i < dpumanager->check_result->nb_data; i++)
                 {
                     host_->check(dpumanager->check_result->rolepids[i]);
-                    dpumanager->check_result->rolepids[i]=0;
+                    dpumanager->check_result->rolepids[i] = 0;
                 }
                 dpumanager->check_result->nb_data = 0;
                 dpumanager->dpu_flag->check = 0;
@@ -231,7 +257,7 @@ namespace upmem_sim::simulator::faho::k1
             {
                 if (p == nullptr)
                     continue;
-                if (p->pid == event->pid) 
+                if (p->pid == event->pid)
                 {
                     dpu_manager->dpu_flag->check = 1;
                     def::add_check(dpu_manager, event);

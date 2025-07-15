@@ -186,9 +186,10 @@ class Linker:
     def _init_libs(self) -> List[Relocatable]:
         relocatables: List[Relocatable] = []
         libS=[]
-        if self.benchmark == "KERNEL":
-            libS=Linker.libs_names(1)
+        
+        libS=Linker.libs_names(1)
         for lib_name in libS:
+
             asm_lib_path = os.path.join(PathCollector.asm_path_in_local(), lib_name)
             for root_path, _, filenames in os.walk(asm_lib_path):
                 for filename in filenames:

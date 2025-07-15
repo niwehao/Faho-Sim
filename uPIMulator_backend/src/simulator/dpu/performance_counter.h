@@ -61,7 +61,7 @@ class PerformanceCounter {
     int get_value()
     {
         int value_t=counter_word->bit_slice(abi::word::UNSIGNED,4,36);
-        return 0;
+        return 0;//不考虑抢占与中断
     }
     private:
         abi::word::_BaseWord *counter_word;

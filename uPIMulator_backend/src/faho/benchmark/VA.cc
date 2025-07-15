@@ -4,6 +4,11 @@
 #define divceil(n, m) (((n) - 1) / (m) + 1)
 #define roundup(n, m) ((n / m) * m + m)
 #define NR_DPUS 1
+ typedef struct
+    {
+        uint32_t size;
+        uint32_t transfer_size;
+    } dpu_arguments_t;
 static void read_input(T *A, T *B, unsigned int nr_elements)
 {
     srand(time(NULL));
@@ -25,7 +30,7 @@ static T *A;
 static T *B;
 static T *C;
 static T *C2;
-const unsigned int input_size = 1024;
+static const unsigned int input_size = 1024;
 namespace upmem_sim::simulator::faho::def
 {
     def::Event *VA::benchmark(int time_)
@@ -66,7 +71,7 @@ namespace upmem_sim::simulator::faho::def
         
         assert(0);
     }
-    void VA::benchmark_init(std::string bindir)
+    void VA::benchmark_init(std::string bindir,int data_prep)
     {
         bindir_ = bindir;
 

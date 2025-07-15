@@ -116,9 +116,8 @@ void Logic::
           iram_->read(thread->reg_file()->read_pc_reg());//从IRAM中读取指令,每一个thread维护一份指令表,通过修改iram的位置来完成数据传入
       instruction->set_thread(thread);//设置指令的线程
       pipeline_->push(instruction);//将指令加入流水线
-      //std::cout << "{" << dpu_id_ << "}";
-      std::string name=converter::InstructionConverter::to_string(instruction);
-      std::cout << "{" << dpu_id_ << "}"<< name << std::endl;
+      // std::string name=converter::InstructionConverter::to_string(instruction);
+      // std::cout << "{" << dpu_id_ << "}"<< name << std::endl;
 
 
       if (instruction->suffix() != abi::instruction::DMA_RRI) {
@@ -4021,10 +4020,19 @@ void Logic::execute_rr(abi::instruction::Instruction *instruction) {
     result = ALU::sats(ra);
   } else if (op_code == abi::instruction::TIME_CFG) {
     //int64_t rb = instruction->thread()->reg_file()->read_src_reg(instruction->rb(), abi::word::UNSIGNED);
+    if(ra<=7){
     performance_counter_->set_cfg(ra);
     result=performance_counter_->get_value();
-    instruction->thread()->reg_file()->clear_conditions();
     instruction->thread()->reg_file()->write_gp_reg(instruction->rc(), result);
+    }
+    else{
+      int64_t rc = instruction->thread()->reg_file()->read_gp_reg(
+      instruction->rc(), abi::word::SIGNED);
+      std::cout<<"debug:"<<rc<<std::endl;
+    }
+
+    instruction->thread()->reg_file()->clear_conditions();
+    
     instruction->thread()->reg_file()->increment_pc_reg();
     return;
   } else {

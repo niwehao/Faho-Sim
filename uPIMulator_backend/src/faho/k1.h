@@ -14,7 +14,7 @@ namespace upmem_sim::simulator::faho::k1
     class K1
     {
     public:
-        K1(std::string bindir, std::string benchmark, int num_tasklets,rank::Rank *rank_);
+        K1(std::string bindir, std::string benchmark, std::string app, int num_tasklets,rank::Rank *rank_,int data_prep);
         ~K1();
         void init();
         void cycle();

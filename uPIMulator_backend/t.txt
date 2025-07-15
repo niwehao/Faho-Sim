@@ -1,0 +1,2802 @@
+16
+1240
+784
+32
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.4/atomic.bin
+DMA to atomic completed...
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.4/iram.bin
+num of instructions: 3528
+DMA to IRAM completed...
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.4/wram.bin
+DMA to WRAM completed...
+init completed...
+launch completed...
+num_active_tasklets: 1, num_embryo: 3, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 2, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 1, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to iram 
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 1, num_block: 1, num_zombie: 0
+Awake thread: 0state: 3
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+set zero
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+********time:4147*******
+text section size is 5870
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 4, num_block: 0, num_zombie: 0
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+set zero
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to iram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to iram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to iram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to iram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to iram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to iram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to iram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to iram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to iram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to iram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to iram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to iram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+Awake thread: 1state: 2
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 2state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+Awake thread: 3state: 2
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 1, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 2, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 1state: 3
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 1state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 1state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 1state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+Awake thread: 0state: 2
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 0state: 1
+Thread 0 is in state: 1, cannot awake.
+Awake thread: 1state: 1
+Awake thread: 2state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+Awake thread: 0state: 1
+Thread 0 is in state: 1, cannot awake.
+Awake thread: 1state: 1
+Awake thread: 2state: 1
+Awake thread: 3state: 2
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 0state: 1
+Thread 0 is in state: 1, cannot awake.
+Awake thread: 1state: 1
+Awake thread: 2state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 0state: 1
+Thread 0 is in state: 1, cannot awake.
+Awake thread: 1state: 1
+Awake thread: 2state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+Awake thread: 3state: 2
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+Awake thread: 0state: 2
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 2, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 2, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 1state: 3
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 2, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 1state: 3
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 2, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 2, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 1state: 3
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 0state: 1
+Thread 0 is in state: 1, cannot awake.
+Awake thread: 1state: 1
+Awake thread: 2state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 1, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 0state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 0state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 0state: 1
+Thread 0 is in state: 1, cannot awake.
+Awake thread: 1state: 1
+Awake thread: 2state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+Awake thread: 0state: 2
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 2state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+Awake thread: 3state: 2
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 1, num_block: 1, num_zombie: 0
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 2, num_block: 1, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+********time:99940*******
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 4, num_block: 0, num_zombie: 0
+ReadSocket event for pid: 1 at time: 0
+
+********time:99941*******
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+set zero
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+Awake thread: 1state: 2
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 2state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+Awake thread: 3state: 2
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 1, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+Awake thread: 0state: 2
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 1state: 1
+Awake thread: 2state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+Awake thread: 3state: 2
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 0state: 1
+Thread 0 is in state: 1, cannot awake.
+Awake thread: 1state: 1
+Awake thread: 2state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+Awake thread: 0state: 1
+Thread 0 is in state: 1, cannot awake.
+Awake thread: 1state: 1
+Awake thread: 2state: 1
+Awake thread: 3state: 2
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:16
+debug:1240
+debug:784
+debug:32
+debug:4
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:8
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+debug:10
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+debug:12
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:12
+debug:12
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+debug:14
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:14
+debug:14
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:14
+debug:16
+debug:16
+debug:16
+debug:18
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:16
+debug:16
+debug:18
+debug:18
+debug:20
+debug:18
+debug:18
+debug:18
+debug:20
+debug:18
+debug:20
+debug:18
+debug:20
+debug:18
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:22
+debug:20
+debug:20
+debug:20
+debug:22
+debug:20
+debug:22
+debug:20
+debug:22
+debug:20
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:24
+debug:22
+debug:22
+debug:22
+debug:24
+debug:22
+debug:24
+debug:22
+debug:24
+debug:22
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:26
+debug:24
+debug:24
+debug:24
+debug:26
+debug:24
+debug:26
+debug:24
+debug:26
+debug:24
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:28
+debug:26
+debug:26
+debug:26
+debug:28
+debug:26
+debug:28
+debug:26
+debug:28
+debug:26
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:32
+debug:28
+debug:28
+debug:28
+debug:34
+debug:28
+debug:32
+debug:28
+debug:36
+debug:28
+debug:34
+debug:32
+debug:40
+debug:32
+debug:36
+debug:34
+debug:42
+debug:34
+debug:40
+debug:36
+debug:46
+debug:36
+debug:42
+debug:40
+debug:48
+debug:40
+debug:46
+debug:42
+debug:50
+debug:42
+debug:48
+debug:46
+debug:50
+debug:46
+debug:50
+debug:48
+debug:52
+debug:48
+debug:50
+debug:50
+debug:52
+debug:50
+debug:52
+debug:50
+debug:50
+debug:50
+debug:52
+debug:52
+debug:48
+debug:52
+debug:50
+debug:52
+debug:44
+debug:52
+debug:48
+debug:50
+debug:38
+debug:50
+debug:44
+debug:48
+debug:4
+debug:48
+debug:38
+debug:44
+debug:8
+debug:44
+debug:4
+debug:38
+debug:10
+debug:38
+debug:8
+debug:4
+debug:12
+debug:4
+debug:10
+debug:8
+debug:12
+debug:12
+debug:10
+debug:14
+debug:12
+debug:12
+debug:14
+debug:14
+debug:12
+debug:16
+debug:14
+debug:16
+debug:16
+debug:18
+debug:16
+debug:18
+debug:18
+debug:20
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:8
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:10
+debug:12
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:12
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:14
+debug:14
+debug:14
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:14
+debug:16
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+debug:16
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:18
+debug:16
+debug:16
+debug:18
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:18
+debug:18
+debug:18
+debug:18
+debug:20
+debug:18
+debug:20
+debug:18
+debug:20
+debug:18
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:22
+debug:20
+debug:20
+debug:20
+debug:22
+debug:20
+debug:22
+debug:20
+debug:22
+debug:20
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:24
+debug:22
+debug:22
+debug:22
+debug:24
+debug:22
+debug:24
+debug:22
+debug:24
+debug:22
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:26
+debug:24
+debug:24
+debug:24
+debug:26
+debug:24
+debug:26
+debug:24
+debug:26
+debug:24
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:28
+debug:26
+debug:26
+debug:26
+debug:28
+debug:26
+debug:28
+debug:26
+debug:28
+debug:26
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:32
+debug:28
+debug:28
+debug:28
+debug:34
+debug:28
+debug:32
+debug:28
+debug:36
+debug:28
+debug:34
+debug:32
+debug:40
+debug:32
+debug:36
+debug:34
+debug:42
+debug:34
+debug:40
+debug:36
+debug:46
+debug:36
+debug:42
+debug:40
+debug:48
+debug:40
+debug:46
+debug:42
+debug:50
+debug:42
+debug:48
+debug:46
+debug:50
+debug:46
+debug:50
+debug:48
+debug:52
+debug:48
+debug:50
+debug:50
+debug:52
+debug:50
+debug:52
+debug:50
+debug:50
+debug:50
+debug:52
+debug:52
+debug:48
+debug:52
+debug:50
+debug:52
+debug:44
+debug:52
+debug:48
+debug:50
+debug:38
+debug:50
+debug:44
+debug:48
+debug:4
+debug:48
+debug:38
+debug:44
+debug:8
+debug:44
+debug:4
+debug:38
+debug:10
+debug:38
+debug:8
+debug:4
+debug:12
+debug:4
+debug:10
+debug:8
+debug:12
+debug:8
+debug:12
+debug:10
+debug:14
+debug:12
+debug:12
+debug:14
+debug:14
+debug:12
+debug:16
+debug:14
+debug:14
+debug:16
+debug:16
+debug:18
+debug:16
+debug:18
+debug:18
+debug:18
+debug:20
+debug:20
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:10
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:12
+debug:12
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:14
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:14
+debug:14
+debug:16
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+debug:16
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:16
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+debug:16
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:18
+debug:18
+debug:18
+debug:18
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:18
+debug:18
+debug:20
+debug:18
+debug:20
+debug:18
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:22
+debug:20
+debug:20
+debug:20
+debug:22
+debug:20
+debug:22
+debug:20
+debug:22
+debug:20
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:24
+debug:22
+debug:22
+debug:22
+debug:24
+debug:22
+debug:24
+debug:22
+debug:24
+debug:22
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:26
+debug:24
+debug:24
+debug:24
+debug:26
+debug:24
+debug:26
+debug:24
+debug:26
+debug:24
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:28
+debug:26
+debug:26
+debug:26
+debug:28
+debug:26
+debug:28
+debug:26
+debug:28
+debug:26
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:32
+debug:28
+debug:28
+debug:28
+debug:34
+debug:28
+debug:32
+debug:28
+debug:36
+debug:28
+debug:34
+debug:32
+debug:40
+debug:32
+debug:36
+debug:34
+debug:42
+debug:34
+debug:40
+debug:36
+debug:46
+debug:36
+debug:42
+debug:40
+debug:48
+debug:40
+debug:46
+debug:42
+debug:50
+debug:42
+debug:48
+debug:46
+debug:50
+debug:46
+debug:50
+debug:48
+debug:52
+debug:48
+debug:50
+debug:50
+debug:52
+debug:50
+debug:52
+debug:50
+debug:50
+debug:50
+debug:52
+debug:52
+debug:48
+debug:52
+debug:50
+debug:52
+debug:44
+debug:52
+debug:48
+debug:50
+debug:38
+debug:50
+debug:44
+debug:48
+debug:4
+debug:48
+debug:38
+debug:44
+debug:8
+debug:44
+debug:4
+debug:38
+debug:10
+debug:38
+debug:8
+debug:4
+debug:12
+debug:4
+debug:10
+debug:8
+debug:12
+debug:8
+debug:12
+debug:10
+debug:14
+debug:10
+debug:12
+debug:12
+debug:14
+debug:14
+debug:12
+debug:16
+debug:14
+debug:14
+debug:16
+debug:16
+debug:14
+debug:18
+debug:16
+debug:18
+debug:18
+debug:18
+debug:18
+debug:20
+debug:20
+debug:20
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 3state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:20
+debug:20
+debug:20
+debug:20
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:32
+debug:34
+debug:36
+debug:40
+debug:42
+debug:46
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:48
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 1state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:50
+debug:50
+debug:12
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:52
+debug:12
+debug:52
+debug:14
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:14
+debug:50
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:16
+debug:16
+debug:48
+debug:16
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+debug:16
+Awake thread: 2state: 3
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+debug:44
+debug:18
+debug:18
+debug:18
+debug:18
+debug:18
+debug:20
+debug:18
+debug:18
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:20
+debug:22
+debug:20
+debug:20
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:22
+debug:24
+debug:22
+debug:22
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:24
+debug:26
+debug:24
+debug:24
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:26
+debug:28
+debug:26
+debug:26
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:28
+debug:32
+debug:28
+debug:28
+debug:34
+debug:32
+debug:32
+debug:36
+debug:34
+debug:34
+debug:40
+debug:36
+debug:36
+debug:42
+debug:40
+debug:40
+debug:46
+debug:42
+debug:42
+debug:48
+debug:46
+debug:46
+debug:50
+debug:48
+debug:48
+debug:50
+debug:50
+debug:50
+debug:52
+debug:50
+debug:50
+debug:52
+debug:52
+debug:52
+debug:50
+debug:52
+debug:52
+debug:48
+debug:50
+debug:50
+debug:44
+debug:48
+debug:48
+debug:38
+debug:44
+debug:44
+debug:4
+debug:38
+debug:38
+debug:8
+debug:4
+debug:4
+debug:10
+debug:8
+debug:8
+debug:12
+debug:10
+debug:10
+debug:12
+debug:12
+debug:12
+debug:14
+debug:12
+debug:14
+debug:14
+debug:16
+debug:14
+debug:16
+debug:16
+debug:18
+debug:18
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+debug:18
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+Awake thread: 0state: 2
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 1state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+Awake thread: 2state: 1
+Awake thread: 3state: 2
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 0state: 1
+Thread 0 is in state: 1, cannot awake.
+Awake thread: 1state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 1, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 0state: 1
+Thread 0 is in state: 1, cannot awake.
+Awake thread: 1state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 1, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 1, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 1, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 1, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 1, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+Awake thread: 0state: 3
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 1, num_block: 1, num_zombie: 0
+DMA::transfer_from_mram to wram 
+Awake thread: 0state: 3
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+Awake thread: 0state: 1
+Thread 0 is in state: 1, cannot awake.
+Awake thread: 1state: 1
+Awake thread: 2state: 1
+Awake thread: 3state: 2
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+Awake thread: 0state: 1
+Thread 0 is in state: 1, cannot awake.
+Awake thread: 1state: 1
+Awake thread: 2state: 1
+Awake thread: 3state: 2
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+Awake thread: 0state: 2
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 2, num_block: 0, num_zombie: 0
+Awake thread: 2state: 2
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 1, num_block: 0, num_zombie: 0
+Awake thread: 3state: 2
+num_active_tasklets: 4, num_embryo: 0, num_sleep: 0, num_block: 0, num_zombie: 0
+num_active_tasklets: 3, num_embryo: 0, num_sleep: 0, num_block: 1, num_zombie: 0
+DMA::transfer_from_wram to mram 
+num_active_tasklets: 2, num_embryo: 0, num_sleep: 1, num_block: 1, num_zombie: 0
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 2, num_block: 1, num_zombie: 0
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 3, num_block: 1, num_zombie: 0
+Awake thread: 0state: 3
+num_active_tasklets: 1, num_embryo: 0, num_sleep: 3, num_block: 0, num_zombie: 0
+********time:4569705*******
+num_active_tasklets: 0, num_embryo: 0, num_sleep: 4, num_block: 0, num_zombie: 0
+ReadSocket event for pid: 1 at time: 0
+ 
+********time:4569706*******

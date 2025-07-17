@@ -170,6 +170,7 @@ extern void resume_me(struct flow_context *saved);
  * @return int  
  */
 int __end_process(int ret);
+extern void print_debug(int value,int align);
 #include "socket.h"
 
 #endif

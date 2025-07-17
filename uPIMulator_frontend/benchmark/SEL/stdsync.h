@@ -41,6 +41,8 @@ void init_barrier(struct barrier *barrier, int nb) {
 void wait_barrier(struct barrier *barrier) {
   lock(&(barrier->__lock));
   barrier->__nb_waiting += 1;
+  //print_debug(barrier->__nb_waiting,0);
+  
   if (barrier->__nb_waiting == barrier->__nb_expected) {//也许可以改成>=
     wakeup(barrier);
     barrier->__nb_waiting = 0;

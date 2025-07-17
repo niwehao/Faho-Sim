@@ -19,6 +19,12 @@ static uint64_t *visited;
 static uint64_t *currentFrontier;
 static uint64_t *nextFrontier;
 static uint32_t numNodes;
+static int nextFrontierEmpty = 0;
+static uint32_t level = 1;
+static struct DPUParams dpuParams[NR_DPUS];
+static uint32_t dpuParams_m[NR_DPUS];
+ uint32_t *nodePtrs;
+ uint32_t *neighborIdxs;
 namespace upmem_sim::simulator::faho::def
 {
     def::Event *BFS::benchmark(int time_)
@@ -28,12 +34,19 @@ namespace upmem_sim::simulator::faho::def
         {
             if (end_flag == 1)
             {
-                std::cout<<"success"<<std::endl;
-                exit(0); // 退出程序
+                 if(!nextFrontierEmpty){
+                    excute_2();
+                    end_flag = 0;
+                } 
+                else{
+
+                     exit(0); // 退出程序
+                }        
             }
-            end_flag = 1; // 设置结束标志
-            return nullptr;
-            // 退出代码
+            else{
+                end_flag = 1; // 设置结束标志
+                return nullptr;
+            }
         }
         def::Event *event_ = get_event(time_);
         if (event_ == nullptr)
@@ -64,7 +77,7 @@ namespace upmem_sim::simulator::faho::def
         free(nextFrontier);
         free(nodeLevelReference);
     }
-    void BFS::benchmark_init(std::string bindir,int data_prep)
+    void BFS::benchmark_init(std::string bindir, int data_prep)
     {
         bindir_ = bindir;
         uint32_t numDPUs = NR_DPUS;
@@ -72,13 +85,13 @@ namespace upmem_sim::simulator::faho::def
         cooGraph = readCOOGraph((bindir_ + "BFS_gragh.TXT").c_str());
         event = init_NewProcess(1, 1000, NR_DPUS, "BFS.16"); // 只有new和lanuch指定role_id=1
         events_.push_back(event);
-        event= init_LanuchProcess(1, 1100);
+        event = init_LanuchProcess(1, 1100);
         events_.push_back(event);
-         
+
         csrGraph = coo2csr(cooGraph);
         numNodes = csrGraph.numNodes;
-        uint32_t *nodePtrs = csrGraph.nodePtrs;
-        uint32_t *neighborIdxs = csrGraph.neighborIdxs;
+        nodePtrs = csrGraph.nodePtrs;
+        neighborIdxs = csrGraph.neighborIdxs;
         nodeLevel =
             (uint32_t *)calloc(numNodes, sizeof(uint32_t));
         visited = (uint64_t *)calloc(
@@ -88,11 +101,9 @@ namespace upmem_sim::simulator::faho::def
         nextFrontier = (uint64_t *)calloc(
             numNodes / 64, sizeof(uint64_t)); // Bit vector with one bit per node
         setBit(nextFrontier[0], 0);           // Initialize frontier to first node
-        uint32_t level = 1;
         uint32_t numNodesPerDPU =
             ROUND_UP_TO_MULTIPLE_OF_64((numNodes - 1) / numDPUs + 1);
-        struct DPUParams dpuParams[numDPUs]; // illegal ?
-        uint32_t dpuParams_m[numDPUs];
+
         unsigned int dpuIdx = 0;
         int first_role_id = 1;
         for (int i = 0; i < numDPUs; i++)
@@ -187,41 +198,107 @@ namespace upmem_sim::simulator::faho::def
                 events_.push_back(event);
                 // NOTE: No need to copy current frontier because it is written before
                 // being read
-            }
-
-            // copyToDPU(&api, first_role_id + dpu_idx, (uint8_t *)&dpuParams[dpuIdx],
-            //           dpuParams_m[dpuIdx], sizeof(struct DPUParams));
-            event = init_InodeWrite(role, 1405, dpuParams_m[dpuIdx],
-                                    transfer_buf_bytes((uint8_t *)&dpuParams[dpuIdx], sizeof(struct DPUParams)));
-            events_.push_back(event);
-
-            ++dpuIdx;
-        }
-        uint32_t nextFrontierEmpty = 0;
-        while (!nextFrontierEmpty)
-        {
-
-            char ok = 1;
-            for (uint32_t dpu_idx = 0; dpu_idx < numDPUs; dpu_idx++)
-            {
-                event = init_WriteSockets(dpu_idx+first_role_id, 2000, 1,
+                char ok = 1;
+                // copyToDPU(&api, first_role_id + dpu_idx, (uint8_t *)&dpuParams[dpuIdx],
+                //           dpuParams_m[dpuIdx], sizeof(struct DPUParams));
+                event = init_InodeWrite(role, 1405, dpuParams_m[dpuIdx],
+                                        transfer_buf_bytes((uint8_t *)&dpuParams[dpuIdx], sizeof(struct DPUParams)));
+                events_.push_back(event);
+                event = init_WriteSockets(dpu_idx + first_role_id, 2000, 1,
                                           transfer_buf_bytes(&ok, 1)); // 告诉dpu_code写入已经完成
                 events_.push_back(event);
-            }
 
-            for (uint32_t dpu_idx = 0; dpu_idx < numDPUs; dpu_idx++)
-            {
-                event = init_ReadSocket(dpu_idx+first_role_id); // 告诉主机计算完成
+                event = init_ReadSocket(dpu_idx + first_role_id); // 告诉主机计算完成
                 events_.push_back(event);
-            }
+                if (dpuIdx == 0)
+                {
+                    // copyFromDPU(&api, role, dpuParams[dpuIdx].dpuNextFrontier_m,
+                    //             (uint8_t *)currentFrontier,
+                    //             numNodes / 64 * sizeof(uint64_t));
+                    event = init_InodeRead(role, 3006,
+                                           (uint8_t *)currentFrontier,
+                                           dpuParams[dpuIdx].dpuNextFrontier_m,
+                                           numNodes / 64 * sizeof(uint64_t));
+                    events_.push_back(event);
+                }
+                else
+                {
 
-            dpuIdx = 0;
+                    // event = init_InodeRead(role, 3007,
+                    //                         (uint8_t *)nextFrontier,
+                    //                         dpuParams[dpuIdx].dpuNextFrontier_m,
+                    //                         numNodes / 64 * sizeof(uint64_t));
+                    // events_.push_back(event);
+
+                    // for (uint32_t i = 0; i < numNodes / 64; ++i)
+                    // {
+                    //     currentFrontier[i] |= nextFrontier[i];
+                    // }
+                    assert(0); // 只支持一个DPU
+                }
+                ++dpuIdx;
+            }
+        }
+
+        
+
+    
+
+        return;
+    }
+    void BFS::excute_2()
+    {
+        char ok = 1;
+        int numDPUs = NR_DPUS;
+        int first_role_id = 1;
+
+        // Check if the next frontier is empty, and copy data to DPU if not empty
+        nextFrontierEmpty = 1;
+        for (uint32_t i = 0; i < numNodes / 64; ++i)
+        {
+            if (currentFrontier[i])
+            {
+                nextFrontierEmpty = 0;
+                printf("%i empty\n", i);
+
+                break;
+            }
+        }
+        Event *event;
+        if (!nextFrontierEmpty)//如果为0
+        {
+            ++level;
+            int dpuIdx = 0;
             for (uint32_t dpu_idx = 0; dpu_idx < numDPUs; dpu_idx++)
             {
                 int role = first_role_id + dpu_idx;
                 uint32_t dpuNumNodes = dpuParams[dpuIdx].dpuNumNodes;
                 if (dpuNumNodes > 0)
                 {
+                    // Copy current frontier to all DPUs (place in next frontier and DPU
+                    // will update visited and copy to current frontier)
+                    // copyToDPU(&api, role, (uint8_t *)currentFrontier,
+                    //           dpuParams[dpuIdx].dpuNextFrontier_m,
+                    //           numNodes / 64 * sizeof(uint64_t));
+                    event = init_InodeWrite(first_role_id + dpu_idx, 1406,
+                                            dpuParams[dpuIdx].dpuNextFrontier_m,
+                                            transfer_buf_bytes((uint8_t *)currentFrontier,
+                                                               numNodes / 64 * sizeof(uint64_t)));
+                    events_.push_back(event);
+                    // Copy new level to DPU
+                    dpuParams[dpuIdx].level = level;
+                    // copyToDPU(&api, role, (uint8_t *)&dpuParams[dpuIdx],
+                    //           dpuParams_m[dpuIdx], sizeof(struct DPUParams));
+                    event = init_InodeWrite(first_role_id + dpu_idx, 1405, dpuParams_m[dpuIdx],
+                                            transfer_buf_bytes((uint8_t *)&dpuParams[dpuIdx],
+                                                               sizeof(struct DPUParams)));
+                    events_.push_back(event);
+                    event = init_WriteSockets(dpu_idx + first_role_id, 2000, 1,
+                                              transfer_buf_bytes(&ok, 1)); // 告诉dpu_code写入已经完成
+                    events_.push_back(event);
+
+                    event = init_ReadSocket(dpu_idx + first_role_id); // 告诉主机计算完成
+                    events_.push_back(event);
                     if (dpuIdx == 0)
                     {
                         // copyFromDPU(&api, role, dpuParams[dpuIdx].dpuNextFrontier_m,
@@ -235,89 +312,32 @@ namespace upmem_sim::simulator::faho::def
                     }
                     else
                     {
-                        // copyFromDPU(&api, role, dpuParams[dpuIdx].dpuNextFrontier_m,
-                        //             (uint8_t *)nextFrontier,
-                        //             numNodes / 64 * sizeof(uint64_t));
-                        event = init_InodeRead(role, 3007,
-                                               (uint8_t *)nextFrontier,
-                                               dpuParams[dpuIdx].dpuNextFrontier_m,
-                                               numNodes / 64 * sizeof(uint64_t));
-                        events_.push_back(event);
 
-                        for (uint32_t i = 0; i < numNodes / 64; ++i)
-                        {
-                            currentFrontier[i] |= nextFrontier[i];
-                        }
+                        // event = init_InodeRead(role, 3007,
+                        //                         (uint8_t *)nextFrontier,
+                        //                         dpuParams[dpuIdx].dpuNextFrontier_m,
+                        //                         numNodes / 64 * sizeof(uint64_t));
+                        // events_.push_back(event);
+
+                        // for (uint32_t i = 0; i < numNodes / 64; ++i)
+                        // {
+                        //     currentFrontier[i] |= nextFrontier[i];
+                        // }
+                        assert(0); // 只支持一个DPU
                     }
                     ++dpuIdx;
                 }
-            }
-
-            // Check if the next frontier is empty, and copy data to DPU if not empty
-            nextFrontierEmpty = 1;
-            for (uint32_t i = 0; i < numNodes / 64; ++i)
-            {
-                if (currentFrontier[i])
+                else
                 {
-                    nextFrontierEmpty = 0;
-                    printf("%i empty\n", i);
-
-                    break;
-                }
-            }
-            if (!nextFrontierEmpty)
-            {
-                ++level;
-                dpuIdx = 0;
-                for (uint32_t dpu_idx = 0; dpu_idx < numDPUs; dpu_idx++)
-                {
-                    int role = first_role_id + dpu_idx;
-                    uint32_t dpuNumNodes = dpuParams[dpuIdx].dpuNumNodes;
-                    if (dpuNumNodes > 0)
-                    {
-                        // Copy current frontier to all DPUs (place in next frontier and DPU
-                        // will update visited and copy to current frontier)
-                        // copyToDPU(&api, role, (uint8_t *)currentFrontier,
-                        //           dpuParams[dpuIdx].dpuNextFrontier_m,
-                        //           numNodes / 64 * sizeof(uint64_t));
-                        event = init_InodeWrite(first_role_id + dpu_idx, 1406,
-                                                dpuParams[dpuIdx].dpuNextFrontier_m,
-                                                transfer_buf_bytes((uint8_t *)currentFrontier,
-                                                                   numNodes / 64 * sizeof(uint64_t)));
-                        events_.push_back(event);
-                        // Copy new level to DPU
-                        dpuParams[dpuIdx].level = level;
-                        // copyToDPU(&api, role, (uint8_t *)&dpuParams[dpuIdx],
-                        //           dpuParams_m[dpuIdx], sizeof(struct DPUParams));
-                        event = init_InodeWrite(first_role_id + dpu_idx, 1405, dpuParams_m[dpuIdx],
-                                                transfer_buf_bytes((uint8_t *)&dpuParams[dpuIdx],
-                                                                   sizeof(struct DPUParams)));
-                        events_.push_back(event);
-                        ++dpuIdx;
-                    }
+                    assert(0);
                 }
             }
         }
-        dpuIdx = 0;
-        for (uint32_t dpu_idx = 0; dpu_idx < numDPUs; dpu_idx++)
-        {
-            int role = first_role_id + dpu_idx;
-            uint32_t dpuNumNodes = dpuParams[dpuIdx].dpuNumNodes;
-            if (dpuNumNodes > 0)
-            {
-                uint32_t dpuStartNodeIdx = dpuIdx * numNodesPerDPU;
-                // copyFromDPU(&api, role, dpuParams[dpuIdx].dpuNodeLevel_m,
-                //             (uint8_t *)(nodeLevel + dpuStartNodeIdx),
-                //             dpuNumNodes * sizeof(float));
-                event = init_InodeRead(role, 3008,
-                                       (uint8_t *)(nodeLevel + dpuStartNodeIdx),
-                                       dpuParams[dpuIdx].dpuNodeLevel_m,
-                                       dpuNumNodes * sizeof(uint32_t));
-                events_.push_back(event);
-            }
-            ++dpuIdx;
+        else{
+            add_check();
         }
-
+    }
+    void BFS::add_check(){
         nodeLevelReference =
             (uint32_t *)calloc(numNodes, sizeof(uint32_t)); // Node's BFS level (initially all 0
                                                             // meaning not reachable)
@@ -381,10 +401,7 @@ namespace upmem_sim::simulator::faho::def
             ++level;
         }
 
-        event = init_Check(1);
+        Event* event = init_Check(1);
         events_.push_back(event);
-
-
-        return;
     }
 }

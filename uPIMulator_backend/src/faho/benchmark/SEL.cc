@@ -15,15 +15,12 @@ static T *A;
 static T *C3;
 static T *C;
 static T *C2;
-#define BL 11
-#define BLOCK_SIZE_LOG2 BL
-#define BLOCK_SIZE (1 << BLOCK_SIZE_LOG2)
-#define REGS (BLOCK_SIZE >> 3)
+#define REGS 128
 #define NR_DPUS 1
-#define NR_FTHREAD 5
+#define NR_FTHREAD 4
 static uint32_t accum = 0;
 static uint32_t total_count = 0;
-static const unsigned int p_input_size = 131072;
+static unsigned int p_input_size;
 static const unsigned int p_exp = 0;
 unsigned int input_size;
 static uint32_t *results_scan;
@@ -68,8 +65,7 @@ static unsigned int select_host(T *C, T *A, unsigned int nr_elements)
 static void read_input(T *A, unsigned int nr_elements,
                        unsigned int nr_elements_round)
 {
-    // srand(0);
-    printf("nr_elements\t%u\t", nr_elements);
+
     for (unsigned int i = 0; i < nr_elements; i++)
     {
         // A[i] = (T) (rand());
@@ -167,7 +163,9 @@ namespace upmem_sim::simulator::faho::def
         def::Event *event;
         char ok;
         bindir_ = bindir;
+        p_input_size=data_prep;
         unsigned nb_role = NR_DPUS, nr_of_dpus = NR_DPUS;
+        int first_role = 1;
 
         input_size =
             p_exp == 0 ? p_input_size * nr_of_dpus
@@ -188,17 +186,14 @@ namespace upmem_sim::simulator::faho::def
         bufferA = A;
         bufferC = C3;
         bufferC_continious = C2;
-
         results_scan = (uint32_t *)malloc(nr_of_dpus * sizeof(uint32_t));
 
         // Create an input file with arbitrary data
         read_input(A, input_size, input_size_dpu_round * nr_of_dpus);
-        int first_role = 1;
         event = init_NewProcess(1, 1000, NR_DPUS, "SEL.16"); // 只有new和lanuch指定role_id=1
         events_.push_back(event);
         event = init_LanuchProcess(1, 1000);
         events_.push_back(event);
-        total_count = select_host(C, A, input_size);
         const unsigned int input_size_dpu = input_size_dpu_round;
         unsigned int kernel = 0;
         int base_offset;
@@ -263,6 +258,7 @@ namespace upmem_sim::simulator::faho::def
             event = init_Check(i + first_role);
             events_.push_back(event);
         }
+         total_count = select_host(C, A, input_size);
     }
 
 }

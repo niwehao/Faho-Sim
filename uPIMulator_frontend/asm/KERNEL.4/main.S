@@ -101,7 +101,15 @@ wake_up_one_start:
 	jump wake_up_one_start
 wake_up_one_end:
 	jump r23
-		.section	.text.sp_wait,"ax",@progbits
+	.section	.text.print_debug,"ax",@progbits
+	.globl	print_debug                         // -- Begin function syscall
+	.type	print_debug,@function
+print_debug:                                // @syscall
+// %bb.0:
+	move r1, 8
+	time_cfg r0,r1
+	jump r23
+	.section	.text.sp_wait,"ax",@progbits
 	.globl	sp_wait                         // -- Begin function sp_wait
 	.type	sp_wait,@function
 sp_wait:                                // @sp_wait

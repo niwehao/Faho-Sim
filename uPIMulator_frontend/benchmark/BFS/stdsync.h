@@ -53,45 +53,29 @@ void wait(int a) {
     ;
 }
 
-void active_wait_barrier(struct barrier *barrier) {
-  int nb = 100;
-  while (barrier->__nb_exit != 0)
-    if (--nb == 0) {
-      yield();
-      nb = 100;
-    }
-  while (try_lock(&(barrier->__lock)) != 0)
+void active_wait_barrier(struct barrier *b) {
+  while (try_lock(&(b->__lock)) != 0)
     ;
-
-  barrier->__nb_waiting += 1;
-  if (barrier->__nb_waiting == barrier->__nb_expected) {
-    barrier->__nb_waiting = 0;
-  } else {
-    unlock(&(barrier->__lock));
-    nb = 100;
-    while (barrier->__nb_waiting != 0) {
-      // unlock(&(barrier->__lock)); // Not totaly sure -> they can have very
-      //                             // tricky scenario where in theory the
-      //                             // barrier
-      //                             // will be never cross. (If this thread has
-
-      //                             // always the lock : impossible in
-      if (--nb == 0) {
-        yield();
-        nb = 100;
-      }
-      //                             // practice)
-      // wait(400);
-      // while (try_lock(&(barrier->__lock)) != 0)
-      ;
-    }
-    while (try_lock(&(barrier->__lock)) != 0)
+  while (b->__nb_exit) {
+    unlock(&(b->__lock));
+    while (try_lock(&(b->__lock)) != 0)
       ;
   }
-  barrier->__nb_exit++;
-  if (barrier->__nb_exit == barrier->__nb_expected)
-    barrier->__nb_exit = 0;
-  unlock(&(barrier->__lock));
+  b->__nb_waiting += 1;
+  if (b->__nb_waiting == b->__nb_expected)
+    b->__nb_exit = 1;
+  else
+    while (!b->__nb_exit) {
+      unlock(&(b->__lock));
+      while (try_lock(&(b->__lock)) != 0)
+        ;
+    }
+  b->__nb_waiting -= 1;
+  if (b->__nb_waiting == 0) {
+    b->__nb_exit = 0;
+  }
+  unlock(&(b->__lock));
+  return;
 }
 
 

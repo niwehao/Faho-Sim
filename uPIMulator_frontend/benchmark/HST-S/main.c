@@ -111,7 +111,7 @@ void main1() {
     socket_write(sd_host, &ok, 1);
     socket_read(sd_host, &ok, 1);
   }
-    wait_barrier(&b);
+  wait_barrier(&b);
 
 }
 

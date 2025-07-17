@@ -99,7 +99,19 @@ bool RevolverScheduler::block(ThreadID id) {//阻塞线程
     throw std::invalid_argument("");
   }
 }
-
+bool RevolverScheduler::awake_block(ThreadID id) {
+  Thread *thread = threads_[id];
+  assert(thread->id() == id);
+  std::cout << "Awake thread: " << id << "state: " << thread->state()
+            << std::endl;
+  if (thread->state() == Thread::BLOCK) {
+    thread->set_state(Thread::RUNNABLE);
+    return true;
+  } 
+  else{
+    assert(0);
+  }
+}
 bool RevolverScheduler::awake(ThreadID id) {//唤醒线程
   Thread *thread = threads_[id];
   assert(thread->id() == id);
@@ -113,16 +125,9 @@ bool RevolverScheduler::awake(ThreadID id) {//唤醒线程
   } else if (thread->state() == Thread::SLEEP) {
     thread->set_state(Thread::RUNNABLE);
     return true;
-  } else if (thread->state() == Thread::BLOCK) {
-    thread->set_state(Thread::RUNNABLE);
-    return true;
   } else {
-    if(id==0){
-       std::cout << "Thread " << id << " is in state: " << thread->state()
-              << ", cannot awake." << std::endl;
-
-    }
-   
+    std::cout << "Thread " << id << " is in state: " << thread->state()
+          << ", cannot awake." << std::endl;
     return false; // 线程处于其他状态,无法唤醒
 
   }

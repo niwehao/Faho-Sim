@@ -60,6 +60,7 @@ int sp_wait(struct custom_barriere *cp) {
   mutex_lock(cp->mutex);
   unsigned char tid = me_new(); // me()
   cp->pending++;
+  //print_debug(cp->pending,0);
   if (cp->pending == cp->nb) {
     cp->ret_val = 0; // clasic exit
     for (int i = 0; i < cp->nb; i++)
@@ -101,7 +102,8 @@ void abnormal_wakeup_one(struct custom_barriere *cp) {
 
   cp->ret_val = 1; // anormal exit
   cp->pending--;
-  wake_up_one(cp->nb);
+  //print_debug(cp->pending,0);
+  wake_up_one(cp->nb); 
 end:
   mutex_unlock(cp->mutex);
 }

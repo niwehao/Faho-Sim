@@ -3,8 +3,7 @@
 // Data type
 #define DTYPE int64_t
 #define NR_DPUS 1
-#define INPUT_SIZE 16
-#define NR_FTHREAD 5
+#define NR_FTHREAD 4
 DTYPE *input;
 DTYPE *querys;
 typedef struct
@@ -128,12 +127,13 @@ namespace upmem_sim::simulator::faho::def
         Event *event;
 
         uint32_t nr_of_dpus = NR_DPUS; // Number of DPUs to use
-        uint64_t input_size = INPUT_SIZE;
-        uint64_t num_querys = 2;
+        uint64_t input_size = data_prep;
+        uint64_t num_querys = 16;
         // Create an input file with arbitrary data
         input = (DTYPE *)malloc((input_size) * sizeof(DTYPE));
         querys = (DTYPE *)malloc((num_querys) * sizeof(DTYPE));
         create_test_file(input, querys, input_size, num_querys);
+        assert(num_querys % ( nr_of_dpus *NR_FTHREAD) == 0);
 
         // Compute host solution
         result_host = binarySearch(input, querys, input_size - 1, num_querys);
@@ -156,20 +156,20 @@ namespace upmem_sim::simulator::faho::def
         {
             int role_id = i + first_role_id;
             //   write_inode(&api, role_id, &input_arguments, sizeof(input_arguments), 0);
-            event = init_InodeWrite(role_id, 1100, 0,
+            event = init_InodeWrite(role_id, 1000, 0,
                                     transfer_buf_bytes(&input_arguments, sizeof(input_arguments)));
             events_.push_back(event);
 
             //   write_inode(&api, role_id, input, input_size * sizeof(DTYPE),
             //               sizeof(input_arguments));
-            event = init_InodeWrite(role_id, 1200, sizeof(input_arguments),
+            event = init_InodeWrite(role_id, 1000, sizeof(input_arguments),
                                     transfer_buf_bytes(input, input_size * sizeof(DTYPE)));
             events_.push_back(event);
 
             //   write_inode(&api, role_id, querys + slice_per_dpu * i,
             //               slice_per_dpu * sizeof(DTYPE),
             //               sizeof(input_arguments) + input_size * sizeof(DTYPE));
-            event = init_InodeWrite(role_id, 1300 + i, sizeof(input_arguments) + input_size * sizeof(DTYPE),
+            event = init_InodeWrite(role_id, 1000, sizeof(input_arguments) + input_size * sizeof(DTYPE),
                                     transfer_buf_bytes(querys + slice_per_dpu * i,
                                                        slice_per_dpu * sizeof(DTYPE)));
             events_.push_back(event);
@@ -195,7 +195,9 @@ namespace upmem_sim::simulator::faho::def
             events_.push_back(event);
             event = init_InodeRead(i + first_role_id, 1000,
                                    (uint8_t *)results_retrieve[i],
-                                   sizeof(input_arguments) + input_size * sizeof(DTYPE) + i * NR_FTHREAD * sizeof(dpu_results_t),
+                                   input_size * sizeof(DTYPE) + 
+                               sizeof(input_arguments) +
+                               input_size * sizeof(DTYPE),
                                    NR_FTHREAD * sizeof(dpu_results_t));
             events_.push_back(event);
         }

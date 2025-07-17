@@ -25,19 +25,20 @@ int nr_tasklets, sd_host;
 
 void main1(void);
 
-int main(void) {
-  nr_tasklets =NR_FTHREAD;
+int main(void)
+{
+  nr_tasklets = NR_FTHREAD;
   init_barrier(&my_barrier, nr_tasklets);
   sd_host = socket_open(0);
 
-  
   for (int i = 1; i < nr_tasklets; i++)
     create_job(main1);
   main1();
 }
 
 // main
-void main1() {
+void main1()
+{
   unsigned int tasklet_id = get_jid();
   int32_t *cache_input =
       (int32_t *)(sbrk((BL_IN + 1) * (BL_IN + 2) * sizeof(int32_t)) -
@@ -45,14 +46,27 @@ void main1() {
   int32_t *cache_ref = (int32_t *)(sbrk(BL_IN * BL_IN * sizeof(int32_t)) -
                                    (BL_IN * BL_IN * sizeof(int32_t)));
 
-  while (1) {
+  while (1)
+  {
+    int r;
 
     // Barrier
     wait_barrier(&my_barrier); //!
-    if (tasklet_id == 0) {
+    if (tasklet_id == 0)
+    {
       char ok = 1;
-      socket_write(sd_host, &ok, 1);
-      socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
+      r = socket_write(sd_host, &ok, 1);
+      if (r != 0)
+      {
+        print_debug(r, 0);
+        fault_notif();
+      }
+      r = socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
+      if (r != 0)
+      {
+        print_debug(r, 0);
+        fault_notif();
+      }
     }
     wait_barrier(&my_barrier); //!
     uint32_t nblocks = DPU_INPUT_ARGUMENTS.nblocks;
@@ -74,26 +88,31 @@ void main1() {
     uint32_t addr_ref;
     uint32_t cache_input_offset;
 
-    for (uint32_t bl = 0; bl < nblocks; bl++) {
+    for (uint32_t bl = 0; bl < nblocks; bl++)
+    {
 
       // Top-left computation
-      for (uint32_t blk = 0; blk <= REP; blk++) {
+      for (uint32_t blk = 0; blk <= REP; blk++)
+      {
 
         // Partition chunks/subblocks of the diagonal to tasklets
         chunks = blk / nr_tasklets;
         mod = blk % nr_tasklets;
         if (tasklet_id < mod)
           chunks++;
-        if (mod > 0) {
+        if (mod > 0)
+        {
           if (tasklet_id < mod)
             start = tasklet_id * chunks;
           else
             start = mod * (chunks + 1) + (tasklet_id - mod) * chunks;
-        } else
+        }
+        else
           start = tasklet_id * chunks;
 
         // Compute all assigned chunks
-        for (uint32_t bl_indx = 0; bl_indx < chunks; bl_indx++) {
+        for (uint32_t bl_indx = 0; bl_indx < chunks; bl_indx++)
+        {
           int t_index_x = start + bl_indx;
           int t_index_y = blk - 1 - t_index_x;
 
@@ -104,15 +123,26 @@ void main1() {
           cache_input_offset = (BL_IN + 2);
           // mram_read((__mram_ptr void const *)addr_input, (void *)cache_input,
           //           (BL_IN + 2) * sizeof(int32_t)); //!
-          umram_read(cache_input, (BL_IN + 2) * sizeof(int32_t),
+          r = umram_read(cache_input, (BL_IN + 2) * sizeof(int32_t),
                          addr_input);
+          if (r != 0)
+          {
+            print_debug(r, 0);
+            fault_notif();
+          }
           addr_input += ((BL + 2) * sizeof(int32_t));
-          for (int i = 1; i < BL_IN + 1; i++) {
+          for (int i = 1; i < BL_IN + 1; i++)
+          {
             //   mram_read((__mram_ptr void const *)addr_input,
             //             (void *)(cache_input + cache_input_offset),
             //             (2) * sizeof(int32_t)); //!
-            umram_read(cache_input + cache_input_offset,
+            r = umram_read(cache_input + cache_input_offset,
                            (2) * sizeof(int32_t), addr_input);
+            if (r != 0)
+            {
+              print_debug(r, 0);
+              fault_notif();
+            }
             cache_input_offset += (BL_IN + 2);
             addr_input += ((BL + 2) * sizeof(int32_t));
           }
@@ -121,19 +151,27 @@ void main1() {
                      (t_index_x * BL * BL_IN * sizeof(int32_t)) +
                      (t_index_y * BL_IN * sizeof(int32_t));
           cache_input_offset = 0;
-          for (int i = 0; i < BL_IN; i++) {
+          for (int i = 0; i < BL_IN; i++)
+          {
             //   mram_read((__mram_ptr void const *)addr_ref,
             //             (void *)(cache_ref + cache_input_offset),
             //             (BL_IN) * sizeof(int32_t)); //!
-            umram_read(cache_ref + cache_input_offset,
+            r = umram_read(cache_ref + cache_input_offset,
                            (BL_IN) * sizeof(int32_t), addr_ref);
+            if (r != 0)
+            {
+              print_debug(r, 0);
+              fault_notif();
+            }
             cache_input_offset += BL_IN;
             addr_ref += (BL * sizeof(int32_t));
           }
 
           // Computation
-          for (uint32_t i = 1; i < BL_IN + 1; i++) {
-            for (uint32_t j = 1; j < BL_IN + 1; j++) {
+          for (uint32_t i = 1; i < BL_IN + 1; i++)
+          {
+            for (uint32_t j = 1; j < BL_IN + 1; j++)
+            {
               cache_input[i * (BL_IN + 2) + j] =
                   maximum(cache_input[(i - 1) * (BL_IN + 2) + j - 1] +
                               cache_ref[(i - 1) * BL_IN + j - 1],
@@ -148,12 +186,18 @@ void main1() {
                        (t_index_y * BL_IN * sizeof(int32_t));
           cache_input_offset = (BL_IN + 2);
           addr_input += ((BL + 2) * sizeof(int32_t));
-          for (int i = 1; i < BL_IN + 1; i++) {
+          for (int i = 1; i < BL_IN + 1; i++)
+          {
             //   mram_write((cache_input + cache_input_offset),
             //              (__mram_ptr void *)addr_input,
             //              (BL_IN + 2) * sizeof(int32_t)); //!
-            umram_write((cache_input + cache_input_offset),
+            r = umram_write((cache_input + cache_input_offset),
                             (BL_IN + 2) * sizeof(int32_t), addr_input);
+            if (r != 0)
+            {
+              print_debug(r, 0);
+              fault_notif();
+            }
             cache_input_offset += (BL_IN + 2);
             addr_input += ((BL + 2) * sizeof(int32_t));
           }
@@ -163,30 +207,45 @@ void main1() {
         wait_barrier(&my_barrier);
       }
       wait_barrier(&my_barrier); //!
-      if (tasklet_id == 0) {
+      if (tasklet_id == 0)
+      {
         char ok = 1;
-        socket_write(sd_host, &ok, 1);
-        socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
+        r = socket_write(sd_host, &ok, 1);
+        if (r != 0)
+        {
+          print_debug(r, 0);
+          fault_notif();
+        }
+        r = socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
+        if (r != 0)
+        {
+          print_debug(r, 0);
+          fault_notif();
+        }
       }
-      wait_barrier(&my_barrier); 
+      wait_barrier(&my_barrier);
 
       // Bottom-right computation
-      for (uint32_t blk = 2; blk <= REP; blk++) {
+      for (uint32_t blk = 2; blk <= REP; blk++)
+      {
         // Partition chunks/subblocks of the diagonal to tasklets
         chunks = (REP - blk + 1) / NR_FTHREAD;
         mod = (REP - blk + 1) % NR_FTHREAD;
         if (tasklet_id < mod)
           chunks++;
-        if (mod > 0) {
+        if (mod > 0)
+        {
           if (tasklet_id < mod)
             start = tasklet_id * chunks;
           else
             start = mod * (chunks + 1) + (tasklet_id - mod) * chunks;
-        } else
+        }
+        else
           start = tasklet_id * chunks;
 
         // Compute all assigned chunks
-        for (uint32_t bl_indx = 0; bl_indx < chunks; bl_indx++) {
+        for (uint32_t bl_indx = 0; bl_indx < chunks; bl_indx++)
+        {
           int t_index_x = blk - 1 + start + bl_indx;
           int t_index_y = REP + blk - 2 - t_index_x;
 
@@ -197,15 +256,26 @@ void main1() {
           cache_input_offset = (BL_IN + 2);
           // mram_read((__mram_ptr void const *)addr_input, (void *)cache_input,
           //           (BL_IN + 2) * sizeof(int32_t)); //!
-          umram_read(cache_input, (BL_IN + 2) * sizeof(int32_t),
+          r = umram_read(cache_input, (BL_IN + 2) * sizeof(int32_t),
                          addr_input);
+          if (r != 0)
+          {
+            print_debug(r, 0);
+            fault_notif();
+          }
           addr_input += ((BL + 2) * sizeof(int32_t));
-          for (int i = 1; i < BL_IN + 1; i++) {
+          for (int i = 1; i < BL_IN + 1; i++)
+          {
             //   mram_read((__mram_ptr void const *)addr_input,
             //             (void *)(cache_input + cache_input_offset),
             //             (2) * sizeof(int32_t)); //!
-            umram_read(cache_input + cache_input_offset,
+            r = umram_read(cache_input + cache_input_offset,
                            (2) * sizeof(int32_t), addr_input);
+            if (r != 0)
+            {
+              print_debug(r, 0);
+              fault_notif();
+            }
             cache_input_offset += (BL_IN + 2);
             addr_input += ((BL + 2) * sizeof(int32_t));
           }
@@ -214,19 +284,27 @@ void main1() {
                      (t_index_x * BL * BL_IN * sizeof(int32_t)) +
                      (t_index_y * BL_IN * sizeof(int32_t));
           cache_input_offset = 0;
-          for (int i = 0; i < BL_IN; i++) {
+          for (int i = 0; i < BL_IN; i++)
+          {
             //   mram_read((__mram_ptr void const *)addr_ref,
             //             (void *)(cache_ref + cache_input_offset),
             //             (BL_IN) * sizeof(int32_t)); //!
-            umram_read(cache_ref + cache_input_offset,
+            r = umram_read(cache_ref + cache_input_offset,
                            (BL_IN) * sizeof(int32_t), addr_ref);
+            if (r != 0)
+            {
+              print_debug(r, 0);
+              fault_notif();
+            }
             cache_input_offset += BL_IN;
             addr_ref += (BL * sizeof(int32_t));
           }
 
           // Computation
-          for (int i = 1; i < BL_IN + 1; i++) {
-            for (int j = 1; j < BL_IN + 1; j++) {
+          for (int i = 1; i < BL_IN + 1; i++)
+          {
+            for (int j = 1; j < BL_IN + 1; j++)
+            {
               cache_input[i * (BL_IN + 2) + j] =
                   maximum(cache_input[(i - 1) * (BL_IN + 2) + j - 1] +
                               cache_ref[(i - 1) * BL_IN + j - 1],
@@ -241,12 +319,18 @@ void main1() {
                        (t_index_y * BL_IN * sizeof(int32_t));
           cache_input_offset = (BL_IN + 2);
           addr_input += ((BL + 2) * sizeof(int32_t));
-          for (int i = 1; i < BL_IN + 1; i++) {
+          for (int i = 1; i < BL_IN + 1; i++)
+          {
             //   mram_write(cache_input + cache_input_offset,
             //              (__mram_ptr void *)addr_input,
             //              (BL_IN + 2) * sizeof(int32_t)); //!
-            umram_write(cache_input + cache_input_offset,
+            r = umram_write(cache_input + cache_input_offset,
                             (BL_IN + 2) * sizeof(int32_t), addr_input);
+            if (r != 0)
+            {
+              print_debug(r, 0);
+              fault_notif();
+            }
             cache_input_offset += (BL_IN + 2);
             addr_input += ((BL + 2) * sizeof(int32_t));
           }

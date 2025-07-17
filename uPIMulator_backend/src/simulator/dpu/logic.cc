@@ -245,7 +245,7 @@ void Logic::service_dma() {
     
         // 4. 唤醒被阻塞的线程
 
-    scheduler_->awake(instruction->thread()->id());
+    scheduler_->awake_block(instruction->thread()->id());
 
     delete dma_command;
     delete instruction;

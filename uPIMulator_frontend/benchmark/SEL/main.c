@@ -13,7 +13,7 @@
 //     if (op != 0)                                                               \
 //       exit_proc(op);                                                           \
 //   } while (0)
-#define CHK(op) op
+// #define CHK(op) op
 int sd_host;
 
 __buffer_aligned dpu_arguments_t DPU_INPUT_ARGUMENTS;
@@ -39,6 +39,7 @@ static unsigned int select(T *output, T *input) {
 
 struct handshake handshakes[NR_FTHREAD];
 
+
 // Handshake with adjacent tasklets
 static unsigned int handshake_sync(unsigned int l_count,
                                    unsigned int fthread_id) {
@@ -61,6 +62,7 @@ struct barrier b;
 
 // main_kernel1
 void main1() {
+  int r;
   int tasklet_id = get_jid();
   wait_barrier(&b);
   if (tasklet_id == 0)
@@ -69,7 +71,7 @@ void main1() {
     socket_write(sd_host, &ok, 1);
     socket_read(sd_host, &ok, 1);
     if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0)
-      exit_proc(3);
+      fault_notif();
   }
   wait_barrier(&b);
   unsigned int fthread_id = get_jid();
@@ -100,7 +102,12 @@ void main1() {
        byte_index += BLOCK_SIZE * NR_FTHREAD) {
 
     // Load cache with current MRAM block
-    CHK(umram_read(cache_A, BLOCK_SIZE, mram_base_addr_A + byte_index));
+    r=umram_read(cache_A, BLOCK_SIZE, mram_base_addr_A + byte_index);
+    if(r!=0){
+      print_debug(r,0);
+      fault_notif();
+    }
+   
 
     // SELECT in each tasklet
     uint32_t l_count = select(cache_B, cache_A); // In-place or out-of-place?
@@ -111,12 +118,18 @@ void main1() {
     // Barrier
     // wait_barrier(&b);
     active_wait_barrier(&b);
+    
 
     // Write cache to current MRAM block
-
-    CHK(umram_write(cache_B, l_count * sizeof(T),
+    r=umram_write(cache_B, l_count * sizeof(T),
                     mram_base_addr_B +
-                        (message_partial_count + p_count) * sizeof(T)));
+                        (message_partial_count + p_count) * sizeof(T));
+
+    if(r!=0){
+      print_debug(r,0);
+      fault_notif();
+    }
+      
 
     // wait_barrier(&b);
     active_wait_barrier(&b);
@@ -127,13 +140,18 @@ void main1() {
       message_partial_count = result->t_count;
     }
     i++;
+    
   }
   wait_barrier(&b);
   if (fthread_id == 0)
   {
-    CHK(umram_write(DPU_RESULTS, sizeof(dpu_results_t) * NR_FTHREAD,
-                  sizeof(dpu_arguments_t) + DPU_INPUT_ARGUMENTS.size));
-   
+    r=umram_write(DPU_RESULTS, sizeof(dpu_results_t) * NR_FTHREAD,
+                  sizeof(dpu_arguments_t) + DPU_INPUT_ARGUMENTS.size);
+
+    if(r!=0){
+      print_debug(r,0);//编译代码存在问题,会导致
+      fault_notif();
+    }
     char ok;
     socket_write(sd_host, &ok, 1);
     socket_read(sd_host, &ok, 1);
@@ -155,7 +173,6 @@ int main(void) {
 
   for (int i = 0; i < NR_FTHREAD - 1; i++)
     join_job();
-  // CHK(umram_write(DPU_RESULTS, sizeof(dpu_results_t) * NR_FTHREAD,
-  //                 sizeof(dpu_arguments_t) + DPU_INPUT_ARGUMENTS.size));
+  
   return 0;
 }

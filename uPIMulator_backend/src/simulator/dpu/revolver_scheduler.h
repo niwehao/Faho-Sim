@@ -24,6 +24,7 @@ class RevolverScheduler {
   bool boot(ThreadID id);
   bool sleep(ThreadID id);
   bool block(ThreadID id);
+  bool awake_block(ThreadID id);
   bool awake(ThreadID id);
   bool shutdown(ThreadID id);
 

@@ -1,8 +1,7 @@
 LIB := dpu/
-NR_FTHREAD ?= 5
-BL ?= 11
+NR_FTHREAD ?= 4
+BL ?= 10
 ENERGY ?= 0
-TYPE ?= INT32
 # 目标汇编文件定义
 K_ASM := dpu_code.S 
 K_C := main.c
@@ -15,7 +14,7 @@ all : ${K_ASM}
 
 
 ${K_ASM} : 
-	dpu-upmem-dpurte-clang  -ffunction-sections -S -g0 -O2 ${DPU_KERNEL_FLAG} -o $@ ${K_C}
+	dpu-upmem-dpurte-clang  -ffunction-sections -S -g0 -O0 ${DPU_KERNEL_FLAG} -o $@ ${K_C}
 
 
 clean:

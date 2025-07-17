@@ -2,14 +2,17 @@
 #include "NW_support/common.h"
 
 #define NR_DPUS 1
-static int p_max_rows = 128;
+uint64_t max_rows ;//一般data_prep是256
+uint64_t max_cols ;
 static int32_t *input_itemsets_host;
 static int32_t *input_itemsets;
-
-int32_t *traceback_output;
-int32_t *traceback_output_host;
-int32_t *reference;
-int32_t *dummy;
+static unsigned int mram_offset = 0;
+static int32_t *traceback_output;
+static int32_t *traceback_output_host;
+static int32_t *reference;
+static int32_t *dummy;
+static dpu_arguments_t *input_args;
+static unsigned int penalty = 1;
 // Compute output in the host 问题在于没有
 static void nw_host(int32_t *input_itemsets, int32_t *reference,
                     uint64_t max_cols, unsigned int penalty)
@@ -136,11 +139,20 @@ namespace upmem_sim::simulator::faho::def
         {
             if (end_flag == 1)
             {
-                exit(0); // 退出程序
+                 if(excution==1){
+                    excute_2();
+                    excution++;
+                    end_flag = 0;
+                } 
+                else{
+
+                     exit(0); // 退出程序
+                }        
             }
-            end_flag = 1; // 设置结束标志
-            return nullptr;
-            // 退出代码
+            else{
+                end_flag = 1; // 设置结束标志
+                return nullptr;
+            }
         }
         def::Event *event_ = get_event(time_);
         if (event_ == nullptr)
@@ -155,8 +167,6 @@ namespace upmem_sim::simulator::faho::def
     void NW::check(int pid)
     {
 
-        int max_rows = p_max_rows + 1;
-        int max_cols = p_max_rows + 1;
         bool status = true;
         for (uint64_t i = 1; i < max_rows; i++)
         {
@@ -190,7 +200,7 @@ namespace upmem_sim::simulator::faho::def
             assert(0);
         }
     }
-    void NW::benchmark_init(std::string bindir,int data_prep)
+    void NW::benchmark_init(std::string bindir, int data_prep)
     {
         Event *event;
         bindir_ = bindir;
@@ -210,17 +220,16 @@ namespace upmem_sim::simulator::faho::def
                 fprintf(stderr, "Error recieved ok (%i) from process %i\n ", ok, i);
             }
         }
-        uint64_t max_rows = p_max_rows + 1;
-        uint64_t max_cols = p_max_rows + 1;
-        unsigned int penalty = 1;
+        max_rows = data_prep + 1;
+        max_cols = data_prep + 1;
+       
         reference = (int32_t *)malloc(max_rows * max_cols * sizeof(int32_t));
         input_itemsets_host =
             (int32_t *)malloc(max_rows * max_cols * sizeof(int32_t));
         input_itemsets =
             (int32_t *)malloc((max_rows + 1) * (max_cols + 1) * sizeof(int32_t));
-        dpu_arguments_t *input_args =
+        input_args =
             (dpu_arguments_t *)malloc(nr_of_dpus * sizeof(dpu_arguments_t));
-        
 
         // Traceback output
         traceback_output =
@@ -233,7 +242,6 @@ namespace upmem_sim::simulator::faho::def
         // This array is used for dummy/stale CPU-DPU transfers
         dummy = (int32_t *)malloc(nr_of_dpus * (BL + 2) * sizeof(int32_t));
         unsigned int blocks_per_dpu;
-        unsigned int mram_offset = 0;
 
         // Initializing inputs are needed at each iteration
         // Initialize input itemsets
@@ -557,7 +565,12 @@ namespace upmem_sim::simulator::faho::def
                 }
             }
         }
-
+    }
+    void NW::excute_2()
+    {
+        def::Event *event;
+        int first_role=1;
+        int nr_of_dpus=NR_DPUS ;
         // Bottom-right computation on DPUs
         for (unsigned int blk = 2; blk <= (max_cols - 1) / BL; blk++)
         {
@@ -595,7 +608,6 @@ namespace upmem_sim::simulator::faho::def
             if ((((max_cols - 1) / BL) - blk + 1) % nr_of_dpus != 0)
                 blocks_per_dpu++;
 
-            unsigned int mram_offset = 0;
             for (unsigned int bl_indx = 0; bl_indx < blocks_per_dpu; bl_indx++)
             {
                 for (unsigned int bl = 0; bl < BL + 1; bl++)
@@ -827,7 +839,7 @@ namespace upmem_sim::simulator::faho::def
                 }
             }
         }
-        event=init_Check(1);
+        event = init_Check(1);
         events_.push_back(event);
     }
 

@@ -59,12 +59,14 @@ namespace upmem_sim::simulator::reg
 
     void write_gp_reg(abi::reg::GPReg *gp_reg, int64_t value)
     {
-      // if(gp_reg->index() == 0)
+      // if(gp_reg->index() == 15)
       // {
-      //   std::cout << "write gp_reg 0 value: " << value << std::endl;
+      //   std::cout << "Thread id: " << sp_reg_->thread_id << "  ";
+      //   std::cout << "write gp_reg 15 value: " << value << std::endl;
       // }
       // if (gp_reg->index() == 1)
       // {
+      //    std::cout << "Thread id: " << sp_reg_->thread_id << "  ";
       //   std::cout << "write gp_reg 1 value: " << value << std::endl;
       // }
 
@@ -138,6 +140,7 @@ namespace upmem_sim::simulator::reg
       }
       else
       { // 系统态debug
+        return;
         state = 0;
         std::cout << "Thread id: " << sp_reg_->thread_id << "  ";
         for (auto &timetable_n : time_table_)
@@ -178,7 +181,7 @@ namespace upmem_sim::simulator::reg
     }
     void write_pc_reg(int64_t value)
     {
-      //print_jump(value);
+      print_jump(value);
       pc_reg_->write(value);
     }
     void increment_pc_reg()
@@ -186,7 +189,7 @@ namespace upmem_sim::simulator::reg
 
       pc_reg_->increment();
       int64_t pc_value = pc_reg_->read();
-      //print_jump(pc_value);
+      print_jump(pc_value);
       // if(pc_reg_->read()  == 570432+12) {
       //   std::cout << "pc_reg increment to: " << pc_reg_->read() << std::endl;
       // }

@@ -13,6 +13,7 @@ namespace upmem_sim::simulator::faho::k1
     int processs_address;
     int inode_table_address;
     int jobs_address;
+    int repeat=0;
     struct def::socket_connection *sockets_connection;
     uint32_t nb_so = 0;
     K1::K1(std::string bindir, std::string benchmark, std::string app, int num_tasklets, rank::Rank *rank,int data_prep)
@@ -108,6 +109,8 @@ namespace upmem_sim::simulator::faho::k1
         {
 
             rank_state = 1;
+            repeat=0;
+            std::cout<<"flag"<<def::read_flag(dpu_managers_[0])<<std::endl;
             rank_->reboot();
             return;
         }
@@ -131,11 +134,13 @@ namespace upmem_sim::simulator::faho::k1
         for (size_t i = 0; i < dpu_managers_.size(); i++)
         {
             auto &dpumanager = dpu_managers_[i];
+            if(repeat==0){
+                dpumanager->ki.flag1 = def::read_flag(dpumanager);
+                def::write_flags(dpumanager, 0);
+                repeat=1;
+                std::cout<<"set repeat"<<std::endl;
 
-            dpumanager->ki.flag1 = def::read_flag(dpumanager);
-            // std::cout<<"k1 cycle "<<i<<"  ******flag" << dpumanager->ki.flag1 <<  std::endl;
-            K1::read_jobs(dpumanager); // 读取job状态
-            def::write_flags(dpumanager, 0);
+            }//标志位的删除是自然发生的
             if (dpumanager->ki.flag1 & (PROCESS_END | NEW_SOCKET | SOCKET_OUT) ||
                 dpumanager->dpu_flag->load_proc || dpumanager->dpu_flag->launch_proc ||
                 dpumanager->dpu_flag->write_inode || dpumanager->dpu_flag->read_inode)
@@ -162,20 +167,23 @@ namespace upmem_sim::simulator::faho::k1
             if (dpumanager->ki.flag1 & NEW_SOCKET)
             {
                 parse_new_socket(dpumanager);
+                dpumanager->ki.flag1-=NEW_SOCKET;
             }
             if (dpumanager->ki.flag1 & SOCKET_OUT)
             {
                 rank_state = 1;
             }
-            if ((dpumanager->ki.flag1 & SOCKET_OUT) ||
-                dpumanager->dpu_flag->write_socket)
-            {
-
-                transfert_socket(dpumanager);
-            }
             if (dpumanager->ki.flag1 & PROCESS_END)
             {
                 parse_end_process(dpumanager);
+                dpumanager->ki.flag1-=PROCESS_END;
+            }
+
+            if ((dpumanager->ki.flag1 & SOCKET_OUT) ||
+                dpumanager->dpu_flag->write_socket)
+            {
+                transfert_socket(dpumanager);
+                dpumanager->ki.flag1-=SOCKET_OUT;
             }
             if (dpumanager->dpu_flag->dpu_process_change)
             {
@@ -191,6 +199,7 @@ namespace upmem_sim::simulator::faho::k1
                 dpumanager->check_result->nb_data = 0;
                 dpumanager->dpu_flag->check = 0;
             }
+            
 
             // 获取事件,并且写入远端dpu中
         }
@@ -888,11 +897,11 @@ namespace upmem_sim::simulator::faho::k1
     {
         host_->write_buffer(app_id, pid, buf, size);
     }
-    void K1::read_jobs(def::DpuManager *dpu_manager)
-    {
-        // 读取jobs
-        def::dpu_copy_from_wram(dpu_manager->dpu, dpu_manager->jobs, k1::jobs_address, sizeof(dpu_manager->jobs));
-    }
+    // void K1::read_jobs(def::DpuManager *dpu_manager)
+    // {
+    //     // 读取jobs
+    //     def::dpu_copy_from_wram(dpu_manager->dpu, dpu_manager->jobs, k1::jobs_address, sizeof(dpu_manager->jobs));
+    // }
     int K1::check_dpu_stop()
     {
         for (auto &dpu : rank_->dpus())

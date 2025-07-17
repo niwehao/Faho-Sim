@@ -67,6 +67,7 @@ namespace upmem_sim::simulator::faho::def
                 assert(0);
             }
         }
+        exit(0);
         return;
         
         assert(0);

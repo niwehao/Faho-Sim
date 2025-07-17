@@ -36,6 +36,10 @@ namespace upmem_sim::simulator::reg
     {
       return gp_regs_[gp_reg->index()]->read(representation);
     }
+    int64_t read_gp_reg(int index)
+    {
+      return gp_regs_[index]->read(abi::word::UNSIGNED);
+    }
     int64_t read_sp_reg(abi::reg::SPReg sp_reg,
                         abi::word::Representation representation)
     {
@@ -140,7 +144,7 @@ namespace upmem_sim::simulator::reg
       }
       else
       { // 系统态debug
-        return;
+ 
         state = 0;
         std::cout << "Thread id: " << sp_reg_->thread_id << "  ";
         for (auto &timetable_n : time_table_)
@@ -181,7 +185,7 @@ namespace upmem_sim::simulator::reg
     }
     void write_pc_reg(int64_t value)
     {
-      print_jump(value);
+      //print_jump(value);
       pc_reg_->write(value);
     }
     void increment_pc_reg()
@@ -189,7 +193,7 @@ namespace upmem_sim::simulator::reg
 
       pc_reg_->increment();
       int64_t pc_value = pc_reg_->read();
-      print_jump(pc_value);
+     //print_jump(pc_value);
       // if(pc_reg_->read()  == 570432+12) {
       //   std::cout << "pc_reg increment to: " << pc_reg_->read() << std::endl;
       // }

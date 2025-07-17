@@ -98,6 +98,7 @@ namespace upmem_sim::simulator::faho::def
          free(A);
         if (status)
         {
+            exit(0);
             return;
         }
         else

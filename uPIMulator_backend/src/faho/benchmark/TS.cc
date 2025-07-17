@@ -200,6 +200,7 @@ namespace upmem_sim::simulator::faho::def
 
     if (status)
     {
+      exit(0);
       return;
     }
     else

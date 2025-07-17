@@ -106,7 +106,7 @@ int alloc_inode() {
             bit_map[j] |= (1 << k);
             mram_write(bit_map, (__mram_ptr void *)(BIT_MAP + i * 400+MRAM_OFFSET), 400);
             mutex_unlock(mutex_mram);
-
+           
             return inode;
           }
         }

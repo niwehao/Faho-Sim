@@ -113,6 +113,7 @@ namespace upmem_sim::simulator::faho::def
         int status = (result_dpu == result_host);
         if (status)
         {
+            exit(0);
             return;
         }
         else

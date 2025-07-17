@@ -69,6 +69,7 @@ namespace upmem_sim::simulator::faho::def
                     nodeIdx, nodeLevelReference[nodeIdx], nodeLevel[nodeIdx]);
             }
         }
+    
         freeCOOGraph(cooGraph);
         freeCSRGraph(csrGraph);
         free(nodeLevel);
@@ -76,6 +77,7 @@ namespace upmem_sim::simulator::faho::def
         free(currentFrontier);
         free(nextFrontier);
         free(nodeLevelReference);
+        exit(0);
     }
     void BFS::benchmark_init(std::string bindir, int data_prep)
     {

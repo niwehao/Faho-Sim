@@ -329,7 +329,7 @@ void launch_proc(unsigned int prc_idx, uint8_t ready) {
 void stop_dpu() {
   // printk_int(-2);
   // printk_int((int)jobs[0].sync_addr);
-  stop_me(&saved_fc_stop);
+  stop_me();
   //resume_me(saved_fc_stop); // save the context of the current process
   // printk_int(-1);
   // printk_int((int)jobs[0].sync_addr);
@@ -346,6 +346,8 @@ void stop_dpu() {
                                  wakeup(&sync_extern_socket, 0, 0); // wakeup all the process wich are
                                                                     // wainting for a extern_socket
                                 creation */
+   //print_debug(flags,0);
+
   if (flags & SOCKET_UPDATE) // The K1 just notify for writing (K1->K2)
                              // operation, not for reading (K2->K1).
     wakeup_sleepy_socket();

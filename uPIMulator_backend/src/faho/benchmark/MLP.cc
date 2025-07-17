@@ -99,6 +99,7 @@ namespace upmem_sim::simulator::faho::def
                         add_check();
                     }
                     end_flag = 0;
+                    std::cout<<"excution:"<<excution<<std::endl;
                 } 
                 else{
 
@@ -148,6 +149,7 @@ namespace upmem_sim::simulator::faho::def
         if (status)
         {
             free(C_dpu);
+            exit(0);
             return;
         }
         else
@@ -166,7 +168,6 @@ namespace upmem_sim::simulator::faho::def
         int first_role = 1;
         unsigned int m_size = data_prep;
         unsigned int n_size = data_prep;
-
         dpu_info =
             (struct dpu_info_t *)malloc(nr_of_dpus * sizeof(struct dpu_info_t));
         input_args =
@@ -369,8 +370,6 @@ namespace upmem_sim::simulator::faho::def
                                    C_dpu + i * max_rows_per_dpu,
                                    max_rows_per_dpu * n_size_pad * sizeof(T) + n_size_pad * sizeof(T),
                                    max_rows_per_dpu * sizeof(T));
-            events_.push_back(event);
-            event = init_Check(first_role + i);
             events_.push_back(event);
         }
     }

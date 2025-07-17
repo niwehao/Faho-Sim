@@ -151,6 +151,7 @@ namespace upmem_sim::simulator::faho::def
         free(results_scan);
         if (status)
         {
+            exit(0);
             return;
         }
         else

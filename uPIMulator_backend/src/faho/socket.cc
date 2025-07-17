@@ -65,7 +65,7 @@ namespace upmem_sim::simulator::faho::def
             
             p->sd[sc->sd].flags |= SOCKET_UPDATE;
             DpuManager->dpu_flag->dpu_process_change = 1;
-            DpuManager->write_socket->data[i]->pid == 0;
+            DpuManager->write_socket->data[i]->pid = 0;
         }
     }
     int write_in_socket(faho::def::DpuManager *DpuManager, int inode, encoder::ByteStream *buf, int size)

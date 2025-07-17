@@ -160,5 +160,5 @@ namespace upmem_sim::simulator::faho::def
         event->kind = def::KIND::Check;
         return event; // 返回新创建的事件对象
     }
-    
+ 
 }

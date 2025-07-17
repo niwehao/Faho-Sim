@@ -131,6 +131,7 @@ namespace upmem_sim::simulator::faho::def
         free(histo);
         if (status)
         {
+            exit(0);
             return;
         }
         else

@@ -191,7 +191,7 @@ namespace upmem_sim::simulator::faho::def
         free(input_itemsets);
         if (status)
         {
-
+            exit(0);
             return;
         }
         else

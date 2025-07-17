@@ -36,9 +36,7 @@ namespace upmem_sim::simulator::faho::def
         std::string bindir_;
         virtual def::Event *benchmark(int time_) = 0; // 基准测试
         virtual void benchmark_init(std::string bindir,int data_prep) = 0;            // 初始化基准测试
-        virtual void excute_2() = 0;            // 初始化基准测试
         virtual void check(int pid) = 0; // 检查事件
-        virtual void add_check()=0;            // 初始化基准测试
     };
     class VA : public Host
     {
@@ -59,8 +57,8 @@ namespace upmem_sim::simulator::faho::def
         def::Event *benchmark(int time_) override;
         void benchmark_init(std::string bindir,int data_prep) override;
         void check(int pid) override;
-        void excute_2() override;
-        void add_check() override;
+        void excute_2();
+        void add_check();
         int end_flag=0;
 
     };
@@ -93,9 +91,9 @@ namespace upmem_sim::simulator::faho::def
   
         def::Event *benchmark(int time_) override;
         void benchmark_init(std::string bindir,int data_prep) override;
-        void excute_2() override;
+        void excute_2() ;
         void check(int pid) override;
-        void add_check() override;
+        void add_check() ;
         int end_flag=0;
         int excution=1;
 
@@ -120,9 +118,9 @@ namespace upmem_sim::simulator::faho::def
   
         def::Event *benchmark(int time_) override;
         void benchmark_init(std::string bindir,int data_prep) override;
-        void excute_2() override;
-        void check(int pid) override;
-         void add_check() override;
+        void excute_2() ;
+        void check(int pid) ;
+         void add_check();
         int end_flag=0;
         int excution=1;
         int layers;

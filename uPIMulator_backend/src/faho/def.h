@@ -173,7 +173,7 @@ namespace upmem_sim::simulator::faho::def
     std::vector<struct ProcessEvent *> load_processes;
     std::vector<struct ProcessEvent *> unlaunch_processes;
     std::vector<struct ProcessEvent *> launch_processes; // 启动和结束
-    __dma_aligned struct def::job jobs[JOB_PER_PROCESS];
+    //__dma_aligned struct def::job jobs[JOB_PER_PROCESS];
     WriteSocket *write_socket;
     CheckResult *check_result;
     WriteInode *write_inode;

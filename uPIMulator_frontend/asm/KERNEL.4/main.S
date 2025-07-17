@@ -16,13 +16,6 @@ boot_me:      ///beginin of kernel code
 	.globl	stop_me                // -- Begin function stop_me
 	.type	stop_me,@function
 stop_me:  //save the flow context in the stack and save the stack offset in r0 and stop. resume function will restart after this function
-	sd r22, 0, d14
-	sd r22, 8, d16
-	sd r22, 16, d18
-	sd r22, 24, d20
-	sd r22, 32, d22
-	sw r0, 0, r22  
-	move r4, 0
 	stop
 	jump r23
 .section	.text.swap_context,"ax",@progbits
@@ -4327,7 +4320,6 @@ stop_dpu:                               // @stop_dpu
 // %bb.0:
 	sd r22, 16, d22
 	add r22, r22, 24
-	move r0, saved_fc_stop
 	call r23, stop_me
 	move r0, 15
 	move r1, 3
@@ -4389,7 +4381,6 @@ check_timer_stop:                       // @check_timer_stop
 	move r1, 5000001
 	jltu r0, r1, .LBB40_3
 // %bb.1:
-	move r0, saved_fc_stop
 	call r23, stop_me
 	move r0, 15
 	move r1, 3
@@ -4475,7 +4466,6 @@ scheduler:                              // @scheduler
 	move r1, 5000001
 	jltu r0, r1, .LBB41_5
 // %bb.3:                               //   in Loop: Header=BB41_2 Depth=2
-	move r0, saved_fc_stop
 	call r23, stop_me
 	move r0, 15
 	move r1, 3
@@ -4529,7 +4519,6 @@ scheduler:                              // @scheduler
 	and r0, r19, 1
 	jnz r0, .LBB41_44
 // %bb.42:                              //   in Loop: Header=BB41_1 Depth=1
-	move r0, saved_fc_stop
 	call r23, stop_me
 	move r0, 15
 	move r1, 3
@@ -5240,7 +5229,6 @@ __atomic_bit_mutex_mutex_inode:
 	.addrsig_sym buf_socket
 	.addrsig_sym beg
 	.addrsig_sym end
-	.addrsig_sym saved_fc_stop
 	.addrsig_sym dpu_id
 	.addrsig_sym log_w
 	.addrsig_sym buf_aligned

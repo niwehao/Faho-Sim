@@ -105,11 +105,13 @@ namespace upmem_sim::simulator::faho::def
         free(C_dpu);
         if (status)
         {
+            exit(0);
             return;
             /* code */
         }
         else
         {
+            
             assert(0);
         }
     }

@@ -14,13 +14,6 @@ boot_me:      ///beginin of kernel code
 	.globl	stop_me                // -- Begin function stop_me
 	.type	stop_me,@function
 stop_me:  //save the flow context in the stack and save the stack offset in r0 and stop. resume function will restart after this function
-	sd r22, 0, d14
-	sd r22, 8, d16
-	sd r22, 16, d18
-	sd r22, 24, d20
-	sd r22, 32, d22
-	sw r0, 0, r22  
-	move r4, 0
 	stop
 	jump r23
 .section	.text.swap_context,"ax",@progbits

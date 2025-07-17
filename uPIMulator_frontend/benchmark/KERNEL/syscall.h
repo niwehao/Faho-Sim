@@ -42,6 +42,7 @@ int global __attribute__((section(".data"))) = 0;
 int syscall(unsigned int arg1, unsigned int arg2, unsigned int arg3,
             unsigned int arg4, unsigned int value) {
   (void)arg4;
+  //print_debug(value,0);
   if (value == 0)
     return 0;
   unsigned int time = 0;

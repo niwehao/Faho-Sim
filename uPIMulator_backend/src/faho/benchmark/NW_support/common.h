@@ -12,7 +12,7 @@ typedef struct {
   uint32_t dummy;
 } dpu_arguments_t;
 
-#define BL 128
+#define BL 8
 
 // Data type
 #define T int32_t

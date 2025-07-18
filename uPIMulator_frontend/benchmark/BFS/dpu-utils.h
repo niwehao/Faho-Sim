@@ -27,6 +27,7 @@ static void store8B(uint64_t val, uint32_t ptr_m, uint32_t idx,
                     uint64_t *cache_w) {
   nbs8++;
   cache_w[0] = val;
+
   //   mram_write(cache_w, (__mram_ptr void *)(ptr_m + idx * sizeof(uint64_t)),
   //   8);
   umram_write(cache_w, 8, ptr_m + idx * sizeof(uint64_t));
@@ -35,31 +36,32 @@ static void store8B(uint64_t val, uint32_t ptr_m, uint32_t idx,
 static uint32_t load4B(uint32_t ptr_m, uint32_t idx, uint64_t *cache_w) {
   // Load 8B
   nbl4++;
-  uint32_t ptr_idx_m = ptr_m + idx * sizeof(uint32_t);
-  uint32_t offset = ((uint32_t)ptr_idx_m) % 8;
-  uint32_t ptr_block_m = ptr_idx_m - offset;
-  //   mram_read((__mram_ptr void const *)ptr_block_m, cache_w, 8);
-  umram_read(cache_w, 8, ptr_block_m);
+  int sign=idx%2;//如果是偶数就是1
+  uint32_t ptr_idx_m = ptr_m + (idx-sign) * sizeof(uint32_t);
+  umram_read(cache_w, 8, ptr_idx_m);
   // Extract 4B
   uint32_t *cache_32_w = (uint32_t *)cache_w;
-  return cache_32_w[offset / 4];
+  return cache_32_w[sign];
+    
+  
 }
 
 static void store4B(uint32_t val, uint32_t ptr_m, uint32_t idx,
                     uint64_t *cache_w) {
   // Load 8B
   nbs4++;
-  uint32_t ptr_idx_m = ptr_m + idx * sizeof(uint32_t);
-  uint32_t offset = ((uint32_t)ptr_idx_m) % 8;
-  uint32_t ptr_block_m = ptr_idx_m - offset;
+  int sign=idx%2;//如果是偶数就是1
+  uint32_t ptr_idx_m = ptr_m + (idx-sign) * sizeof(uint32_t);
+  // uint32_t offset = ((uint32_t)ptr_idx_m) % 8;
+  // uint32_t ptr_block_m = ptr_idx_m - offset;
   //   mram_read((__mram_ptr void const *)ptr_block_m, cache_w, 8);
   // Modify 4B
-  umram_read(cache_w, 8, ptr_block_m);
+  umram_read(cache_w, 8, ptr_idx_m);
   uint32_t *cache_32_w = (uint32_t *)cache_w;
-  cache_32_w[offset / 4] = val;
+  cache_32_w[sign] = val;
   // Write back 8B
   //   mram_write(cache_w, (__mram_ptr void *)ptr_block_m, 8);
-  umram_write(cache_w, 8, ptr_block_m);
+  umram_write(cache_w, 8, ptr_idx_m);
 }
 
 void aa(void)

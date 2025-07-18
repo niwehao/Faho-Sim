@@ -23,7 +23,6 @@ struct CSRGraph {
 };
 
 static struct COOGraph readCOOGraph(const char* fileName) {
-
     struct COOGraph cooGraph;
 
     // Initialize fields
@@ -103,6 +102,7 @@ static struct CSRGraph coo2csr(struct COOGraph cooGraph) {
         csrGraph.nodePtrs[nodeIdx] = csrGraph.nodePtrs[nodeIdx - 1];
     }
     csrGraph.nodePtrs[0] = 0;
+
 
     return csrGraph;
 

@@ -4026,9 +4026,10 @@ void Logic::execute_rr(abi::instruction::Instruction *instruction) {
     instruction->thread()->reg_file()->write_gp_reg(instruction->rc(), result);
     }
     else{
+      int sign=ra-8;
       int64_t rc = instruction->thread()->reg_file()->read_gp_reg(
       instruction->rc(), abi::word::SIGNED);
-      std::cout<<"debug:"<<rc<<std::endl;
+      std::cout<<"debug"<<sign<<":"<<rc<<std::endl;
     }
 
     instruction->thread()->reg_file()->clear_conditions();

@@ -42,7 +42,7 @@ MRAM::~MRAM() {
 
 std::vector<int> MRAM::read(Address address) {
   //std::cout<<"MRAM::read from "<<address<<std::endl;
-  return std::move(wordlines_[index(address)]->read());//不明白,可能是多此一举
+  return std::move(wordlines_[index(address)]->read());//对齐
 }
 
 void MRAM::write(Address address, std::vector<int> bytes) {

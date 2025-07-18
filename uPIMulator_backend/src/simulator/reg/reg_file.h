@@ -144,6 +144,7 @@ namespace upmem_sim::simulator::reg
       }
       else
       { // 系统态debug
+        return;
  
         state = 0;
         std::cout << "Thread id: " << sp_reg_->thread_id << "  ";

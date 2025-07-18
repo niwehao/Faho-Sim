@@ -21,6 +21,6 @@ fault_notif:                                // @syscall
 	.type	print_debug,@function
 print_debug:                                // @syscall
 // %bb.0:
-	move r1, 8
+	add r1, r1, 8
 	time_cfg r0,r1
 	jump r23

@@ -60,6 +60,7 @@ namespace upmem_sim::simulator::faho::def
         void excute_2();
         void add_check();
         int end_flag=0;
+       
 
     };
     class SEL : public Host
@@ -91,10 +92,13 @@ namespace upmem_sim::simulator::faho::def
   
         def::Event *benchmark(int time_) override;
         void benchmark_init(std::string bindir,int data_prep) override;
-        void excute_2() ;
+        void excute_2(int blk) ;
+
+        void excute_1(int blk) ;
         void check(int pid) override;
         void add_check() ;
         int end_flag=0;
+        int blk=1;
         int excution=1;
 
     };

@@ -1,6 +1,6 @@
 LIB := dpu/
 NR_FTHREAD ?= 4
-BL ?= 128
+BL ?= 8
 BL_IN ?= 4 
 NR_DPUS ?= 1 
 ENERGY ?= 0

@@ -238,5 +238,44 @@
             "miDebuggerPath": "/usr/bin/gdb",
             "console": "integratedTerminal"
         },
+        {
+            "name": "VA",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/src/uPIMulator",
+            "args": [
+                "--bindir",
+                "/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/",
+                "--num_tasklets",
+                "16",
+                "--benchmark",
+                "KERNEL",
+                "--application",
+                "VA",
+                "--logdir",
+                ".",
+                "--num_dpus",
+                "1",
+                "--data_prep",
+                "16384",
+                ">",
+                "t.txt",
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build uPIMulator",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "console": "integratedTerminal"
+        },
     ]
 }

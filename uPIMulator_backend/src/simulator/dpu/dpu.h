@@ -27,7 +27,10 @@ class DPU {
   PerformanceCounter *performance_counter() {
     return performance_counter_;
   }
+  uint64_t get_cycle(){
+    return performance_counter_->get_true_value();
 
+  }
   util::StatFactory *stat_factory();
 
   bool is_zombie();

@@ -4,7 +4,7 @@
  */
 #include "stdsync.h"
 #include "support/common.h"
-
+#define START 8
 #define CHK(op)                                                                \
   do {                                                                         \
     int ret;                                                                   \
@@ -19,8 +19,14 @@ int sd_host;
 
 // vector_addition: Computes the vector addition of a cached block
 static void vector_addition(T *bufferB, T *bufferA, unsigned int l_size) {
+ 
   for (unsigned int i = 0; i < l_size; i++) {
     bufferB[i] += bufferA[i];
+     //print_debug(bufferB[i],1);
+    // if(bufferB[i]==0){
+    //   int tasklet_id = get_jid();
+    //   print_debug(1,tasklet_id);
+    // }
   }
 }
 
@@ -29,9 +35,8 @@ void main1() {
   // Initialize a local cache to store the MRAM block
   __buffer_aligned T *cache_A = (T *)(sbrk(BLOCK_SIZE) - BLOCK_SIZE);
   __buffer_aligned T *cache_B = (T *)(sbrk(BLOCK_SIZE) - BLOCK_SIZE);
-  int tasklet_id = get_jid();; // apres utiliser get_jid()
+  int tasklet_id = get_jid();// apres utiliser get_jid()
   while (1) {
-    wait_barrier(&b);
     if (tasklet_id == 0) {
       char ok;
       socket_write(sd_host, &ok, 1);
@@ -39,7 +44,9 @@ void main1() {
       if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0)
         exit_proc(3);
     }
+    print_debug(0,START+tasklet_id);
     wait_barrier(&b);
+    print_debug(1,START+tasklet_id);
 
     uint32_t input_size_dpu_bytes =
         DPU_INPUT_ARGUMENTS.size; // Input size per DPU in bytes
@@ -62,10 +69,11 @@ void main1() {
          byte_index += BLOCK_SIZE * NR_FTHREAD) {
       // debug_int(11);
       // Bound checking
+      
       uint32_t l_size_bytes = (byte_index + BLOCK_SIZE >= input_size_dpu_bytes)
                                   ? (input_size_dpu_bytes - byte_index)
                                   : BLOCK_SIZE;
-
+      //print_debug(1,l_size_bytes);
       // Load cache with current MRAM inode
       CHK(umram_read(cache_A, l_size_bytes, mram_base_addr_A + byte_index));
       CHK(umram_read(cache_B, l_size_bytes, mram_base_addr_B + byte_index));
@@ -76,11 +84,18 @@ void main1() {
 
       // Write cache to current MRAM inode
       CHK(umram_write(cache_B, l_size_bytes, mram_base_addr_B + byte_index));
+      //-1747751478 0 2090218572 456997246
     }
+   print_debug(0,START+tasklet_id);
+    wait_barrier(&b);
+    print_debug(1,START+tasklet_id);
+   
   }
 }
 
 int main(void) {
+  print_debug(0,7);//end of switch context
+  //fault_notif();
   sd_host = socket_open(0);
   init_barrier(&b, NR_FTHREAD);
   for (int i = 0; i < NR_FTHREAD - 1; i++)

@@ -14,7 +14,7 @@ RegFile::RegFile(ThreadID id,std::string benchmark,std::string bindir)
       exception_reg_(new ExceptionReg()) {//异常寄存器
   for (RegIndex index = 0; index < util::ConfigLoader::num_gp_registers();//通用寄存器
        index++) {
-    std::ifstream file(bindir+"KERNEL.4/iram_labels.bin");
+    std::ifstream file(bindir+"KERNEL.16/iram_labels.bin");
     std::string line;
     int time_ = 0;
     std::string name_;

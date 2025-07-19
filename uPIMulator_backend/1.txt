@@ -1,0 +1,106 @@
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/atomic.bin
+DMA to atomic completed...
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/iram.bin
+num of instructions: 3466
+DMA to IRAM completed...
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/wram.bin
+DMA to WRAM completed...
+init completed...
+launch completed...
+********time:6312*******
+text section size is 48a0
+flag set:0
+break point 0 happen in cycle:6972
+break point 1 happen in cycle:7921
+break point 2 happen in cycle:8093
+break point 3 happen in cycle:9045
+break point 4 happen in cycle:9180
+break point 5 happen in cycle:22038
+break point 6 happen in cycle:32232
+break point 7 happen in cycle:33079
+Thread 1 meet barrier:59191
+Thread 2 meet barrier:70497
+Thread 3 meet barrier:82248
+Thread 4 meet barrier:96225
+Thread 5 meet barrier:111487
+Thread 6 meet barrier:128420
+Thread 7 meet barrier:148736
+Thread 8 meet barrier:177368
+Thread 9 meet barrier:200569
+Thread 10 meet barrier:231401
+Thread 11 meet barrier:261506
+Thread 12 meet barrier:292619
+Thread 13 meet barrier:317136
+Thread 14 meet barrier:345715
+Thread 15 meet barrier:379878
+********time:542552*******
+ReadSocket event for pid: 1 at time: 0
+********time:542553*******
+flag set:32
+Thread 0 meet barrier:584562
+Thread 0 leave barrier:778626
+Thread 1 leave barrier:948028
+Thread 2 leave barrier:955117
+Thread 3 leave barrier:959798
+Thread 4 leave barrier:965353
+Thread 5 leave barrier:972030
+Thread 6 leave barrier:979994
+Thread 7 leave barrier:989351
+Thread 8 leave barrier:1000522
+Thread 9 leave barrier:1013655
+Thread 10 leave barrier:1029088
+Thread 11 leave barrier:1047041
+Thread 12 leave barrier:1067721
+Thread 0 meet barrier:1081179
+Thread 13 leave barrier:1091546
+Thread 14 leave barrier:1119001
+Thread 15 leave barrier:1178356
+Thread 1 meet barrier:1358934
+Thread 2 meet barrier:1373513
+Thread 3 meet barrier:1384045
+Thread 4 meet barrier:1397998
+Thread 5 meet barrier:1411519
+Thread 6 meet barrier:1425793
+Thread 7 meet barrier:1441151
+Thread 8 meet barrier:1457481
+Thread 9 meet barrier:1472419
+Thread 10 meet barrier:1486396
+Thread 11 meet barrier:1504020
+Thread 12 meet barrier:1515765
+Thread 13 meet barrier:1528849
+Thread 14 meet barrier:1543588
+Thread 15 meet barrier:1569069
+Thread 15 leave barrier:1968923
+Thread 15 meet barrier:1969052
+Thread 0 leave barrier:1974805
+Thread 1 leave barrier:1981529
+Thread 1 meet barrier:1981658
+Thread 2 leave barrier:1992431
+Thread 2 meet barrier:1992560
+Thread 3 leave barrier:2028292
+Thread 3 meet barrier:2028421
+Thread 4 leave barrier:2035511
+Thread 4 meet barrier:2035639
+Thread 5 leave barrier:2071664
+Thread 5 meet barrier:2071792
+Thread 6 leave barrier:2079727
+Thread 6 meet barrier:2079856
+Thread 7 leave barrier:2116758
+Thread 7 meet barrier:2116887
+Thread 8 leave barrier:2125664
+Thread 8 meet barrier:2125794
+Thread 9 leave barrier:2162612
+Thread 9 meet barrier:2162741
+Thread 10 leave barrier:2172376
+Thread 10 meet barrier:2172504
+Thread 11 leave barrier:2210207
+Thread 11 meet barrier:2210335
+Thread 12 leave barrier:2220813
+Thread 12 meet barrier:2220942
+Thread 13 leave barrier:2258858
+Thread 13 meet barrier:2258987
+Thread 14 leave barrier:2270309
+Thread 14 meet barrier:2270439
+********time:2324422*******
+ReadSocket event for pid: 1 at time: 0
+********time:2324423*******

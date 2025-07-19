@@ -82,11 +82,6 @@ namespace upmem_sim::simulator::faho::def
                 assert(read_buffer_->buf != nullptr); // 确保缓冲区不为空
                 assert(read_buffer_->need_read > 0); // 确保需要读取的字节数大于0
                 std::cout << "ReadSocket event for pid: " << event_f->pid << " at time: " << event_f->time << std::endl;
-                for(int i = 0; i < read_buffer_->need_read; i++)
-                {
-                    std::cout << static_cast<char *>(read_buffer_->buf)[i]; // 输出读取的字节
-                }
-                std::cout << std::endl; // 输出换行符
                 delete read_buffer_;
                 
                 events_.erase(events_.begin());

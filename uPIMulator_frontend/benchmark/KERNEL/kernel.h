@@ -171,6 +171,6 @@ extern void resume_me(struct flow_context *saved);
  */
 int __end_process(int ret);
 extern void print_debug(int value,int align);
+extern void fault_notif();
 #include "socket.h"
-
 #endif

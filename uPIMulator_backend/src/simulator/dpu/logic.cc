@@ -4029,7 +4029,30 @@ void Logic::execute_rr(abi::instruction::Instruction *instruction) {
       int sign=ra-8;
       int64_t rc = instruction->thread()->reg_file()->read_gp_reg(
       instruction->rc(), abi::word::SIGNED);
-      std::cout<<"debug"<<sign<<":"<<rc<<std::endl;
+      if(rc==0 || rc==1){
+        if(sign>break_point_set && sign<=7){
+           std::cout<<"break point "<<sign<<" happen in cycle:"<<performance_counter_->get_true_value()<<std::endl;
+           break_point_set=sign;
+        }
+        else if(sign>7){
+          int thread=sign-8;
+          if(rc==0){
+             std::cout<<"Thread "<<thread<<" meet barrier:"<<performance_counter_->get_true_value()<<std::endl;
+          }
+          else{
+            std::cout<<"Thread "<<thread<<" leave barrier:"<<performance_counter_->get_true_value()<<std::endl;
+          }
+          
+
+
+        }
+        
+       
+      }
+      else{
+        std::cout<<"debug"<<sign<<":"<<rc<<std::endl;
+      }
+
     }
 
     instruction->thread()->reg_file()->clear_conditions();

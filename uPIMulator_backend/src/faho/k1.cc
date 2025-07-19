@@ -110,7 +110,7 @@ namespace upmem_sim::simulator::faho::k1
 
             rank_state = 1;
             repeat=0;
-            std::cout<<"flag"<<def::read_flag(dpu_managers_[0])<<std::endl;
+            std::cout<<"flag set:"<<def::read_flag(dpu_managers_[0])<<std::endl;
             rank_->reboot();
             return;
         }
@@ -130,15 +130,16 @@ namespace upmem_sim::simulator::faho::k1
         {
             assert(0);
         }
-        std::cout << "********" << "time:" << timer_ << "*******" << std::endl;
         for (size_t i = 0; i < dpu_managers_.size(); i++)
         {
+             
             auto &dpumanager = dpu_managers_[i];
+            std::cout << "********" << "time:" << dpumanager->dpu->get_cycle() << "*******" << std::endl;
             if(repeat==0){
                 dpumanager->ki.flag1 = def::read_flag(dpumanager);
                 def::write_flags(dpumanager, 0);
                 repeat=1;
-                std::cout<<"set repeat"<<std::endl;
+                //std::cout<<"set repeat"<<std::endl;
 
             }//标志位的删除是自然发生的
             if (dpumanager->ki.flag1 & (PROCESS_END | NEW_SOCKET | SOCKET_OUT) ||

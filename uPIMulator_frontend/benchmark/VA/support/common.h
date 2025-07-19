@@ -7,6 +7,7 @@
 typedef struct {
     uint32_t size;
     uint32_t transfer_size;
+    
 } dpu_arguments_t;
 
 // Transfer size between MRAM and WRAM

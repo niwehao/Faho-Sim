@@ -95,6 +95,7 @@ namespace upmem_sim::simulator::faho::def
         int ret;
         if ((ret = find_inode(prc_idx, dpu_manager, offset,inode_table_address)) < 0)
             return ret;
+        //std::cout<<"get_node"<<ret<<std::endl;
         inodes_wirte = ret;
         write_inode(dpu_manager, inodes_wirte, buf, cur_size, offset % SIZE_BLOCK);
 
@@ -111,6 +112,7 @@ namespace upmem_sim::simulator::faho::def
                                                           // of first_inode (modify the offset)
             if (ret < 0)
                 return ret;
+            //std::cout<<"get_node"<<ret<<std::endl;
 
             inodes_wirte = ret;
             write_inode(dpu_manager, inodes_wirte, buf, cur_size, 0);
@@ -246,6 +248,7 @@ namespace upmem_sim::simulator::faho::def
         if ((ret = find_inode(prc_ix, dpu_manager, offset,inode_table_address)) < 0)
             return ret;
         inode = ret;
+        //std::cout<<"get_node"<<ret<<std::endl;
 
         //printf("Inode : %i (%x) at offset %i\n", inode, inode * SIZE_BLOCK, offset);
         read_inode(dpu_manager, inode, buf, cur_size, offset % SIZE_BLOCK);
@@ -260,8 +263,8 @@ namespace upmem_sim::simulator::faho::def
                 find_inode(prc_ix, dpu_manager, offset,inode_table_address); // in the future put inodes[1] instead
                                                 // of first_inode (modify the offset)
             if (ret < 0)
-                assert(0);
                 return ret;
+            //std::cout<<"get_node"<<ret<<std::endl;
 
             inode = ret;
             read_inode(dpu_manager, inode, buf, cur_size, 0);

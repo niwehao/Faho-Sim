@@ -12,7 +12,7 @@
             "console": "integratedTerminal",
             "args": [
                 "--mode", "compile_by_toolchain",
-                "--num_tasklets", "4",
+                "--num_tasklets", "16",
                 "--benchmark", "KERNEL",
                 "--num_dpus", "16"
             ],

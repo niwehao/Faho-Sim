@@ -17,35 +17,35 @@ WRAM::WRAM() {
   for (int i = 0; i < num_data_words(); i++) {
     cells_[i] = new abi::word::DataWord();//初始化wram的单元格
   }
-   std::ifstream file("/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus/KERNEL.4/wram_var.bin");
-    std::string line;
-    int time_ = 0;
-    std::string name_;
+  //  std::ifstream file("/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus/KERNEL.16/wram_var.bin");
+  //   std::string line;
+  //   int time_ = 0;
+  //   std::string name_;
     
-    if (file.is_open()) {
-        while (std::getline(file, line)) {
-           std::istringstream iss(line);
-            iss>>time_>>name_;
+  //   if (file.is_open()) {
+  //       while (std::getline(file, line)) {
+  //          std::istringstream iss(line);
+  //           iss>>time_>>name_;
 
-            time_table_.push_back(new timetable(time_, name_));//时间表
-        }
-        file.close();
-    } else {
-        std::cout << "无法打开文件" << std::endl;
-    }
-     file.close();
-    std::ifstream file_b("/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus/VA.16/wram_var.bin");
+  //           time_table_.push_back(new timetable(time_, name_));//时间表
+  //       }
+  //       file.close();
+  //   } else {
+  //       std::cout << "无法打开文件" << std::endl;
+  //   }
+  //    file.close();
+  //   std::ifstream file_b("/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus/VA.16/wram_var.bin");
     
-    if (file_b.is_open()) {
-        while (std::getline(file_b, line)) {
-           std::istringstream iss(line);
-            iss>>time_>>name_;
-            time_table_helloworld.push_back(new timetable(time_, name_));//时间表
-        }
-        file_b.close();
-    } else {
-        std::cout << "无法打开文件" << std::endl;
-    }
+  //   if (file_b.is_open()) {
+  //       while (std::getline(file_b, line)) {
+  //          std::istringstream iss(line);
+  //           iss>>time_>>name_;
+  //           time_table_helloworld.push_back(new timetable(time_, name_));//时间表
+  //       }
+  //       file_b.close();
+  //   } else {
+  //       std::cout << "无法打开文件" << std::endl;
+  //   }
 }
 
 WRAM::~WRAM() {

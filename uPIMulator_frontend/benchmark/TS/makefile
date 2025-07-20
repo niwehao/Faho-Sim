@@ -1,5 +1,5 @@
 LIB := dpu/
-NR_FTHREAD ?= 4
+NR_FTHREAD ?= 16
 # 目标汇编文件定义
 K_ASM := dpu_code.S 
 K_C := main.c

@@ -157,6 +157,7 @@ int sbrk(int n) {
     processs[cur_process_index].prg.size_data += n;//size_data本身就有栈
   }
   ret = processs[cur_process_index].prg.size_data+WRAM_OFFSET;//因为有偏移
+  
 err:
   mutex_unlock(mutex_sbrk);
   return ret;
@@ -221,6 +222,7 @@ Do not check mram alignement
 */
 void store_big_blocks(void *wram_place, __mram_ptr void *mram_place,
                       size_t size) {
+ 
   unsigned int i = 0;
   for (; i < size >> 11; i++) {
     mram_write(wram_place + (i << 11), mram_place + (i << 11), 2048);
@@ -235,18 +237,18 @@ void store_big_blocks(void *wram_place, __mram_ptr void *mram_place,
 */
 void load_prg_memory(unsigned int prc_ind) {
   struct prg *p = &processs[prc_ind].prg;
-  print_debug(0,2);
+  print_debug(2,0);
 
   load_big_blocks((__mram_ptr void const *)((p->inode_data * SIZE_BLOCK)+MRAM_OFFSET),
                   (void *)(0X0+WRAM_OFFSET), p->size_data);
-  print_debug(0,3);
+  print_debug(3,0);
 
   uint32_t temp = p->size_text;
 
   // printk_int(p->inode_data);
 
   uint32_t off = 16;
-  print_debug(0,4);
+  print_debug(4,0);
   while (temp >= 0x800) { // write by slot of 255 1000 0000 0000 2048=256*8
 
     temp -= 0x800;
@@ -265,7 +267,7 @@ void load_prg_memory(unsigned int prc_ind) {
       "\tldmai %[ra], %[mram_place], 0\n"
       :
       : [ra] "r"(ra), [mram_place] "r"(p->inode_text * SIZE_BLOCK + off));
-  print_debug(0,5);
+  print_debug(5,0);
 }
 
 /*
@@ -404,7 +406,7 @@ int scheduler(void) {
         //if (processs[loaded_idx].pid == pid_loaded) {
           print_debug(0,0);
           save_wram_process(loaded_idx);
-          print_debug(0,1);
+          print_debug(1,0);
           // mram_write(jobs, job_mram.j[prc_idx], sizeof(jobs));
         //}
 

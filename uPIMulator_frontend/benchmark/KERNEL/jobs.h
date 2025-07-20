@@ -201,7 +201,7 @@ void swap(unsigned int job_idx, uint8_t first)
   jobs[job_idx].time = time;
 
   if (first){
-    print_debug(0,6);
+    print_debug(6,0);
     first_swap_context(&fc_scheduler_job[me_new()], jobs[job_idx].fc,
                        jobs[job_idx].fc->r21);
   }

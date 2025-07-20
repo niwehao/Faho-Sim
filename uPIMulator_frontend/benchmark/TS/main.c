@@ -15,14 +15,15 @@ struct barrier b;
 int sd_host;
 // Dot product
 static void dot_product(DTYPE *vectorA, DTYPE *vectorA_aux, DTYPE *vectorB,
-                        DTYPE *result,int res,int query_length)
+                        DTYPE *result, int res, int query_length)
 {
 
   for (uint32_t i = 0; i < query_length; i++)
   {
     for (uint32_t j = 0; j < res; j++)
     {
-      if ((j + i) > BLOCK_SIZE / sizeof(DTYPE) - 1)
+    
+      if ((j + i) > BLOCK_SIZE / sizeof(DTYPE) - 1) // 127
       {
         result[j] +=
             vectorA_aux[(j + i) - BLOCK_SIZE / sizeof(DTYPE)] * vectorB[i];
@@ -40,9 +41,8 @@ struct barrier b;
 // main_kernel1
 void main1()
 {
-  int tasklet_id = get_jid();
-  wait_barrier(&b);
-  if (tasklet_id == 0)
+  int fthread_id = get_jid();
+  if (fthread_id == 0)
   {
     char ok;
     socket_write(sd_host, &ok, 1);
@@ -50,10 +50,10 @@ void main1()
     if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0)
       fault_notif();
   }
-  wait_barrier(&b);
+   print_debug(fthread_id,1);
+    wait_barrier(&b);
+    print_debug(fthread_id,2);
   int ret;
-
-  int fthread_id = get_jid();
 
   // Input arguments
   uint32_t query_length = DPU_INPUT_ARGUMENTS.query_length;
@@ -65,10 +65,14 @@ void main1()
   // Boundaries for current tasklet
   uint32_t myStartElem = fthread_id * (slice_per_dpu / (NR_FTHREAD));
   uint32_t myEndElem;
-  if(fthread_id== NR_FTHREAD - 1){
-    myEndElem = slice_per_dpu - query_length-1;
+  if (fthread_id == NR_FTHREAD - 1)
+  {
+    myEndElem = slice_per_dpu - query_length - 1;
   }
-  else {myEndElem = myStartElem + (slice_per_dpu / (NR_FTHREAD)) ;}
+  else
+  {
+    myEndElem = myStartElem + (slice_per_dpu / (NR_FTHREAD));
+  }
 
   // // Check time series limit
   // if (myEndElem > slice_per_dpu - query_length)
@@ -100,7 +104,7 @@ void main1()
   DTYPE *cache_query = (DTYPE *)(sbrk(BLOCK_SIZE) - BLOCK_SIZE);
   DTYPE *cache_TSMean = (DTYPE *)(sbrk(BLOCK_SIZE) - BLOCK_SIZE);
   DTYPE *cache_TSSigma = (DTYPE *)(sbrk(BLOCK_SIZE) - BLOCK_SIZE);
-  DTYPE *cache_dotprods = (DTYPE *)(sbrk(BLOCK_SIZE) - BLOCK_SIZE);
+  DTYPE *cache_dotprods = (DTYPE *)(sbrk(BLOCK_SIZE) - BLOCK_SIZE);//6*16=
 
   // Create result structure pointer
   dpu_result_t *result = &DPU_RESULTS[fthread_id];
@@ -110,23 +114,27 @@ void main1()
   DTYPE min_distance = DTYPE_MAX;
   uint32_t min_index = 0;
   for (uint32_t i = myStartElem; i < myEndElem;
-       i += (BLOCK_SIZE / sizeof(DTYPE)))
+       i += (BLOCK_SIZE / sizeof(DTYPE)))//128
   {
-    int res=myEndElem-i;//不确定大小
-    if (res > BLOCK_SIZE / sizeof(DTYPE)){
-      res= BLOCK_SIZE / sizeof(DTYPE) ;
+     
+
+    int res = myEndElem - i; // 不确定大小
+    if (res > BLOCK_SIZE / sizeof(DTYPE))
+    {
+      res = BLOCK_SIZE / sizeof(DTYPE);
     }
     
-
     for (uint32_t d = 0; d < DOTPIP; d++)
+    {
       cache_dotprods[d] = 0;
+    }
 
     current_mram_block_addr_TS =
         (uint32_t)starting_offset_ts + (i - myStartElem) * sizeof(DTYPE);
     current_mram_block_addr_query = (uint32_t)sizeof(DPU_INPUT_ARGUMENTS);
-    int cycle=(query_length-1) / (BLOCK_SIZE / sizeof(DTYPE));
+    int cycle = (query_length - 1) / (BLOCK_SIZE / sizeof(DTYPE));
 
-    for (uint32_t j = 0; j < cycle+1;//一个不理解的修改
+    for (uint32_t j = 0; j < cycle + 1; // 一个不理解的修改
          j++)
     {
       umram_read(cache_TS, BLOCK_SIZE, current_mram_block_addr_TS);
@@ -136,19 +144,19 @@ void main1()
 
       current_mram_block_addr_TS += BLOCK_SIZE;
       current_mram_block_addr_query += BLOCK_SIZE;
-    
-        // print_debug( cache_TS[1]);
-        // print_debug( cache_TS_aux[1]);
-        // print_debug( cache_query[1]);
+
+     
       int query_length_;
-      if((j == cycle)){
-        query_length_ = query_length;
+      if ((j == cycle))
+      {
+        query_length_ = query_length % (BLOCK_SIZE / sizeof(DTYPE));
       }
-      else{
+      else
+      {
         query_length_ = BLOCK_SIZE / sizeof(DTYPE);
       }
-    
-      dot_product(cache_TS, cache_TS_aux, cache_query, cache_dotprods,res,query_length_);
+
+      dot_product(cache_TS, cache_TS_aux, cache_query, cache_dotprods, res, query_length_);
     }
 
     if ((ret = umram_read(cache_TSMean, BLOCK_SIZE,
@@ -159,40 +167,34 @@ void main1()
       fault_notif();
     current_mram_block_addr_TSMean += BLOCK_SIZE;
     current_mram_block_addr_TSSigma += BLOCK_SIZE;
+    
 
     for (uint32_t k = 0; k < res; k++)
     {
 
-      // if(i + k == 0){
-      //   print_debug( query_length);
-      //   print_debug( cache_dotprods[k]);
-      //   print_debug( (DTYPE)query_length * cache_TSMean[k] * query_mean);
-      //   print_debug( (cache_TSSigma[k] * query_std));
-      // }
+    
       distance = 2 * ((DTYPE)query_length -
                       (cache_dotprods[k] -
                        (DTYPE)query_length * cache_TSMean[k] * query_mean) /
                           (cache_TSSigma[k] * query_std));
-       //print_debug( distance);
-        
-
+     
+      //print_debug(distance,4);
       if (distance < min_distance)
       {
-        print_debug( distance);
+        //print_debug(distance,5);
         min_distance = distance;
         min_index = i + k;
-        
- 
       }
-   
     }
   }
   // Save the result
   result->minValue = min_distance;
+  //print_debug(result->minValue,5);
   result->minIndex = min_index;
   //   return min_distance;
-
+  print_debug(fthread_id, 1);
   wait_barrier(&b);
+  print_debug(fthread_id, 2);
   if (fthread_id == 0)
   {
     if ((ret = umram_write(DPU_RESULTS, sizeof(DPU_RESULTS),
@@ -209,6 +211,7 @@ void main1()
 
 int main(void)
 {
+  print_debug(7, 0); // end of switch context
   sd_host = socket_open(0);
   // umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0);
   init_barrier(&b, NR_FTHREAD);

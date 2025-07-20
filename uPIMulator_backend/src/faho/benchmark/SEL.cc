@@ -17,7 +17,7 @@ static T *C;
 static T *C2;
 #define REGS 128
 #define NR_DPUS 1
-#define NR_FTHREAD 4
+#define NR_FTHREAD 16
 static uint32_t accum = 0;
 static uint32_t total_count = 0;
 static unsigned int p_input_size;

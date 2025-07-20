@@ -67,6 +67,7 @@ int inode_operation(uint32_t inode, void *buf, size_t size, uint32_t offset,
       return PTR_MUST8BIYTEALIGN;
     if (((int)buf & 7) != 0)
       return PTR_MUST8BIYTEALIGN; */
+      
   __mram_ptr void *mram_place =
       (__mram_ptr void *)((inode << 16) + offset)+MRAM_OFFSET; //>16 -> * SIZE_BLOCK
 

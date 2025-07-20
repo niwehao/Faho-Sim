@@ -19,4 +19,11 @@ syscall:                                // @syscall
 fault_notif:                                // @syscall
 // %bb.0:
 	fault 1
-
+.section	.text.print_debug,"ax",@progbits
+	.globl	print_debug                         // -- Begin function syscall
+	.type	print_debug,@function
+print_debug:                                // @syscall
+// %bb.0:
+	add r1, r1, 8
+	time_cfg r0,r1
+	jump r23

@@ -13,7 +13,7 @@
                 "--bindir",
                 "/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/",
                 "--num_tasklets",
-                "4",
+                "16",
                 "--benchmark",
                 "KERNEL",
                 "--application",

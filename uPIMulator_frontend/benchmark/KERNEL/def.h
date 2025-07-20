@@ -41,7 +41,7 @@
 #define NB_INODE_PRO 5
 #define MAX_SD 3 // max socket descriptor
 
-#define WRAM_MAX_PROCESS 0xE000 // The (maximum) size of the wram of a user
+#define WRAM_MAX_PROCESS 128*1024 // The (maximum) size of the wram of a user
 #define WRAM_OFFSET 512
 #define MRAM_OFFSET 636 * 1024
 

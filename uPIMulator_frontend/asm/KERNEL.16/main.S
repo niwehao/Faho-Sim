@@ -682,7 +682,7 @@ create_job:                             // @create_job
 	add r3, r1, 512
 	move r1, -514
 	lsr r3, r3, 8
-	jgtu r3, 222, .LBB6_8
+	jgtu r3, 510, .LBB6_8
 // %bb.7:
 	lw r1, zero, cur_process_index
 	lsl r3, r1, 4
@@ -807,7 +807,7 @@ sbrk:                                   // @sbrk
 	add r2, r1, r0
 	move r1, -2
 	lsr r2, r2, 8
-	jleu r2, 222, .LBB7_4
+	jleu r2, 510, .LBB7_4
 	jump .LBB7_6
 .LBB7_2:
 	jgts r0, -1, .LBB7_5
@@ -1056,8 +1056,8 @@ swap:                                   // @swap
 	sw r16, 12, r0
 	jeq r14, 0, .LBB10_2
 // %bb.1:
-	move r0, 0
-	move r1, 6
+	move r0, 6
+	move r1, 0
 	call r23, print_debug
 	call r23, me_new
 	lw r1, r16, 16
@@ -3375,7 +3375,7 @@ syscall:                                // @syscall
 	add r0, r0, r14
 	move r15, -2
 	lsr r0, r0, 8
-	jgtu r0, 222, .LBB31_38
+	jgtu r0, 510, .LBB31_38
 .LBB31_36:
 	lw r0, zero, cur_process_index
 	lsl r1, r0, 4
@@ -4078,9 +4078,9 @@ load_prg_memory:                        // @load_prg_memory
 	sd r22, -16, d14
 	sd r22, -24, d16
 	move r14, r0
+	move r0, 2
 	move r15, 0
-	move r1, 2
-	move r0, r15
+	move r1, r15
 	call r23, print_debug
 	lsl r0, r14, 4
 	lsl_add r0, r0, r14, 6
@@ -4112,17 +4112,17 @@ load_prg_memory:                        // @load_prg_memory
 	lsl_add r1, r2, r1, 24
 	ldma r1, r0, 0
 .LBB36_6:
+	move r0, 3
 	move r15, 0
-	move r1, 3
-	move r0, r15
+	move r1, r15
 	call r23, print_debug
 	lsl r0, r14, 4
 	lsl_add r0, r0, r14, 6
 	move r1, processs
 	add r16, r1, r0
 	lw r17, r16, 40
-	move r1, 4
-	move r0, r15
+	move r0, 4
+	move r1, r15
 	call r23, print_debug
 	move r0, 16
 	lsr r1, r17, 11, z, .LBB36_9
@@ -4154,8 +4154,8 @@ load_prg_memory:                        // @load_prg_memory
 	ldmai r1, r0, 0
 
 	// inline asm
-	move r0, 0
-	move r1, 5
+	move r0, 5
+	move r1, 0
 	call r23, print_debug
 	ld d16, r22, -24
 	ld d14, r22, -16
@@ -4590,8 +4590,8 @@ scheduler:                              // @scheduler
 	lsl_add r1, r2, r1, 24
 	sdma r1, r0, 0
 .LBB41_17:                              //   in Loop: Header=BB41_1 Depth=1
-	move r0, 0
-	move r1, 1
+	move r0, 1
+	move r1, 0
 	call r23, print_debug
 	move r0, r14
 	call r23, load_prg_memory

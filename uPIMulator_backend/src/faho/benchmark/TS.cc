@@ -9,7 +9,7 @@
 #include <time.h>
 #include <unistd.h>
 #define DTYPE int32_t
-#define NR_FTHREAD 4
+#define NR_FTHREAD 16
 typedef struct
 {
   uint32_t ts_length;
@@ -49,7 +49,7 @@ static DTYPE minHost;
 static DTYPE minHostIdx;
 static dpu_result_t *results_retrieve[NR_DPUS];
 static unsigned long int ts_size;
-static const unsigned int query_length = 16;
+static const unsigned int query_length = 64;
 static DTYPE *create_test_file(unsigned int ts_elements,
                                unsigned int query_elements)
 {
@@ -87,12 +87,7 @@ static void streamp(DTYPE *tSeries, DTYPE *AMean, DTYPE *ASigma,
     }
     // //打印 ASigma
     // std::cout << "ASigma[" << subseq << "] = " << ASigma[subseq] << std::endl;
-    if(subseq==0){
-    std::cout << queryLength << std::endl;
-    std::cout << dotprod << std::endl;
-    std::cout << queryLength * AMean[subseq] * queryMean << std::endl;
-    std::cout <<ASigma[subseq] * queryStdDeviation << std::endl;
-    }
+ 
     distance =
         2 * (queryLength - (dotprod - queryLength * AMean[subseq] * queryMean) /(ASigma[subseq] * queryStdDeviation));
 
@@ -184,8 +179,7 @@ namespace upmem_sim::simulator::faho::def
       for (unsigned int each_tasklet = 0; each_tasklet < NR_FTHREAD;
            each_tasklet++)
       {
-        if (results_retrieve[i][each_tasklet].minValue < result.minValue &&
-            results_retrieve[i][each_tasklet].minValue > 0)
+        if (results_retrieve[i][each_tasklet].minValue < result.minValue )
         {
           result.minValue = results_retrieve[i][each_tasklet].minValue;
           result.minIndex = (DTYPE)results_retrieve[i][each_tasklet].minIndex +

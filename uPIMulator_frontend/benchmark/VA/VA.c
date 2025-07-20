@@ -4,7 +4,7 @@
  */
 #include "stdsync.h"
 #include "support/common.h"
-#define START 8
+
 #define CHK(op)                                                                \
   do {                                                                         \
     int ret;                                                                   \
@@ -44,10 +44,9 @@ void main1() {
       if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0)
         exit_proc(3);
     }
-    print_debug(0,START+tasklet_id);
+    print_debug(tasklet_id,1);//rc,ra
     wait_barrier(&b);
-    print_debug(1,START+tasklet_id);
-
+    print_debug(tasklet_id,2);
     uint32_t input_size_dpu_bytes =
         DPU_INPUT_ARGUMENTS.size; // Input size per DPU in bytes
     uint32_t input_size_dpu_bytes_transfer =
@@ -86,15 +85,15 @@ void main1() {
       CHK(umram_write(cache_B, l_size_bytes, mram_base_addr_B + byte_index));
       //-1747751478 0 2090218572 456997246
     }
-   print_debug(0,START+tasklet_id);
+   print_debug(tasklet_id,1);
     wait_barrier(&b);
-    print_debug(1,START+tasklet_id);
+    print_debug(tasklet_id,2);
    
   }
 }
 
 int main(void) {
-  print_debug(0,7);//end of switch context
+  print_debug(7,0);//end of switch context rc,ra
   //fault_notif();
   sd_host = socket_open(0);
   init_barrier(&b, NR_FTHREAD);

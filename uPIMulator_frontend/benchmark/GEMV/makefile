@@ -1,5 +1,5 @@
 LIB := dpu/
-NR_FTHREAD ?= 5
+NR_FTHREAD ?= 16
 BL ?= 11
 NR_DPUS ?= 1 
 TYPE ?= INT32

@@ -4,8 +4,8 @@ static T *A;
 static T *B;
 static T *C;
 static T *C_dpu;
-static int m_size = 16; // Number of rows in matrix A
-static int n_size = 16;
+static int m_size; // Number of rows in matrix A
+static int n_size;
 static int NR_DPUS = 1; // Number of DPUs to use
 typedef struct
 {
@@ -93,7 +93,7 @@ namespace upmem_sim::simulator::faho::def
             {
                 if (C[i] != C_dpu[n * max_rows_per_dpu + j])
                 {
-                    // printf("(%i,%i) %i %i\n", i, j, C[i], C_dpu[n * max_rows_per_dpu + j]);
+                    std::cout << "(" << i << "," << j << ") " << C[i] << " " << C_dpu[n * max_rows_per_dpu + j] << std::endl;
                     status = false;
                 }
                 i++;
@@ -105,23 +105,30 @@ namespace upmem_sim::simulator::faho::def
         free(C_dpu);
         if (status)
         {
+            std::cout << "sucess" << std::endl;
             exit(0);
             return;
             /* code */
         }
         else
         {
-            
+
             assert(0);
         }
     }
-    void GEMV::benchmark_init(std::string bindir,int data_prep)
+    void GEMV::benchmark_init(std::string bindir, int data_prep)
     {
         bindir_ = bindir;
         def::Event *event;
+        m_size = data_prep;
+        n_size = data_prep;
 
         uint32_t nr_of_dpus = NR_DPUS; // Number of DPUs to use
                                        // Initialize help data
+        if (nr_of_dpus != 1)
+        {
+            std::cout << "not support multiple dpus" << std::endl;
+        }
         dpu_info =
             (struct dpu_info_t *)malloc(nr_of_dpus * sizeof(struct dpu_info_t));
         input_args =

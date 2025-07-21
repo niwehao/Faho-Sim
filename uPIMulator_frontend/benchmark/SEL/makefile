@@ -1,5 +1,5 @@
 LIB := dpu/
-NR_FTHREAD ?= 4
+NR_FTHREAD ?= 16
 BL ?= 10
 ENERGY ?= 0
 # 目标汇编文件定义
@@ -14,7 +14,7 @@ all : ${K_ASM}
 
 
 ${K_ASM} : 
-	dpu-upmem-dpurte-clang  -ffunction-sections -S -g0 -O0 ${DPU_KERNEL_FLAG} -o $@ ${K_C}
+	dpu-upmem-dpurte-clang  -ffunction-sections -S -g0 -O2 ${DPU_KERNEL_FLAG} -o $@ ${K_C}
 
 
 clean:

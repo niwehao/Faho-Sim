@@ -7,7 +7,7 @@ static unsigned int *histo;
 static std::string file_name = "image_VanHateren.iml";
 #define ByteSwap16(n) (((((unsigned int)n) << 8) & 0xFF00) | ((((unsigned int)n) >> 8) & 0x00FF))
 // Create input arrays
-static int p_input_size = 16 * 16;
+static int p_input_size;
 #define DEPTH 12
 static int p_bins = 16;
 #define divceil(n, m) (((n) - 1) / (m) + 1)
@@ -122,8 +122,7 @@ namespace upmem_sim::simulator::faho::def
             if (NR_DPUS * histo_host[j] != histo[j])
             {
                 status = false;
-                printf("%u - %u: %u -- %u\n", j, j, NR_DPUS * histo_host[j],
-                       histo[j]);
+                std::cout << j << " - " << j << ": " << NR_DPUS * histo_host[j] << " -- " << histo[j] << std::endl;
             }
         }
         free(A);
@@ -131,6 +130,7 @@ namespace upmem_sim::simulator::faho::def
         free(histo);
         if (status)
         {
+            std::cout << "sucess" << std::endl;
             exit(0);
             return;
         }
@@ -143,8 +143,12 @@ namespace upmem_sim::simulator::faho::def
     {
         bindir_ = bindir;
         file_name = bindir_ + file_name;
+        p_input_size=data_prep;
 
         uint32_t nr_of_dpus = NR_DPUS;          // Number of DPUs to use
+         if(nr_of_dpus!=1){
+            std::cout << "not support multiple dpus" << std::endl;
+        }
         unsigned int input_size;                // Size of input image
         input_size = p_input_size * nr_of_dpus; // Size of input image
         const unsigned int input_size_8bytes =

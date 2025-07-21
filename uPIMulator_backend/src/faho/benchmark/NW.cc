@@ -215,7 +215,6 @@ namespace upmem_sim::simulator::faho::def
 {
     def::Event *NW::benchmark(int time_)
     {
-
         if (events_.empty())
         {
             if (end_flag == 1)
@@ -279,11 +278,11 @@ namespace upmem_sim::simulator::faho::def
                     input_itemsets[i * (max_cols + 1) + j])
                 {
                     status = false;
-#if PRINT
-                    printf("%ld (%ld, %ld): %d %d\n", i * max_cols + j, i, j,
-                           input_itemsets_host[i * max_cols + j],
-                           input_itemsets[i * (max_cols + 1) + j]);
-#endif
+
+                    // 转换为cout版本
+                    std::cout << i * max_cols + j << " (" << i << ", " << j << "): "
+                         << input_itemsets_host[i * max_cols + j] << " "
+                         << input_itemsets[i * (max_cols + 1) + j] << std::endl;
                 }
             }
         }
@@ -294,6 +293,7 @@ namespace upmem_sim::simulator::faho::def
         free(input_itemsets);
         if (status)
         {
+            std::cout << "sucess" << std::endl;
             exit(0);
             return;
         }
@@ -318,10 +318,6 @@ namespace upmem_sim::simulator::faho::def
         {
             event = init_ReadSocket(first_role + i);
             events_.push_back(event);
-            if (ok != 0)
-            {
-                fprintf(stderr, "Error recieved ok (%i) from process %i\n ", ok, i);
-            }
         }
         max_rows = data_prep + 1;
         max_cols = data_prep + 1;
@@ -408,12 +404,18 @@ namespace upmem_sim::simulator::faho::def
         // }
         excute_1(blk);
         blk++;
+        if(blk > (max_cols - 1) / BL){
+            add_check();
+        }
     }
     void NW::excute_2(int blk)
     {
         def::Event *event;
         int first_role = 1;
         int nr_of_dpus = NR_DPUS;
+         if(nr_of_dpus!=1){
+            std::cout << "not support multiple dpus" << std::endl;
+        }
         // Bottom-right computation on DPUs
 
         // Copy data to DPUs
@@ -867,10 +869,6 @@ namespace upmem_sim::simulator::faho::def
         {
             event = init_ReadSocket(first_role + i);
             events_.push_back(event);
-            if (ok != 0)
-            {
-                fprintf(stderr, "Error recieved ok (%i) from process %i\n ", ok, i);
-            }
         }
 
         // Retrieve results

@@ -1,7 +1,5 @@
 LIB := dpu/
-NR_TASKLETS ?=24
-
-
+NR_TASKLETS ?=16
 
 # 目标汇编文件定义
 K_ASM := dpu_code.S 

@@ -15,6 +15,20 @@ syscall:                                // @syscall
 	// inline asm
 	move r0, 0
 	jump r23
+.section	.text.fault_notif,"ax",@progbits
+	.globl	fault_notif                         // -- Begin function syscall
+	.type	fault_notif,@function
+fault_notif:                                // @syscall
+// %bb.0:
+	fault 1
+.section	.text.print_debug,"ax",@progbits
+	.globl	print_debug                         // -- Begin function syscall
+	.type	print_debug,@function
+print_debug:                                // @syscall
+// %bb.0:
+	add r1, r1, 8
+	time_cfg r0,r1
+	jump r23
 	.section	.text.socket_read,"ax",@progbits
 	.globl	socket_read                     // -- Begin function socket_read
 	.type	socket_read,@function
@@ -478,10 +492,10 @@ get_appid:                              // @get_appid
 	.byte	8
 	.section	.text.get_appid,"ax",@progbits
                                         // -- End function
-	.section	.text.u_mram_read,"ax",@progbits
-	.globl	u_mram_read                      // -- Begin function u_mram_read
-	.type	u_mram_read,@function
-u_mram_read:                             // @u_mram_read
+	.section	.text.umram_read,"ax",@progbits
+	.globl	umram_read                      // -- Begin function umram_read
+	.type	umram_read,@function
+umram_read:                             // @umram_read
 .Lfunc_begin21:
 // %bb.0:
 	sd r22, 0, d22
@@ -492,16 +506,16 @@ u_mram_read:                             // @u_mram_read
 	ld d22, r22, -8
 	jump r23
 .Lfunc_end21:
-	.size	u_mram_read, .Lfunc_end21-u_mram_read
-	.section	.stack_sizes,"o",@progbits,.text.u_mram_read
+	.size	umram_read, .Lfunc_end21-umram_read
+	.section	.stack_sizes,"o",@progbits,.text.umram_read
 	.long	.Lfunc_begin21
 	.byte	8
-	.section	.text.u_mram_read,"ax",@progbits
+	.section	.text.umram_read,"ax",@progbits
                                         // -- End function
-	.section	.text.u_mram_write,"ax",@progbits
-	.globl	u_mram_write                     // -- Begin function u_mram_write
-	.type	u_mram_write,@function
-u_mram_write:                            // @u_mram_write
+	.section	.text.umram_write,"ax",@progbits
+	.globl	umram_write                     // -- Begin function umram_write
+	.type	umram_write,@function
+umram_write:                            // @umram_write
 .Lfunc_begin22:
 // %bb.0:
 	sd r22, 0, d22
@@ -512,11 +526,11 @@ u_mram_write:                            // @u_mram_write
 	ld d22, r22, -8
 	jump r23
 .Lfunc_end22:
-	.size	u_mram_write, .Lfunc_end22-u_mram_write
-	.section	.stack_sizes,"o",@progbits,.text.u_mram_write
+	.size	umram_write, .Lfunc_end22-umram_write
+	.section	.stack_sizes,"o",@progbits,.text.umram_write
 	.long	.Lfunc_begin22
 	.byte	8
-	.section	.text.u_mram_write,"ax",@progbits
+	.section	.text.umram_write,"ax",@progbits
                                         // -- End function
 	.section	.text.init_barrier,"ax",@progbits
 	.globl	init_barrier                    // -- Begin function init_barrier
@@ -916,52 +930,14 @@ main1:                                  // @main1
 	sd r22, -48, d16
 	sd r22, -56, d18
 	sd r22, -64, d20
-	move r16, 0
+	move r0, 0
 	move r4, 6
-	move r0, r16
-	move r1, r16
-	move r2, r16
-	move r3, r16
-	call r23, syscall
-	move r15, r0
-	move r14, b
-	move r4, 15
-	move r0, r14
-	move r1, r16
-	move r2, r16
-	move r3, r16
-	call r23, syscall
-	lw r0, r14, 4
-	add r0, r0, 1
-	sw r14, 4, r0
-	lw r1, r14, 8
-	jneq r0, r1, .LBB32_2
-// %bb.1:
-	move r1, 0
-	move r4, 18
-	move r0, r14
-	move r2, r1
-	move r3, r1
-	call r23, syscall
-	sw r14, 4, 0
-	jump .LBB32_3
-.LBB32_2:
-	move r0, b
-	move r2, 0
-	move r4, 17
 	move r1, r0
-	move r3, r2
+	move r2, r0
+	move r3, r0
 	call r23, syscall
-.LBB32_3:
-	move r14, b
-	move r1, 0
-	move r4, 16
-	move r0, r14
-	move r2, r1
-	move r3, r1
-	call r23, syscall
-	jneq r15, 0, .LBB32_6
-// %bb.4:
+	move r14, r0, nz, .LBB32_3
+// %bb.1:
 	lw r0, zero, sd_host
 	add r15, r22, -32
 	move r16, 1
@@ -983,44 +959,47 @@ main1:                                  // @main1
 	move r2, r17
 	move r3, r17
 	call r23, syscall
-	jgts r0, -1, .LBB32_6
-// %bb.5:
+	jgts r0, -1, .LBB32_3
+// %bb.2:
 	move r0, 3
 	move r1, 0
 	move r4, 7
 	move r2, r1
 	move r3, r1
 	call r23, syscall
-.LBB32_6:
+.LBB32_3:
+	move r1, 1
+	move r0, r14
+	call r23, print_debug
+	move r15, b
 	move r1, 0
 	move r4, 15
-	move r0, r14
+	move r0, r15
 	move r2, r1
 	move r3, r1
 	call r23, syscall
-	lw r0, r14, 4
+	lw r0, r15, 4
 	add r0, r0, 1
-	sw r14, 4, r0
-	lw r1, r14, 8
-	jneq r0, r1, .LBB32_8
-// %bb.7:
-	move r14, b
+	sw r15, 4, r0
+	lw r1, r15, 8
+	jneq r0, r1, .LBB32_5
+// %bb.4:
 	move r1, 0
 	move r4, 18
-	move r0, r14
+	move r0, r15
 	move r2, r1
 	move r3, r1
 	call r23, syscall
-	sw r14, 4, 0
-	jump .LBB32_9
-.LBB32_8:
+	sw r15, 4, 0
+	jump .LBB32_6
+.LBB32_5:
 	move r0, b
 	move r2, 0
 	move r4, 17
 	move r1, r0
 	move r3, r2
 	call r23, syscall
-.LBB32_9:
+.LBB32_6:
 	move r0, b
 	move r17, 0
 	move r4, 16
@@ -1029,62 +1008,60 @@ main1:                                  // @main1
 	move r2, r17
 	move r3, r17
 	call r23, syscall
-	move r4, 6
-	move r0, r17
-	move r1, r17
-	move r2, r17
-	move r3, r17
-	call r23, syscall
+	move r16, 2
+	move r0, r14
+	move r1, r16
+	call r23, print_debug
 	lw r18, zero, DPU_INPUT_ARGUMENTS
-	sw r22, -16, r0
-	lsl r20, r0, 11
+	sw r22, -16, r14
+	lsl r20, r14, 11
 	move r0, 2048
-	move r4, 2
 	move r1, r17
 	move r2, r17
 	move r3, r17
+	move r4, r16
 	call r23, syscall
 	move.s d14, 0
-	jleu r18, r20, .LBB32_19
-// %bb.10:
+	jleu r18, r20, .LBB32_16
+// %bb.7:
 	add r19, r0, -2048
 	add r21, r20, 2048
 	lw r0, r22, -16
 	lsl_sub r16, r17, r0, 11
 	move.s d14, 0
 	sw r22, -20, r19
-	jump .LBB32_11
-.LBB32_18:                              //   in Loop: Header=BB32_11 Depth=1
+	jump .LBB32_8
+.LBB32_15:                              //   in Loop: Header=BB32_8 Depth=1
 	move.s d0, 0
-.LBB32_27:                              //   in Loop: Header=BB32_11 Depth=1
+.LBB32_27:                              //   in Loop: Header=BB32_8 Depth=1
 	add r15, r1, r15
 	addc r14, r0, r14
-	add r20, r20, 8192
-	add r21, r21, 8192
-	add r16, r16, -8192
-	jleu r18, r20, .LBB32_19
-.LBB32_11:                              // =>This Loop Header: Depth=1
+	add r20, r20, 32768
+	add r21, r21, 32768
+	add r16, r16, -32768
+	jleu r18, r20, .LBB32_16
+.LBB32_8:                               // =>This Loop Header: Depth=1
                                         //     Child Loop BB32_26 Depth 2
 	move r0, r18
-	jltu r18, r21, .LBB32_13
-// %bb.12:                              //   in Loop: Header=BB32_11 Depth=1
+	jltu r18, r21, .LBB32_10
+// %bb.9:                               //   in Loop: Header=BB32_8 Depth=1
 	move r0, r21
-.LBB32_13:                              //   in Loop: Header=BB32_11 Depth=1
+.LBB32_10:                              //   in Loop: Header=BB32_8 Depth=1
 	sw r22, -24, r0
 	add r0, r20, 2048
 	move r17, 2048
-	jltu r0, r18, .LBB32_15
-// %bb.14:                              //   in Loop: Header=BB32_11 Depth=1
+	jltu r0, r18, .LBB32_12
+// %bb.11:                              //   in Loop: Header=BB32_8 Depth=1
 	sub r17, r18, r20
-.LBB32_15:                              //   in Loop: Header=BB32_11 Depth=1
+.LBB32_12:                              //   in Loop: Header=BB32_8 Depth=1
 	or r2, r20, 16
 	move r3, 0
 	move r4, 22
 	move r0, r19
 	move r1, r17
 	call r23, syscall
-	jeq r0, 0, .LBB32_17
-// %bb.16:                              //   in Loop: Header=BB32_11 Depth=1
+	jeq r0, 0, .LBB32_14
+// %bb.13:                              //   in Loop: Header=BB32_8 Depth=1
 	move r0, .L.str
 	move r19, r18
 	move r18, 0
@@ -1101,16 +1078,16 @@ main1:                                  // @main1
 	move r18, r19
 	lw r19, r22, -20
 	call r23, syscall
-.LBB32_17:                              //   in Loop: Header=BB32_11 Depth=1
-	lsr r0, r17, 3, z, .LBB32_18
-// %bb.25:                              //   in Loop: Header=BB32_11 Depth=1
+.LBB32_14:                              //   in Loop: Header=BB32_8 Depth=1
+	lsr r0, r17, 3, z, .LBB32_15
+// %bb.25:                              //   in Loop: Header=BB32_8 Depth=1
 	lw r0, r22, -24
 	add r0, r0, r16
 	lsr r0, r0, 3
 	neg r3, r0
 	move.s d0, 0
 	move r2, r19
-.LBB32_26:                              //   Parent Loop BB32_11 Depth=1
+.LBB32_26:                              //   Parent Loop BB32_8 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ld d4, r2, 0
 	add r1, r5, r1
@@ -1121,10 +1098,13 @@ main1:                                  // @main1
 	move r3, r4
 	jneq r5, 1, .LBB32_26
 	jump .LBB32_27
-.LBB32_19:
+.LBB32_16:
 	lw r16, r22, -16
 	lsl r0, r16, 3
 	sd r0, message, d14
+	move r1, 1
+	move r0, r16
+	call r23, print_debug
 	move r1, 0
 	move r4, 15
 	lw r14, r22, -12
@@ -1136,8 +1116,8 @@ main1:                                  // @main1
 	add r0, r0, 1
 	sw r14, 4, r0
 	lw r1, r14, 8
-	jneq r0, r1, .LBB32_21
-// %bb.20:
+	jneq r0, r1, .LBB32_18
+// %bb.17:
 	move r15, b
 	move r1, 0
 	move r4, 18
@@ -1146,15 +1126,15 @@ main1:                                  // @main1
 	move r3, r1
 	call r23, syscall
 	sw r15, 4, 0
-	jump .LBB32_22
-.LBB32_21:
+	jump .LBB32_19
+.LBB32_18:
 	move r0, b
 	move r2, 0
 	move r4, 17
 	move r1, r0
 	move r3, r2
 	call r23, syscall
-.LBB32_22:
+.LBB32_19:
 	move r15, b
 	move r1, 0
 	move r4, 16
@@ -1162,46 +1142,100 @@ main1:                                  // @main1
 	move r2, r1
 	move r3, r1
 	call r23, syscall
-	jeq r16, 0, .LBB32_23
-// %bb.32:
-	move r1, 0
-	move r4, 15
-	move r0, r15
-	move r2, r1
-	move r3, r1
-	call r23, syscall
-	lw r0, r15, 4
-	add r0, r0, 1
-	sw r15, 4, r0
-	lw r1, r15, 8
-	jneq r0, r1, .LBB32_34
-// %bb.33:
-	move r14, b
-	move r1, 0
-	move r4, 18
-	move r0, r14
-	move r2, r1
-	move r3, r1
-	call r23, syscall
-	sw r14, 4, 0
-	jump .LBB32_35
-.LBB32_23:
+	move r1, 2
+	move r0, r16
+	call r23, print_debug
+	jneq r16, 0, .LBB32_23
+// %bb.20:
 	ld d0, zero, message
 	move r2, message
 	ld d4, r2, 8
 	ld d6, r2, 16
-	ld d2, r2, 24
+	ld d8, r2, 24
 	add r1, r1, r5
 	addc r0, r0, r4
 	add r1, r1, r7
 	addc r0, r0, r6
+	add r1, r1, r9
+	addc r0, r0, r8
+	ld d4, r2, 32
+	ld d6, r2, 40
+	ld d8, r2, 48
+	ld d10, r2, 56
+	add r1, r1, r5
+	addc r0, r0, r4
+	add r1, r1, r7
+	addc r0, r0, r6
+	add r1, r1, r9
+	addc r0, r0, r8
+	add r1, r1, r11
+	addc r0, r0, r10
+	ld d4, r2, 64
+	ld d6, r2, 72
+	ld d8, r2, 80
+	ld d10, r2, 88
+	add r1, r1, r5
+	addc r0, r0, r4
+	add r1, r1, r7
+	addc r0, r0, r6
+	add r1, r1, r9
+	addc r0, r0, r8
+	add r1, r1, r11
+	addc r0, r0, r10
+	ld d4, r2, 96
+	ld d6, r2, 104
+	ld d8, r2, 112
+	ld d2, r2, 120
+	add r1, r1, r5
+	addc r0, r0, r4
+	add r1, r1, r7
+	addc r0, r0, r6
+	add r1, r1, r9
+	addc r0, r0, r8
 	add r1, r1, r3
 	addc r0, r0, r2
 	sd zero, message, d0
 	lsl r0, r16, 3
-	ld d0, r0, message
-	move r2, DPU_RESULTS
-	sd r2, 8, d0
+	ld d2, r0, message
+	move r0, DPU_RESULTS
+	sd r0, 8, d2
+	add r2, r18, 16
+	move r1, 256
+	move r3, 0
+	move r4, 23
+	call r23, syscall
+	jeq r0, 0, .LBB32_22
+// %bb.21:
+	move r0, .L.str.1
+	move r14, 0
+	move r4, 8
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	call r23, syscall
+	move r0, -1
+	move r4, 7
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	call r23, syscall
+.LBB32_22:
+	lw r0, zero, sd_host
+	add r14, r22, -28
+	move r16, 1
+	move r17, 0
+	move r4, 12
+	move r1, r14
+	move r2, r16
+	move r3, r17
+	call r23, syscall
+	lw r0, zero, sd_host
+	move r4, 11
+	move r1, r14
+	move r2, r16
+	move r3, r17
+	call r23, syscall
+.LBB32_23:
 	move r1, 0
 	move r4, 15
 	move r0, r15
@@ -1223,19 +1257,6 @@ main1:                                  // @main1
 	call r23, syscall
 	sw r14, 4, 0
 	jump .LBB32_29
-.LBB32_34:
-	move r0, b
-	move r2, 0
-	move r4, 17
-	move r1, r0
-	move r3, r2
-	call r23, syscall
-.LBB32_35:
-	move r0, b
-	move r1, 0
-	move r4, 16
-	move r2, r1
-	move r3, r1, true, .LBB32_36
 .LBB32_28:
 	move r0, b
 	move r2, 0
@@ -1244,80 +1265,6 @@ main1:                                  // @main1
 	move r3, r2
 	call r23, syscall
 .LBB32_29:
-	move r0, b
-	move r14, 0
-	move r4, 16
-	move r1, r14
-	move r2, r14
-	move r3, r14
-	call r23, syscall
-	add r2, r18, 16
-	move r0, DPU_RESULTS
-	move r1, 64
-	move r4, 23
-	move r3, r14
-	call r23, syscall
-	jeq r0, 0, .LBB32_31
-// %bb.30:
-	move r0, .L.str.1
-	move r14, 0
-	move r4, 8
-	move r1, r14
-	move r2, r14
-	move r3, r14
-	call r23, syscall
-	move r0, -1
-	move r4, 7
-	move r1, r14
-	move r2, r14
-	move r3, r14
-	call r23, syscall
-.LBB32_31:
-	lw r0, zero, sd_host
-	add r14, r22, -28
-	move r15, 1
-	move r16, 0
-	move r4, 12
-	move r1, r14
-	move r2, r15
-	move r3, r16
-	call r23, syscall
-	lw r0, zero, sd_host
-	move r4, 11
-	move r1, r14
-	move r2, r15
-	move r3, r16
-.LBB32_36:
-	call r23, syscall
-	move r14, b
-	move r1, 0
-	move r4, 15
-	move r0, r14
-	move r2, r1
-	move r3, r1
-	call r23, syscall
-	lw r0, r14, 4
-	add r0, r0, 1
-	sw r14, 4, r0
-	lw r1, r14, 8
-	jneq r0, r1, .LBB32_38
-// %bb.37:
-	move r1, 0
-	move r4, 18
-	move r0, r14
-	move r2, r1
-	move r3, r1
-	call r23, syscall
-	sw r14, 4, 0
-	jump .LBB32_39
-.LBB32_38:
-	move r0, b
-	move r2, 0
-	move r4, 17
-	move r1, r0
-	move r3, r2
-	call r23, syscall
-.LBB32_39:
 	move r0, b
 	move r1, 0
 	move r4, 16
@@ -1347,7 +1294,10 @@ main:                                   // @main
 	add r22, r22, 24
 	sd r22, -16, d14
 	sd r22, -24, d16
+	move r0, 7
 	move r14, 0
+	move r1, r14
+	call r23, print_debug
 	move r4, 10
 	move r0, r14
 	move r1, r14
@@ -1363,30 +1313,174 @@ main:                                   // @main
 	move r3, r14
 	call r23, syscall
 	sw r15, 4, 0
-	sw r15, 8, 4
+	sw r15, 8, 16
 	sw r15, 12, 0
-	move r15, main1
-	move r16, 20
-	move r0, r15
+	move r16, main1
+	move r15, 20
+	move r0, r16
 	move r1, r14
 	move r2, r14
 	move r3, r14
-	move r4, r16
+	move r4, r15
 	call r23, syscall
-	move r0, r15
+	move r0, r16
 	move r1, r14
 	move r2, r14
 	move r3, r14
-	move r4, r16
+	move r4, r15
 	call r23, syscall
-	move r0, r15
+	move r0, r16
 	move r1, r14
 	move r2, r14
 	move r3, r14
-	move r4, r16
+	move r4, r15
+	call r23, syscall
+	move r0, r16
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r16
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r16
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r16
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r16
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r16
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r16
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r16
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r16
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r16
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r16
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r16
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
 	call r23, syscall
 	call r23, main1
 	move r15, 21
+	move r0, r14
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r14
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r14
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r14
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r14
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r14
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r14
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r14
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r14
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r14
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r14
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
+	move r0, r14
+	move r1, r14
+	move r2, r14
+	move r3, r14
+	move r4, r15
+	call r23, syscall
 	move r0, r14
 	move r1, r14
 	move r2, r14
@@ -1417,14 +1511,6 @@ main:                                   // @main
 	.byte	24
 	.section	.text.main,"ax",@progbits
                                         // -- End function
-	.type	b,@object                       // @b
-	.section	.bss.b,"aw",@nobits
-	.globl	b
-	.p2align	2
-b:
-	.zero	16
-	.size	b, 16
-
 	.type	sd_host,@object                 // @sd_host
 	.section	.bss.sd_host,"aw",@nobits
 	.globl	sd_host
@@ -1441,18 +1527,26 @@ DPU_INPUT_ARGUMENTS:
 	.zero	16
 	.size	DPU_INPUT_ARGUMENTS, 16
 
+	.type	b,@object                       // @b
+	.section	.bss.b,"aw",@nobits
+	.globl	b
+	.p2align	2
+b:
+	.zero	16
+	.size	b, 16
+
 	.type	DPU_RESULTS,@object             // @DPU_RESULTS
 	.section	.bss.DPU_RESULTS,"aw",@nobits
 	.globl	DPU_RESULTS
 	.p2align	3
 DPU_RESULTS:
-	.zero	64
-	.size	DPU_RESULTS, 64
+	.zero	256
+	.size	DPU_RESULTS, 256
 
 	.type	.L.str,@object                  // @.str
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .L.str:
-	.asciz	"u_mram_read(cache_A, l_size_bytes, (mram_base_addr_A + byte_index))"
+	.asciz	"umram_read(cache_A, l_size_bytes, (mram_base_addr_A + byte_index))"
 	.size	.L.str, 67
 
 	.type	message,@object                 // @message
@@ -1460,17 +1554,17 @@ DPU_RESULTS:
 	.globl	message
 	.p2align	3
 message:
-	.zero	32
-	.size	message, 32
+	.zero	128
+	.size	message, 128
 
 	.type	.L.str.1,@object                // @.str.1
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .L.str.1:
-	.asciz	"u_mram_write(DPU_RESULTS, sizeof(DPU_RESULTS), input_size_dpu_bytes + sizeof(dpu_arguments_t))"
+	.asciz	"umram_write(DPU_RESULTS, sizeof(DPU_RESULTS), input_size_dpu_bytes + sizeof(dpu_arguments_t))"
 	.size	.L.str.1, 94
 
 	.addrsig
 	.addrsig_sym main1
-	.addrsig_sym b
 	.addrsig_sym DPU_INPUT_ARGUMENTS
+	.addrsig_sym b
 	.addrsig_sym DPU_RESULTS

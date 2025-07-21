@@ -1,5 +1,5 @@
 LIB := dpu/
-NR_FTHREAD ?= 4
+NR_FTHREAD ?= 16
 NR_DPUS ?= 1 
 TYPE ?= INT64
 # 目标汇编文件定义

@@ -27,7 +27,7 @@ static DTYPE search(DTYPE *bufferA, DTYPE searching_for, uint32_t search_size)
       
       if (bufferA[i] == searching_for)
       {
-         print_debug(found, 0);
+
         found = i;
         break;
       }
@@ -43,7 +43,6 @@ void main1()
 {
   int r;
   int tasklet_id=get_jid();
-  wait_barrier(&b);
   if (tasklet_id == 0)
   {
     char ok;
@@ -52,7 +51,9 @@ void main1()
     if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0)
       fault_notif();
   }
-  wait_barrier(&b);
+  print_debug(tasklet_id,1);//rc,ra
+    wait_barrier(&b);
+    print_debug(tasklet_id,2);
 
   DTYPE searching_for, found;
   uint64_t input_size = DPU_INPUT_ARGUMENTS.input_size;
@@ -85,7 +86,7 @@ void main1()
 
     if (r != 0)
     {
-      print_debug(r, 0);
+
       fault_notif();
     }
     current_mram_block_addr_query += 8;
@@ -103,14 +104,14 @@ void main1()
     r = umram_read(cache_aux_A, BLOCK_SIZE, current_mram_block_addr_A);
     if (r != 0)
     {
-      print_debug(r, 0);
+   
       fault_notif();
     }
     r = umram_read(cache_aux_B, BLOCK_SIZE,
                    (end_mram_block_addr_A - BLOCK_SIZE * sizeof(DTYPE)));
     if (r != 0)
     {
-      print_debug(r, 0);
+    
       fault_notif();
     }
 
@@ -128,6 +129,7 @@ void main1()
         // BLOCK_SIZE)
         r=umram_read(cache_A, BLOCK_SIZE, start_mram_block_addr_A);
         found = search(cache_A, searching_for, BLOCK_SIZE);
+        
       
 
         if (found > -1)
@@ -147,7 +149,7 @@ void main1()
                          start_mram_block_addr_A + BLOCK_SIZE);
           if (r != 0)
           {
-            print_debug(r, 0);
+         
             fault_notif();
           }
           found = search(cache_A, searching_for, remain_bytes_to_search);
@@ -170,7 +172,7 @@ void main1()
       r = umram_read(cache_A, BLOCK_SIZE, current_mram_block_addr_A);
       if (r != 0)
       {
-        print_debug(r, 0);
+  
         fault_notif();
       }
 
@@ -200,7 +202,9 @@ void main1()
     }
    
   }
-  wait_barrier(&b);
+  print_debug(tasklet_id,1);//rc,ra
+    wait_barrier(&b);
+    print_debug(tasklet_id,2);
   if (tasklet_id == 0)
   {
     r = umram_write(DPU_RESULTS, sizeof(DPU_RESULTS),
@@ -208,7 +212,7 @@ void main1()
                         input_size * sizeof(DTYPE));
     if (r != 0)
     {
-      print_debug(r, 0);
+
       fault_notif();
     }
     char ok;
@@ -220,6 +224,7 @@ void main1()
 
 int main(void)
 {
+   print_debug(7, 0);
   sd_host = socket_open(0);
   // umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0);
   init_barrier(&b, NR_FTHREAD);

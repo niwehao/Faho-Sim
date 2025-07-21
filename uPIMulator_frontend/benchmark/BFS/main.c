@@ -19,6 +19,7 @@ void main_prog(void);
 // main
 int main(void)
 {
+   print_debug(7, 0);
   nb_thread = NR_FTHREAD;
   init_barrier(&my_barrier, nb_thread);
   init_barrier(&bfsBarrier, nb_thread);
@@ -44,7 +45,6 @@ void main_prog()
 
   while (1)
   {
-    wait_barrier(&my_barrier);
     if (me == 0)
     {
       socket_write(sd_host, &ok, 1);
@@ -59,11 +59,12 @@ void main_prog()
                      params_m);
       if (r != 0)
       {
-        print_debug(r, 0);
         fault_notif();
       }
     }
-    wait_barrier(&my_barrier);
+    print_debug(me, 1);
+    wait_barrier(&my_barrier); //!
+    print_debug(me, 2);
 
     // Extract parameters
     uint32_t numGlobalNodes = params_w->numNodes;
@@ -101,14 +102,14 @@ void main_prog()
       // Allocate WRAM cache for each tasklet to use throughout
       __buffer_aligned uint64_t cache_value;
       uint64_t *cache_w = &cache_value;
-      //print_debug(numGlobalNodes / 64,0);
+   
 
       // Update current frontier and visited list based on the next frontier
       // from the previous iteration
       for (uint32_t nodeTileIdx = me; nodeTileIdx < numGlobalNodes / 64;
            nodeTileIdx += nb_thread)
       {
-        //print_debug(nodeTileIdx,0);
+        
 
         // Get the next frontier tile from MRAM
         uint64_t nextFrontierTile =
@@ -121,9 +122,7 @@ void main_prog()
           // visited
           uint64_t visitedTile = load8B(visited_m, nodeTileIdx, cache_w);
           visitedTile |= nextFrontierTile;
-         //  print_debug(visitedTile,0);
-
-          //print_debug(visitedTile,0);
+    
 
           store8B(visitedTile, visited_m, nodeTileIdx, cache_w);
 
@@ -138,7 +137,6 @@ void main_prog()
         if (startTileIdx <= nodeTileIdx &&
             nodeTileIdx < startTileIdx + numTiles)
         {
-         // print_debug(nextFrontierTile,1);
 
           // Update current frontier
           store8B(nextFrontierTile, currentFrontier_m,
@@ -162,7 +160,9 @@ void main_prog()
 
       // Wait until all tasklets have updated the current frontier
       // barrier_wait(&bfsBarrier);
+      print_debug(me, 1);
       active_wait_barrier(&bfsBarrier);
+      print_debug(me, 2);
 
       // Identify tasklet's nodes
       uint32_t numNodesPerTasklet = (numNodes + nb_thread - 1) / nb_thread;
@@ -180,29 +180,27 @@ void main_prog()
       {
         taskletNumNodes = numNodesPerTasklet;
       }
-      //print_debug(taskletNodesStart + taskletNumNodes,0);
+      
 
       // Visit neighbors of the current frontier
       // mutex_id_t mutexID = MUTEX_GET(nextFrontierMutex);
       for (uint32_t node = taskletNodesStart;
            node < taskletNodesStart + taskletNumNodes; ++node)
       {
-        //print_debug(node,0);
+
         uint32_t nodeTileIdx = node / 64;
         uint64_t currentFrontierTile =
             load8B(currentFrontier_m, nodeTileIdx,
                    cache_w); // TODO: Optimize: load tile then loop over nodes
                              // in the tile
-        print_debug(currentFrontierTile,0);
-        print_debug(node,1);
+       
         
         if (isSet(currentFrontierTile,
                   node % 64))
         
         { // If the node is in the current frontier
           // Visit its neighbors
-          //print_debug(currentFrontierTile,2);
-          print_debug(currentFrontierTile,2);
+
          
           uint32_t nodePtr = load4B(nodePtrs_m, node, cache_w) - nodePtrsOffset;
           uint32_t nextNodePtr = load4B(nodePtrs_m, node + 1, cache_w) -
@@ -213,19 +211,18 @@ void main_prog()
             // debug_int(nodePtr);
             // debug_int(nextNodePtr);
           }
-          print_debug(nextNodePtr,3);
-          print_debug(nodePtr,4);
+         
           
           for (uint32_t i = nodePtr; i < nextNodePtr; ++i)
           {
-           // print_debug(i,3);
+
             uint32_t neighbor =
                 load4B(neighborIdxs_m, i,
                        cache_w); // TODO: Optimize: sequential access to
                                  // neighbors can use sequential reader
             uint32_t neighborTileIdx = neighbor / 64;
             uint64_t visitedTile = load8B(visited_m, neighborTileIdx, cache_w);
-            print_debug(visitedTile,5);
+  
             if (!isSet(visitedTile,
                        neighbor % 64))
             { // Neighbor not previously visited
@@ -237,7 +234,7 @@ void main_prog()
               uint64_t nextFrontierTile =
                   load8B(nextFrontier_m, neighborTileIdx, cache_w);
               setBit(nextFrontierTile, neighbor % 64);
-              //print_debug(nextFrontierTile,4);
+
               store8B(nextFrontierTile, nextFrontier_m, neighborTileIdx,
                       cache_w);
               // mutex_unlock(mutexID);
@@ -255,7 +252,9 @@ void main_prog()
     //   //   debug_int(nb_loop++);
     //   socket_read(sd_host, &ok, 1);
     // }
-    wait_barrier(&my_barrier);
+    print_debug(me, 1);
+    wait_barrier(&my_barrier); //!
+    print_debug(me, 2);
   }
   return;
 }

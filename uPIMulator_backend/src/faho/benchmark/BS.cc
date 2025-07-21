@@ -3,7 +3,7 @@
 // Data type
 #define DTYPE int64_t
 #define NR_DPUS 1
-#define NR_FTHREAD 4
+#define NR_FTHREAD 16
 DTYPE *input;
 DTYPE *querys;
 typedef struct
@@ -113,6 +113,7 @@ namespace upmem_sim::simulator::faho::def
         int status = (result_dpu == result_host);
         if (status)
         {
+            std::cout << "sucess" << std::endl;
             exit(0);
             return;
         }
@@ -128,6 +129,9 @@ namespace upmem_sim::simulator::faho::def
         Event *event;
 
         uint32_t nr_of_dpus = NR_DPUS; // Number of DPUs to use
+         if(nr_of_dpus!=1){
+            std::cout << "not support multiple dpus" << std::endl;
+        }
         uint64_t input_size = data_prep;
         uint64_t num_querys = 16;
         // Create an input file with arbitrary data

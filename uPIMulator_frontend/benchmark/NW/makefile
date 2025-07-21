@@ -1,7 +1,7 @@
 LIB := dpu/
-NR_FTHREAD ?= 4
-BL ?= 8
-BL_IN ?= 4 
+NR_FTHREAD ?= 16
+BL ?= 64
+BL_IN ?= 16
 NR_DPUS ?= 1 
 ENERGY ?= 0
 TYPE ?= INT32

@@ -1,13 +1,13 @@
 #include "host.h"
 #define T int64_t
-#define NR_FTHREAD 4
+#define NR_FTHREAD 16
 #define NR_DPUS 1
 // Pointer declaration
 static T *A;
 #define divceil(n, m) (((n) - 1) / (m) + 1)
 #define roundup(n, m) ((n / m) * m + m)
 static int p_exp = 0;              // 0 for weak scaling, 1 for strong scaling
-static int p_input_size = 1024; // Input size in elements
+static int p_input_size ; // Input size in elements
 typedef struct {
     uint32_t size;
 	enum kernels {
@@ -30,7 +30,6 @@ static T count_host = 0;
 static void read_input(T *A, unsigned int nr_elements)
 {
     srand(0);
-    printf("nr_elements\t%u\t", nr_elements);
     for (unsigned int i = 0; i < nr_elements; i++)
     {
         A[i] = (T)(rand());
@@ -98,6 +97,7 @@ namespace upmem_sim::simulator::faho::def
          free(A);
         if (status)
         {
+            std::cout << "sucess" << std::endl;
             exit(0);
             return;
         }
@@ -109,8 +109,12 @@ namespace upmem_sim::simulator::faho::def
     void RED::benchmark_init(std::string bindir,int data_prep)
     {
         bindir_ = bindir;
+        p_input_size=data_prep;
 
         uint32_t nr_of_dpus = NR_DPUS; // Number of DPUs to use
+         if(nr_of_dpus!=1){
+            std::cout << "not support multiple dpus" << std::endl;
+        }
         const unsigned int input_size =
             p_exp == 0 ? p_input_size * nr_of_dpus
                        : p_input_size; // Total input size (weak or strong scaling)

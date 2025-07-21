@@ -73,10 +73,9 @@ namespace upmem_sim::simulator::faho::def
                 assert(0);
             }
         }
+        std::cout << "sucess" << std::endl;
         exit(0);
         return;
-        
-        assert(0);
     }
     void VA::benchmark_init(std::string bindir,int data_prep)
     {
@@ -84,6 +83,9 @@ namespace upmem_sim::simulator::faho::def
         input_size=data_prep;
 
         uint32_t nr_of_dpus = NR_DPUS; // Number of DPUs to use
+        if(nr_of_dpus!=1){
+            std::cout << "not support multiple dpus" << std::endl;
+        }
 
         const unsigned int input_size_8bytes =
             ((input_size * sizeof(T)) % 8) != 0

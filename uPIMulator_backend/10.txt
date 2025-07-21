@@ -1,0 +1,583 @@
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/loc-gowalla_edges.txt
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/atomic.bin
+DMA to atomic completed...
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/iram.bin
+num of instructions: 3505
+DMA to IRAM completed...
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/wram.bin
+DMA to WRAM completed...
+init completed...
+launch completed...
+********time:6303*******
+text section size is 61c0
+flag set:0
+debug3 for 0
+break point 2 happen in cycle:7234
+break point 3 happen in cycle:8223
+break point 4 happen in cycle:8357
+break point 5 happen in cycle:25571
+break point 6 happen in cycle:35791
+break point 7 happen in cycle:36638
+fthread 1 meet barrier60490
+fthread 2 meet barrier71391
+fthread 3 meet barrier83097
+fthread 4 meet barrier98199
+fthread 5 meet barrier112303
+fthread 6 meet barrier129714
+fthread 7 meet barrier152532
+fthread 8 meet barrier172736
+fthread 9 meet barrier202766
+fthread 10 meet barrier224741
+fthread 11 meet barrier247708
+fthread 12 meet barrier271484
+fthread 13 meet barrier304098
+fthread 14 meet barrier331146
+fthread 15 meet barrier359275
+********time:535450*******
+ReadSocket event for pid: 1 at time: 0
+********time:535451*******
+flag set:32
+debug4 for 1
+debug5 for 0
+debug6 for 1
+fthread 0 meet barrier578128
+fthread 0 leave barrier771565
+fthread 0 meet barrier835883
+fthread 1 leave barrier939486
+fthread 1 meet barrier944316
+fthread 2 leave barrier950334
+fthread 2 meet barrier955164
+fthread 3 leave barrier957696
+fthread 3 meet barrier962793
+fthread 4 leave barrier971468
+fthread 4 meet barrier971931
+fthread 5 leave barrier985836
+fthread 5 meet barrier986338
+fthread 6 leave barrier1002417
+fthread 6 meet barrier1002963
+fthread 7 leave barrier1015014
+fthread 7 meet barrier1015559
+fthread 8 leave barrier1029239
+fthread 8 meet barrier1029814
+fthread 9 leave barrier1050095
+fthread 9 meet barrier1050704
+fthread 10 leave barrier1073126
+fthread 10 meet barrier1073800
+fthread 11 leave barrier1099100
+fthread 11 meet barrier1099870
+fthread 12 leave barrier1119611
+fthread 12 meet barrier1120434
+fthread 13 leave barrier1142606
+fthread 13 meet barrier1143486
+fthread 14 leave barrier1168393
+fthread 14 meet barrier1169335
+fthread 15 leave barrier1193629
+fthread 15 meet barrier1194598
+fthread 15 leave barrier1238695
+fthread 2 leave barrier1250267
+fthread 1 leave barrier1261827
+fthread 0 leave barrier1273323
+fthread 3 leave barrier1284613
+fthread 4 leave barrier1296224
+fthread 5 leave barrier1307187
+fthread 15 meet barrier1318550
+fthread 6 leave barrier1326085
+fthread 7 leave barrier1341914
+fthread 1 meet barrier1343603
+fthread 3 meet barrier1367520
+fthread 8 leave barrier1373757
+fthread 4 meet barrier1379046
+fthread 5 meet barrier1389867
+fthread 6 meet barrier1407156
+fthread 0 meet barrier1408108
+fthread 7 meet barrier1420290
+fthread 9 leave barrier1436417
+fthread 8 meet barrier1446739
+fthread 9 meet barrier1498274
+fthread 10 leave barrier1544100
+fthread 11 leave barrier1561346
+fthread 12 leave barrier1583456
+fthread 10 meet barrier1587270
+fthread 11 meet barrier1604863
+fthread 13 leave barrier1608916
+fthread 12 meet barrier1626892
+fthread 14 leave barrier1645702
+fthread 13 meet barrier1650698
+fthread 14 meet barrier1683269
+fthread 2 meet barrier1697937
+fthread 14 leave barrier1873974
+fthread 14 meet barrier1874206
+fthread 0 leave barrier2045141
+fthread 1 leave barrier2057189
+fthread 1 meet barrier2057296
+fthread 2 leave barrier2068455
+fthread 2 meet barrier2068555
+fthread 3 leave barrier2104114
+fthread 3 meet barrier2104213
+fthread 4 leave barrier2111375
+fthread 4 meet barrier2111476
+fthread 5 leave barrier2147844
+fthread 5 meet barrier2147943
+fthread 6 leave barrier2155906
+fthread 6 meet barrier2156005
+fthread 7 leave barrier2192529
+fthread 7 meet barrier2192628
+fthread 8 leave barrier2201436
+fthread 8 meet barrier2201536
+fthread 9 leave barrier2238861
+fthread 9 meet barrier2238960
+fthread 10 leave barrier2248611
+fthread 10 meet barrier2248712
+fthread 11 leave barrier2286030
+fthread 11 meet barrier2286129
+fthread 12 leave barrier2296637
+fthread 12 meet barrier2296736
+fthread 13 leave barrier2334862
+fthread 13 meet barrier2334961
+fthread 15 leave barrier2375501
+fthread 15 meet barrier2375586
+********time:2393831*******
+ReadSocket event for pid: 1 at time: 0
+********time:2393832*******
+flag set:32
+debug4 for 1
+debug5 for 1
+debug6 for 1
+in level:2
+********time:2547976*******
+flag set:32
+debug4 for 2
+debug5 for 1
+debug6 for 1
+fthread 0 meet barrier2590654
+fthread 0 leave barrier2784091
+fthread 0 meet barrier2848423
+fthread 1 leave barrier2952026
+fthread 2 leave barrier2963007
+fthread 3 leave barrier2970206
+fthread 4 leave barrier2978606
+fthread 4 meet barrier2979102
+fthread 5 leave barrier2988328
+fthread 5 meet barrier2988847
+fthread 2 meet barrier2999315
+fthread 1 meet barrier3004125
+fthread 6 leave barrier3004915
+fthread 6 meet barrier3005464
+fthread 3 meet barrier3008102
+fthread 7 leave barrier3017967
+fthread 7 meet barrier3018512
+fthread 8 leave barrier3032192
+fthread 8 meet barrier3032767
+fthread 9 leave barrier3048099
+fthread 9 meet barrier3048705
+fthread 10 leave barrier3071147
+fthread 10 meet barrier3071810
+fthread 11 leave barrier3097143
+fthread 11 meet barrier3097883
+fthread 12 leave barrier3126260
+fthread 12 meet barrier3127083
+fthread 13 leave barrier3149255
+fthread 13 meet barrier3150135
+fthread 14 leave barrier3175042
+fthread 14 meet barrier3175984
+fthread 15 leave barrier3200278
+fthread 15 meet barrier3201247
+fthread 15 leave barrier3245344
+fthread 2 leave barrier3256916
+fthread 1 leave barrier3268469
+fthread 0 leave barrier3279959
+fthread 3 leave barrier3291405
+fthread 4 leave barrier3302739
+fthread 5 leave barrier3314273
+fthread 6 leave barrier3335940
+fthread 7 leave barrier3349682
+fthread 1 meet barrier3352124
+fthread 8 leave barrier3363691
+fthread 15 meet barrier3375282
+fthread 3 meet barrier3376362
+fthread 8 meet barrier3439793
+fthread 9 leave barrier3511294
+fthread 10 leave barrier3546753
+fthread 10 meet barrier3598222
+fthread 11 leave barrier3602818
+fthread 12 leave barrier3653596
+fthread 12 meet barrier3698720
+fthread 13 leave barrier3713079
+fthread 14 leave barrier3748899
+fthread 14 meet barrier3785319
+fthread 0 meet barrier3849937
+fthread 2 meet barrier3930381
+fthread 5 meet barrier4092417
+fthread 4 meet barrier4111412
+fthread 7 meet barrier4195880
+fthread 9 meet barrier4269816
+fthread 11 meet barrier4322778
+fthread 13 meet barrier4348131
+fthread 6 meet barrier4359573
+fthread 6 leave barrier4453599
+fthread 6 meet barrier4453831
+fthread 0 leave barrier4621932
+fthread 1 leave barrier4636124
+fthread 1 meet barrier4636231
+fthread 2 leave barrier4647390
+fthread 2 meet barrier4647490
+fthread 3 leave barrier4683049
+fthread 3 meet barrier4683148
+fthread 4 leave barrier4690310
+fthread 4 meet barrier4690411
+fthread 5 leave barrier4726779
+fthread 5 meet barrier4726878
+fthread 7 leave barrier4760238
+fthread 7 meet barrier4760337
+fthread 8 leave barrier4769141
+fthread 8 meet barrier4769242
+fthread 9 leave barrier4806410
+fthread 9 meet barrier4806509
+fthread 10 leave barrier4816168
+fthread 10 meet barrier4816267
+fthread 11 leave barrier4853743
+fthread 11 meet barrier4853842
+fthread 12 leave barrier4864346
+fthread 12 meet barrier4864446
+fthread 13 leave barrier4902571
+fthread 13 meet barrier4902670
+fthread 14 leave barrier4914017
+fthread 14 meet barrier4914118
+fthread 15 leave barrier4952050
+fthread 15 meet barrier4952142
+********time:4973563*******
+ReadSocket event for pid: 1 at time: 0
+********time:4973564*******
+flag set:32
+debug4 for 2
+debug5 for 2
+debug6 for 1
+in level:3
+********time:5127709*******
+flag set:32
+debug4 for 3
+debug5 for 2
+debug6 for 1
+fthread 0 meet barrier5170386
+fthread 0 leave barrier5363823
+fthread 0 meet barrier5498111
+fthread 1 leave barrier5524370
+fthread 2 leave barrier5547179
+fthread 3 leave barrier5559145
+fthread 4 leave barrier5567487
+fthread 4 meet barrier5567974
+fthread 5 leave barrier5577113
+fthread 5 meet barrier5577643
+fthread 6 leave barrier5593675
+fthread 6 meet barrier5594244
+fthread 7 leave barrier5606805
+fthread 7 meet barrier5607394
+fthread 8 leave barrier5627581
+fthread 8 meet barrier5628195
+fthread 9 leave barrier5650844
+fthread 9 meet barrier5651534
+fthread 1 meet barrier5674105
+fthread 10 leave barrier5676842
+fthread 10 meet barrier5677596
+fthread 11 leave barrier5697445
+fthread 11 meet barrier5698212
+fthread 2 meet barrier5726259
+fthread 12 leave barrier5727444
+fthread 12 meet barrier5728242
+fthread 13 leave barrier5760161
+fthread 13 meet barrier5761025
+fthread 3 meet barrier5763847
+fthread 14 leave barrier5796379
+fthread 14 meet barrier5797284
+fthread 15 leave barrier5832468
+fthread 15 meet barrier5833437
+fthread 3 leave barrier5923478
+fthread 4 leave barrier5935055
+fthread 5 leave barrier5946614
+fthread 6 leave barrier5958140
+fthread 7 leave barrier5969570
+fthread 8 leave barrier5980838
+fthread 9 leave barrier5992366
+fthread 10 leave barrier6008787
+fthread 11 leave barrier6111807
+fthread 12 leave barrier6128474
+fthread 13 leave barrier6152773
+fthread 2 leave barrier6187562
+fthread 14 leave barrier6217695
+fthread 15 leave barrier6280304
+fthread 1 leave barrier6291854
+fthread 0 leave barrier6307343
+fthread 0 meet barrier6664657
+fthread 2 meet barrier6740755
+fthread 3 meet barrier6878744
+fthread 1 meet barrier6907445
+fthread 4 meet barrier7059668
+fthread 6 meet barrier7459126
+fthread 5 meet barrier7513652
+fthread 7 meet barrier7574283
+fthread 8 meet barrier7731311
+fthread 9 meet barrier7991512
+fthread 10 meet barrier8090401
+fthread 11 meet barrier8097748
+fthread 12 meet barrier8228927
+fthread 15 meet barrier8322391
+fthread 13 meet barrier8339727
+fthread 14 meet barrier8349591
+fthread 14 leave barrier8440600
+fthread 14 meet barrier8440832
+fthread 0 leave barrier8599855
+fthread 1 leave barrier8619505
+fthread 1 meet barrier8619618
+fthread 2 leave barrier8632433
+fthread 2 meet barrier8632539
+fthread 3 leave barrier8673602
+fthread 3 meet barrier8673701
+fthread 4 leave barrier8680814
+fthread 4 meet barrier8680913
+fthread 5 leave barrier8716961
+fthread 5 meet barrier8717060
+fthread 6 leave barrier8725020
+fthread 6 meet barrier8725120
+fthread 7 leave barrier8762045
+fthread 7 meet barrier8762144
+fthread 8 leave barrier8770947
+fthread 8 meet barrier8771048
+fthread 9 leave barrier8807890
+fthread 9 meet barrier8807989
+fthread 10 leave barrier8817649
+fthread 10 meet barrier8817748
+fthread 11 leave barrier8855474
+fthread 11 meet barrier8855573
+fthread 12 leave barrier8866076
+fthread 12 meet barrier8866176
+fthread 13 leave barrier8904115
+fthread 13 meet barrier8904214
+fthread 15 leave barrier8941218
+fthread 15 meet barrier8941310
+********time:8962730*******
+ReadSocket event for pid: 1 at time: 0
+********time:8962731*******
+flag set:32
+debug4 for 3
+debug5 for 3
+debug6 for 1
+in level:4
+********time:9116876*******
+flag set:32
+debug4 for 4
+debug5 for 3
+debug6 for 1
+fthread 0 meet barrier9159553
+fthread 0 leave barrier9352990
+fthread 1 leave barrier9523665
+fthread 2 leave barrier9530919
+fthread 3 leave barrier9535706
+fthread 4 leave barrier9541508
+fthread 4 meet barrier9542006
+fthread 5 leave barrier9552687
+fthread 5 meet barrier9553226
+fthread 6 leave barrier9563737
+fthread 6 meet barrier9564305
+fthread 7 leave barrier9582291
+fthread 7 meet barrier9582899
+fthread 0 meet barrier9586090
+fthread 8 leave barrier9597100
+fthread 8 meet barrier9597746
+fthread 9 leave barrier9620395
+fthread 9 meet barrier9621075
+fthread 10 leave barrier9646461
+fthread 10 meet barrier9647225
+fthread 11 leave barrier9675545
+fthread 11 meet barrier9676386
+fthread 12 leave barrier9701295
+fthread 12 meet barrier9702136
+fthread 13 leave barrier9734856
+fthread 13 meet barrier9735757
+fthread 1 meet barrier9756984
+fthread 14 leave barrier9771817
+fthread 14 meet barrier9772758
+fthread 3 meet barrier9782794
+fthread 2 meet barrier9806363
+fthread 15 leave barrier9808615
+fthread 15 meet barrier9809587
+fthread 3 leave barrier9922157
+fthread 4 leave barrier9933729
+fthread 5 leave barrier9945278
+fthread 6 leave barrier9956623
+fthread 7 leave barrier9968305
+fthread 8 leave barrier9979501
+fthread 9 leave barrier9998518
+fthread 10 leave barrier10020240
+fthread 11 leave barrier10034057
+fthread 12 leave barrier10047740
+fthread 13 leave barrier10061321
+fthread 14 leave barrier10074702
+fthread 15 leave barrier10087988
+fthread 2 leave barrier10101064
+fthread 1 leave barrier10113893
+fthread 0 leave barrier10126737
+fthread 4 meet barrier10430728
+fthread 12 meet barrier10483848
+fthread 11 meet barrier10492973
+fthread 6 meet barrier10503628
+fthread 7 meet barrier10539807
+fthread 9 meet barrier10663570
+fthread 8 meet barrier10683001
+fthread 1 meet barrier10764680
+fthread 5 meet barrier10779813
+fthread 14 meet barrier10804029
+fthread 13 meet barrier10832190
+fthread 3 meet barrier10898094
+fthread 10 meet barrier10900102
+fthread 0 meet barrier10901112
+fthread 2 meet barrier10934327
+fthread 15 meet barrier10969890
+fthread 15 leave barrier11090277
+fthread 15 meet barrier11090509
+fthread 0 leave barrier11261892
+fthread 1 leave barrier11273672
+fthread 1 meet barrier11273779
+fthread 2 leave barrier11284990
+fthread 2 meet barrier11285091
+fthread 3 leave barrier11320505
+fthread 3 meet barrier11320604
+fthread 4 leave barrier11327720
+fthread 4 meet barrier11327819
+fthread 5 leave barrier11364345
+fthread 5 meet barrier11364444
+fthread 6 leave barrier11372403
+fthread 6 meet barrier11372503
+fthread 7 leave barrier11409014
+fthread 7 meet barrier11409113
+fthread 8 leave barrier11417917
+fthread 8 meet barrier11418018
+fthread 9 leave barrier11455186
+fthread 9 meet barrier11455285
+fthread 10 leave barrier11464944
+fthread 10 meet barrier11465043
+fthread 11 leave barrier11502519
+fthread 11 meet barrier11502618
+fthread 12 leave barrier11513122
+fthread 12 meet barrier11513222
+fthread 13 leave barrier11551347
+fthread 13 meet barrier11551446
+fthread 14 leave barrier11562793
+fthread 14 meet barrier11562894
+********time:11618290*******
+ReadSocket event for pid: 1 at time: 0
+********time:11618291*******
+flag set:32
+debug4 for 4
+debug5 for 4
+debug6 for 1
+in level:5
+********time:11772436*******
+flag set:32
+debug4 for 5
+debug5 for 4
+debug6 for 1
+fthread 0 meet barrier11815113
+fthread 0 leave barrier12008550
+fthread 0 meet barrier12122387
+fthread 1 leave barrier12178178
+fthread 2 leave barrier12189155
+fthread 2 meet barrier12194089
+fthread 3 leave barrier12196355
+fthread 4 leave barrier12204749
+fthread 4 meet barrier12205236
+fthread 1 meet barrier12210990
+fthread 5 leave barrier12214727
+fthread 5 meet barrier12215231
+fthread 6 leave barrier12231415
+fthread 6 meet barrier12231949
+fthread 3 meet barrier12233232
+fthread 7 leave barrier12248966
+fthread 7 meet barrier12249559
+fthread 8 leave barrier12263179
+fthread 8 meet barrier12263754
+fthread 9 leave barrier12284087
+fthread 9 meet barrier12284693
+fthread 10 leave barrier12307135
+fthread 10 meet barrier12307798
+fthread 11 leave barrier12333121
+fthread 11 meet barrier12333861
+fthread 12 leave barrier12362238
+fthread 12 meet barrier12363061
+fthread 13 leave barrier12385233
+fthread 13 meet barrier12386113
+fthread 14 leave barrier12411020
+fthread 14 meet barrier12411962
+fthread 15 leave barrier12436256
+fthread 15 meet barrier12437225
+fthread 15 leave barrier12481322
+fthread 2 leave barrier12492894
+fthread 1 leave barrier12504447
+fthread 0 leave barrier12515935
+fthread 3 leave barrier12527375
+fthread 4 leave barrier12538741
+fthread 5 leave barrier12549981
+fthread 6 leave barrier12563986
+fthread 7 leave barrier12577817
+fthread 15 meet barrier12584193
+fthread 8 leave barrier12591398
+fthread 9 leave barrier12604768
+fthread 2 meet barrier12619094
+fthread 10 leave barrier12623574
+fthread 5 meet barrier12639012
+fthread 11 leave barrier12648096
+fthread 0 meet barrier12655072
+fthread 12 leave barrier12665554
+fthread 7 meet barrier12665581
+fthread 8 meet barrier12678409
+fthread 4 meet barrier12688313
+fthread 9 meet barrier12690411
+fthread 10 meet barrier12706829
+fthread 11 meet barrier12728325
+fthread 6 meet barrier12738142
+fthread 12 meet barrier12742735
+fthread 13 leave barrier12802018
+fthread 14 leave barrier12829180
+fthread 3 meet barrier12836298
+fthread 13 meet barrier12858062
+fthread 14 meet barrier12872295
+fthread 1 meet barrier12888600
+fthread 14 leave barrier13248425
+fthread 14 meet barrier13248554
+fthread 0 leave barrier13277162
+fthread 1 leave barrier13289280
+fthread 1 meet barrier13289386
+fthread 2 leave barrier13300609
+fthread 2 meet barrier13300708
+fthread 3 leave barrier13336280
+fthread 3 meet barrier13336379
+fthread 4 leave barrier13343491
+fthread 4 meet barrier13343591
+fthread 5 leave barrier13380116
+fthread 5 meet barrier13380215
+fthread 6 leave barrier13388170
+fthread 6 meet barrier13388271
+fthread 7 leave barrier13424637
+fthread 7 meet barrier13424736
+fthread 8 leave barrier13433548
+fthread 8 meet barrier13433647
+fthread 9 leave barrier13470973
+fthread 9 meet barrier13471072
+fthread 10 leave barrier13480727
+fthread 10 meet barrier13480827
+fthread 11 leave barrier13518290
+fthread 11 meet barrier13518389
+fthread 12 leave barrier13528889
+fthread 12 meet barrier13528990
+fthread 13 leave barrier13566958
+fthread 13 meet barrier13567057
+fthread 15 leave barrier13607705
+fthread 15 meet barrier13607790
+********time:13624660*******
+ReadSocket event for pid: 1 at time: 0
+********time:13624661*******
+flag set:32
+debug4 for 5
+debug5 for 5
+debug6 for 1
+********time:13778805*******
+sucess

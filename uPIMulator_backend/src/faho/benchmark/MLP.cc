@@ -135,7 +135,7 @@ namespace upmem_sim::simulator::faho::def
                 if (C[i] != C_dpu[n * max_rows_per_dpu + j])
                 {
                     status = false;
-                    //printf("%d: %d -- %d\n", i, C[i], C_dpu[n * max_rows_per_dpu + j]);
+                   std::cout << i << ": " << C[i] << " -- " << C_dpu[n * max_rows_per_dpu + j] << std::endl;
                 }
                 i++;
             }
@@ -148,6 +148,7 @@ namespace upmem_sim::simulator::faho::def
         free(C);
         if (status)
         {
+            std::cout << "sucess" << std::endl;
             free(C_dpu);
             exit(0);
             return;
@@ -165,6 +166,9 @@ namespace upmem_sim::simulator::faho::def
         layers=NUM_LAYERS;
 
         uint32_t nr_of_dpus = NR_DPUS; // Number of DPUs to use
+         if(nr_of_dpus!=1){
+            std::cout << "not support multiple dpus" << std::endl;
+        }
         int first_role = 1;
         unsigned int m_size = data_prep;
         unsigned int n_size = data_prep;
@@ -298,6 +302,9 @@ namespace upmem_sim::simulator::faho::def
                                     max_rows_per_dpu * n_size_pad * sizeof(T) + n_size_pad * sizeof(T),
                                     max_rows_per_dpu * sizeof(T));
             events_.push_back(event);
+        }
+        if(excution==NUM_LAYERS){
+            add_check();
         }
 
         

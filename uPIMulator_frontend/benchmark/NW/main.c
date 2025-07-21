@@ -27,6 +27,7 @@ void main1(void);
 
 int main(void)
 {
+  print_debug(7, 0);
   nr_tasklets = NR_FTHREAD;
   init_barrier(&my_barrier, nr_tasklets);
   sd_host = socket_open(0);
@@ -51,24 +52,26 @@ void main1()
     int r;
 
     // Barrier
-    wait_barrier(&my_barrier); //!
     if (tasklet_id == 0)
     {
       char ok = 0;
       r = socket_write(sd_host, &ok, 1);
       if (r != 0)
       {
-        print_debug(r, 0);
+
         fault_notif();
       }
       r = socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
       if (r != 0)
       {
-        print_debug(r, 0);
+
         fault_notif();
       }
     }
+    print_debug(tasklet_id, 1);
     wait_barrier(&my_barrier); //!
+    print_debug(tasklet_id, 2);
+
     uint32_t nblocks = DPU_INPUT_ARGUMENTS.nblocks;
     uint32_t active_blocks = DPU_INPUT_ARGUMENTS.active_blocks;
     uint32_t penalty = DPU_INPUT_ARGUMENTS.penalty;
@@ -87,11 +90,9 @@ void main1()
     uint32_t addr_input;
     uint32_t addr_ref;
     uint32_t cache_input_offset;
-    print_debug(nblocks,0);
 
     for (uint32_t bl = 0; bl < nblocks; bl++)
     {
-      print_debug(bl,0);
 
       // Top-left computation
       for (uint32_t blk = 0; blk <= REP; blk++)
@@ -129,7 +130,7 @@ void main1()
                          addr_input);
           if (r != 0)
           {
-            print_debug(r, 0);
+
             fault_notif();
           }
           addr_input += ((BL + 2) * sizeof(int32_t));
@@ -142,7 +143,7 @@ void main1()
                            (2) * sizeof(int32_t), addr_input);
             if (r != 0)
             {
-              print_debug(r, 0);
+
               fault_notif();
             }
             cache_input_offset += (BL_IN + 2);
@@ -162,7 +163,7 @@ void main1()
                            (BL_IN) * sizeof(int32_t), addr_ref);
             if (r != 0)
             {
-              print_debug(r, 0);
+
               fault_notif();
             }
             cache_input_offset += BL_IN;
@@ -197,7 +198,7 @@ void main1()
                             (BL_IN + 2) * sizeof(int32_t), addr_input);
             if (r != 0)
             {
-              print_debug(r, 0);
+
               fault_notif();
             }
             cache_input_offset += (BL_IN + 2);
@@ -206,14 +207,15 @@ void main1()
         }
 
         //   barrier_wait(&my_barrier); //!
-        wait_barrier(&my_barrier);
+        print_debug(tasklet_id, 1);
+        wait_barrier(&my_barrier); //!
+        print_debug(tasklet_id, 2);
       }
-     
 
       // Bottom-right computation
       for (uint32_t blk = 2; blk <= REP; blk++)
       {
-        
+
         // Partition chunks/subblocks of the diagonal to tasklets
         chunks = (REP - blk + 1) / NR_FTHREAD;
         mod = (REP - blk + 1) % NR_FTHREAD;
@@ -246,7 +248,7 @@ void main1()
                          addr_input);
           if (r != 0)
           {
-            print_debug(r, 0);
+
             fault_notif();
           }
           addr_input += ((BL + 2) * sizeof(int32_t));
@@ -259,7 +261,7 @@ void main1()
                            (2) * sizeof(int32_t), addr_input);
             if (r != 0)
             {
-              print_debug(r, 0);
+
               fault_notif();
             }
             cache_input_offset += (BL_IN + 2);
@@ -279,7 +281,7 @@ void main1()
                            (BL_IN) * sizeof(int32_t), addr_ref);
             if (r != 0)
             {
-              print_debug(r, 0);
+
               fault_notif();
             }
             cache_input_offset += BL_IN;
@@ -314,7 +316,7 @@ void main1()
                             (BL_IN + 2) * sizeof(int32_t), addr_input);
             if (r != 0)
             {
-              print_debug(r, 0);
+
               fault_notif();
             }
             cache_input_offset += (BL_IN + 2);
@@ -323,7 +325,9 @@ void main1()
         }
 
         //   barrier_wait(&my_barrier); //!
-        wait_barrier(&my_barrier);
+        print_debug(tasklet_id, 1);
+        wait_barrier(&my_barrier); //!
+        print_debug(tasklet_id, 2);
       }
 
       mram_base_addr_input_itemsets += ((BL + 1) * (BL + 2) * sizeof(int32_t));

@@ -64,14 +64,13 @@ namespace upmem_sim::simulator::faho::def
     }
     void BFS::check(int pid)
     {
+        int state = 1;
         for (uint32_t nodeIdx = 0; nodeIdx < numNodes; ++nodeIdx)
         {
             if (nodeLevel[nodeIdx] != nodeLevelReference[nodeIdx])
             {
-                PRINT_ERROR(
-                    "Mismatch at node %u (CPU result = level %u, DPU result = level %u)",
-                    nodeIdx, nodeLevelReference[nodeIdx], nodeLevel[nodeIdx]);
-                assert(0);
+                std::cout << "Mismatch at node " << nodeIdx << " (CPU result = level " << nodeLevelReference[nodeIdx] << ", DPU result = level " << nodeLevel[nodeIdx] << ")" << std::endl;
+                state = 0;
             }
         }
 
@@ -82,13 +81,24 @@ namespace upmem_sim::simulator::faho::def
         free(currentFrontier);
         free(nextFrontier);
         free(nodeLevelReference);
-        std::cout << "sucess" << std::endl;
-        exit(0);
+        if (state > 0)
+        {
+            std::cout << "sucess" << std::endl;
+             exit(0);
+        }
+        else{
+            assert(0);
+        }
+
+
     }
     void BFS::benchmark_init(std::string bindir, int data_prep)
     {
         bindir_ = bindir;
         uint32_t numDPUs = NR_DPUS;
+         if(numDPUs!=1){
+            std::cout << "not support multiple dpus" << std::endl;
+        }
         def::Event *event;
         cooGraph = readCOOGraph((bindir_ + "loc-gowalla_edges.txt").c_str());
         event = init_NewProcess(1, 1000, NR_DPUS, "BFS.16"); // 只有new和lanuch指定role_id=1
@@ -152,8 +162,6 @@ namespace upmem_sim::simulator::faho::def
                 uint32_t *dpuNeighborIdxs_h = neighborIdxs + dpuNodePtrsOffset;
                 uint32_t dpuNumNeighbors = dpuNodePtrs_h[dpuNumNodes] - dpuNodePtrsOffset;
                 uint32_t *dpuNodeLevel_h = &nodeLevel[dpuStartNodeIdx];
-             
-               
 
                 // Allocate MRAM
                 uint32_t dpuNodePtrs_m =
@@ -183,7 +191,7 @@ namespace upmem_sim::simulator::faho::def
 
                 // copyToDPU(&api, role, (uint8_t *)dpuNodePtrs_h, dpuNodePtrs_m,
                 //           (dpuNumNodes + 1) * sizeof(uint32_t));
-             
+
                 event = init_InodeWrite(role, 1400, dpuNodePtrs_m,
                                         transfer_buf_bytes((uint8_t *)dpuNodePtrs_h, ROUND_UP_TO_MULTIPLE_OF_8((dpuNumNodes + 1) * sizeof(uint32_t))));
                 events_.push_back(event);
@@ -270,7 +278,6 @@ namespace upmem_sim::simulator::faho::def
             if (currentFrontier[i])
             {
                 nextFrontierEmpty = 0;
-                printf("%i empty\n", i);
 
                 break;
             }
@@ -280,7 +287,7 @@ namespace upmem_sim::simulator::faho::def
         {
 
             ++level;
-            std::cout << "in level:" <<level<< std::endl;
+            std::cout << "in level:" << level << std::endl;
             int dpuIdx = 0;
             for (uint32_t dpu_idx = 0; dpu_idx < numDPUs; dpu_idx++)
             {
@@ -296,7 +303,7 @@ namespace upmem_sim::simulator::faho::def
                     event = init_InodeWrite(first_role_id + dpu_idx, 1406,
                                             dpuParams[dpuIdx].dpuNextFrontier_m,
                                             transfer_buf_bytes((uint8_t *)currentFrontier,
-                                                              ROUND_UP_TO_MULTIPLE_OF_8( numNodes / 64 * sizeof(uint64_t))));
+                                                               ROUND_UP_TO_MULTIPLE_OF_8(numNodes / 64 * sizeof(uint64_t))));
                     events_.push_back(event);
                     // Copy new level to DPU
                     dpuParams[dpuIdx].level = level;
@@ -419,17 +426,18 @@ namespace upmem_sim::simulator::faho::def
         uint32_t dpuNumNodes = dpuParams[0].dpuNumNodes;
         if (dpuNumNodes > 0)
         {
-            uint32_t dpuStartNodeIdx = 0 ;
-             event = init_InodeRead(1, 3006,
-                               (uint8_t *)(nodeLevel + dpuStartNodeIdx),
-                               dpuParams[0].dpuNodeLevel_m,
-                                ROUND_UP_TO_MULTIPLE_OF_8(dpuNumNodes * sizeof(float)));
+            uint32_t dpuStartNodeIdx = 0;
+            event = init_InodeRead(1, 3006,
+                                   (uint8_t *)(nodeLevel + dpuStartNodeIdx),
+                                   dpuParams[0].dpuNodeLevel_m,
+                                   ROUND_UP_TO_MULTIPLE_OF_8(dpuNumNodes * sizeof(float)));
             events_.push_back(event);
         }
-        else{
+        else
+        {
             assert(0);
         }
-       
+
         event = init_Check(1);
         events_.push_back(event);
     }

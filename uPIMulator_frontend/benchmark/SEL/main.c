@@ -65,6 +65,7 @@ static unsigned int handshake_sync(unsigned int l_count,
 }
 
 struct barrier b;
+struct barrier a;
 
 // main_kernel1
 void main1()
@@ -96,6 +97,7 @@ void main1()
   // Initialize a local cache to store the MRAM block
   T *cache_A = (T *)(sbrk(BLOCK_SIZE) - BLOCK_SIZE);
   T *cache_B = (T *)(sbrk(BLOCK_SIZE) - BLOCK_SIZE);
+  fthread_id = get_jid();
 
   // Initialize shared variable
   if (fthread_id == NR_FTHREAD - 1)
@@ -115,7 +117,6 @@ void main1()
     r = umram_read(cache_A, BLOCK_SIZE, mram_base_addr_A + byte_index);
     if (r != 0)
     {
-      print_debug(r, 0);
       fault_notif();
     }
 
@@ -130,7 +131,7 @@ void main1()
     // Barrier
     // wait_barrier(&b);
     print_debug(fthread_id, 1);
-    active_wait_barrier(&b);
+    active_wait_barrier(&a);
     print_debug(fthread_id, 2);
 
     // Write cache to current MRAM block
@@ -140,13 +141,12 @@ void main1()
 
     if (r != 0)
     {
-      print_debug(r, 0);
       fault_notif();
     }
 
     // wait_barrier(&b);
     print_debug(fthread_id, 1);
-    active_wait_barrier(&b);
+    active_wait_barrier(&a);
     print_debug(fthread_id, 2);
 
     // Total count in this DPU
@@ -158,8 +158,9 @@ void main1()
     i++;
   }
   print_debug(fthread_id, 1);
-  wait_barrier(&b);
-  print_debug(fthread_id, 2);
+    wait_barrier(&b);
+    print_debug(fthread_id, 2);
+ 
 
   if (fthread_id == 0)
   {
@@ -168,7 +169,6 @@ void main1()
 
     if (r != 0)
     {
-      print_debug(r, 0); // 编译代码存在问题,会导致
       fault_notif();
     }
     char ok;
@@ -184,6 +184,7 @@ int main(void)
   sd_host = socket_open(0);
   // umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0);
   init_barrier(&b, NR_FTHREAD);
+  init_barrier(&a, NR_FTHREAD);
   for (int i = 0; i < NR_FTHREAD; i++)
     init_handshake(&handshakes[i]);
   // init handckecks

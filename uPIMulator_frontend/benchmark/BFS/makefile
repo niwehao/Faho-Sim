@@ -1,5 +1,5 @@
 LIB := dpu/
-NR_FTHREAD ?= 1
+NR_FTHREAD ?= 16
 
 TYPE ?= INT32
 # 目标汇编文件定义

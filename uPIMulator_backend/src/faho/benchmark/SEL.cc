@@ -151,6 +151,7 @@ namespace upmem_sim::simulator::faho::def
         free(results_scan);
         if (status)
         {
+            std::cout << "sucess" << std::endl;
             exit(0);
             return;
         }
@@ -166,6 +167,9 @@ namespace upmem_sim::simulator::faho::def
         bindir_ = bindir;
         p_input_size=data_prep;
         unsigned nb_role = NR_DPUS, nr_of_dpus = NR_DPUS;
+         if(nr_of_dpus!=1){
+            std::cout << "not support multiple dpus" << std::endl;
+        }
         int first_role = 1;
 
         input_size =

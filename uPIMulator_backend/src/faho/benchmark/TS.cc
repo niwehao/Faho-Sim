@@ -87,9 +87,9 @@ static void streamp(DTYPE *tSeries, DTYPE *AMean, DTYPE *ASigma,
     }
     // //打印 ASigma
     // std::cout << "ASigma[" << subseq << "] = " << ASigma[subseq] << std::endl;
- 
+
     distance =
-        2 * (queryLength - (dotprod - queryLength * AMean[subseq] * queryMean) /(ASigma[subseq] * queryStdDeviation));
+        2 * (queryLength - (dotprod - queryLength * AMean[subseq] * queryMean) / (ASigma[subseq] * queryStdDeviation));
 
     if (distance < minHost)
     {
@@ -172,14 +172,13 @@ namespace upmem_sim::simulator::faho::def
   void TS::check(int pid)
   {
     int status = 0;
-    
 
     for (uint32_t i = 0; i < NR_DPUS; i++)
     {
       for (unsigned int each_tasklet = 0; each_tasklet < NR_FTHREAD;
            each_tasklet++)
       {
-        if (results_retrieve[i][each_tasklet].minValue < result.minValue )
+        if (results_retrieve[i][each_tasklet].minValue < result.minValue)
         {
           result.minValue = results_retrieve[i][each_tasklet].minValue;
           result.minIndex = (DTYPE)results_retrieve[i][each_tasklet].minIndex +
@@ -194,6 +193,7 @@ namespace upmem_sim::simulator::faho::def
 
     if (status)
     {
+      std::cout << "sucess" << std::endl;
       exit(0);
       return;
     }
@@ -206,7 +206,10 @@ namespace upmem_sim::simulator::faho::def
   {
     bindir_ = bindir;
     ts_size = data_prep;
-
+    if (nr_of_dpus != 1)
+    {
+      std::cout << "not support multiple dpus" << std::endl;
+    }
     // Size adjustment
     if (ts_size % (nr_of_dpus * NR_FTHREAD * query_length))
       ts_size = ts_size + (nr_of_dpus * NR_FTHREAD * query_length -

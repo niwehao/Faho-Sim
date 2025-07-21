@@ -111,5 +111,6 @@ int umram_write(void *buf, unsigned int size, unsigned int offset) {
   return syscall((unsigned int)buf, (unsigned int)size, (unsigned int)offset, 0,
                  23);
 }
-
+extern void fault_notif();
+extern void print_debug(int value,int align);
 #endif

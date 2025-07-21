@@ -1,5 +1,5 @@
 LIB := dpu/
-NR_FTHREAD ?= 4
+NR_FTHREAD ?= 16
 BL ?= 11
 TYPE ?= INT64
 ENERGY ?= 0

@@ -266,9 +266,13 @@ int socket_read(unsigned int sd, unsigned int _buf, unsigned int len) {
 
   while (((si.rw >= si.rr) && ((si.rw - si.rr) < len)) ||
          ((si.rw < si.rr) && (SIZE_SOCKET - si.rr + si.rw < len))) {
+    
     sleep(&processs[cur_process_index].sd[sd], NULL, mutex_sockets);
     if (inode_operation(inode, &si, sizeof(si), 0, INODE_READ) != 0)
       halt();
+    // print_debug(si.rw,4);
+    // print_debug(si.rr,5);
+    // print_debug(len,6);
   }
 
   uint32_t size = ((si.rr + len) / 8 + 1) * 8; // the begin of te=he

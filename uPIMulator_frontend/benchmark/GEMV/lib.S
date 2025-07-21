@@ -13,3 +13,17 @@ syscall:                                // @syscall
 	// inline asm
 	move r0, 0
 	jump r23
+.section	.text.fault_notif,"ax",@progbits
+	.globl	fault_notif                         // -- Begin function syscall
+	.type	fault_notif,@function
+fault_notif:                                // @syscall
+// %bb.0:
+	fault 1
+.section	.text.print_debug,"ax",@progbits
+	.globl	print_debug                         // -- Begin function syscall
+	.type	print_debug,@function
+print_debug:                                // @syscall
+// %bb.0:
+	add r1, r1, 8
+	time_cfg r0,r1
+	jump r23

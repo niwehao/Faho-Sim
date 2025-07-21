@@ -159,6 +159,9 @@ int sbrk(int n) {
   ret = processs[cur_process_index].prg.size_data+WRAM_OFFSET;//因为有偏移
   
 err:
+  if(ret<0){
+    fault_notif();
+  }
   mutex_unlock(mutex_sbrk);
   return ret;
 }
@@ -402,13 +405,12 @@ int scheduler(void) {
           cur_pid) { // if ready load anyway the process (avoid the case that
                      // a process finish and diriectly a new one takes it
                      // place in process tab)
-
-        //if (processs[loaded_idx].pid == pid_loaded) {
+        if (processs[loaded_idx].pid == pid_loaded) {
           print_debug(0,0);
-          save_wram_process(loaded_idx);
+          save_wram_process(loaded_idx);//潜在的bug,如果分配的内存大于data
           print_debug(1,0);
           // mram_write(jobs, job_mram.j[prc_idx], sizeof(jobs));
-        //}
+        }
 
         load_prg_memory(idx);
         loaded_idx = idx;

@@ -34,6 +34,7 @@ int sd_host;
 struct barrier my_barrier;
 int main(void)
 {
+  print_debug(7, 0);
   should_break = 0;
   init_barrier(&my_barrier, NR_FTHREAD);
   sd_host = socket_open(0);
@@ -53,7 +54,6 @@ int main(void)
 // main
 void main1()
 {
-  wait_barrier(&my_barrier);
   int r;
 
   // Inititalize a local cache to store the MRAM block
@@ -65,24 +65,25 @@ void main1()
   char new_processing;
   for (;;)
   {
-    wait_barrier(&my_barrier);
     if (tasklet_id == 0)
     {
       char ok = 1;
       r = socket_write(sd_host, &ok, 1);
       if (r != 0)
       {
-        print_debug(r, 0);
+
         fault_notif();
       }
       r = socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
       if (r != 0)
       {
-        print_debug(r, 0);
+
         fault_notif();
       }
     }
-    wait_barrier(&my_barrier);
+    print_debug(tasklet_id, 1);
+    wait_barrier(&my_barrier); //!
+    print_debug(tasklet_id, 2);
 
     int32_t n_size = DPU_INPUT_ARGUMENTS.n_size;
     int32_t n_size_pad = DPU_INPUT_ARGUMENTS.n_size_pad;
@@ -137,7 +138,9 @@ void main1()
       uint32_t mram_temp_addr_B = mram_base_addr_B;
       if (lay)
       {
-        wait_barrier(&my_barrier);
+        // print_debug(tasklet_id, 1);
+        // wait_barrier(&my_barrier); //!
+        // print_debug(tasklet_id, 2);
         if (tasklet_id == 0)
         {
           should_break = 0;
@@ -146,7 +149,6 @@ void main1()
           r = socket_write(sd_host, &ok, 1);
           if (r != 0)
           {
-            print_debug(r, 0);
             fault_notif();
           }
 
@@ -154,18 +156,17 @@ void main1()
                           1); // wait to start 2
           if (r != 0)
           {
-            print_debug(r, 0);
+
             fault_notif();
           }
-          print_debug(new_processing, 0);
           if (new_processing)
           {
             should_break = 1;
-            wait_barrier(&my_barrier);
-            break;
           }
         }
-        wait_barrier(&my_barrier);
+        print_debug(tasklet_id, 1);
+        wait_barrier(&my_barrier); //!
+        print_debug(tasklet_id, 2);
         if (should_break)
           break;
       }
@@ -196,13 +197,13 @@ void main1()
             r = umram_read(cache_A, BLOCK_SIZE, mram_temp_addr_A);
             if (r != 0)
             {
-              print_debug(r, 0);
+
               fault_notif();
             }
             r = umram_read(cache_B, BLOCK_SIZE, mram_temp_addr_B);
             if (r != 0)
             {
-              print_debug(r, 0);
+
               fault_notif();
             }
 
@@ -221,7 +222,7 @@ void main1()
               r = umram_read(cache_A_aux, 8, mram_temp_addr_A + BLOCK_SIZE);
               if (r != 0)
               {
-                print_debug(r, 0);
+
                 fault_notif();
               }
 
@@ -242,7 +243,7 @@ void main1()
           r = umram_read(cache_A, BLOCK_SIZE, mram_temp_addr_A);
           if (r != 0)
           {
-            print_debug(r, 0);
+
             fault_notif();
           }
 
@@ -260,7 +261,7 @@ void main1()
             r = umram_read(cache_A_aux, 8, mram_temp_addr_A + BLOCK_SIZE);
             if (r != 0)
             {
-              print_debug(r, 0);
+
               fault_notif();
             }
 
@@ -272,7 +273,7 @@ void main1()
           r = (umram_read(cache_B, BLOCK_SIZE, mram_temp_addr_B));
           if (r != 0)
           {
-            print_debug(r, 0);
+
             fault_notif();
           }
 
@@ -316,7 +317,7 @@ void main1()
         r = (umram_write(cache_C, 8, mram_base_addr_C));
         if (r != 0)
         {
-          print_debug(r, 0);
+
           fault_notif();
         }
 
@@ -324,7 +325,9 @@ void main1()
         mram_base_addr_C += 2 * sizeof(T);
       }
     }
-    wait_barrier(&my_barrier);
+    print_debug(tasklet_id, 1);
+    wait_barrier(&my_barrier); //!
+    print_debug(tasklet_id, 2);
   }
   return;
 }

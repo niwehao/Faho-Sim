@@ -12,7 +12,7 @@ typedef struct {
 } dpu_arguments_t;
 
 #ifndef BL
-#define BL 16
+#define BL 1024
 #endif
 
 // Data type

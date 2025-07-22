@@ -85,7 +85,7 @@ namespace upmem_sim::simulator::reg
       if (gp_reg->index() == 22)
       {
         bool user_flag=(value< util::ConfigLoader::wram_offset() + util::ConfigLoader::wram_kernel_offset());
-        bool kernel_flag=(value >= sp_reg_->thread_id * 512 + 136123 && value < sp_reg_->thread_id * 512 + 136123 + 512);
+        bool kernel_flag=(value >= sp_reg_->thread_id * 512 + 136123 && value < sp_reg_->thread_id * 512 + 136123 + 512);//136123 is sys_use_end_0 of kernel
         //std::cout << "write gp_reg 22 value: " << value << std::endl;  
         assert(user_flag || kernel_flag); // 22号寄存器只能是用户态或系统态的栈地址   
 
@@ -144,6 +144,7 @@ namespace upmem_sim::simulator::reg
       }
       else
       { // 系统态debug
+        return;
    
  
         state = 0;

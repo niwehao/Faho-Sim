@@ -19,9 +19,14 @@ dpu_arguments_t DPU_INPUT_ARGUMENTS;
 // GEMV
 static void gemv(T *bufferC, T *bufferA, T *bufferB, int pos)
 {
+  unsigned int tasklet_id = get_jid();
   for (unsigned int i = 0; i < BLOCK_SIZE / sizeof(T); i++)
   {
+
     bufferC[pos] += bufferA[i] * bufferB[i];
+
+    //print_debug(bufferC[pos], 3);
+            
   }
   return;
 }
@@ -131,7 +136,8 @@ void main1()
       uint32_t mram_base_addr_C =
           (uint32_t)(0 + max_rows * n_size_pad * sizeof(T) +
                      n_size_pad * sizeof(T) + start_row * sizeof(T));
-      // debug_int(max_rows);
+      //print_debug(max_rows,5);
+      // print_debug(n_size_pad,5);
       // debug_int(mram_base_addr_C);
 
       uint32_t mram_temp_addr_A = mram_base_addr_A;
@@ -162,6 +168,10 @@ void main1()
           if (new_processing)
           {
             should_break = 1;
+            print_debug(tasklet_id, 1);
+            wait_barrier(&my_barrier); //!
+            print_debug(tasklet_id, 2);
+            break;
           }
         }
         print_debug(tasklet_id, 1);
@@ -188,6 +198,7 @@ void main1()
           for (n = 0; n < (int32_t)(n_size - (BLOCK_SIZE / sizeof(T)));
                n += (BLOCK_SIZE / sizeof(T)))
           {
+            //print_debug(101,7);
 
             //   mram_read((__mram_ptr void const *)(mram_temp_addr_A), cache_A,
             // BLOCK_SIZE);
@@ -214,6 +225,7 @@ void main1()
                    off++)
               {
                 cache_A[off] = cache_A[off + 1];
+
               }
 
               // mram_read((__mram_ptr void const *)(mram_temp_addr_A +
@@ -286,6 +298,7 @@ void main1()
               break;
             }
             cache_C[pos] += cache_A[j] * cache_B[j];
+            
           }
 
           mram_temp_addr_A +=
@@ -313,6 +326,10 @@ void main1()
         //   // debug_int(cache_C[0]);
         //   // debug_int(mram_temp_addr_B);
         //   // debug_int(cache_B[0]);
+        // }
+        // if(i==0){
+        //    print_debug(cache_C[0],3);
+        //   print_debug(mram_base_addr_C,4);//max_rows * n_size_pad * sizeof(T) +n_size_pad * sizeof(T)
         // }
         r = (umram_write(cache_C, 8, mram_base_addr_C));
         if (r != 0)

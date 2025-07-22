@@ -93,10 +93,10 @@ def compile_by_toolchain(benchmark: str, num_tasklets: int) -> None:#简单编�
     # 完成后返回原来的目录
         os.chdir(current_dir)
    
-def compile(benchmark: str, num_tasklets: int) -> None:#简单编译
-    Compiler.clean()
-    Compiler.compile_sdk(num_tasklets)
-    Compiler.compile_benchmark(benchmark, num_tasklets)
+# def compile(benchmark: str, num_tasklets: int) -> None:#简单编译
+#     Compiler.clean()
+#     Compiler.compile_sdk(num_tasklets)
+#     Compiler.compile_benchmark(benchmark, num_tasklets)
 
 def link(benchmark: str, num_dpus: int,num_tasklets: int, data_prep_param: list) -> None:#链接方式是O2优化
     #如果存在文件save_lib.pkl,则加载类
@@ -121,14 +121,15 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     data_prep_param = [int(elem) for elem in args.data_prep_param.split(',')]
-    if args.mode == "compile":
-        compile(args.benchmark, args.num_tasklets)
+    if args.mode == "compile_sdk":
+        compile_sdk(args.num_tasklets)
 
-    elif args.mode == "link":
+    elif args.mode == "all":
+        compile_sdk(args.num_tasklets)
+        compile_by_toolchain(args.benchmark, args.num_tasklets)
         link(args.benchmark, args.num_dpus, args.num_tasklets, data_prep_param)
 
     elif args.mode == "compile_by_toolchain":
-        #compile_sdk(args.num_tasklets)
         compile_by_toolchain(args.benchmark, args.num_tasklets)
         link(args.benchmark, args.num_dpus, args.num_tasklets, data_prep_param)
     else:

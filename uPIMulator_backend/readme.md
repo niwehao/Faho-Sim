@@ -2,3 +2,5 @@
 
 tmux a -t BFS
 tmux new -s xxx
+cmake -B build -S .
+cmake --build build -j $(nproc)

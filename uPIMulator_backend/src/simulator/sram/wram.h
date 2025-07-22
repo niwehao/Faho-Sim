@@ -34,66 +34,66 @@ class WRAM {
   void cycle() = delete;
 
  protected:
-  std::string wr_find(int value){
-     timetable *timetable_p = nullptr;
-       int found = 0;
-      if (value < util::ConfigLoader::wram_offset() + util::ConfigLoader::wram_kernel_offset())
-      {//用户态debug
-        for (auto &timetable_n : time_table_helloworld)
-        {
+  // std::string wr_find(int value){
+  //    timetable *timetable_p = nullptr;
+  //      int found = 0;
+  //     if (value < util::ConfigLoader::wram_offset() + util::ConfigLoader::wram_kernel_offset())
+  //     {//用户态debug
+  //       for (auto &timetable_n : time_table_helloworld)
+  //       {
 
-          if (timetable_n->time == value)
-          {
+  //         if (timetable_n->time == value)
+  //         {
 
-            return timetable_n->name;
-            found = 1;
-            break;
-          }
-          else if (timetable_n->time > value)
-          {
-            assert(timetable_p != nullptr);
+  //           return timetable_n->name;
+  //           found = 1;
+  //           break;
+  //         }
+  //         else if (timetable_n->time > value)
+  //         {
+  //           assert(timetable_p != nullptr);
             
-            return timetable_p->name + "+" + std::to_string((value - timetable_p->time) );
+  //           return timetable_p->name + "+" + std::to_string((value - timetable_p->time) );
             
-            found = 1;
-            break;
-          }
-          timetable_p = timetable_n;
-        }
-        if(!found) {
-          //找到timetable_最后一项
-          return timetable_p->name + "+" + std::to_string((value - timetable_p->time) );
-        }
-      }
-      else
-      {//系统态
-        for (auto &timetable_n : time_table_)
-        {
-          if (timetable_n->time == value)
-          {
-            return timetable_n->name;
-            // if(timetable_n->name == ".LBB40_2") {
-            //   std::cout << "*** .LBB40_2" << std::endl;
-            //   return;
-            // }
-            found = 1;
-            break;
-          }
-          else if (timetable_n->time > value)
-          {
-            assert(timetable_p != nullptr);
-            found=1;
-            return timetable_p->name + "+" + std::to_string((value - timetable_p->time) );
-            break;
-          }
-          timetable_p = timetable_n;
-        }
-      }
-      if(!found) {
-        //找到timetable_最后一项
-        return timetable_p->name + "+" + std::to_string((value - timetable_p->time) );
-      } 
-  }
+  //           found = 1;
+  //           break;
+  //         }
+  //         timetable_p = timetable_n;
+  //       }
+  //       if(!found) {
+  //         //找到timetable_最后一项
+  //         return timetable_p->name + "+" + std::to_string((value - timetable_p->time) );
+  //       }
+  //     }
+  //     else
+  //     {//系统态
+  //       for (auto &timetable_n : time_table_)
+  //       {
+  //         if (timetable_n->time == value)
+  //         {
+  //           return timetable_n->name;
+  //           // if(timetable_n->name == ".LBB40_2") {
+  //           //   std::cout << "*** .LBB40_2" << std::endl;
+  //           //   return;
+  //           // }
+  //           found = 1;
+  //           break;
+  //         }
+  //         else if (timetable_n->time > value)
+  //         {
+  //           assert(timetable_p != nullptr);
+  //           found=1;
+  //           return timetable_p->name + "+" + std::to_string((value - timetable_p->time) );
+  //           break;
+  //         }
+  //         timetable_p = timetable_n;
+  //       }
+  //     }
+  //     if(!found) {
+  //       //找到timetable_最后一项
+  //       return timetable_p->name + "+" + std::to_string((value - timetable_p->time) );
+  //     } 
+  // }
   static int num_data_words() {
     return static_cast<int>(util::ConfigLoader::wram_size() /
                             abi::word::DataWord().size());
@@ -101,8 +101,8 @@ class WRAM {
   int index(Address address);
 
  private:
-  std::vector<timetable *> time_table_; // 时间表
-  std::vector<timetable *> time_table_helloworld;
+  // std::vector<timetable *> time_table_; // 时间表
+  // std::vector<timetable *> time_table_helloworld;
   abi::word::DataAddressWord *address_;
   Address size_;
   std::vector<abi::word::DataWord *> cells_;

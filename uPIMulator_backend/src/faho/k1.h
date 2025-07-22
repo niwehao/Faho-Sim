@@ -18,7 +18,7 @@ namespace upmem_sim::simulator::faho::k1
         ~K1();
         void init();
         void cycle();
-        int get_inode();
+
     
         void init_mram();
         void read_process(def::DpuManager *dpu_manager);

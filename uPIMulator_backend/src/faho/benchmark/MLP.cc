@@ -31,7 +31,8 @@ static struct dpu_info_t *dpu_info;
 static void init_data(T **A, T *B, T *B_host, unsigned int m_size,
                       unsigned int n_size)
 {
-    for (unsigned int l = 0; l < NUM_LAYERS; l++)
+    for (unsigned int l = 0; l < NUM_LAYERS; l++){
+
         for (unsigned int i = 0; i < m_size * n_size; i++)
         {
             if (i % 100 < 98)
@@ -42,7 +43,11 @@ static void init_data(T **A, T *B, T *B_host, unsigned int m_size,
             {
                 A[l][i] = (l + i) % 2;
             }
+           
+
         }
+
+    }
     for (unsigned int i = 0; i < n_size; i++)
     {
         if (i % 50 < 48)
@@ -64,6 +69,7 @@ static void mlp_host(T *C, T **A, T *B, unsigned int m_size,
 
     for (unsigned int nl = 0; nl < NUM_LAYERS; nl++)
     {
+        //std::cout<<"layer"<<(nl+1)<<std::endl;
         for (unsigned int m = 0; m < m_size; m++)
         {
             C[m] = 0;
@@ -80,7 +86,13 @@ static void mlp_host(T *C, T **A, T *B, unsigned int m_size,
         {
             B[n] = C[n];
         }
+        // for (unsigned int m = 0; m < m_size; m++)
+        // {
+        //     std::cout<<C[m]<<std::endl;
+        // }
     }
+    
+       
 }
 
 namespace upmem_sim::simulator::faho::def
@@ -219,6 +231,7 @@ namespace upmem_sim::simulator::faho::def
             input_args[i].n_size = n_size;
             input_args[i].n_size_pad = n_size_pad;
             input_args[i].nr_rows = rows_per_dpu;
+           
         }
         A = (T **)malloc(NUM_LAYERS * sizeof(T *));
         int l;
@@ -236,6 +249,7 @@ namespace upmem_sim::simulator::faho::def
         // Compute output on CPU (performance comparison and verification purposes)
 
         mlp_host(C, A, B_host, m_size, n_size);
+       
 
         event = init_NewProcess(first_role, 1000, NR_DPUS, "MLP.16");
         events_.push_back(event);
@@ -264,7 +278,8 @@ namespace upmem_sim::simulator::faho::def
             // write_inode(&api, first_role + i,
             //             A[0] + dpu_info[i].prev_rows_dpu * n_size,
             //             max_rows_per_dpu * n_size_pad * sizeof(T), 0);
-            
+            assert((A[0] + dpu_info[i].prev_rows_dpu * n_size_pad)==A[0]);
+           
             event = init_InodeWrite(first_role + i, 1000,
                                     0,
                                     transfer_buf_bytes(A[0] + dpu_info[i].prev_rows_dpu * n_size_pad, max_rows_per_dpu * n_size_pad * sizeof(T)));
@@ -281,6 +296,7 @@ namespace upmem_sim::simulator::faho::def
         // DPU_ASSERT(dpu_launch(dpu_set, DPU_SYNCHRONOUS));
         for (i = 0; i < nr_of_dpus; i++)
         {
+            input_args[i].max_rows = max_rows_per_dpu;
             event = init_WriteSockets(first_role + i, 1000, sizeof(dpu_arguments_t),
                                       transfer_buf_bytes(input_args + i, sizeof(dpu_arguments_t)));
             events_.push_back(event); // send and launch the process
@@ -291,7 +307,7 @@ namespace upmem_sim::simulator::faho::def
             event = init_ReadSocket(first_role + i);
             events_.push_back(event); // send and launch the process
         }
-        for (; i < nr_of_dpus; i++)
+        for (i=0; i < nr_of_dpus; i++)
         {
             // DPU_ASSERT(dpu_prepare_xfer(dpu, C_dpu + i * max_rows_per_dpu));
             // ari[i] = ask_read_inode(
@@ -317,11 +333,13 @@ namespace upmem_sim::simulator::faho::def
         int first_role = 1;
         uint32_t nr_of_dpus = NR_DPUS; // Number of DPUs to use
         int i = 0;
+        //std::cout<<"layer"<<excution<<std::endl;
         for (n = 0; n < nr_of_dpus; n++)
         {
             for (j = 0; j < dpu_info[n].rows_per_dpu; j++)
             {
                 B_tmp[i] = C_dpu[n * max_rows_per_dpu + j];
+                //std::cout<< B_tmp[i]<<std::endl;
                 i++;
             }
         }

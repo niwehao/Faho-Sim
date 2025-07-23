@@ -4,28 +4,37 @@
 #define divceil(n, m) (((n) - 1) / (m) + 1)
 #define roundup(n, m) ((n / m) * m + m)
 #define NR_DPUS 1
+ typedef struct
+    {
+        uint32_t size;
+        uint32_t transfer_size;
+        
+    } dpu_arguments_t;
 static void read_input(T *A, T *B, unsigned int nr_elements)
 {
     srand(time(NULL));
-    printf("nr_elements\t%u\t", nr_elements);
     for (unsigned int i = 0; i < nr_elements; i++)
     {
         A[i] = (T)(rand());
         B[i] = (T)(rand());
     }
 }
-static void vector_addition_host(T *C, T *A, T *B, unsigned int nr_elements)
-{
-    for (unsigned int i = 0; i < nr_elements; i++)
-    {
-        C[i] = A[i] + B[i];
-    }
-}
 static T *A;
 static T *B;
 static T *C;
 static T *C2;
-const unsigned int input_size = 1024;
+static void vector_addition_host(T *C, T *A, T *B, unsigned int nr_elements)
+{
+    for (unsigned int i = 0; i < nr_elements; i++)
+    {
+
+        
+        C[i] = A[i] + B[i];
+       
+    }
+}
+
+static unsigned int input_size;
 namespace upmem_sim::simulator::faho::def
 {
     def::Event *VA::benchmark(int time_)
@@ -56,21 +65,27 @@ namespace upmem_sim::simulator::faho::def
  
         for (int i = 0; i < input_size; i++)
         {
+            //std::cout<<C[i]<<" "<<C2[i]<<" "<<A[i]<<" "<<B[i]<<std::endl;
             if (C[i] != C2[i])
             {
-                printf("i =%i  %i %i %i %i\n", i, C[i], C2[i], A[i], B[i]);
+                
+                //std::cout<<C[i+1]<<" "<<C2[i+1]<<" "<<A[i+1]<<" "<<B[i+1]<<std::endl;
                 assert(0);
             }
         }
+        std::cout << "sucess" << std::endl;
+        exit(0);
         return;
-        
-        assert(0);
     }
-    void VA::benchmark_init(std::string bindir)
+    void VA::benchmark_init(std::string bindir,int data_prep)
     {
         bindir_ = bindir;
+        input_size=data_prep;
 
         uint32_t nr_of_dpus = NR_DPUS; // Number of DPUs to use
+        if(nr_of_dpus!=1){
+            std::cout << "not support multiple dpus" << std::endl;
+        }
 
         const unsigned int input_size_8bytes =
             ((input_size * sizeof(T)) % 8) != 0

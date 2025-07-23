@@ -14,13 +14,6 @@ boot_me:      ///beginin of kernel code
 	.globl	stop_me                // -- Begin function stop_me
 	.type	stop_me,@function
 stop_me:  //save the flow context in the stack and save the stack offset in r0 and stop. resume function will restart after this function
-	sd r22, 0, d14
-	sd r22, 8, d16
-	sd r22, 16, d18
-	sd r22, 24, d20
-	sd r22, 32, d22
-	sw r0, 0, r22  
-	move r4, 0
 	stop
 	jump r23
 .section	.text.swap_context,"ax",@progbits
@@ -98,6 +91,21 @@ wake_up_one_start:
 	add r1, r1, 1
 	jump wake_up_one_start
 wake_up_one_end:
+	jump r23
+	.section	.text.print_debug,"ax",@progbits
+.section	.text.fault_notif,"ax",@progbits
+	.globl	fault_notif                         // -- Begin function syscall
+	.type	fault_notif,@function
+fault_notif:                                // @syscall
+// %bb.0:
+	fault 1
+.section	.text.print_debug,"ax",@progbits
+	.globl	print_debug                         // -- Begin function syscall
+	.type	print_debug,@function
+print_debug:                                // @syscall
+// %bb.0:
+	add r1, r1, 89
+	time_cfg r0,r1
 	jump r23
 .section	.text.alloc_mram,"ax",@progbits
 	.globl alloc_mram

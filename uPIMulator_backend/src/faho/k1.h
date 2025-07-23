@@ -14,11 +14,10 @@ namespace upmem_sim::simulator::faho::k1
     class K1
     {
     public:
-        K1(std::string bindir, std::string benchmark, int num_tasklets,rank::Rank *rank_);
+       K1(std::string bindir, std::string benchmark, std::string app, int num_tasklets,rank::Rank *rank_,int data_prep);
         ~K1();
         void init();
         void cycle();
-        int get_inode();
     
         void init_mram();
         void read_process(def::DpuManager *dpu_manager);
@@ -42,7 +41,6 @@ namespace upmem_sim::simulator::faho::k1
         void parse_end_process(def::DpuManager *dpu_manager) ;
         void check_atomic(encoder::ByteStream *buf);
         void socket_send_to_main(uint32_t app_id, uint32_t pid, void *buf,uint32_t size);
-        void read_jobs(def::DpuManager *dpu_manager);
         struct def::socket_connection *find_free_socket_connection_or_alloc();
         int check_dpu_stop();
         void api_retrieve();

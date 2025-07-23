@@ -27,7 +27,7 @@ DPU::DPU(DPUID dpu_id, util::ArgumentParser *argument_parser)
 
   threads_.resize(num_threads);
   for (ThreadID id = 0; id < num_threads; id++) {
-    threads_[id] = new Thread(id);
+    threads_[id] = new Thread(id,argument_parser->get_string_parameter("application"),argument_parser->get_string_parameter("bindir"));
   }
 
   scheduler_ = new RevolverScheduler(argument_parser, threads_);

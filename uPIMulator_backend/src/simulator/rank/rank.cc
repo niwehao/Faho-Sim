@@ -81,7 +81,7 @@ namespace upmem_sim::simulator::rank
     {
       dpu::Thread *thread_0 = dpu->scheduler()->threads()[0];
       Address syscall = util::ConfigLoader::iram_offset();
-      thread_0->reg_file()->write_pc_reg(syscall);
+      thread_0->reg_file()->write_pc_reg(thread_0->reg_file()->read_gp_reg(23));
 
       if (thread_0->state() == dpu::Thread::SLEEP)
       {

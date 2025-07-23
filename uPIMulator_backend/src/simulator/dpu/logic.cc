@@ -121,8 +121,8 @@ void Logic::
       instruction->set_thread(thread);//设置指令的线程
       pipeline_->push(instruction);//将指令加入流水线
       //std::cout << "{" << dpu_id_ << "}";
-      std::string name=converter::InstructionConverter::to_string(instruction);
-      std::cout << "{" << dpu_id_ << "}"<< name << std::endl;
+      // std::string name=converter::InstructionConverter::to_string(instruction);
+      // std::cout << "{" << dpu_id_ << "}"<< name << std::endl;
 
 
       if (instruction->suffix() != abi::instruction::DMA_RRI) {
@@ -254,7 +254,7 @@ void Logic::service_dma() {
     
         // 4. 唤醒被阻塞的线程
 
-    scheduler_->awake(instruction->thread()->id());
+    scheduler_->awake_block(instruction->thread()->id());
     delete dma_command;
     delete instruction;
   }
@@ -4027,13 +4027,47 @@ void Logic::execute_rr(abi::instruction::Instruction *instruction) {
   } else if (op_code == abi::instruction::SATS) {
     result = ALU::sats(ra);
   } else if (op_code == abi::instruction::TIME_CFG) {
-    //int64_t rb = instruction->thread()->reg_file()->read_src_reg(instruction->rb(), abi::word::UNSIGNED);
-    performance_counter_->set_cfg(ra);
-    result=performance_counter_->get_value();
-    instruction->thread()->reg_file()->clear_conditions();
-    instruction->thread()->reg_file()->write_gp_reg(instruction->rc(), result);
-    instruction->thread()->reg_file()->increment_pc_reg();
-    return;
+     if (ra <=88)
+      {
+        int64_t rc = instruction->thread()->reg_file()->read_gp_reg(
+            instruction->rc(), abi::word::SIGNED);
+        performance_counter_->set_cfg(ra);
+        result = performance_counter_->get_value();
+        instruction->thread()->reg_file()->write_gp_reg(instruction->rc(), result);
+      }
+      else
+      {
+        int sign = ra - 89;
+        int64_t rc = instruction->thread()->reg_file()->read_gp_reg(
+            instruction->rc(), abi::word::SIGNED);
+        if (rc <= 7 && sign == 0)
+        {
+          if (rc > break_point_set)
+          {
+            std::cout << "break point " << rc << " happen in cycle:" << performance_counter_->get_true_value() << std::endl;
+            break_point_set = rc;
+          }
+        }
+
+        else if (sign == 1 || sign == 2)
+        {
+          if (sign == 1)
+          {
+            std::cout << "fthread " << rc << " meet barrier" <<performance_counter_->get_true_value()<< std::endl;
+          }
+          else{
+            std::cout << "fthread " << rc << " leave barrier"  <<performance_counter_->get_true_value()<< std::endl;
+          }
+        }
+        else{
+          std::cout << "debug" << sign << " for " <<rc<< std::endl;
+        }
+      }
+
+      instruction->thread()->reg_file()->clear_conditions();
+
+      instruction->thread()->reg_file()->increment_pc_reg();
+      return;
   } else {
     throw std::invalid_argument("");
   }
@@ -5241,7 +5275,6 @@ void Logic::execute_ldma(abi::instruction::Instruction *instruction) {
   Address size = (1 + ALU::and_(imm + ALU::and_(ALU::lsr(ra, 24), 255), 255)) *
                  min_access_granularity;
   instruction->set_ram_flag(wram_address);
-std::cout<<"rb "<<rb<<std::endl;
   dma_->transfer_from_mram_to_wram(wram_address, mram_address, size,
                                    instruction);
 

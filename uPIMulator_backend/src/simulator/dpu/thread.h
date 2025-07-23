@@ -22,10 +22,10 @@ class Thread {
     ZOMBIE       // 僵尸状态
    */
 
-  explicit Thread(ThreadID id)
+  explicit Thread(ThreadID id,std::string benchmark,std::string bindir)
       : id_(id),
         state_(EMBRYO),
-        reg_file_(new reg::RegFile(id_)),
+        reg_file_(new reg::RegFile(id_,benchmark,bindir)),
         issue_cycle_(0) {
     assert(0 <= id and id < upmem_sim::util::ConfigLoader::max_num_tasklets());
     status_tracker_.emplace("WAIT_DATA", 0);//等待数据

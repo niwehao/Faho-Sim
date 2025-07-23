@@ -15,6 +15,8 @@ util::ArgumentParser *init_argument_parser() {
   argument_parser->add_option("verbose", util::ArgumentParser::INT, "0");
 
   argument_parser->add_option("benchmark", util::ArgumentParser::STRING, "TRNS");
+   argument_parser->add_option("application", util::ArgumentParser::STRING, "VA");
+  argument_parser->add_option("data_prep", util::ArgumentParser::INT, "0");
   argument_parser->add_option("num_dpus", util::ArgumentParser::INT, "1");
   argument_parser->add_option("num_tasklets", util::ArgumentParser::INT, "16");//dpu支持线程数量
 

@@ -9,6 +9,7 @@ namespace upmem_sim::simulator::cpu {
 Thread::Thread(util::ArgumentParser *argument_parser)
     : bindir_(argument_parser->get_string_parameter("bindir")),
       benchmark_(argument_parser->get_string_parameter("benchmark")),
+      app_(argument_parser->get_string_parameter("application")),
       num_dpus_(
           static_cast<int>(argument_parser->get_int_parameter("num_dpus"))),
       num_tasklets_(static_cast<int>(

@@ -313,7 +313,7 @@ namespace upmem_sim::simulator::dpu
     MMU *mmu_;
 
 
-    PerformanceCounter *performance_counter_;
+    PerformanceCounter *performance_counter_=nullptr;
     // 每一个dpu只有一个pipline
 
     Pipeline *pipeline_;                  // 流水线
@@ -322,6 +322,7 @@ namespace upmem_sim::simulator::dpu
     OperandCollector *operand_collector_; // 操作收集器
 
     basic::Queue<abi::instruction::Instruction> *wait_instruction_q_;
+     int break_point_set=-1;
 
     util::StatFactory *stat_factory_;
   };

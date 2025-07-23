@@ -24,7 +24,8 @@ struct prg {           // the content of the program of a process
   uint32_t size_text;
   uint32_t off_stack; // where the stack begin (to create the process)
   uint32_t extra_inode;
-  uint32_t page_table_entry;
+
+  uint32_t chained_inode;   //unsed is for 8 bit align
 };
 
 struct socket_descriptor;
@@ -97,14 +98,14 @@ void set_flag(unsigned int flag1);
  *
  * @param buf
  */
-//void printk(char *buf);
+void printk(char *buf);
 
 /**
  * @brief Print i in the DPU log
  *
  * @param i
  */
-//void printk_int(int i);
+void printk_int(int i);
 
 /**
  * @brief Find the index in process tab of the process which has the role id and
@@ -157,7 +158,7 @@ extern void first_swap_context(struct flow_context **old,
  *
  * @param saved
  */
-extern void stop_me(struct flow_context **saved);
+extern void stop_me();
 //extern void resume(struct flow_context *saved);
 
 extern void resume_me(struct flow_context *saved);
@@ -168,9 +169,9 @@ extern void resume_me(struct flow_context *saved);
  * @param ret 
  * @return int  
  */
-
-extern uint32_t alloc_mram();
 int __end_process(int ret);
+extern void print_debug(int value,int align);
+extern void fault_notif();
+extern uint32_t alloc_mram();
 #include "socket.h"
-
 #endif

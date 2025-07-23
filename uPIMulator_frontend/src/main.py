@@ -52,33 +52,34 @@ def compile_by_toolchain(benchmark: str, num_tasklets: int) -> None:#简单编�
         for cmd in commands:
             subprocess.run(cmd, check=True)
         #打开文件asm_path,把文件里的.data字符串全部替换.section	.data,"aw",@progbits
-        if benchmark == "KERNEL":
-            # 读取lib.S文件内容
-            lib_path = os.path.join(path, "lib.S")
-            with open(lib_path, 'r') as file:
-                lib_data = file.read()
-            
-            # 读取目标asm文件
-            with open(asm_path, 'r') as file:
-                asm_lines = file.readlines()
-            
-            # 将lib.S的内容按行分割
-            lib_lines = lib_data.splitlines(keepends=True)
-            
-            insert_position = 2  #line of start (first index is 0)
-            
-            # 确保插入位置不超过文件长度
-            if insert_position > len(asm_lines):
-                insert_position = len(asm_lines)
-            
-            # 插入内容
-            result_lines = (asm_lines[:insert_position] + 
-                        lib_lines + 
-                        asm_lines[insert_position:])
-            
-            # 写回文件
-            with open(asm_path, 'w') as file:
-                file.writelines(result_lines)
+        
+        # 读取lib.S文件内容
+        lib_path = os.path.join(path, "lib.S")
+        with open(lib_path, 'r') as file:
+            lib_data = file.read()
+        
+        # 读取目标asm文件
+        with open(asm_path, 'r') as file:
+            asm_lines = file.readlines()
+        
+        # 将lib.S的内容按行分割
+        lib_lines = lib_data.splitlines(keepends=True)
+        
+        insert_position = 2  #line of start (first index is 0)
+        
+        # 确保插入位置不超过文件长度
+        if insert_position > len(asm_lines):
+            insert_position = len(asm_lines)
+        
+        # 插入内容
+        result_lines = (asm_lines[:insert_position] + 
+                    lib_lines + 
+                    asm_lines[insert_position:])
+        
+        # 写回文件
+        with open(asm_path, 'w') as file:
+            file.writelines(result_lines)
+        if benchmark=="KERNEL":
             with open(asm_path, 'r') as file:
                 data = file.read()
                 data = data.replace('.data', '.section	.data,"aw",@progbits')
@@ -92,10 +93,10 @@ def compile_by_toolchain(benchmark: str, num_tasklets: int) -> None:#简单编�
     # 完成后返回原来的目录
         os.chdir(current_dir)
    
-def compile(benchmark: str, num_tasklets: int) -> None:#简单编译
-    Compiler.clean()
-    Compiler.compile_sdk(num_tasklets)
-    Compiler.compile_benchmark(benchmark, num_tasklets)
+# def compile(benchmark: str, num_tasklets: int) -> None:#简单编译
+#     Compiler.clean()
+#     Compiler.compile_sdk(num_tasklets)
+#     Compiler.compile_benchmark(benchmark, num_tasklets)
 
 def link(benchmark: str, num_dpus: int,num_tasklets: int, data_prep_param: list) -> None:#链接方式是O2优化
     #如果存在文件save_lib.pkl,则加载类
@@ -120,14 +121,15 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     data_prep_param = [int(elem) for elem in args.data_prep_param.split(',')]
-    if args.mode == "compile":
-        compile(args.benchmark, args.num_tasklets)
+    if args.mode == "compile_sdk":
+        compile_sdk(args.num_tasklets)
 
-    elif args.mode == "link":
+    elif args.mode == "all":
+        compile_sdk(args.num_tasklets)
+        compile_by_toolchain(args.benchmark, args.num_tasklets)
         link(args.benchmark, args.num_dpus, args.num_tasklets, data_prep_param)
 
     elif args.mode == "compile_by_toolchain":
-        #compile_sdk(args.num_tasklets)
         compile_by_toolchain(args.benchmark, args.num_tasklets)
         link(args.benchmark, args.num_dpus, args.num_tasklets, data_prep_param)
     else:

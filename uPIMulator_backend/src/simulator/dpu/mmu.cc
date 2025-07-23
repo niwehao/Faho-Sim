@@ -173,6 +173,7 @@ namespace upmem_sim::simulator::dpu
                                 continue;
                             bit_map_ptr[j] |= (1 << k);
                             std::cout<<"alloc inode:"<<inode<<std::endl;
+                            assert(inode>0);
                             return inode;
                         }
                     }

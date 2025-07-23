@@ -31,6 +31,10 @@ class DPU {
   MMU *mmu(){
     return mmu_;
   }
+  uint64_t get_cycle(){
+    return performance_counter_->get_true_value();
+
+  }
 
   util::StatFactory *stat_factory();
 

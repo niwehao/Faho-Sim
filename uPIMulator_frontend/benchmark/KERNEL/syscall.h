@@ -42,6 +42,7 @@ int global __attribute__((section(".data"))) = 0;
 int syscall(unsigned int arg1, unsigned int arg2, unsigned int arg3,
             unsigned int arg4, unsigned int value) {
   (void)arg4;
+  //print_debug(value,0);
   if (value == 0)
     return 0;
   unsigned int time = 0;
@@ -175,19 +176,17 @@ int syscall(unsigned int arg1, unsigned int arg2, unsigned int arg3,
     __end_process(arg1);
 
   if (value == 8) {
-   
-    // printk(beg);
-    // printk((char *)arg1);
-    // printk(end);
+    printk(beg);
+    printk((char *)arg1);
+    printk(end);
     return 0;
   }
 
   if (value == 9) {
-    
-    // printk(beg);
-    // printk_int(arg1);
-    // // printk_int(global);
-    // printk(end);
+    printk(beg);
+    printk_int(arg1);
+    // printk_int(global);
+    printk(end);
     return 0;
     if (value == 24) {
       return try_lock((struct lock *)arg1);

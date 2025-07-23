@@ -12,6 +12,7 @@ class Thread {
 
   std::string benchmark() { return benchmark_; }
   int num_dpus() { return num_dpus_; }
+  std::string app() { return app_; }
   int num_tasklets() { return num_tasklets_; }
 
   Address sys_used_mram_end_pointer() { return sys_used_mram_end_pointer_; }
@@ -30,6 +31,7 @@ class Thread {
  private:
   std::string bindir_;
   std::string benchmark_;
+  std::string app_;
 
   int num_dpus_;
   int num_tasklets_;

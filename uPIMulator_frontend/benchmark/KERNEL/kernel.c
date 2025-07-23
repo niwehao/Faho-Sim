@@ -17,8 +17,8 @@ extern void boot_me(void);
 
 // unsigned int nb_process __attribute__((section(".data"))) = 0;
 
-// uint8_t __attribute__((section(".atomic"))) __atomic_bit_mutex_mutex_printk;
-// mutex_id_t mutex_printk __attribute__((section(".data"))) = 0;
+uint8_t __attribute__((section(".atomic"))) __atomic_bit_mutex_mutex_printk;
+mutex_id_t mutex_printk __attribute__((section(".data"))) = 0;
 uint8_t __attribute__((section(".atomic"))) __atomic_bit_mutex_sp;
 uint8_t __attribute__((section(".atomic"))) __atomic_bit_mutex_mutex_flag;
 mutex_id_t mutex_flag __attribute__((section(".data"))) = 0;
@@ -53,59 +53,16 @@ __host unsigned int dpu_id = 0;
 // the dpu need to resume it execution or not
 __host unsigned int log_w = 0; // the offset to write the log
 
-// /*
-// Write int debug
-// */
-// void printk_int(int i) {
-//   if (log_w + 8 > SIZE_BLOCK)
-//     return;
-//   mutex_lock(mutex_printk);
-//   __dma_aligned int buf[2] = {1, i};
-//   // write_inode(1, buf, 8, log_w);
-//   inode_operation(1, buf, 8, log_w, INODE_WRITE);
-//   log_w += 8;
-//   set_flag(NEW_LOG);
-//   mutex_unlock(mutex_printk);
-// }
+/*
+Write int debug
+*/
+
 
 __dma_aligned char buf_aligned[128] __attribute__((section(".data"))) = {};
 /*
 Write message debug str write in buf.
 */
-// void printk(char *buf) {
 
-//   int size = 0;
-//   char *buf_calc = buf;
-//   while ((*buf_calc) != '\0') {
-//     buf_calc++;
-//     size++;
-//   }
-//   if (log_w + size > SIZE_BLOCK)
-//     return;
-//   uint8_t i_aligned = 0;
-//   mutex_lock(mutex_printk);
-//   for (int i = 0; i < size; i++) {
-//     buf_aligned[i_aligned] = buf[i];
-//     i_aligned++;
-//     if (i_aligned == 128) {
-//       // write_inode(1, buf_aligned, 128, log_w);
-//       inode_operation(1, buf_aligned, 128, log_w, INODE_WRITE);
-//       log_w += 128;
-//       i_aligned = 0;
-//     }
-//   }
-//   while ((i_aligned % 8) != 0) {
-//     buf_aligned[i_aligned] = '\0';
-//     i_aligned++;
-//   }
-//   // write_inode(1, buf_aligned, i_aligned, log_w);
-//   inode_operation(1, buf_aligned, i_aligned, log_w, INODE_WRITE);
-//   log_w += i_aligned;
-
-//   set_flag(NEW_LOG);
-
-//   mutex_unlock(mutex_printk);
-// }
 
 int read_flags() {
   mutex_lock(mutex_flag);
@@ -114,7 +71,51 @@ int read_flags() {
   mutex_unlock(mutex_flag);
   return ki.flag1;
 }
+void printk_int(int i) {
+  if (log_w + 8 > SIZE_BLOCK)
+    return;
+  mutex_lock(mutex_printk);
+  __dma_aligned int buf[2] = {1, i};
+  // write_inode(1, buf, 8, log_w);
+  inode_operation(1, buf, 8, log_w, INODE_WRITE);
+  log_w += 8;
+  set_flag(NEW_LOG);
+  mutex_unlock(mutex_printk);
+}
+void printk(char *buf) {
 
+  int size = 0;
+  char *buf_calc = buf;
+  while ((*buf_calc) != '\0') {
+    buf_calc++;
+    size++;
+  }
+  if (log_w + size > SIZE_BLOCK)
+    return;
+  uint8_t i_aligned = 0;
+  mutex_lock(mutex_printk);
+  for (int i = 0; i < size; i++) {
+    buf_aligned[i_aligned] = buf[i];
+    i_aligned++;
+    if (i_aligned == 128) {
+      // write_inode(1, buf_aligned, 128, log_w);
+      inode_operation(1, buf_aligned, 128, log_w, INODE_WRITE);
+      log_w += 128;
+      i_aligned = 0;
+    }
+  }
+  while ((i_aligned % 8) != 0) {
+    buf_aligned[i_aligned] = '\0';
+    i_aligned++;
+  }
+  // write_inode(1, buf_aligned, i_aligned, log_w);
+  inode_operation(1, buf_aligned, i_aligned, log_w, INODE_WRITE);
+  log_w += i_aligned;
+
+  set_flag(NEW_LOG);
+
+  mutex_unlock(mutex_printk);
+}
 /*
 overwrite the flags
 */
@@ -157,7 +158,11 @@ int sbrk(int n) {
     processs[cur_process_index].prg.size_data += n;//size_data本身就有栈
   }
   ret = processs[cur_process_index].prg.size_data+WRAM_OFFSET;//因为有偏移
+  
 err:
+  if(ret<0){
+    fault_notif();
+  }
   mutex_unlock(mutex_sbrk);
   return ret;
 }
@@ -221,6 +226,7 @@ Do not check mram alignement
 */
 void store_big_blocks(void *wram_place, __mram_ptr void *mram_place,
                       size_t size) {
+ 
   unsigned int i = 0;
   for (; i < size >> 11; i++) {
     mram_write(wram_place + (i << 11), mram_place + (i << 11), 2048);
@@ -235,15 +241,18 @@ void store_big_blocks(void *wram_place, __mram_ptr void *mram_place,
 */
 void load_prg_memory(unsigned int prc_ind) {
   struct prg *p = &processs[prc_ind].prg;
+  print_debug(2,0);
 
   load_big_blocks((__mram_ptr void const *)((p->inode_data * SIZE_BLOCK)+MRAM_OFFSET),
                   (void *)(0X0+WRAM_OFFSET), p->size_data);
+  print_debug(3,0);
 
   uint32_t temp = p->size_text;
 
   // printk_int(p->inode_data);
 
   uint32_t off = 16;
+  print_debug(4,0);
   while (temp >= 0x800) { // write by slot of 255 1000 0000 0000 2048=256*8
 
     temp -= 0x800;
@@ -262,6 +271,7 @@ void load_prg_memory(unsigned int prc_ind) {
       "\tldmai %[ra], %[mram_place], 0\n"
       :
       : [ra] "r"(ra), [mram_place] "r"(p->inode_text * SIZE_BLOCK + off));
+  print_debug(5,0);
 }
 
 /*
@@ -329,7 +339,7 @@ void launch_proc(unsigned int prc_idx, uint8_t ready) {
 void stop_dpu() {
   // printk_int(-2);
   // printk_int((int)jobs[0].sync_addr);
-  stop_me(&saved_fc_stop);
+  stop_me();
   //resume_me(saved_fc_stop); // save the context of the current process
   // printk_int(-1);
   // printk_int((int)jobs[0].sync_addr);
@@ -346,6 +356,8 @@ void stop_dpu() {
                                  wakeup(&sync_extern_socket, 0, 0); // wakeup all the process wich are
                                                                     // wainting for a extern_socket
                                 creation */
+   //print_debug(flags,0);
+
   if (flags & SOCKET_UPDATE) // The K1 just notify for writing (K1->K2)
                              // operation, not for reading (K2->K1).
     wakeup_sleepy_socket();
@@ -370,16 +382,15 @@ Find a runable process (state READY or PAUSED),
 int scheduler(void) {
 
   char all_end = 0;
-  uint32_t value_temp;
-  unsigned int idx = 0, loaded_idx = 0;
   uint32_t reg_config;
+   uint32_t value_temp;
+  unsigned int idx = 0, loaded_idx = 0;
   unsigned int pid_loaded = 0,
                cur_pid; // the process id which is loaded in IRAM/MRAM
                         // (avoid to load unload at each time)
   for (;;) {
     for (; idx < MAX_PRG; idx++) {
       check_timer_stop(); // uncomment
-      
       char ready;
       if (processs[idx].state == READY) {
         ready = 1;
@@ -397,11 +408,13 @@ int scheduler(void) {
           cur_pid) { // if ready load anyway the process (avoid the case that
                      // a process finish and diriectly a new one takes it
                      // place in process tab)
-
         if (processs[loaded_idx].pid == pid_loaded) {
-          save_wram_process(loaded_idx);
+          print_debug(0,0);
+          save_wram_process(loaded_idx);//潜在的bug,如果分配的内存大于data
+          print_debug(1,0);
           // mram_write(jobs, job_mram.j[prc_idx], sizeof(jobs));
         }
+
         load_prg_memory(idx);
         loaded_idx = idx;
         pid_loaded = cur_pid;
@@ -411,11 +424,11 @@ int scheduler(void) {
                     idx * (JOB_PER_PROCESS * sizeof(struct job))+MRAM_OFFSET,
                 jobs, sizeof(jobs)); // launch the jobs (each time because can
                                      // be modify by other process)
-      //在这里去设置perform_counter 来切换proc_idx;
-      reg_config = (idx<<3)+7+1;
+
+      reg_config = ((idx+1)<<3);
       __asm__ volatile("time_cfg %[r], %[c]" : [r] "=r"(value_temp) : [c] "r"(reg_config));
       launch_proc(idx, ready);
-      reg_config = (10<<3)+7+1;
+      reg_config = ((10+1)<<3);
       __asm__ volatile("time_cfg %[r], %[c]" : [r] "=r"(value_temp) : [c] "r"(reg_config));
       mram_write(jobs,
                  (__mram_ptr void *)sizeof(struct kernel_info) +
@@ -445,7 +458,7 @@ int main(void) {
 
     mutex_flag = &__atomic_bit_mutex_mutex_flag;
     mutex_l = &__atomic_bit_mutex_mutex_l;
-    //mutex_printk = &__atomic_bit_mutex_mutex_printk;
+    mutex_printk = &__atomic_bit_mutex_mutex_printk;
     mutex_jobs = &__atomic_bit_mutex_mutex_jobs;
     mutex_sockets = &__atomic_bit_mutex_mutex_sockets;
     mutex_mram = &__atomic_bit_mutex_mutex_mram;
@@ -467,9 +480,7 @@ int main(void) {
   // int flags = read_flags();
   //write_flags(0); // reset flag
 
-  uint32_t reg_value;
-  uint32_t reg_config = (true ? 1 : 0) | (1 << 1);
-  __asm__ volatile("time_cfg %[r], %[c]" : [r] "=r"(reg_value) : [c] "r"(reg_config));
+  perfcounter_config(COUNT_CYCLES, true);
   // init_sockets();
   scheduler(); // willl never return
 

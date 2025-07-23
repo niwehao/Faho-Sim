@@ -12,14 +12,14 @@
             "console": "integratedTerminal",
             "args": [
                 "--mode", "compile_by_toolchain",
-                "--num_tasklets", "4",
+                "--num_tasklets", "16",
                 "--benchmark", "KERNEL",
                 "--num_dpus", "16"
             ],
             "cwd": "${workspaceFolder}"
         },
         {
-             "name": "Debug VA",
+             "name": "Debug BFS",
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/main.py",
@@ -27,7 +27,7 @@
             "args": [
                 "--mode", "compile_by_toolchain",
                 "--num_tasklets", "16",
-                "--benchmark", "VA",
+                "--benchmark", "BFS",
                 "--num_dpus", "16"
             ],
             "cwd": "${workspaceFolder}"

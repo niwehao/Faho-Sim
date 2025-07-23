@@ -41,16 +41,20 @@ int inode_operation(uint32_t inode, void *buf, size_t size, uint32_t offset,
  * @return int
  */
 
-void free_inode(int inode);
 
+/**
+ * @brief TODO
+ *
+ * @param inode
+ */
+void free_inode(int inode);
 int virtual_access( void *buf, unsigned int size,
                             unsigned int offset, enum inode_operation op);
+
 extern mutex_id_t mutex_mram;
 extern mutex_id_t mutex_inode;
 
 __dma_aligned char newline2[8] __attribute__((section(".data"))) = "      \n";
-// __host uint16_t inode_table[MAX_PRG][4][2]
-//     __attribute__((section(".dpu_host"))) = {}; // put the 4 in a define
 extern void store_big_blocks(void *wram_place, __mram_ptr void *mram_place,
                       size_t size);
 void load_big_blocks(__mram_ptr void const *mram_place, void *wram_place,
@@ -61,6 +65,7 @@ int inode_operation(uint32_t inode, void *buf, size_t size, uint32_t offset,
       return PTR_MUST8BIYTEALIGN;
     if (((int)buf & 7) != 0)
       return PTR_MUST8BIYTEALIGN; */
+      
   __mram_ptr void *mram_place =
       (__mram_ptr void *)((inode << 16) + offset)+MRAM_OFFSET; //>16 -> * SIZE_BLOCK
 
@@ -78,10 +83,13 @@ int inode_operation(uint32_t inode, void *buf, size_t size, uint32_t offset,
   return 0;
 }
 
+/*
+Find a free inode and mark it at used
+*/
 
 
 
-
+extern void printk_int(int i);
 
 
 int virtual_access(void *buf, unsigned int size, unsigned int offset,
@@ -99,6 +107,7 @@ int virtual_access(void *buf, unsigned int size, unsigned int offset,
   
 }
 
+
 /*
 Free the inode : mark it a unsed in bit map.
 */
@@ -106,7 +115,7 @@ void free_inode(int inode) {
   (void)inode;
   // TODO, maybe never do because it is unecessary and take place for nothing in
   // IRAM
-  //printk_int(75698);
+  printk_int(75698);
   halt();
 }
 #endif

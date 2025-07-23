@@ -173,8 +173,6 @@ namespace upmem_sim::simulator::faho::def
                                                 // of first_inode (modify the offset)
             if (ret < 0)
                 assert(0);
-                return ret;
-
             inode = ret;
             read_inode(dpu_manager, inode, buf, cur_size, 0);
             size -= cur_size;

@@ -99,12 +99,24 @@ bool RevolverScheduler::block(ThreadID id) {//阻塞线程
     throw std::invalid_argument("");
   }
 }
+bool RevolverScheduler::awake_block(ThreadID id) {
+  Thread *thread = threads_[id];
+  assert(thread->id() == id);
+  //std::cout << "Awake thread: " << id << "state: " << thread->state()<< std::endl;
+  if (thread->state() == Thread::BLOCK) {
+    thread->set_state(Thread::RUNNABLE);
+    return true;
+  } 
+  else{
+    assert(0);
+  }
+}
 
 bool RevolverScheduler::awake(ThreadID id) {//唤醒线程
   Thread *thread = threads_[id];
   assert(thread->id() == id);
-  std::cout << "Awake thread: " << id << "state: " << thread->state()
-            << std::endl;
+  // std::cout << "Awake thread: " << id << "state: " << thread->state()
+  //           << std::endl;
   
 
   if (thread->state() == Thread::EMBRYO) {
@@ -113,13 +125,10 @@ bool RevolverScheduler::awake(ThreadID id) {//唤醒线程
   } else if (thread->state() == Thread::SLEEP) {
     thread->set_state(Thread::RUNNABLE);
     return true;
-  } else if (thread->state() == Thread::BLOCK) {
-    thread->set_state(Thread::RUNNABLE);
-    return true;
-  } else {
+  }  else {
     if(id==0){
-       std::cout << "Thread " << id << " is in state: " << thread->state()
-              << ", cannot awake." << std::endl;
+      //  std::cout << "Thread " << id << " is in state: " << thread->state()
+      //         << ", cannot awake." << std::endl;
 
     }
    
@@ -178,9 +187,9 @@ void RevolverScheduler::cycle() {
         ", num_sleep: "+std::to_string(num_sleep)+
         ", num_block: "+std::to_string(num_block)+
         ", num_zombie: "+std::to_string(num_zombie);
-  if (info_ != info_new) {
-    std::cout << info_new << std::endl;
-  }
+  // if (info_ != info_new) {
+  //   std::cout << info_new << std::endl;
+  // }
   info_ = info_new;
   assert(num_active_tasklets <= 16);//活动线程数不能超过16,这是dpu的限制
   stat_factory_->overwrite("current_active_tasklets",

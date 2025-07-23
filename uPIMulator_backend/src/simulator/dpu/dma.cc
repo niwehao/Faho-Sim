@@ -138,7 +138,7 @@ namespace upmem_sim::simulator::dpu
       abi::instruction::Instruction *instruction)
   {
     assert(can_push());
-    std::cout << "DMA::transfer_from_wram to mram " << std::endl;
+    //std::cout << "DMA::transfer_from_wram to mram " << std::endl;
 
     encoder::ByteStream *byte_stream = transfer_from_wram(wram_address, size); // 先从wram读取数据
 
@@ -162,8 +162,8 @@ namespace upmem_sim::simulator::dpu
       auto dma_command = new DMACommand(DMACommand::WRITE, wram_address,
                                         mram_address, size, bytes, instruction); // 创建写入命令
       input_q_->push(dma_command);                                               // 加入输入队列
-    }
-
+    
+}
     else
     {
       assert(0);
@@ -175,7 +175,7 @@ namespace upmem_sim::simulator::dpu
       abi::instruction::Instruction *instruction)
   {
     assert(can_push());
-    std::cout << "DMA::transfer_from_mram to iram " << std::endl;
+    //std::cout << "DMA::transfer_from_mram to iram " << std::endl;
     assert(mram_address >= util::ConfigLoader::mram_offset());
     assert(mram_address + size <=
            util::ConfigLoader::mram_offset() + util::ConfigLoader::mram_size());
@@ -185,13 +185,13 @@ namespace upmem_sim::simulator::dpu
     input_q_->push(dma_command);
   }
 
-  void DMA::transfer_from_mram_to_wram(
+  void DMA::transfer_from_mram_to_wram(//sd
       Address wram_address, Address mram_address, Address size,
       abi::instruction::Instruction *instruction)
   {
     assert(can_push());
-    std::cout << "DMA::transfer_from_mram to wram " << std::endl;
-    std::cout << "fProc " << performance_counter_->get_fProc() << " flag " << (mram_address >> 31) << std::endl;
+    //std::cout << "DMA::transfer_from_mram to wram " << std::endl;
+    //std::cout << "fProc " << performance_counter_->get_fProc() << " flag " << (mram_address >> 31) << std::endl;
 
     if (performance_counter_->get_fProc() != 10 && (mram_address >> 31) == 1)
     {
@@ -208,8 +208,7 @@ namespace upmem_sim::simulator::dpu
              util::ConfigLoader::mram_offset() + util::ConfigLoader::mram_size());
       auto dma_command = new DMACommand(DMACommand::READ, wram_address,
                                         mram_address, size, instruction);
-
-      input_q_->push(dma_command); // 加入输入队列
+      input_q_->push(dma_command);
     }
     else
     {

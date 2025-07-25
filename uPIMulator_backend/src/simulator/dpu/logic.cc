@@ -83,6 +83,7 @@ namespace upmem_sim::simulator::dpu
     assert(performance_counter_ == nullptr);
     performance_counter_ = performance_counter;
     cycle_rule_->connect_performace_counter(performance_counter);
+    scheduler_->connect_performace_counter(performance_counter);
   }
 
   void Logic::cycle()
@@ -101,9 +102,11 @@ namespace upmem_sim::simulator::dpu
 
     pipeline_->cycle();
     cycle_rule_->cycle();
-
     stat_factory_->increment("logic_cycle"); // all cycle
     performance_counter_->add_counter(1, 1);
+    scheduler_->preemption();
+    
+    
   }
 
   void Logic::

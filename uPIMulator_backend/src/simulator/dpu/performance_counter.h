@@ -28,7 +28,7 @@ class PerformanceCounter {
         assert(mode==1 || mode==2 || mode==0);
         if (mode_==mode)
         {
-            int sub_counter_=sub_counter+value;
+            sub_counter=sub_counter+value;
             int mult=sub_counter/16;
             sub_counter=sub_counter%16;
             if (mult>0)
@@ -36,10 +36,13 @@ class PerformanceCounter {
                 //std::cout<<"before:"<<counter_word->bit_slice(abi::word::UNSIGNED,4,36)<<" try to add "<<value<<" with mode "<<mode<<std::endl;
                 int value_t=counter_word->bit_slice(abi::word::UNSIGNED,4,36)+mult;
                 counter_word->set_bit_slice(4,36,value_t);
-                //std::cout<<"after:"<<counter_word->bit_slice(abi::word::UNSIGNED,4,36)<<std::endl;
+                
             }
+            real_time_debug=value+real_time_debug;
+            // int debug=counter_word->bit_slice(abi::word::UNSIGNED,4,36);
+            // std::cout<<real_time_debug<<" "<<debug<<std::endl;
         }
-        real_time_debug=value+real_time_debug;
+
     }
     void set_cfg(int value)
     {
@@ -48,18 +51,21 @@ class PerformanceCounter {
         counter_word->set_bit_slice(0,4,value);
         int flag_t=counter_word->bit_slice(abi::word::UNSIGNED,0,1);
         int mode_t=counter_word->bit_slice(abi::word::UNSIGNED,1,3);
+        mode_=mode_t;
+        assert(mode_==1);
         if (flag_t==1)
         {
             counter_word->set_bit_slice(4,36,0);
             counter_word->set_bit_slice(0,1,0);
             sub_counter=0;
         }
-         mode_=mode_t;
+        
+         
     }
     int get_value()
     {
         int value_t=counter_word->bit_slice(abi::word::UNSIGNED,4,36);
-        return 0;//不考虑抢占与中断
+        return value_t;//preempt
     }
     int get_true_value()
     {

@@ -35,7 +35,7 @@ class ConfigLoader {
   static Address mram_offset() { return 636 * 1024; }
   static Address mram_size() { return 64 * 1024 * 1024; }
 
-  static int num_gp_registers() { return 24; }
+  static int num_gp_registers() { return 27; }
   static int max_num_tasklets() { return 24; }
   static int min_access_granularity() { return 8; }/**
   最小访问粒度

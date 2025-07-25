@@ -8,56 +8,58 @@
 #include "util/stat_factory.h"
 #include "simulator/dpu/performance_counter.h"
 
-namespace upmem_sim::simulator::dpu {
+namespace upmem_sim::simulator::dpu
+{
 
-class CycleRule {
- public:
-  explicit CycleRule(util::ArgumentParser *argument_parser);
-  ~CycleRule();
+  class CycleRule
+  {
+  public:
+    explicit CycleRule(util::ArgumentParser *argument_parser);
+    ~CycleRule();
 
-  util::StatFactory *stat_factory();
+    util::StatFactory *stat_factory();
 
-  bool empty() {
-    return input_q_->empty() and wait_q_->empty() and ready_q_->empty();
-  }
-  bool can_push() { return input_q_->can_push(); }
-  void push(abi::instruction::Instruction *instruction);
-  bool can_pop() { return ready_q_->can_pop(); }
-  abi::instruction::Instruction *pop() { return ready_q_->pop(); }
-  void cycle();
-    void connect_performace_counter( PerformanceCounter * performance_counter )
+    bool empty()
     {
-        performance_counter_ = performance_counter;
-
+      return input_q_->empty() and wait_q_->empty() and ready_q_->empty();
+    }
+    bool can_push() { return input_q_->can_push(); }
+    void push(abi::instruction::Instruction *instruction);
+    bool can_pop() { return ready_q_->can_pop(); }
+    abi::instruction::Instruction *pop() { return ready_q_->pop(); }
+    void cycle();
+    void connect_performace_counter(PerformanceCounter *performance_counter)
+    {
+      performance_counter_ = performance_counter;
     }
 
- protected:
-  void service_input_q();
-  void service_ready_q();
+  protected:
+    void service_input_q();
+    void service_ready_q();
 
-  int calculate_extra_cycles(abi::instruction::Instruction *instruction);
-  std::tuple<int, int> calculate_counters(
-      abi::instruction::Instruction *instruction);
+    int calculate_extra_cycles(abi::instruction::Instruction *instruction);
+    std::tuple<int, int> calculate_counters(
+        abi::instruction::Instruction *instruction);
 
-  static std::set<abi::reg::GPReg *> collect_read_gp_regs(
-      abi::instruction::Instruction *instruction);
-  static std::set<abi::reg::GPReg *> collect_write_gp_regs(
-      abi::instruction::Instruction *instruction);
-  static std::set<abi::reg::GPReg *> merge(std::set<abi::reg::GPReg *> regs1,
-                                           std::set<abi::reg::GPReg *> regs2);
+    static std::set<abi::reg::GPReg *> collect_read_gp_regs(
+        abi::instruction::Instruction *instruction);
+    static std::set<abi::reg::GPReg *> collect_write_gp_regs(
+        abi::instruction::Instruction *instruction);
+    static std::set<abi::reg::GPReg *> merge(std::set<abi::reg::GPReg *> regs1,
+                                             std::set<abi::reg::GPReg *> regs2);
 
- private:
-  basic::Queue<abi::instruction::Instruction> *input_q_;
-  basic::TimerQueue<abi::instruction::Instruction> *wait_q_;
-  basic::Queue<abi::instruction::Instruction> *ready_q_;
+  private:
+    basic::Queue<abi::instruction::Instruction> *input_q_;
+    basic::TimerQueue<abi::instruction::Instruction> *wait_q_;
+    basic::Queue<abi::instruction::Instruction> *ready_q_;
     PerformanceCounter *performance_counter_;
 
-  std::vector<std::set<abi::reg::GPReg *>> prev_write_gp_regs_;
-  std::vector<std::set<abi::reg::GPReg *>> cur_read_gp_regs_;
+    std::vector<std::set<abi::reg::GPReg *>> prev_write_gp_regs_;
+    std::vector<std::set<abi::reg::GPReg *>> cur_read_gp_regs_;
 
-  util::StatFactory *stat_factory_;
-};
+    util::StatFactory *stat_factory_;
+  };
 
-}  // namespace upmem_sim::simulator::dpu
+} // namespace upmem_sim::simulator::dpu
 
 #endif

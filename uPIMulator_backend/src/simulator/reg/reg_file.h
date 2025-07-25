@@ -40,6 +40,10 @@ namespace upmem_sim::simulator::reg
     {
       return gp_regs_[index]->read(abi::word::UNSIGNED);
     }
+    void write_gp_reg(int index,int value){
+      gp_regs_[index]->write(value);
+
+    }
     int64_t read_sp_reg(abi::reg::SPReg sp_reg,
                         abi::word::Representation representation)
     {
@@ -85,7 +89,7 @@ namespace upmem_sim::simulator::reg
       if (gp_reg->index() == 22)
       {
         bool user_flag=(value< util::ConfigLoader::wram_offset() + util::ConfigLoader::wram_kernel_offset());
-        bool kernel_flag=(value >= sp_reg_->thread_id * 512 + 136123 && value < sp_reg_->thread_id * 512 + 136123 + 512);//136123 is sys_use_end_0 of kernel
+        bool kernel_flag=(value >= sp_reg_->thread_id * 512 + 136127 && value < sp_reg_->thread_id * 512 + 136127 + 512);//136123 is sys_use_end_0 of kernel
         //std::cout << "write gp_reg 22 value: " << value << std::endl;  
         assert(user_flag || kernel_flag); // 22号寄存器只能是用户态或系统态的栈地址   
 
@@ -144,7 +148,7 @@ namespace upmem_sim::simulator::reg
       }
       else
       { // 系统态debug
-        return;
+
    
  
         state = 0;
@@ -195,7 +199,7 @@ namespace upmem_sim::simulator::reg
 
       pc_reg_->increment();
       int64_t pc_value = pc_reg_->read();
-     //print_jump(pc_value);
+      //print_jump(pc_value);
       // if(pc_reg_->read()  == 570432+12) {
       //   std::cout << "pc_reg increment to: " << pc_reg_->read() << std::endl;
       // }

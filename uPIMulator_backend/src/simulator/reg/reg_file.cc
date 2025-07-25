@@ -14,7 +14,10 @@ RegFile::RegFile(ThreadID id,std::string benchmark,std::string bindir)
       exception_reg_(new ExceptionReg()) {//异常寄存器
   for (RegIndex index = 0; index < util::ConfigLoader::num_gp_registers();//通用寄存器
        index++) {
-    std::ifstream file(bindir+"KERNEL.16/iram_labels.bin");
+    
+    gp_regs_.push_back(new GPReg(index));//通用寄存器
+  }
+  std::ifstream file(bindir+"KERNEL.16/iram_labels.bin");
     std::string line;
     int time_ = 0;
     std::string name_;
@@ -50,8 +53,6 @@ RegFile::RegFile(ThreadID id,std::string benchmark,std::string bindir)
         std::cout << "无法打开文件" << std::endl;
     }
     
-    gp_regs_.push_back(new GPReg(index));//通用寄存器
-  }
 }
 /**
  * 这个RegFile类是DPU模拟器中的关键组件：

@@ -575,137 +575,6 @@ stdio.__stdout_cache_buffer:
 	$addrsig_sym, __atomic_bit___stdout_buffer_lock
 	$addrsig_sym, stdio.__stdout_cache_buffer
 	$text,
-	$file,	"div32.c"
-	$section,	%text, __udiv32,"ax",@progbits
-	$globl,	__udiv32                        //  -  -  Begin function __udiv32
-	$type,	__udiv32,@function
-__udiv32:                               // @__udiv32
-div32..Lfunc_begin0:
-// %bb.0:
-	// inline asm
-
-	$clz , r3, r1, max, div32.__udiv32_division_by_zero
-	$clz , r4, r0
-	$sub , r3, r4, r3, gtu, div32.__udiv32_result_0
-	$move , r4, r1
-	$move .u, d0, r0
-	$jump , r3, div32.__udiv32_base
-	$div_step , d0, r4, d0, 31
-	$div_step , d0, r4, d0, 30
-	$div_step , d0, r4, d0, 29
-	$div_step , d0, r4, d0, 28
-	$div_step , d0, r4, d0, 27
-	$div_step , d0, r4, d0, 26
-	$div_step , d0, r4, d0, 25
-	$div_step , d0, r4, d0, 24
-	$div_step , d0, r4, d0, 23
-	$div_step , d0, r4, d0, 22
-	$div_step , d0, r4, d0, 21
-	$div_step , d0, r4, d0, 20
-	$div_step , d0, r4, d0, 19
-	$div_step , d0, r4, d0, 18
-	$div_step , d0, r4, d0, 17
-	$div_step , d0, r4, d0, 16
-	$div_step , d0, r4, d0, 15
-	$div_step , d0, r4, d0, 14
-	$div_step , d0, r4, d0, 13
-	$div_step , d0, r4, d0, 12
-	$div_step , d0, r4, d0, 11
-	$div_step , d0, r4, d0, 10
-	$div_step , d0, r4, d0, 9
-	$div_step , d0, r4, d0, 8
-	$div_step , d0, r4, d0, 7
-	$div_step , d0, r4, d0, 6
-	$div_step , d0, r4, d0, 5
-	$div_step , d0, r4, d0, 4
-	$div_step , d0, r4, d0, 3
-	$div_step , d0, r4, d0, 2
-	$div_step , d0, r4, d0, 1
-div32.__udiv32_base:
-	$div_step , d0, r4, d0, 0
-div32.__udiv32_exit:
-	$jump , r23
-div32.__udiv32_result_0:
-	$move .u, d0, r0, true, div32.__udiv32_exit
-div32.__udiv32_division_by_zero:
-	$fault , 2
-	// inline asm
-div32..Lfunc_end0:
-	$size,	__udiv32, div32..Lfunc_end0 - __udiv32
-	$section,	%stack_sizes,"o",@progbits,%text, __udiv32
-	$long,	div32..Lfunc_begin0
-	$byte,	0
-	$section,	%text, __udiv32,"ax",@progbits
-                                        //  -  -  End function
-	$section,	%text, __div32,"ax",@progbits
-	$globl,	__div32                         //  -  -  Begin function __div32
-	$type,	__div32,@function
-__div32:                                // @__div32
-div32..Lfunc_begin1:
-// %bb.0:
-	// inline asm
-
-	$sd , r22, 0, d22
-	$add , r22, r22, 8
-	$clo , r3, r0, z, div32.__div32_pos_dividend
-	$clo , r3, r1, z, div32.__div32_neg_dividend_pos_divider
-div32.__div32_neg_dividend_neg_divider:
-	$neg , r0, r0
-	$neg , r1, r1
-	$call , r23, __udiv32
-	$neg , r1, r1, true, div32.__div32_exit
-div32.__div32_neg_dividend_pos_divider:
-	$neg , r0, r0
-	$call , r23, __udiv32
-	$neg , r1, r1
-	$neg , r0, r0, true, div32.__div32_exit
-div32.__div32_pos_dividend:
-	$clo , r3, r1, z, div32.__div32_pos_dividend_pos_divider
-	$neg , r1, r1
-	$call , r23, __udiv32
-	$neg , r0, r0, true, div32.__div32_exit
-div32.__div32_pos_dividend_pos_divider:
-	$call , r23, __udiv32
-div32.__div32_exit:
-	$ld , d22, r22,  - 8
-	$jump , r23
-
-	// inline asm
-div32..Lfunc_end1:
-	$size,	__div32, div32..Lfunc_end1 - __div32
-	$section,	%stack_sizes,"o",@progbits,%text, __div32
-	$long,	div32..Lfunc_begin1
-	$byte,	0
-	$section,	%text, __div32,"ax",@progbits
-                                        //  -  -  End function
-	$addrsig,
-	$text,
-	$file,	"udivmodsi4.c"
-	$section,	%text, __udivmodsi4,"ax",@progbits
-	$globl,	__udivmodsi4                    //  -  -  Begin function __udivmodsi4
-	$type,	__udivmodsi4,@function
-__udivmodsi4:                           // @__udivmodsi4
-udivmodsi4..Lfunc_begin0:
-// %bb.0:
-	$sd , r22, 8, d22
-	$add , r22, r22, 16
-	$sd , r22,  - 16, d14
-	$move , r14, r2
-	$call , r23, __udiv32
-	$sw , r14, 0, r1
-                                        // kill: def $r0 killed $r0 killed $d0
-	$ld , d14, r22,  - 16
-	$ld , d22, r22,  - 8
-	$jump , r23
-udivmodsi4..Lfunc_end0:
-	$size,	__udivmodsi4, udivmodsi4..Lfunc_end0 - __udivmodsi4
-	$section,	%stack_sizes,"o",@progbits,%text, __udivmodsi4
-	$long,	udivmodsi4..Lfunc_begin0
-	$byte,	16
-	$section,	%text, __udivmodsi4,"ax",@progbits
-                                        //  -  -  End function
-	$addrsig,
-	$text,
 	$file,	"main.c"
 $section,	%text, syscall,"ax",@progbits
 	$globl,	syscall                         //  -  -  Begin function syscall
@@ -2286,589 +2155,6 @@ main1:                                  // @main1
 	$byte,	120
 	$section,	%text, main1,"ax",@progbits
                                         //  -  -  End function
-	$type,	blosum62,@object                // @blosum62
-	$section,	%data, blosum62,"aw",@progbits
-	$globl,	blosum62
-	$p2align,	2
-blosum62:
-	$long,	4                               // 0x4
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	1                               // 0x1
-	$long,	0                               // 0x0
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967295                      // 0xffffffff
-	$long,	5                               // 0x5
-	$long,	0                               // 0x0
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	1                               // 0x1
-	$long,	0                               // 0x0
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	2                               // 0x2
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	6                               // 0x6
-	$long,	1                               // 0x1
-	$long,	4294967293                      // 0xfffffffd
-	$long,	0                               // 0x0
-	$long,	0                               // 0x0
-	$long,	0                               // 0x0
-	$long,	1                               // 0x1
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	0                               // 0x0
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	1                               // 0x1
-	$long,	0                               // 0x0
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	3                               // 0x3
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	1                               // 0x1
-	$long,	6                               // 0x6
-	$long,	4294967293                      // 0xfffffffd
-	$long,	0                               // 0x0
-	$long,	2                               // 0x2
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4                               // 0x4
-	$long,	1                               // 0x1
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	0                               // 0x0
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	9                               // 0x9
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967295                      // 0xffffffff
-	$long,	1                               // 0x1
-	$long,	0                               // 0x0
-	$long,	0                               // 0x0
-	$long,	4294967293                      // 0xfffffffd
-	$long,	5                               // 0x5
-	$long,	2                               // 0x2
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	1                               // 0x1
-	$long,	0                               // 0x0
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	3                               // 0x3
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	0                               // 0x0
-	$long,	2                               // 0x2
-	$long,	4294967292                      // 0xfffffffc
-	$long,	2                               // 0x2
-	$long,	5                               // 0x5
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	1                               // 0x1
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	1                               // 0x1
-	$long,	4                               // 0x4
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	0                               // 0x0
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	6                               // 0x6
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	1                               // 0x1
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	0                               // 0x0
-	$long,	0                               // 0x0
-	$long,	4294967294                      // 0xfffffffe
-	$long,	8                               // 0x8
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	2                               // 0x2
-	$long,	4294967293                      // 0xfffffffd
-	$long,	0                               // 0x0
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4                               // 0x4
-	$long,	2                               // 0x2
-	$long,	4294967293                      // 0xfffffffd
-	$long,	1                               // 0x1
-	$long,	0                               // 0x0
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	3                               // 0x3
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967293                      // 0xfffffffd
-	$long,	2                               // 0x2
-	$long,	4                               // 0x4
-	$long,	4294967294                      // 0xfffffffe
-	$long,	2                               // 0x2
-	$long,	0                               // 0x0
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	1                               // 0x1
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967295                      // 0xffffffff
-	$long,	2                               // 0x2
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	1                               // 0x1
-	$long,	1                               // 0x1
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	5                               // 0x5
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	1                               // 0x1
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	1                               // 0x1
-	$long,	2                               // 0x2
-	$long,	4294967295                      // 0xffffffff
-	$long,	5                               // 0x5
-	$long,	0                               // 0x0
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	1                               // 0x1
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	0                               // 0x0
-	$long,	4294967293                      // 0xfffffffd
-	$long,	0                               // 0x0
-	$long,	6                               // 0x6
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	1                               // 0x1
-	$long,	3                               // 0x3
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967292                      // 0xfffffffc
-	$long,	7                               // 0x7
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967292                      // 0xfffffffc
-	$long,	1                               // 0x1
-	$long,	4294967295                      // 0xffffffff
-	$long,	1                               // 0x1
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	0                               // 0x0
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4                               // 0x4
-	$long,	1                               // 0x1
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	0                               // 0x0
-	$long,	0                               // 0x0
-	$long,	4294967292                      // 0xfffffffc
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	1                               // 0x1
-	$long,	5                               // 0x5
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	1                               // 0x1
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	11                              // 0xb
-	$long,	2                               // 0x2
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	2                               // 0x2
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	3                               // 0x3
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	2                               // 0x2
-	$long,	7                               // 0x7
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	0                               // 0x0
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	3                               // 0x3
-	$long,	1                               // 0x1
-	$long,	4294967294                      // 0xfffffffe
-	$long,	1                               // 0x1
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	4                               // 0x4
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	3                               // 0x3
-	$long,	4                               // 0x4
-	$long,	4294967293                      // 0xfffffffd
-	$long,	0                               // 0x0
-	$long,	1                               // 0x1
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967292                      // 0xfffffffc
-	$long,	0                               // 0x0
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4                               // 0x4
-	$long,	1                               // 0x1
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	0                               // 0x0
-	$long,	1                               // 0x1
-	$long,	4294967293                      // 0xfffffffd
-	$long,	3                               // 0x3
-	$long,	4                               // 0x4
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967293                      // 0xfffffffd
-	$long,	1                               // 0x1
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967295                      // 0xffffffff
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967293                      // 0xfffffffd
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967294                      // 0xfffffffe
-	$long,	1                               // 0x1
-	$long,	4                               // 0x4
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	0                               // 0x0
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967294                      // 0xfffffffe
-	$long,	0                               // 0x0
-	$long,	0                               // 0x0
-	$long,	4294967294                      // 0xfffffffe
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967295                      // 0xffffffff
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	4294967292                      // 0xfffffffc
-	$long,	1                               // 0x1
-	$size,	blosum62, 2304
-
 	$type,	nr_tasklets,@object             // @nr_tasklets
 	$section,	%bss, nr_tasklets,"aw",@nobits
 	$globl,	nr_tasklets
@@ -3100,65 +2386,108 @@ memset..Lfunc_end3:
 	$addrsig_sym, __memset_mram_8align
 	$addrsig_sym, __memset_mram
 	$text,
-	$file,	"mul32.c"
-	$section,	%text, __mulsi3,"ax",@progbits
-	$globl,	__mulsi3                        //  -  -  Begin function __mulsi3
-	$type,	__mulsi3,@function
-__mulsi3:                               // @__mulsi3
-mul32..Lfunc_begin0:
+	$file,	"div32.c"
+	$section,	%text, __udiv32,"ax",@progbits
+	$globl,	__udiv32                        //  -  -  Begin function __udiv32
+	$type,	__udiv32,@function
+__udiv32:                               // @__udiv32
+div32..Lfunc_begin0:
 // %bb.0:
 	// inline asm
-	$jgtu , r1, r0, mul32.__mulsi3_swap
-	$move , r2, r0
-	$move , r0, r1, true, mul32.__mulsi3_start
-mul32.__mulsi3_swap:
-	$move , r2, r1
-	$move , r0, r0
-mul32.__mulsi3_start:
-	$move , r1, zero
-	$mul_step , d0, r2, d0, 0, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 1, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 2, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 3, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 4, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 5, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 6, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 7, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 8, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 9, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 10, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 11, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 12, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 13, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 14, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 15, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 16, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 17, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 18, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 19, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 20, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 21, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 22, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 23, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 24, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 25, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 26, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 27, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 28, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 29, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 30, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 31, z, mul32.__mulsi3_exit
-mul32.__mulsi3_exit:
-	$move , r0, r1
+
+	$clz , r3, r1, max, div32.__udiv32_division_by_zero
+	$clz , r4, r0
+	$sub , r3, r4, r3, gtu, div32.__udiv32_result_0
+	$move , r4, r1
+	$move .u, d0, r0
+	$jump , r3, div32.__udiv32_base
+	$div_step , d0, r4, d0, 31
+	$div_step , d0, r4, d0, 30
+	$div_step , d0, r4, d0, 29
+	$div_step , d0, r4, d0, 28
+	$div_step , d0, r4, d0, 27
+	$div_step , d0, r4, d0, 26
+	$div_step , d0, r4, d0, 25
+	$div_step , d0, r4, d0, 24
+	$div_step , d0, r4, d0, 23
+	$div_step , d0, r4, d0, 22
+	$div_step , d0, r4, d0, 21
+	$div_step , d0, r4, d0, 20
+	$div_step , d0, r4, d0, 19
+	$div_step , d0, r4, d0, 18
+	$div_step , d0, r4, d0, 17
+	$div_step , d0, r4, d0, 16
+	$div_step , d0, r4, d0, 15
+	$div_step , d0, r4, d0, 14
+	$div_step , d0, r4, d0, 13
+	$div_step , d0, r4, d0, 12
+	$div_step , d0, r4, d0, 11
+	$div_step , d0, r4, d0, 10
+	$div_step , d0, r4, d0, 9
+	$div_step , d0, r4, d0, 8
+	$div_step , d0, r4, d0, 7
+	$div_step , d0, r4, d0, 6
+	$div_step , d0, r4, d0, 5
+	$div_step , d0, r4, d0, 4
+	$div_step , d0, r4, d0, 3
+	$div_step , d0, r4, d0, 2
+	$div_step , d0, r4, d0, 1
+div32.__udiv32_base:
+	$div_step , d0, r4, d0, 0
+div32.__udiv32_exit:
+	$jump , r23
+div32.__udiv32_result_0:
+	$move .u, d0, r0, true, div32.__udiv32_exit
+div32.__udiv32_division_by_zero:
+	$fault , 2
+	// inline asm
+div32..Lfunc_end0:
+	$size,	__udiv32, div32..Lfunc_end0 - __udiv32
+	$section,	%stack_sizes,"o",@progbits,%text, __udiv32
+	$long,	div32..Lfunc_begin0
+	$byte,	0
+	$section,	%text, __udiv32,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%text, __div32,"ax",@progbits
+	$globl,	__div32                         //  -  -  Begin function __div32
+	$type,	__div32,@function
+__div32:                                // @__div32
+div32..Lfunc_begin1:
+// %bb.0:
+	// inline asm
+
+	$sd , r22, 0, d22
+	$add , r22, r22, 8
+	$clo , r3, r0, z, div32.__div32_pos_dividend
+	$clo , r3, r1, z, div32.__div32_neg_dividend_pos_divider
+div32.__div32_neg_dividend_neg_divider:
+	$neg , r0, r0
+	$neg , r1, r1
+	$call , r23, __udiv32
+	$neg , r1, r1, true, div32.__div32_exit
+div32.__div32_neg_dividend_pos_divider:
+	$neg , r0, r0
+	$call , r23, __udiv32
+	$neg , r1, r1
+	$neg , r0, r0, true, div32.__div32_exit
+div32.__div32_pos_dividend:
+	$clo , r3, r1, z, div32.__div32_pos_dividend_pos_divider
+	$neg , r1, r1
+	$call , r23, __udiv32
+	$neg , r0, r0, true, div32.__div32_exit
+div32.__div32_pos_dividend_pos_divider:
+	$call , r23, __udiv32
+div32.__div32_exit:
+	$ld , d22, r22,  - 8
+	$jump , r23
 
 	// inline asm
-	$jump , r23
-mul32..Lfunc_end0:
-	$size,	__mulsi3, mul32..Lfunc_end0 - __mulsi3
-	$section,	%stack_sizes,"o",@progbits,%text, __mulsi3
-	$long,	mul32..Lfunc_begin0
+div32..Lfunc_end1:
+	$size,	__div32, div32..Lfunc_end1 - __div32
+	$section,	%stack_sizes,"o",@progbits,%text, __div32
+	$long,	div32..Lfunc_begin1
 	$byte,	0
-	$section,	%text, __mulsi3,"ax",@progbits
+	$section,	%text, __div32,"ax",@progbits
                                         //  -  -  End function
 	$addrsig,
 	$text,
@@ -3354,3 +2683,91 @@ error_storage:
 	$addrsig_sym, thread_profiling
 	$addrsig_sym, CLOCKS_PER_SEC
 	$addrsig_sym, error_storage
+	$text,
+	$file,	"udivmodsi4.c"
+	$section,	%text, __udivmodsi4,"ax",@progbits
+	$globl,	__udivmodsi4                    //  -  -  Begin function __udivmodsi4
+	$type,	__udivmodsi4,@function
+__udivmodsi4:                           // @__udivmodsi4
+udivmodsi4..Lfunc_begin0:
+// %bb.0:
+	$sd , r22, 8, d22
+	$add , r22, r22, 16
+	$sd , r22,  - 16, d14
+	$move , r14, r2
+	$call , r23, __udiv32
+	$sw , r14, 0, r1
+                                        // kill: def $r0 killed $r0 killed $d0
+	$ld , d14, r22,  - 16
+	$ld , d22, r22,  - 8
+	$jump , r23
+udivmodsi4..Lfunc_end0:
+	$size,	__udivmodsi4, udivmodsi4..Lfunc_end0 - __udivmodsi4
+	$section,	%stack_sizes,"o",@progbits,%text, __udivmodsi4
+	$long,	udivmodsi4..Lfunc_begin0
+	$byte,	16
+	$section,	%text, __udivmodsi4,"ax",@progbits
+                                        //  -  -  End function
+	$addrsig,
+	$text,
+	$file,	"mul32.c"
+	$section,	%text, __mulsi3,"ax",@progbits
+	$globl,	__mulsi3                        //  -  -  Begin function __mulsi3
+	$type,	__mulsi3,@function
+__mulsi3:                               // @__mulsi3
+mul32..Lfunc_begin0:
+// %bb.0:
+	// inline asm
+	$jgtu , r1, r0, mul32.__mulsi3_swap
+	$move , r2, r0
+	$move , r0, r1, true, mul32.__mulsi3_start
+mul32.__mulsi3_swap:
+	$move , r2, r1
+	$move , r0, r0
+mul32.__mulsi3_start:
+	$move , r1, zero
+	$mul_step , d0, r2, d0, 0, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 1, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 2, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 3, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 4, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 5, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 6, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 7, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 8, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 9, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 10, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 11, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 12, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 13, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 14, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 15, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 16, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 17, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 18, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 19, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 20, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 21, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 22, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 23, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 24, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 25, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 26, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 27, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 28, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 29, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 30, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 31, z, mul32.__mulsi3_exit
+mul32.__mulsi3_exit:
+	$move , r0, r1
+
+	// inline asm
+	$jump , r23
+mul32..Lfunc_end0:
+	$size,	__mulsi3, mul32..Lfunc_end0 - __mulsi3
+	$section,	%stack_sizes,"o",@progbits,%text, __mulsi3
+	$long,	mul32..Lfunc_begin0
+	$byte,	0
+	$section,	%text, __mulsi3,"ax",@progbits
+                                        //  -  -  End function
+	$addrsig,

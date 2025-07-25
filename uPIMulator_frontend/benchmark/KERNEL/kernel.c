@@ -6,7 +6,7 @@
 #include "inode.h"
 #include "syscall.h"
 #include <perfcounter.h>
-
+extern void preemption();
 __mram_ptr struct kernel_info
     begin_mram; // At 0x0 addr in mram, used by the API K1-K2
 
@@ -43,7 +43,8 @@ __host struct process processs[MAX_PRG]
 
 volatile unsigned int cur_process_index __attribute__((section(".data"))) =
     0; // the index (in processs) of the running process
-
+volatile unsigned int ifpreempt __attribute__((section(".data"))) =
+    0;
 struct flow_context *saved_fc_stop __attribute__((section(".data"))) =
     NULL; // flow context to stop/resume the dpu
 
@@ -308,12 +309,16 @@ void launch_proc(unsigned int prc_idx, uint8_t ready) {
         processs[prc_idx].end_value; // at this moment end_value contain the
                                      // entry point (main) of the process
     jobs[0].state = READY;
+    jobs[0].fc->r24=(int)preemption;
     jobs[0].jid = 0;
   }
   unsigned int time = 0;
   //__builtin_time_r(time);
    __asm__ volatile("\ttime %[time]\n" : [time] "=r"(time));
   processs[prc_idx].timer = time;
+  if(ifpreempt!=0){
+    fault_notif();
+  }
   int all_end_or_waiting = scheduler_jobs();
   if (all_end_or_waiting && processs[prc_idx].state != FINISHED) {
     processs[prc_idx].state = WAITING;
@@ -387,7 +392,7 @@ int scheduler(void) {
                         // (avoid to load unload at each time)
   for (;;) {
     for (; idx < MAX_PRG; idx++) {
-      check_timer_stop(); // uncomment
+      //check_timer_stop(); // uncomment
       char ready;
       if (processs[idx].state == READY) {
         ready = 1;
@@ -443,6 +448,7 @@ Kernel start here after booting.
 
 // BARRIER_INIT(barrier_boot, NR_TASKLETS);
 int main(void) {
+  read_preemption();
   if (me_new() == 0) {
     cp.mutex = &__atomic_bit_mutex_sp;
     cp.nb = NR_TASKLETS;
@@ -468,11 +474,6 @@ int main(void) {
   // barrier_wait(&barrier_boot);
 
   boot_me();
-  //__user_space_wram[WRAM_MAX_PROCESS - 1] = 0xff;
-
-  // int flags = read_flags();
-  //write_flags(0); // reset flag
-
   perfcounter_config(COUNT_CYCLES, true);
   // init_sockets();
   scheduler(); // willl never return

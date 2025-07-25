@@ -119,6 +119,7 @@ namespace upmem_sim::simulator::faho::def
         }
         else
         {
+            std::cout<<result_dpu<<" "<<result_host<<std::endl;
             assert(0);
         }
 

@@ -44,7 +44,7 @@
 #define WRAM_MAX_PROCESS 128*1024 // The (maximum) size of the wram of a user
 #define WRAM_OFFSET 512
 #define MRAM_OFFSET 636 * 1024
-
+#define fProc_QUANTOM 1000
 #define QUANTOM_STOP_DPU 5000000
 #define PROCESS_QUANTOM QUANTOM_STOP_DPU / 100
 #define QUANTOM_JOB PROCESS_QUANTOM / 20

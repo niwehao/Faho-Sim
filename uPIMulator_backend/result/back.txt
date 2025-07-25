@@ -1,0 +1,686 @@
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/loc-gowalla_edges.txt
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/atomic.bin
+DMA to atomic completed...
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/iram.bin
+num of instructions: 3572
+DMA to IRAM completed...
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/wram.bin
+DMA to WRAM completed...
+init completed...
+launch completed...
+********time:3715*******
+text section size is 61c0
+flag set:0
+break point 2 happen in cycle:4429
+break point 3 happen in cycle:5389
+break point 4 happen in cycle:5510
+break point 5 happen in cycle:22547
+break point 6 happen in cycle:31859
+break point 7 happen in cycle:32377
+fthread 1 meet barrier48803
+fthread 2 meet barrier57636
+fthread 3 meet barrier66647
+fthread 4 meet barrier77117
+fthread 5 meet barrier90561
+fthread 6 meet barrier104136
+fthread 7 meet barrier115223
+fthread 8 meet barrier128376
+fthread 9 meet barrier137672
+fthread 10 meet barrier149859
+fthread 11 meet barrier176340
+fthread 12 meet barrier194489
+fthread 13 meet barrier221109
+fthread 14 meet barrier245821
+fthread 15 meet barrier268851
+********time:390618*******
+ReadSocket event for pid: 1 at time: 0
+********time:390619*******
+flag set:32
+fthread 0 meet barrier428560
+fthread 0 leave barrier564236
+fthread 0 meet barrier595898
+fthread 1 leave barrier675639
+fthread 1 meet barrier678788
+fthread 2 leave barrier684768
+fthread 2 meet barrier687907
+fthread 3 leave barrier690291
+fthread 3 meet barrier693435
+fthread 4 leave barrier699583
+fthread 4 meet barrier702720
+fthread 5 leave barrier709282
+fthread 5 meet barrier712428
+fthread 6 leave barrier719526
+fthread 6 meet barrier722684
+fthread 7 leave barrier729895
+fthread 7 meet barrier733114
+fthread 8 leave barrier737440
+fthread 8 meet barrier740766
+fthread 9 leave barrier745678
+fthread 9 meet barrier749099
+fthread 10 leave barrier754599
+fthread 10 meet barrier758283
+fthread 11 leave barrier764803
+fthread 11 meet barrier768749
+fthread 12 leave barrier776264
+fthread 12 meet barrier780474
+fthread 13 leave barrier789212
+fthread 13 meet barrier793749
+fthread 14 leave barrier803708
+fthread 14 meet barrier808543
+fthread 15 leave barrier818199
+fthread 15 meet barrier823263
+fthread 15 leave barrier916924
+fthread 2 leave barrier922793
+fthread 1 leave barrier928702
+fthread 0 leave barrier934579
+fthread 3 leave barrier940442
+fthread 4 leave barrier946276
+fthread 5 leave barrier951999
+fthread 6 leave barrier957916
+fthread 7 leave barrier967769
+fthread 8 leave barrier974639
+fthread 9 leave barrier981462
+fthread 10 leave barrier988192
+fthread 11 leave barrier994862
+fthread 12 leave barrier1001437
+fthread 13 leave barrier1007905
+fthread 14 leave barrier1014359
+fthread 15 meet barrier1086458
+fthread 2 meet barrier1094103
+fthread 1 meet barrier1101570
+fthread 3 meet barrier1115245
+fthread 4 meet barrier1121604
+fthread 5 meet barrier1127474
+fthread 6 meet barrier1133237
+fthread 7 meet barrier1142093
+fthread 8 meet barrier1147822
+fthread 9 meet barrier1153255
+fthread 10 meet barrier1158070
+fthread 11 meet barrier1162540
+fthread 12 meet barrier1166782
+fthread 13 meet barrier1170766
+fthread 14 meet barrier1174587
+preempt start with 1224586
+thread1 preempt directly at 410040
+preempt finish with 4246
+fthread 0 meet barrier1467000
+fthread 0 leave barrier1531545
+fthread 1 leave barrier1644671
+fthread 1 meet barrier1644748
+fthread 2 leave barrier1650841
+fthread 2 meet barrier1650918
+fthread 3 leave barrier1685679
+fthread 3 meet barrier1685756
+fthread 4 leave barrier1692608
+fthread 4 meet barrier1692685
+fthread 5 leave barrier1727680
+fthread 5 meet barrier1727757
+fthread 6 leave barrier1735422
+fthread 6 meet barrier1735499
+fthread 7 leave barrier1770612
+fthread 7 meet barrier1770689
+fthread 8 leave barrier1779169
+fthread 8 meet barrier1779246
+fthread 9 leave barrier1814725
+fthread 9 meet barrier1814802
+fthread 10 leave barrier1824095
+fthread 10 meet barrier1824172
+fthread 11 leave barrier1859901
+fthread 11 meet barrier1859978
+fthread 12 leave barrier1870086
+fthread 12 meet barrier1870163
+fthread 13 leave barrier1905994
+fthread 13 meet barrier1906071
+fthread 14 leave barrier1916992
+fthread 14 meet barrier1917069
+fthread 15 leave barrier1952952
+fthread 15 meet barrier1953029
+********time:1971335*******
+ReadSocket event for pid: 1 at time: 0
+********time:1971336*******
+flag set:32
+in level:2
+********time:2094204*******
+flag set:32
+fthread 0 meet barrier2132146
+fthread 0 leave barrier2267822
+fthread 0 meet barrier2272670
+fthread 1 leave barrier2378041
+fthread 2 leave barrier2387171
+fthread 2 meet barrier2390317
+fthread 3 leave barrier2392507
+fthread 3 meet barrier2395656
+fthread 4 leave barrier2401636
+fthread 1 meet barrier2403826
+fthread 4 meet barrier2404788
+fthread 5 leave barrier2411521
+fthread 6 leave barrier2421628
+fthread 7 leave barrier2432258
+fthread 5 meet barrier2432931
+fthread 7 meet barrier2435668
+fthread 8 leave barrier2440967
+fthread 6 meet barrier2443585
+fthread 8 meet barrier2444399
+fthread 9 leave barrier2452747
+fthread 9 meet barrier2456142
+fthread 10 leave barrier2465282
+fthread 11 leave barrier2479655
+fthread 12 leave barrier2495980
+fthread 10 meet barrier2498272
+fthread 13 leave barrier2509506
+fthread 11 meet barrier2515716
+fthread 14 leave barrier2524814
+fthread 12 meet barrier2527262
+fthread 15 leave barrier2540038
+fthread 13 meet barrier2542884
+fthread 15 meet barrier2545349
+fthread 14 meet barrier2559076
+fthread 14 leave barrier2644515
+fthread 15 leave barrier2650382
+fthread 2 leave barrier2656273
+fthread 1 leave barrier2662140
+fthread 0 leave barrier2667989
+fthread 3 leave barrier2673828
+fthread 4 leave barrier2679600
+fthread 5 leave barrier2685514
+fthread 6 leave barrier2695362
+fthread 7 leave barrier2702354
+fthread 8 leave barrier2713380
+fthread 9 leave barrier2720402
+fthread 10 leave barrier2743251
+fthread 11 leave barrier2751321
+fthread 12 leave barrier2771381
+fthread 15 meet barrier2812745
+fthread 13 leave barrier2815663
+fthread 2 meet barrier2819389
+fthread 0 meet barrier2831743
+fthread 3 meet barrier2837495
+fthread 4 meet barrier2842601
+fthread 7 meet barrier2861311
+fthread 8 meet barrier2869073
+fthread 9 meet barrier2873560
+preempt start with 2928172
+thread1 preempt directly at 409248
+preempt finish with 5208
+fthread 5 meet barrier3468527
+preempt start with 3736748
+thread0 preempt directly at 410184
+preempt finish with 3444
+fthread 6 meet barrier3958919
+fthread 1 meet barrier4283129
+fthread 10 meet barrier4486983
+preempt start with 4544812
+thread3 preempt directly at 409176
+thread2 preempt directly at 409500
+preempt finish with 3256
+fthread 12 meet barrier4704991
+fthread 11 meet barrier4705541
+fthread 13 meet barrier4798629
+fthread 14 meet barrier4838944
+fthread 14 leave barrier4897872
+fthread 14 meet barrier4897989
+fthread 0 leave barrier5011865
+fthread 1 leave barrier5022765
+fthread 1 meet barrier5022842
+fthread 2 leave barrier5033372
+fthread 2 meet barrier5033449
+fthread 3 leave barrier5068210
+fthread 3 meet barrier5068287
+fthread 4 leave barrier5075139
+fthread 4 meet barrier5075216
+fthread 5 leave barrier5110211
+fthread 5 meet barrier5110288
+fthread 6 leave barrier5117953
+fthread 6 meet barrier5118030
+fthread 7 leave barrier5153143
+fthread 7 meet barrier5153220
+fthread 8 leave barrier5161700
+fthread 8 meet barrier5161777
+fthread 9 leave barrier5197256
+fthread 9 meet barrier5197333
+fthread 10 leave barrier5206626
+fthread 10 meet barrier5206703
+fthread 11 leave barrier5242432
+fthread 11 meet barrier5242509
+fthread 12 leave barrier5252617
+fthread 12 meet barrier5252694
+fthread 13 leave barrier5288525
+fthread 13 meet barrier5288602
+fthread 15 leave barrier5328609
+fthread 15 meet barrier5328686
+********time:5342002*******
+ReadSocket event for pid: 1 at time: 0
+********time:5342003*******
+flag set:32
+in level:3
+********time:5464871*******
+flag set:32
+fthread 0 meet barrier5502813
+fthread 0 leave barrier5638489
+fthread 0 meet barrier5670144
+fthread 1 leave barrier5749885
+fthread 2 leave barrier5759014
+fthread 3 leave barrier5764242
+fthread 4 leave barrier5769903
+fthread 5 leave barrier5776007
+fthread 1 meet barrier5780848
+fthread 6 leave barrier5782726
+fthread 7 leave barrier5790344
+fthread 8 leave barrier5802374
+fthread 2 meet barrier5808297
+fthread 9 leave barrier5815720
+fthread 4 meet barrier5822220
+fthread 5 meet barrier5823836
+fthread 3 meet barrier5827685
+fthread 10 leave barrier5830799
+fthread 11 leave barrier5846957
+fthread 7 meet barrier5855823
+fthread 12 leave barrier5865000
+fthread 6 meet barrier5867132
+fthread 13 leave barrier5885078
+fthread 8 meet barrier5886675
+fthread 9 meet barrier5896047
+fthread 14 leave barrier5906036
+fthread 10 meet barrier5906853
+fthread 15 leave barrier5921530
+fthread 11 meet barrier5970204
+fthread 12 meet barrier5974534
+fthread 13 meet barrier6020996
+fthread 14 meet barrier6050333
+fthread 15 meet barrier6057621
+fthread 15 leave barrier6096860
+fthread 2 leave barrier6102731
+fthread 1 leave barrier6108613
+fthread 0 leave barrier6114408
+fthread 3 leave barrier6120395
+fthread 4 leave barrier6130014
+fthread 5 leave barrier6140332
+fthread 6 leave barrier6208122
+fthread 7 leave barrier6220843
+fthread 8 leave barrier6250091
+fthread 9 leave barrier6272393
+preempt start with 6298839
+thread9 preempt directly at 403332
+thread10 preempt directly at 403164
+thread11 preempt directly at 403164
+thread12 preempt directly at 403164
+thread13 preempt directly at 403164
+thread2 preempt directly at 409248
+preempt finish with 7869
+fthread 10 leave barrier6318055
+fthread 11 leave barrier6399707
+fthread 12 leave barrier6415072
+fthread 13 leave barrier6433315
+fthread 14 leave barrier6470436
+fthread 0 meet barrier6836665
+preempt start with 7110103
+thread1 preempt directly at 409680
+thread3 preempt directly at 409248
+preempt finish with 3774
+fthread 1 meet barrier7841702
+preempt start with 7917271
+thread2 preempt directly at 410184
+thread1 preempt directly at 409680
+preempt finish with 2839
+preempt start with 8723543
+thread2 preempt directly at 403884
+preempt finish with 2592
+fthread 2 meet barrier9371604
+preempt start with 9529559
+thread0 preempt directly at 409248
+preempt finish with 2847
+preempt start with 10335831
+thread0 preempt directly at 409248
+preempt finish with 4293
+fthread 3 meet barrier10919094
+fthread 4 meet barrier11052963
+preempt start with 11144663
+thread1 preempt directly at 409248
+preempt finish with 3970
+preempt start with 11951959
+thread0 preempt directly at 409248
+preempt finish with 2838
+fthread 5 meet barrier11980657
+preempt start with 12759383
+thread0 preempt directly at 409500
+thread1 preempt directly at 409248
+preempt finish with 4405
+preempt start with 13567191
+thread0 preempt directly at 409500
+preempt finish with 2847
+fthread 6 meet barrier13895678
+fthread 7 meet barrier13947672
+preempt start with 14374615
+thread2 preempt directly at 409248
+preempt finish with 4105
+preempt start with 15182039
+thread0 preempt directly at 409248
+preempt finish with 4757
+fthread 8 meet barrier15851434
+preempt start with 15991383
+thread0 preempt directly at 409248
+preempt finish with 4769
+fthread 9 meet barrier16159235
+fthread 10 meet barrier16505387
+preempt start with 16800727
+thread2 preempt directly at 409248
+preempt finish with 4644
+preempt start with 17608791
+thread2 preempt directly at 409680
+thread0 preempt directly at 409248
+preempt finish with 4802
+fthread 12 meet barrier18144733
+fthread 11 meet barrier18201572
+preempt start with 18418135
+thread1 preempt directly at 409248
+preempt finish with 5084
+fthread 13 meet barrier18988359
+preempt start with 19226583
+thread1 preempt directly at 409176
+preempt finish with 2888
+fthread 15 meet barrier19354710
+fthread 14 meet barrier19506607
+fthread 14 leave barrier19565269
+fthread 14 meet barrier19565386
+fthread 0 leave barrier19679160
+fthread 1 leave barrier19690060
+fthread 1 meet barrier19690137
+fthread 2 leave barrier19700623
+fthread 2 meet barrier19700700
+fthread 3 leave barrier19735506
+fthread 3 meet barrier19735583
+fthread 4 leave barrier19742434
+fthread 4 meet barrier19742511
+fthread 5 leave barrier19777382
+fthread 5 meet barrier19777459
+fthread 6 leave barrier19785125
+fthread 6 meet barrier19785202
+fthread 7 leave barrier19820439
+fthread 7 meet barrier19820516
+fthread 8 leave barrier19828995
+fthread 8 meet barrier19829072
+fthread 9 leave barrier19864559
+fthread 9 meet barrier19864636
+fthread 10 leave barrier19873930
+fthread 10 meet barrier19874007
+fthread 11 leave barrier19909596
+fthread 11 meet barrier19909673
+fthread 12 leave barrier19919780
+fthread 12 meet barrier19919857
+fthread 13 leave barrier19955828
+fthread 13 meet barrier19955905
+fthread 15 leave barrier19991016
+fthread 15 meet barrier19991093
+********time:20008094*******
+ReadSocket event for pid: 1 at time: 0
+********time:20008095*******
+flag set:32
+in level:4
+********time:20130963*******
+flag set:32
+fthread 0 meet barrier20168905
+fthread 0 leave barrier20304581
+fthread 1 leave barrier20417818
+fthread 0 meet barrier20421036
+fthread 2 leave barrier20424075
+fthread 3 leave barrier20429301
+fthread 4 leave barrier20434943
+fthread 5 leave barrier20441055
+fthread 6 leave barrier20447745
+fthread 7 leave barrier20455254
+fthread 8 leave barrier20463888
+fthread 9 leave barrier20473906
+fthread 10 leave barrier20485386
+fthread 11 leave barrier20498578
+fthread 12 leave barrier20513560
+fthread 1 meet barrier20518267
+fthread 13 leave barrier20535935
+fthread 14 leave barrier20554886
+fthread 2 meet barrier20557001
+fthread 3 meet barrier20577629
+fthread 15 leave barrier20578547
+fthread 4 meet barrier20618733
+fthread 6 meet barrier20643724
+fthread 7 meet barrier20667126
+fthread 8 meet barrier20681195
+fthread 5 meet barrier20688225
+fthread 11 meet barrier20699127
+fthread 9 meet barrier20713283
+fthread 10 meet barrier20727633
+fthread 13 meet barrier20737227
+fthread 12 meet barrier20740846
+fthread 14 meet barrier20745469
+fthread 15 meet barrier20779905
+fthread 15 leave barrier20803207
+fthread 2 leave barrier20809075
+fthread 1 leave barrier20814974
+fthread 0 leave barrier20820852
+fthread 3 leave barrier20826731
+fthread 4 leave barrier20832404
+fthread 5 leave barrier20838583
+fthread 6 leave barrier20859337
+fthread 7 leave barrier20910739
+fthread 8 leave barrier20934510
+fthread 9 leave barrier20954392
+preempt start with 20964931
+thread9 preempt directly at 403164
+thread8 preempt directly at 409500
+thread10 preempt directly at 403164
+thread7 preempt directly at 409680
+thread11 preempt directly at 403164
+thread12 preempt directly at 403164
+thread3 preempt directly at 409500
+thread13 preempt directly at 403164
+thread2 preempt directly at 409248
+preempt finish with 6947
+fthread 10 leave barrier21064133
+fthread 11 leave barrier21075185
+fthread 12 leave barrier21085199
+fthread 13 leave barrier21106952
+fthread 14 leave barrier21129757
+preempt start with 21775299
+thread4 preempt directly at 409680
+thread8 preempt directly at 409500
+thread7 preempt directly at 409680
+thread5 preempt directly at 409248
+preempt finish with 5951
+preempt start with 22584643
+thread8 preempt directly at 409452
+thread5 preempt directly at 409680
+thread0 preempt directly at 410184
+thread2 preempt directly at 409500
+thread3 preempt directly at 409500
+thread9 preempt directly at 409680
+thread7 preempt directly at 408900
+preempt finish with 5274
+fthread 4 meet barrier23142027
+preempt start with 23393347
+thread1 preempt directly at 409356
+thread0 preempt directly at 408900
+thread4 preempt directly at 409500
+thread7 preempt directly at 409500
+thread3 preempt directly at 409248
+preempt finish with 5096
+fthread 1 meet barrier23405721
+fthread 2 meet barrier23768941
+fthread 3 meet barrier23778830
+fthread 7 meet barrier24078873
+preempt start with 24201795
+thread0 preempt directly at 409464
+thread2 preempt directly at 408660
+thread1 preempt directly at 408168
+thread11 preempt directly at 409680
+thread6 preempt directly at 409500
+thread3 preempt directly at 409680
+thread4 preempt directly at 409500
+thread9 preempt directly at 409680
+thread7 preempt directly at 409500
+thread5 preempt directly at 409248
+preempt finish with 6625
+fthread 8 meet barrier24425627
+fthread 6 meet barrier24466066
+fthread 0 meet barrier24566524
+fthread 5 meet barrier24632931
+fthread 13 meet barrier24800945
+fthread 11 meet barrier24822797
+fthread 14 meet barrier24831413
+fthread 15 meet barrier24885914
+fthread 12 meet barrier24900629
+fthread 9 meet barrier24967232
+fthread 10 meet barrier24990544
+preempt start with 25011779
+thread2 preempt directly at 404292
+preempt finish with 7722
+fthread 10 leave barrier25038985
+fthread 10 meet barrier25039099
+fthread 0 leave barrier25107745
+fthread 1 leave barrier25161043
+fthread 1 meet barrier25161120
+fthread 2 leave barrier25167213
+fthread 2 meet barrier25167290
+fthread 3 leave barrier25202043
+fthread 3 meet barrier25202120
+fthread 4 leave barrier25208971
+fthread 4 meet barrier25209048
+fthread 5 leave barrier25243919
+fthread 5 meet barrier25243996
+fthread 6 leave barrier25251662
+fthread 6 meet barrier25251739
+fthread 7 leave barrier25286976
+fthread 7 meet barrier25287053
+fthread 8 leave barrier25295532
+fthread 8 meet barrier25295609
+fthread 9 leave barrier25331096
+fthread 9 meet barrier25331173
+fthread 11 leave barrier25365041
+fthread 11 meet barrier25365118
+fthread 12 leave barrier25375218
+fthread 12 meet barrier25375295
+fthread 13 leave barrier25411179
+fthread 13 meet barrier25411256
+fthread 14 leave barrier25422177
+fthread 14 meet barrier25422254
+fthread 15 leave barrier25458137
+fthread 15 meet barrier25458214
+********time:25476520*******
+ReadSocket event for pid: 1 at time: 0
+********time:25476521*******
+flag set:32
+in level:5
+********time:25599390*******
+flag set:32
+fthread 0 meet barrier25637332
+fthread 0 leave barrier25773008
+fthread 0 meet barrier25870022
+fthread 1 leave barrier25886234
+fthread 2 leave barrier25895407
+fthread 3 leave barrier25900638
+fthread 4 leave barrier25906286
+fthread 5 leave barrier25912390
+fthread 5 meet barrier25915645
+fthread 6 leave barrier25919154
+fthread 7 leave barrier25929956
+fthread 8 leave barrier25942086
+fthread 6 meet barrier25942957
+fthread 9 leave barrier25955475
+fthread 3 meet barrier25956902
+fthread 4 meet barrier25958109
+fthread 10 leave barrier25966780
+fthread 2 meet barrier25969421
+fthread 10 meet barrier25971156
+fthread 7 meet barrier25975244
+fthread 8 meet barrier25976027
+fthread 11 leave barrier25982910
+fthread 1 meet barrier25983044
+fthread 9 meet barrier25983301
+fthread 11 meet barrier25986922
+fthread 12 leave barrier25998656
+fthread 12 meet barrier26002837
+fthread 13 leave barrier26016236
+fthread 13 meet barrier26020773
+fthread 14 leave barrier26030717
+fthread 14 meet barrier26035552
+fthread 15 leave barrier26045210
+fthread 15 meet barrier26050218
+fthread 1 leave barrier26085206
+fthread 0 leave barrier26091071
+fthread 3 leave barrier26096961
+fthread 4 leave barrier26102832
+fthread 5 leave barrier26108702
+fthread 6 leave barrier26114543
+fthread 7 leave barrier26120370
+fthread 8 leave barrier26126145
+fthread 9 leave barrier26131890
+fthread 10 leave barrier26138787
+fthread 11 leave barrier26145599
+fthread 12 leave barrier26152378
+fthread 13 leave barrier26159063
+fthread 14 leave barrier26165623
+fthread 15 leave barrier26172102
+fthread 2 leave barrier26178574
+fthread 5 meet barrier26286878
+fthread 10 meet barrier26321081
+fthread 11 meet barrier26327869
+fthread 12 meet barrier26334538
+fthread 13 meet barrier26340777
+fthread 14 meet barrier26346718
+fthread 15 meet barrier26352101
+fthread 9 meet barrier26389445
+fthread 6 meet barrier26421667
+preempt start with 26433358
+thread3 preempt directly at 409512
+thread0 preempt directly at 393216
+thread2 preempt directly at 409500
+thread7 preempt directly at 409500
+thread15 preempt directly at 409680
+thread1 preempt directly at 409500
+thread6 preempt directly at 409500
+preempt finish with 6621
+fthread 8 meet barrier26506951
+fthread 7 meet barrier26584608
+fthread 4 meet barrier26748022
+fthread 3 meet barrier26808484
+fthread 2 meet barrier27145975
+preempt start with 27243470
+thread2 preempt directly at 408900
+thread1 preempt directly at 409500
+preempt finish with 3176
+fthread 0 meet barrier27492915
+fthread 1 meet barrier27495098
+fthread 1 leave barrier27563951
+fthread 1 meet barrier27564068
+fthread 0 leave barrier27674029
+fthread 2 leave barrier27688647
+fthread 2 meet barrier27688724
+fthread 3 leave barrier27723731
+fthread 3 meet barrier27723808
+fthread 4 leave barrier27730659
+fthread 4 meet barrier27730736
+fthread 5 leave barrier27765739
+fthread 5 meet barrier27765816
+fthread 6 leave barrier27773482
+fthread 6 meet barrier27773559
+fthread 7 leave barrier27808796
+fthread 7 meet barrier27808873
+fthread 8 leave barrier27817352
+fthread 8 meet barrier27817429
+fthread 9 leave barrier27852784
+fthread 9 meet barrier27852861
+fthread 10 leave barrier27862155
+fthread 10 meet barrier27862232
+fthread 11 leave barrier27897953
+fthread 11 meet barrier27898030
+fthread 12 leave barrier27908137
+fthread 12 meet barrier27908214
+fthread 13 leave barrier27944185
+fthread 13 meet barrier27944262
+fthread 14 leave barrier27955184
+fthread 14 meet barrier27955261
+fthread 15 leave barrier27991002
+fthread 15 meet barrier27991079
+********time:28008080*******
+ReadSocket event for pid: 1 at time: 0
+********time:28008081*******
+flag set:32
+********time:28130949*******
+sucess

@@ -45,16 +45,16 @@ int syscall(unsigned int arg1, unsigned int arg2, unsigned int arg3,
   //print_debug(value,0);
   if (value == 0)
     return 0;
-  unsigned int time = 0;
+  //unsigned int time = 0;
   uint8_t jobidx = cur_jobs[me_new()];
   //__builtin_time_r(time);
-   __asm__ volatile("\ttime %[time]\n" : [time] "=r"(time));
+  //  __asm__ volatile("\ttime %[time]\n" : [time] "=r"(time));
 
-  if (time - jobs[jobidx].time > QUANTOM_JOB) {
-    jobs[jobidx].state = PAUSED;
-    swap_scheduler();
-    //__asm__ volatile("\tmove r19, id\n");
-  }
+  // if (time - jobs[jobidx].time > QUANTOM_JOB) {
+  //   jobs[jobidx].state = PAUSED;
+  //   swap_scheduler();
+  //   //__asm__ volatile("\tmove r19, id\n");
+  // }
 
   /* switch (value) {       switch not possible witout specific linker -> switch
   use memory to jump at the correct location case 1: return yield(); case 2:

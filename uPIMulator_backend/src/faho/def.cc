@@ -16,6 +16,7 @@ namespace upmem_sim::simulator::faho::def
     write_socket = new WriteSocket();
     write_inode = new WriteInode();
     read_inode = new ReadInode();
+    check_result= new CheckResult();
     processes.resize(MAX_PRG);
   }
   void dpu_copy_from_mram(dpu::DPU *dpu, void *buf, int offset, int size)

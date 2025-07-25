@@ -28,6 +28,7 @@ extern __dma_aligned struct job jobs[JOB_PER_PROCESS];
 extern struct flow_context *fc_scheduler_job[NR_TASKLETS];
 extern struct process processs[MAX_PRG];
 extern volatile unsigned int cur_process_index;
+extern volatile unsigned int ifpreempt;
 /**
  * @brief Create a new job, this function must be called by the job 0.  The job
  * will be  start at begin_pc
@@ -56,6 +57,7 @@ int scheduler_jobs(void);
  *
  */
 void swap_scheduler(void);
+int kernel_preempt_check();
 extern mutex_id_t mutex_jobs;
 extern struct custom_barriere cp;
 
@@ -146,6 +148,7 @@ int create_job(unsigned int arg1)
     jobs[found].fc->r22 = (int)jobs[found].fc;
     jobs[found].fc->r23 = (int)__end_child_jobs;
     jobs[found].fc->r21 = arg1; // the beging of the job
+    jobs[found].fc->r24 = (int)preemption;
 
     mutex_unlock(mutex_jobs);
 
@@ -200,8 +203,9 @@ void swap(unsigned int job_idx, uint8_t first)
   __asm__ volatile("\ttime %[time]\n" : [time] "=r"(time));
   jobs[job_idx].time = time;
 
-  if (first){
-    print_debug(6,0);
+  if (first)
+  {
+    print_debug(6, 0);
     first_swap_context(&fc_scheduler_job[me_new()], jobs[job_idx].fc,
                        jobs[job_idx].fc->r21);
   }
@@ -225,19 +229,47 @@ uint8_t check_time_process()
 
 uint8_t all_end_or_waiting __attribute__((section(".data"))) = 0;
 // uint32_t last __attribute__((section(".data"))) = 0;
+int kernel_preempt_check()
+{
+  int r26;
+  int flag;
+  int flag1;
+  int flag3;
+  r26 = r26_read();
+  flag = r26 - ((r26 >> 3) << 3);
+  flag1 = (flag % 2);
+  flag3 = ((flag >> 2) % 2);
+  if (flag1 == 1)
+  {
+    uint32_t reg_config = 0;
+    r26_cfg(reg_config, PROCESS_QUANTOM);
+    ifpreempt=1;
+    
+    return 1;
+  }
+  if (flag3 == 1)
+  {
+    uint32_t reg_config = 0;
+    r26_cfg(reg_config, PROCESS_QUANTOM);
+    //ifpreempt=1;
+    return 3;
+  }
+  return 0;
+}
 int scheduler_jobs(void)
 {
 
   unsigned int last = 0;
-  uint8_t stop = 0, ready;
+  uint8_t stop = 0, ready, preempt = 0;
 
   // int a = 0; // remove this
-
   sp_wait(&cp);
+  uint32_t reg_config = 1 << 1;
+  r26_cfg(reg_config,PROCESS_QUANTOM);
   for (;;)
   {
     mutex_lock(mutex_jobs);
-    for (; last < processs[cur_process_index].nb_jobs && !stop; last++)
+    for (; last < processs[cur_process_index].nb_jobs && !stop && !preempt; last++)
     {
 
       if (jobs[last].state == PAUSED)
@@ -246,24 +278,61 @@ int scheduler_jobs(void)
         ready = 1;
       else
       {
+        preempt = kernel_preempt_check();
+        if (preempt == 3)
+        {
+           preempt=1;
+          break;
+        }
+        else if (preempt == 1)
+        {
+          fault_notif();
+        }
         continue;
+      }
+      preempt = kernel_preempt_check();
+      if (preempt == 3)
+      {
+        preempt=1;
+        break;
+      }
+      else if (preempt == 1)
+      {
+        fault_notif();
       }
 
       swap(last, ready); // swap结束以后
       all_end_or_waiting =
           0; // the detection of all_end can be more fast but keep it simple
-      stop = check_time_process();
+      preempt = kernel_preempt_check();
+      if (preempt == 3)
+      {
+        preempt=1;
+        break;
+      }
+      else if (preempt == 1)
+      {
+        jobs[last].state = PAUSED;
+        break;
+      }
+
+      // stop = check_time_process();
     }
-    stop = check_time_process();
+    // stop = check_time_process();
     last = 0;
     mutex_unlock(mutex_jobs);
-    if (all_end_or_waiting || stop)
+    if (all_end_or_waiting || stop || preempt)
     {
 
       // barrier_wait(&barrier_jobs); // wait the end of everyone before quit
 
       if (sp_wait(&cp) != 0)
         continue;
+      kernel_preempt_check();
+      if(ifpreempt==1){
+        all_end_or_waiting=0;
+        ifpreempt=0;
+      }
       //__asm__ volatile("\tmove r15, id\n");//r15记录的me可能会发生变化
       if (me_new() == 0)
         return all_end_or_waiting; // return the all_end_or_waiting if it is
@@ -271,8 +340,12 @@ int scheduler_jobs(void)
       // barrier_wait(&barrier_jobs);
       sp_wait(&cp); // wait before restart the loop
       // wait the me()==0 to return back to this function
+      uint32_t reg_config = (1 << 1);
+      r26_cfg(reg_config,PROCESS_QUANTOM);
 
       stop = 0;
+      preempt = 0;
+    
     }
 
     all_end_or_waiting = 1;

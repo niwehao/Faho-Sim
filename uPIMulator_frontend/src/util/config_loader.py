@@ -55,7 +55,7 @@ class ConfigLoader:
 
     @staticmethod
     def num_gp_registers() -> int:
-        return 24
+        return 27
 
     @staticmethod
     def max_num_tasklets() -> int:

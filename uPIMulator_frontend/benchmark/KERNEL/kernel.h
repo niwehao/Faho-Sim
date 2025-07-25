@@ -13,6 +13,8 @@ struct flow_context { // the flow context of a process (or the scheduler)
   int r18;
   int r21;
   int r20;
+  int r25;
+  int r24;
   int r23;
   int r22;
 };
@@ -172,5 +174,9 @@ extern void resume_me(struct flow_context *saved);
 int __end_process(int ret);
 extern void print_debug(int value,int align);
 extern void fault_notif();
+extern void r26_cfg(int cfg,int quantum);
+extern int r26_read();
+extern int read_preemption();
+void preemption();
 #include "socket.h"
 #endif

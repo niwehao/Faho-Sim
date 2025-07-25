@@ -1,0 +1,129 @@
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/atomic.bin
+DMA to atomic completed...
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/iram.bin
+num of instructions: 3572
+DMA to IRAM completed...
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/wram.bin
+DMA to WRAM completed...
+init completed...
+launch completed...
+********time:3715*******
+text section size is 5450
+flag set:0
+break point 2 happen in cycle:4429
+break point 3 happen in cycle:5697
+break point 4 happen in cycle:5818
+break point 5 happen in cycle:20498
+break point 6 happen in cycle:29810
+break point 7 happen in cycle:30328
+fthread 1 meet barrier46070
+fthread 2 meet barrier55454
+fthread 3 meet barrier64969
+fthread 4 meet barrier73812
+fthread 5 meet barrier85741
+fthread 6 meet barrier98673
+fthread 7 meet barrier107980
+fthread 8 meet barrier122872
+fthread 9 meet barrier139974
+fthread 10 meet barrier158047
+fthread 11 meet barrier179801
+fthread 12 meet barrier195127
+fthread 13 meet barrier212184
+fthread 14 meet barrier231060
+fthread 15 meet barrier254156
+********time:410037*******
+ReadSocket event for pid: 1 at time: 0
+********time:410038*******
+flag set:32
+fthread 0 meet barrier447964
+fthread 0 leave barrier583661
+fthread 1 leave barrier697865
+fthread 2 leave barrier704125
+fthread 3 leave barrier707523
+fthread 4 leave barrier711379
+fthread 5 leave barrier715757
+fthread 6 leave barrier720797
+fthread 7 leave barrier726705
+fthread 8 leave barrier733744
+fthread 9 leave barrier742149
+fthread 10 leave barrier752177
+fthread 11 leave barrier764047
+fthread 12 leave barrier777471
+fthread 13 leave barrier792934
+fthread 14 leave barrier810723
+fthread 15 leave barrier828342
+preempt start with 1244005
+thread1 preempt directly
+thread2 preempt directly
+thread3 preempt directly
+thread4 preempt directly
+thread5 preempt directly
+thread6 preempt directly
+thread7 preempt directly
+thread8 preempt directly
+thread9 preempt directly
+thread10 preempt directly
+thread11 preempt directly
+thread13 preempt directly
+thread14 preempt directly
+thread15 preempt directly
+thread0 preempt directly
+thread12 preempt directly
+preempt finish with 6549
+preempt start with 2055653
+thread1 preempt directly
+thread2 preempt directly
+thread3 preempt directly
+thread4 preempt directly
+thread5 preempt directly
+thread6 preempt directly
+thread7 preempt directly
+thread8 preempt directly
+thread9 preempt directly
+thread10 preempt directly
+thread11 preempt directly
+thread12 preempt directly
+thread13 preempt directly
+thread14 preempt directly
+thread15 preempt directly
+thread0 preempt directly
+preempt finish with 6521
+fthread 0 meet barrier2231125
+fthread 1 meet barrier2432492
+fthread 2 meet barrier2449379
+fthread 3 meet barrier2458405
+fthread 4 meet barrier2471831
+fthread 5 meet barrier2486435
+fthread 6 meet barrier2505684
+fthread 7 meet barrier2523525
+fthread 8 meet barrier2536365
+fthread 9 meet barrier2563494
+fthread 10 meet barrier2573804
+fthread 11 meet barrier2593696
+fthread 12 meet barrier2609447
+fthread 13 meet barrier2624093
+fthread 14 meet barrier2647426
+fthread 15 meet barrier2671871
+preempt start with 2867301
+thread14 preempt directly
+preempt finish with 6206
+fthread 15 leave barrier2886186
+fthread 0 leave barrier2956802
+fthread 1 leave barrier2963262
+fthread 2 leave barrier2973776
+fthread 3 leave barrier3008482
+fthread 4 leave barrier3015411
+fthread 5 leave barrier3050483
+fthread 6 leave barrier3058225
+fthread 7 leave barrier3093547
+fthread 8 leave barrier3102104
+fthread 9 leave barrier3137528
+fthread 10 leave barrier3146898
+fthread 11 leave barrier3182704
+fthread 12 leave barrier3192889
+fthread 13 leave barrier3228929
+fthread 14 leave barrier3239927
+********time:3289324*******
+ReadSocket event for pid: 1 at time: 0
+********time:3289325*******
+sucess

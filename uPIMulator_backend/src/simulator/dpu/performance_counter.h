@@ -28,7 +28,7 @@ class PerformanceCounter {
         assert(mode==1 || mode==2 || mode==0);
         if (mode_==mode)
         {
-            int sub_counter_=sub_counter+value;
+            sub_counter=sub_counter+value;
             int mult=sub_counter/16;
             sub_counter=sub_counter%16;
             if (mult>0)
@@ -38,8 +38,9 @@ class PerformanceCounter {
                 counter_word->set_bit_slice(4,36,value_t);
                 //std::cout<<"after:"<<counter_word->bit_slice(abi::word::UNSIGNED,4,36)<<std::endl;
             }
+             real_time_debug=value+real_time_debug;
         }
-        real_time_debug=value+real_time_debug;
+       
     }
     void set_cfg(int value)
     {

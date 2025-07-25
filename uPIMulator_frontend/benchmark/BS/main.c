@@ -129,7 +129,7 @@ void main1()
         // BLOCK_SIZE)
         r=umram_read(cache_A, BLOCK_SIZE, start_mram_block_addr_A);
         found = search(cache_A, searching_for, BLOCK_SIZE);
-        
+        print_debug(found,4);
       
 
         if (found > -1)

@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/build/src/uPIMulator",
             "args": [
                 "--bindir",
-                "/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/",
+                "/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus/",
                 "--num_tasklets",
                 "16",
                 "--benchmark",
@@ -50,7 +50,7 @@
             "program": "${workspaceFolder}/build/src/uPIMulator",
             "args": [
                 "--bindir",
-                "/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/",
+                "/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus/",
                 "--num_tasklets",
                 "16",
                 "--benchmark",
@@ -89,7 +89,7 @@
             "program": "${workspaceFolder}/build/src/uPIMulator",
             "args": [
                 "--bindir",
-                "/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/",
+                "/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus/",
                 "--num_tasklets",
                 "16",
                 "--benchmark",
@@ -128,7 +128,7 @@
             "program": "${workspaceFolder}/build/src/uPIMulator",
             "args": [
                 "--bindir",
-                "/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/",
+                "/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus/",
                 "--num_tasklets",
                 "16",
                 "--benchmark",
@@ -167,7 +167,7 @@
             "program": "${workspaceFolder}/build/src/uPIMulator",
             "args": [
                 "--bindir",
-                "/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/",
+               "/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus/",
                 "--num_tasklets",
                 "16",
                 "--benchmark",
@@ -206,7 +206,7 @@
             "program": "${workspaceFolder}/build/src/uPIMulator",
             "args": [
                 "--bindir",
-                "/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/",
+                "/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus/",
                 "--num_tasklets",
                 "4",
                 "--benchmark",
@@ -245,7 +245,7 @@
             "program": "${workspaceFolder}/build/src/uPIMulator",
             "args": [
                 "--bindir",
-                "/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/",
+                "/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus/",
                 "--num_tasklets",
                 "16",
                 "--benchmark",
@@ -257,7 +257,7 @@
                 "--num_dpus",
                 "1",
                 "--data_prep",
-                "16384",
+                "131072",
                 ">",
                 "t.txt",
             ],
@@ -284,7 +284,7 @@
             "program": "${workspaceFolder}/build/src/uPIMulator",
             "args": [
                 "--bindir",
-                "/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/",
+                "/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus/",
                 "--num_tasklets",
                 "16",
                 "--benchmark",
@@ -296,7 +296,7 @@
                 "--num_dpus",
                 "1",
                 "--data_prep",
-                "16384",
+                "131072",
                 ">",
                 "t.txt",
             ],
@@ -323,7 +323,7 @@
             "program": "${workspaceFolder}/build/src/uPIMulator",
             "args": [
                 "--bindir",
-                "/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/",
+                "/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus/",
                 "--num_tasklets",
                 "16",
                 "--benchmark",
@@ -362,7 +362,7 @@
             "program": "${workspaceFolder}/build/src/uPIMulator",
             "args": [
                 "--bindir",
-                "/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/",
+                "/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus/",
                 "--num_tasklets",
                 "16",
                 "--benchmark",

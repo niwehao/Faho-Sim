@@ -4,7 +4,6 @@
  */
 #include "stdsync.h"
 #include "support/common.h"
-#include "support/cyclecount.h"
 #include <stdint.h>
 
 __buffer_aligned dpu_arguments_t DPU_INPUT_ARGUMENTS;

@@ -1,5 +1,5 @@
 #include "host.h"
-#define T int64_t
+#define T int32_t
 #define NR_FTHREAD 16
 #define NR_DPUS 1
 // Pointer declaration
@@ -44,6 +44,7 @@ static T reduction_host(T *A, unsigned int nr_elements)
     {
         count += A[i];
     }
+
     return count;
 }
 //没有读到最后一个节点!!!
@@ -92,8 +93,14 @@ namespace upmem_sim::simulator::faho::def
             count += results[i].t_count;
         }
         int status = true;
-        if (count != count_host)
+        if (count != count_host){
             status = false;
+            std::cout<<"host:"<<count_host<<std::endl;
+            std::cout<<"dpu:"<<count<<std::endl;
+            
+
+        }
+            
          free(A);
         if (status)
         {

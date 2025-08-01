@@ -5,4 +5,4 @@ tmux new -s xxx
 cmake -B build -S .
 cmake --build build -j $(nproc)
 python main.py --mode compile_by_toolchain --num_tasklets 16 --benchmark KERNEL --num_dpus 16
-./build/src/uPIMulator  --bindir /home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/ --num_tasklets 16 --benchmark KERNEL --application MLP  --logdir . --num_dpus 1 --data_prep 256  > result/back2.txt
+./build/src/uPIMulator  --bindir /home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/ --num_tasklets 16 --benchmark KERNEL --application RED  --logdir . --num_dpus 1 --data_prep 131072  > result/back2.txt

@@ -101,30 +101,30 @@ namespace upmem_sim::simulator::dpu
   {
     for (auto &thread : threads_)
     {
-      if(thread->state()== Thread::BLOCK){
-        continue;
 
-      }
-      
       int64_t r26 = thread->reg_file()->read_gp_reg(26);
       int flag = r26 - ((r26 >> 3) << 3);
       int flag1 = (flag % 2);
       int flag2 = ((flag >> 1) % 2);
       int flag3 = ((flag >> 2) % 2);
       int value = (r26 >> 3) << 3;
-     
+
       if (flag2 == 1)
       {
-        assert(thread->state()!= Thread::ZOMBIE &&thread->state()!= Thread::EMBRYO );
+        assert(thread->state() != Thread::ZOMBIE && thread->state() != Thread::EMBRYO);
         int time = performance_counter_->get_value();
-        if (time > value || ifpreempt == 1)//只要有一个线程开始抢占,其他也开始
-        { // check if in user state
+        if (time > value || ifpreempt == 1) // 只要有一个线程开始抢占,其他也开始
+        {                                   // check if in user state
           if (ifpreempt == 0)
           {
             ifpreempt = 1;
             preempt_fin = threads_.size();
             preempt_start = performance_counter_->get_true_value();
             std::cout << "preempt start with " << preempt_start << std::endl;
+          }
+          if (thread->state() == Thread::BLOCK)
+          {
+            continue;
           }
           preempt_broad[thread->id()] = 1;
           int64_t pc = thread->reg_file()->read_pc_reg();
@@ -142,7 +142,7 @@ namespace upmem_sim::simulator::dpu
           {
             continue;
           }
-          std::cout <<"thread"<<thread->id()<< " preempt directly at "<<pc<< std::endl;
+          std::cout << "thread" << thread->id() << " preempt directly at " << pc << std::endl;
           thread->reg_file()->write_gp_reg(25, pc);
           thread->reg_file()->write_pc_reg(thread->reg_file()->read_gp_reg(24));
           flag1 = 1;
@@ -177,16 +177,16 @@ namespace upmem_sim::simulator::dpu
       else
       {
         assert(preempt_fin > 0);
-        int sign=0;
-        for (int i=0; i < threads_.size(); i++)
+        int sign = 0;
+        for (int i = 0; i < threads_.size(); i++)
         {
           if (preempt_broad[i] != 0)
           {
-            sign=1;
+            sign = 1;
             break;
           }
         }
-        assert(sign==1);
+        assert(sign == 1);
       }
       /****can be comment */
     }

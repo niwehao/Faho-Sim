@@ -1,0 +1,1807 @@
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus/loc-gowalla_edges.txt
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/atomic.bin
+DMA to atomic completed...
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/iram.bin
+num of instructions: 3572
+DMA to IRAM completed...
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/wram.bin
+DMA to WRAM completed...
+init completed...
+launch completed...
+********time:3715*******
+text section size is 61c0
+flag set:0
+break point 2 happen in cycle:4429
+break point 3 happen in cycle:5389
+break point 4 happen in cycle:5510
+break point 5 happen in cycle:22547
+break point 6 happen in cycle:31859
+break point 7 happen in cycle:32377
+fthread 1 meet barrier48803
+fthread 2 meet barrier57636
+fthread 3 meet barrier66647
+fthread 4 meet barrier77117
+fthread 5 meet barrier90561
+fthread 6 meet barrier104136
+fthread 7 meet barrier115223
+fthread 8 meet barrier128376
+fthread 9 meet barrier137672
+fthread 10 meet barrier149859
+fthread 11 meet barrier176340
+preempt start with 191027
+thread1 preempt directly at 394092
+preempt finish with 7356
+fthread 12 meet barrier213587
+fthread 13 meet barrier290086
+fthread 14 meet barrier290961
+fthread 15 meet barrier317545
+preempt start with 361779
+preempt finish with 5632
+********time:487848*******
+ReadSocket event for pid: 1 at time: 0
+********time:487849*******
+flag set:32
+fthread 0 meet barrier525790
+fthread 0 leave barrier661466
+preempt start with 681816
+thread1 preempt directly at 407076
+thread0 preempt directly at 405060
+preempt finish with 7954
+fthread 1 leave barrier697986
+fthread 1 meet barrier703007
+fthread 0 meet barrier708847
+fthread 2 leave barrier766543
+fthread 2 meet barrier769681
+fthread 3 leave barrier772115
+fthread 3 meet barrier775254
+fthread 4 leave barrier781205
+fthread 4 meet barrier784354
+fthread 5 leave barrier787592
+fthread 5 meet barrier790734
+fthread 6 leave barrier797920
+fthread 6 meet barrier801076
+fthread 7 leave barrier808282
+fthread 7 meet barrier811511
+fthread 8 leave barrier815881
+fthread 8 meet barrier819194
+fthread 9 leave barrier824072
+fthread 9 meet barrier827494
+fthread 10 leave barrier833042
+fthread 10 meet barrier836730
+fthread 11 leave barrier843205
+fthread 11 meet barrier847140
+fthread 12 leave barrier854708
+preempt start with 855512
+thread12 preempt directly at 403908
+thread9 preempt directly at 403164
+thread10 preempt directly at 403164
+thread11 preempt directly at 403092
+thread0 preempt directly at 402708
+thread1 preempt directly at 403164
+thread2 preempt directly at 403164
+thread3 preempt directly at 403164
+thread4 preempt directly at 403164
+thread5 preempt directly at 403164
+thread6 preempt directly at 403164
+thread7 preempt directly at 403164
+thread8 preempt directly at 403164
+preempt finish with 10599
+fthread 12 meet barrier915189
+fthread 13 leave barrier937775
+fthread 13 meet barrier942304
+fthread 14 leave barrier953215
+fthread 14 meet barrier958029
+fthread 15 leave barrier973029
+fthread 15 meet barrier978011
+fthread 14 leave barrier1024185
+preempt start with 1029464
+thread0 preempt directly at 408084
+thread1 preempt directly at 403332
+thread2 preempt directly at 403164
+thread3 preempt directly at 403164
+thread4 preempt directly at 403164
+thread5 preempt directly at 403164
+thread6 preempt directly at 403164
+thread7 preempt directly at 403164
+thread8 preempt directly at 403164
+thread9 preempt directly at 403164
+thread10 preempt directly at 403164
+thread11 preempt directly at 403164
+thread12 preempt directly at 403164
+thread13 preempt directly at 403164
+thread14 preempt directly at 403164
+thread15 preempt directly at 403164
+preempt finish with 7650
+fthread 0 leave barrier1043531
+fthread 1 leave barrier1107057
+fthread 2 leave barrier1113049
+fthread 3 leave barrier1122601
+fthread 4 leave barrier1128465
+fthread 5 leave barrier1134295
+fthread 6 leave barrier1140097
+fthread 7 leave barrier1145827
+fthread 8 leave barrier1152668
+fthread 9 leave barrier1159498
+fthread 10 leave barrier1166277
+fthread 11 leave barrier1172978
+fthread 12 leave barrier1179546
+fthread 13 leave barrier1186036
+fthread 15 leave barrier1192505
+preempt start with 1202264
+thread3 preempt directly at 408396
+thread8 preempt directly at 403908
+thread10 preempt directly at 408336
+thread12 preempt directly at 408420
+thread15 preempt directly at 408156
+thread0 preempt directly at 410388
+thread1 preempt directly at 408168
+thread6 preempt directly at 408168
+thread4 preempt directly at 408168
+thread2 preempt directly at 408168
+thread13 preempt directly at 408168
+thread9 preempt directly at 408168
+thread7 preempt directly at 408168
+thread11 preempt directly at 408168
+thread14 preempt directly at 408168
+thread5 preempt directly at 408168
+preempt finish with 6886
+fthread 1 meet barrier1284778
+fthread 2 meet barrier1295101
+fthread 3 meet barrier1308968
+fthread 4 meet barrier1317557
+fthread 5 meet barrier1328951
+fthread 14 meet barrier1335642
+fthread 6 meet barrier1337794
+fthread 7 meet barrier1348118
+fthread 8 meet barrier1357288
+fthread 9 meet barrier1368217
+preempt start with 1374296
+thread11 preempt directly at 408168
+thread0 preempt directly at 408168
+thread13 preempt directly at 408168
+thread14 preempt directly at 408168
+thread12 preempt directly at 408168
+thread1 preempt directly at 409248
+preempt finish with 8884
+fthread 10 meet barrier1398233
+fthread 11 meet barrier1413999
+fthread 12 meet barrier1430556
+fthread 13 meet barrier1445272
+fthread 15 meet barrier1464816
+preempt start with 1547352
+thread1 preempt directly at 410040
+preempt finish with 3188
+preempt start with 1713880
+thread1 preempt directly at 410040
+preempt finish with 2477
+fthread 0 meet barrier1839083
+preempt start with 1879768
+thread1 preempt directly at 404292
+preempt finish with 7943
+fthread 0 leave barrier1894068
+fthread 1 leave barrier1977070
+fthread 1 meet barrier1977148
+fthread 2 leave barrier2000178
+fthread 2 meet barrier2000255
+fthread 3 leave barrier2010803
+fthread 3 meet barrier2010880
+preempt start with 2052824
+thread2 preempt directly at 404292
+preempt finish with 4463
+fthread 4 leave barrier2063585
+fthread 4 meet barrier2063699
+fthread 5 leave barrier2137531
+fthread 5 meet barrier2137608
+fthread 6 leave barrier2172732
+fthread 6 meet barrier2172809
+fthread 7 leave barrier2180882
+fthread 7 meet barrier2180959
+fthread 8 leave barrier2216317
+fthread 8 meet barrier2216394
+preempt start with 2220632
+thread1 preempt directly at 404292
+preempt finish with 4468
+fthread 9 leave barrier2237416
+fthread 9 meet barrier2237530
+fthread 10 leave barrier2318329
+fthread 10 meet barrier2318406
+fthread 11 leave barrier2356586
+fthread 11 meet barrier2356663
+fthread 12 leave barrier2366771
+fthread 12 meet barrier2366848
+preempt start with 2388440
+preempt finish with 4951
+fthread 13 leave barrier2481415
+fthread 13 meet barrier2481492
+fthread 14 leave barrier2489336
+fthread 14 meet barrier2489413
+fthread 15 leave barrier2524348
+fthread 15 meet barrier2524425
+********time:2541426*******
+ReadSocket event for pid: 1 at time: 0
+********time:2541427*******
+flag set:32
+in level:2
+********time:2664296*******
+flag set:32
+fthread 0 meet barrier2702238
+fthread 0 leave barrier2837914
+fthread 0 meet barrier2842762
+preempt start with 2858264
+thread1 preempt directly at 402708
+thread0 preempt directly at 405060
+preempt finish with 8025
+fthread 1 leave barrier2875085
+fthread 1 meet barrier2909538
+fthread 2 leave barrier2947519
+fthread 2 meet barrier2950667
+fthread 3 leave barrier2956441
+fthread 3 meet barrier2959578
+fthread 4 leave barrier2965904
+fthread 4 meet barrier2969042
+fthread 5 leave barrier2975348
+fthread 6 leave barrier2985424
+fthread 7 leave barrier2993291
+fthread 7 meet barrier2996684
+fthread 5 meet barrier2996832
+fthread 8 leave barrier3001680
+fthread 8 meet barrier3005130
+fthread 6 meet barrier3007661
+fthread 9 leave barrier3013481
+fthread 9 meet barrier3016886
+fthread 10 leave barrier3026014
+preempt start with 3032600
+thread7 preempt directly at 402708
+thread8 preempt directly at 402708
+thread9 preempt directly at 402708
+thread0 preempt directly at 403164
+thread11 preempt directly at 404976
+thread1 preempt directly at 403164
+thread2 preempt directly at 403164
+thread10 preempt directly at 406884
+thread3 preempt directly at 403164
+thread4 preempt directly at 403164
+thread5 preempt directly at 403164
+thread6 preempt directly at 403164
+preempt finish with 6954
+fthread 10 meet barrier3101523
+fthread 11 leave barrier3110506
+fthread 12 leave barrier3123015
+fthread 13 leave barrier3136442
+fthread 11 meet barrier3146817
+fthread 14 leave barrier3151833
+fthread 12 meet barrier3154564
+fthread 15 leave barrier3168910
+fthread 13 meet barrier3170000
+fthread 15 meet barrier3174124
+fthread 14 meet barrier3186147
+preempt start with 3202968
+thread13 preempt directly at 403920
+thread14 preempt directly at 402672
+thread15 preempt directly at 402708
+thread0 preempt directly at 402708
+thread1 preempt directly at 403164
+thread2 preempt directly at 403164
+thread3 preempt directly at 403164
+thread4 preempt directly at 403164
+thread5 preempt directly at 403164
+thread6 preempt directly at 403164
+thread7 preempt directly at 403164
+thread8 preempt directly at 403092
+thread9 preempt directly at 403164
+thread10 preempt directly at 403164
+thread11 preempt directly at 403164
+thread12 preempt directly at 402708
+preempt finish with 9551
+fthread 15 leave barrier3323530
+fthread 0 leave barrier3329397
+fthread 1 leave barrier3335290
+fthread 2 leave barrier3341158
+fthread 3 leave barrier3347021
+fthread 4 leave barrier3352796
+fthread 5 leave barrier3358775
+fthread 6 leave barrier3368550
+fthread 7 leave barrier3374179
+preempt start with 3377688
+thread8 preempt directly at 408396
+thread0 preempt directly at 408168
+thread2 preempt directly at 410184
+thread3 preempt directly at 408168
+thread5 preempt directly at 408168
+thread6 preempt directly at 408168
+thread4 preempt directly at 408168
+thread7 preempt directly at 408168
+thread1 preempt directly at 408168
+thread9 preempt directly at 403332
+thread10 preempt directly at 403164
+thread11 preempt directly at 403164
+thread12 preempt directly at 403164
+thread13 preempt directly at 403164
+thread14 preempt directly at 403164
+thread15 preempt directly at 403164
+preempt finish with 8418
+fthread 8 leave barrier3415895
+fthread 9 leave barrier3473410
+fthread 10 leave barrier3493517
+fthread 0 meet barrier3497078
+fthread 2 meet barrier3515442
+fthread 11 leave barrier3518764
+fthread 3 meet barrier3522944
+fthread 4 meet barrier3533049
+preempt start with 3551256
+thread9 preempt directly at 408168
+thread10 preempt directly at 408168
+thread12 preempt directly at 408168
+thread8 preempt directly at 408168
+thread0 preempt directly at 408168
+thread13 preempt directly at 403332
+thread14 preempt directly at 403164
+thread15 preempt directly at 403164
+thread1 preempt directly at 409248
+preempt finish with 10741
+fthread 7 meet barrier3588499
+fthread 12 leave barrier3598486
+fthread 8 meet barrier3601532
+fthread 15 meet barrier3630711
+fthread 9 meet barrier3651398
+fthread 13 leave barrier3702862
+fthread 14 leave barrier3712505
+preempt start with 3727128
+thread9 preempt directly at 409500
+thread10 preempt directly at 408168
+thread0 preempt directly at 409248
+preempt finish with 5658
+preempt start with 3897368
+thread0 preempt directly at 409248
+preempt finish with 4125
+preempt start with 4066072
+thread2 preempt directly at 409872
+preempt finish with 2860
+preempt start with 4233496
+thread2 preempt directly at 409896
+thread4 preempt directly at 410184
+preempt finish with 2960
+preempt start with 4399768
+thread2 preempt directly at 403860
+preempt finish with 2660
+fthread 5 meet barrier4541993
+preempt start with 4565784
+thread0 preempt directly at 409416
+preempt finish with 3611
+preempt start with 4732824
+thread2 preempt directly at 409680
+preempt finish with 3200
+preempt start with 4899352
+thread1 preempt directly at 410040
+preempt finish with 3386
+preempt start with 5067288
+preempt finish with 2682
+fthread 6 meet barrier5192066
+preempt start with 5233304
+thread1 preempt directly at 409248
+preempt finish with 4503
+preempt start with 5401240
+thread2 preempt directly at 409500
+preempt finish with 3285
+preempt start with 5567896
+thread2 preempt directly at 409248
+preempt finish with 3586
+preempt start with 5734808
+thread0 preempt directly at 409176
+preempt finish with 2647
+fthread 1 meet barrier5837367
+preempt start with 5902104
+thread1 preempt directly at 409248
+preempt finish with 4490
+preempt start with 6070040
+thread0 preempt directly at 409248
+preempt finish with 4136
+fthread 10 meet barrier6216526
+preempt start with 6238744
+thread2 preempt directly at 408168
+thread0 preempt directly at 409248
+preempt finish with 4586
+fthread 11 meet barrier6400047
+preempt start with 6407960
+thread1 preempt directly at 409248
+preempt finish with 5015
+fthread 12 meet barrier6502605
+preempt start with 6576408
+thread1 preempt directly at 409176
+thread0 preempt directly at 408168
+preempt finish with 3036
+fthread 13 meet barrier6698458
+preempt start with 6744088
+thread2 preempt directly at 408168
+preempt finish with 2874
+fthread 14 meet barrier6757612
+fthread 14 leave barrier6889835
+fthread 14 meet barrier6889952
+preempt start with 6910360
+thread0 preempt directly at 404292
+preempt finish with 7503
+fthread 0 leave barrier6925505
+fthread 1 leave barrier7001910
+fthread 1 meet barrier7001987
+fthread 2 leave barrier7008080
+fthread 2 meet barrier7008157
+fthread 3 leave barrier7042910
+fthread 3 meet barrier7042987
+fthread 4 leave barrier7049838
+fthread 4 meet barrier7049915
+preempt start with 7084184
+thread1 preempt directly at 404292
+preempt finish with 3095
+fthread 5 leave barrier7093988
+fthread 5 meet barrier7094102
+fthread 6 leave barrier7168472
+fthread 6 meet barrier7168549
+fthread 7 leave barrier7203794
+fthread 7 meet barrier7203871
+fthread 8 leave barrier7212351
+fthread 8 meet barrier7212428
+fthread 9 leave barrier7247907
+fthread 9 meet barrier7247984
+preempt start with 7250712
+thread1 preempt directly at 404220
+preempt finish with 2777
+fthread 10 leave barrier7338428
+fthread 10 meet barrier7338505
+fthread 11 leave barrier7368383
+fthread 11 meet barrier7368460
+fthread 12 leave barrier7378567
+fthread 12 meet barrier7378644
+fthread 13 leave barrier7414483
+fthread 13 meet barrier7414560
+preempt start with 7416856
+preempt finish with 2891
+fthread 15 leave barrier7530786
+fthread 15 meet barrier7530863
+********time:7544179*******
+ReadSocket event for pid: 1 at time: 0
+********time:7544180*******
+flag set:32
+in level:3
+********time:7667049*******
+flag set:32
+fthread 0 meet barrier7704991
+fthread 0 leave barrier7840667
+preempt start with 7861017
+thread1 preempt directly at 407556
+thread0 preempt directly at 405060
+preempt finish with 8054
+fthread 1 leave barrier7877289
+fthread 0 meet barrier7887880
+fthread 1 meet barrier7917274
+fthread 2 leave barrier7947336
+fthread 3 leave barrier7952819
+fthread 4 leave barrier7961852
+fthread 5 leave barrier7971251
+fthread 6 leave barrier7981194
+fthread 7 leave barrier7991988
+fthread 2 meet barrier7994077
+fthread 8 leave barrier8004037
+fthread 4 meet barrier8011451
+fthread 3 meet barrier8012199
+fthread 5 meet barrier8016572
+fthread 9 leave barrier8017097
+fthread 10 leave barrier8031313
+preempt start with 8034841
+thread6 preempt directly at 407172
+thread8 preempt directly at 407172
+thread10 preempt directly at 406128
+thread1 preempt directly at 403164
+thread9 preempt directly at 407448
+thread7 preempt directly at 407448
+thread2 preempt directly at 403164
+thread3 preempt directly at 403164
+thread4 preempt directly at 403164
+thread5 preempt directly at 403164
+thread0 preempt directly at 403092
+preempt finish with 8706
+fthread 7 meet barrier8089568
+fthread 6 meet barrier8094659
+fthread 11 leave barrier8117168
+fthread 8 meet barrier8123674
+fthread 12 leave barrier8134627
+fthread 9 meet barrier8134826
+fthread 10 meet barrier8149806
+fthread 13 leave barrier8153041
+fthread 14 leave barrier8173641
+fthread 15 leave barrier8194664
+preempt start with 8208153
+thread14 preempt directly at 407100
+thread0 preempt directly at 407448
+thread12 preempt directly at 407448
+thread15 preempt directly at 407448
+thread13 preempt directly at 407448
+thread11 preempt directly at 403092
+thread1 preempt directly at 403164
+thread2 preempt directly at 403164
+thread3 preempt directly at 403164
+thread4 preempt directly at 403164
+thread5 preempt directly at 403164
+thread6 preempt directly at 403164
+thread7 preempt directly at 403164
+thread8 preempt directly at 403164
+thread9 preempt directly at 403164
+thread10 preempt directly at 403164
+preempt finish with 9577
+fthread 11 meet barrier8284170
+fthread 12 meet barrier8296323
+fthread 13 meet barrier8348393
+preempt start with 8382873
+thread3 preempt directly at 403092
+thread4 preempt directly at 403164
+thread15 preempt directly at 407448
+thread5 preempt directly at 403164
+thread6 preempt directly at 403164
+thread7 preempt directly at 403164
+thread8 preempt directly at 403164
+thread9 preempt directly at 403164
+thread0 preempt directly at 407448
+thread10 preempt directly at 403164
+thread11 preempt directly at 403164
+thread12 preempt directly at 403164
+thread13 preempt directly at 403164
+thread14 preempt directly at 403164
+thread1 preempt directly at 403164
+thread2 preempt directly at 403164
+preempt finish with 7642
+fthread 14 meet barrier8452602
+fthread 15 meet barrier8477122
+fthread 15 leave barrier8530273
+fthread 0 leave barrier8536144
+fthread 1 leave barrier8542022
+fthread 2 leave barrier8547822
+fthread 3 leave barrier8553830
+preempt start with 8555673
+thread3 preempt directly at 408396
+thread15 preempt directly at 403872
+thread2 preempt directly at 409500
+thread4 preempt directly at 408168
+thread1 preempt directly at 408168
+thread0 preempt directly at 409248
+thread5 preempt directly at 403332
+thread6 preempt directly at 403164
+thread7 preempt directly at 403164
+thread8 preempt directly at 403164
+thread9 preempt directly at 403164
+thread10 preempt directly at 403164
+thread11 preempt directly at 403164
+thread12 preempt directly at 403164
+thread13 preempt directly at 403164
+thread14 preempt directly at 403164
+preempt finish with 12649
+fthread 4 leave barrier8582245
+fthread 5 leave barrier8642631
+fthread 6 leave barrier8694104
+fthread 7 leave barrier8723483
+preempt start with 8733465
+thread8 preempt directly at 403908
+thread9 preempt directly at 403164
+thread10 preempt directly at 403164
+thread11 preempt directly at 403164
+thread12 preempt directly at 403164
+thread13 preempt directly at 403164
+thread14 preempt directly at 403164
+thread15 preempt directly at 403164
+thread0 preempt directly at 409248
+preempt finish with 6017
+fthread 8 leave barrier8831367
+fthread 9 leave barrier8845787
+fthread 10 leave barrier8877983
+fthread 11 leave barrier8886200
+preempt start with 8903705
+thread0 preempt directly at 403884
+thread8 preempt directly at 403332
+thread9 preempt directly at 403164
+thread10 preempt directly at 403164
+thread1 preempt directly at 409248
+preempt finish with 7674
+fthread 12 leave barrier8924741
+fthread 13 leave barrier8992998
+fthread 14 leave barrier9019167
+preempt start with 9074713
+thread1 preempt directly at 409176
+thread0 preempt directly at 408168
+preempt finish with 3382
+preempt start with 9242649
+thread2 preempt directly at 409392
+preempt finish with 2615
+preempt start with 9408665
+thread1 preempt directly at 410184
+preempt finish with 2690
+fthread 0 meet barrier9555903
+preempt start with 9574681
+thread1 preempt directly at 408168
+thread0 preempt directly at 409248
+preempt finish with 3917
+preempt start with 9743129
+thread1 preempt directly at 409248
+preempt finish with 3877
+preempt start with 9910425
+thread2 preempt directly at 409908
+preempt finish with 2744
+preempt start with 10076569
+thread3 preempt directly at 409248
+preempt finish with 4014
+preempt start with 10243993
+thread0 preempt directly at 403884
+thread1 preempt directly at 409500
+preempt finish with 2679
+preempt start with 10410009
+thread1 preempt directly at 409248
+preempt finish with 3728
+preempt start with 10577177
+thread0 preempt directly at 403896
+thread1 preempt directly at 409500
+preempt finish with 2679
+preempt start with 10743193
+thread0 preempt directly at 409248
+preempt finish with 3728
+preempt start with 10911513
+thread0 preempt directly at 409500
+preempt finish with 3184
+preempt start with 11079321
+thread1 preempt directly at 409248
+preempt finish with 3679
+fthread 1 meet barrier11184095
+preempt start with 11246361
+thread4 preempt directly at 409248
+preempt finish with 3900
+preempt start with 11413657
+thread2 preempt directly at 409404
+preempt finish with 2715
+preempt start with 11579801
+preempt finish with 3156
+preempt start with 11747609
+thread1 preempt directly at 408168
+preempt finish with 2627
+preempt start with 11913625
+thread3 preempt directly at 409500
+thread1 preempt directly at 409248
+preempt finish with 4073
+preempt start with 12082329
+thread1 preempt directly at 409176
+preempt finish with 2986
+preempt start with 12249881
+thread2 preempt directly at 409248
+preempt finish with 2957
+preempt start with 12416281
+thread1 preempt directly at 409500
+preempt finish with 3188
+preempt start with 12582809
+thread3 preempt directly at 409176
+preempt finish with 3106
+preempt start with 12749337
+preempt finish with 2666
+preempt start with 12915353
+thread0 preempt directly at 409500
+preempt finish with 3092
+preempt start with 13083033
+thread1 preempt directly at 409500
+preempt finish with 3324
+preempt start with 13249689
+preempt finish with 3026
+preempt start with 13416089
+thread0 preempt directly at 410184
+preempt finish with 3174
+preempt start with 13583897
+thread2 preempt directly at 409248
+preempt finish with 3533
+preempt start with 13750809
+thread2 preempt directly at 409680
+thread1 preempt directly at 410184
+preempt finish with 3198
+fthread 2 meet barrier13851126
+preempt start with 13917337
+thread1 preempt directly at 409248
+preempt finish with 4002
+preempt start with 14084761
+thread1 preempt directly at 409248
+thread2 preempt directly at 408168
+preempt finish with 3484
+preempt start with 14251673
+thread3 preempt directly at 409248
+preempt finish with 3991
+preempt start with 14419097
+thread1 preempt directly at 410100
+preempt finish with 2946
+preempt start with 14585369
+thread2 preempt directly at 409644
+preempt finish with 2801
+preempt start with 14751513
+thread0 preempt directly at 410184
+thread2 preempt directly at 409680
+preempt finish with 3097
+preempt start with 14918041
+thread0 preempt directly at 409500
+preempt finish with 2712
+preempt start with 15085337
+thread0 preempt directly at 409248
+preempt finish with 4074
+preempt start with 15254041
+thread1 preempt directly at 409404
+preempt finish with 2761
+preempt start with 15420185
+thread1 preempt directly at 409500
+preempt finish with 2609
+preempt start with 15586201
+thread0 preempt directly at 409248
+preempt finish with 2867
+preempt start with 15753625
+thread2 preempt directly at 410184
+preempt finish with 2831
+preempt start with 15921049
+thread2 preempt directly at 409668
+preempt finish with 2781
+preempt start with 16087193
+thread2 preempt directly at 393216
+thread0 preempt directly at 408996
+preempt finish with 2722
+fthread 3 meet barrier16103024
+fthread 4 meet barrier16246777
+preempt start with 16254489
+thread2 preempt directly at 409248
+preempt finish with 6771
+preempt start with 16424601
+thread2 preempt directly at 410172
+preempt finish with 2814
+preempt start with 16590745
+thread2 preempt directly at 408168
+thread1 preempt directly at 409248
+preempt finish with 3638
+preempt start with 16757785
+thread0 preempt directly at 409500
+preempt finish with 3159
+preempt start with 16925593
+thread1 preempt directly at 409248
+preempt finish with 4058
+preempt start with 17093017
+thread0 preempt directly at 410184
+preempt finish with 3048
+preempt start with 17260697
+thread0 preempt directly at 409644
+preempt finish with 2811
+preempt start with 17428121
+thread1 preempt directly at 409140
+thread0 preempt directly at 409500
+preempt finish with 2733
+preempt start with 17595417
+thread0 preempt directly at 409248
+preempt finish with 4359
+preempt start with 17764377
+thread1 preempt directly at 409248
+preempt finish with 4093
+preempt start with 17931801
+thread2 preempt directly at 409176
+preempt finish with 2793
+fthread 5 meet barrier18058763
+preempt start with 18099225
+thread0 preempt directly at 410184
+preempt finish with 3285
+preempt start with 18267161
+thread0 preempt directly at 409248
+preempt finish with 3133
+preempt start with 18434841
+thread1 preempt directly at 408168
+thread2 preempt directly at 410184
+preempt finish with 3166
+preempt start with 18601369
+thread1 preempt directly at 409248
+preempt finish with 4325
+preempt start with 18769049
+thread2 preempt directly at 410040
+preempt finish with 2842
+preempt start with 18936473
+thread3 preempt directly at 409500
+preempt finish with 3333
+preempt start with 19103129
+thread1 preempt directly at 409680
+preempt finish with 2788
+preempt start with 19269273
+thread0 preempt directly at 410040
+thread2 preempt directly at 409680
+preempt finish with 2966
+preempt start with 19435673
+thread2 preempt directly at 410184
+preempt finish with 3179
+preempt start with 19602201
+thread2 preempt directly at 409176
+preempt finish with 2900
+preempt start with 19769753
+thread2 preempt directly at 409248
+preempt finish with 3835
+preempt start with 19936921
+thread1 preempt directly at 410184
+preempt finish with 3229
+preempt start with 20103577
+thread0 preempt directly at 409176
+preempt finish with 2888
+preempt start with 20269849
+thread1 preempt directly at 409956
+thread2 preempt directly at 408108
+thread0 preempt directly at 409872
+thread3 preempt directly at 410040
+preempt finish with 3316
+preempt start with 20436505
+thread2 preempt directly at 409176
+preempt finish with 3470
+preempt start with 20603417
+thread2 preempt directly at 409176
+preempt finish with 2827
+preempt start with 20769689
+thread1 preempt directly at 409188
+preempt finish with 2703
+preempt start with 20935833
+thread1 preempt directly at 409404
+thread0 preempt directly at 409248
+preempt finish with 4573
+preempt start with 21105049
+thread0 preempt directly at 409248
+preempt finish with 3047
+fthread 7 meet barrier21226911
+fthread 6 meet barrier21262191
+preempt start with 21272729
+thread1 preempt directly at 409680
+preempt finish with 2607
+preempt start with 21438745
+thread0 preempt directly at 409500
+preempt finish with 2736
+preempt start with 21606041
+thread1 preempt directly at 409500
+preempt finish with 2706
+preempt start with 21772185
+thread2 preempt directly at 409500
+preempt finish with 2706
+preempt start with 21938329
+thread2 preempt directly at 408900
+thread0 preempt directly at 409680
+preempt finish with 3054
+preempt start with 22106009
+thread0 preempt directly at 410184
+preempt finish with 2931
+preempt start with 22272281
+thread1 preempt directly at 408660
+thread2 preempt directly at 409176
+preempt finish with 3107
+preempt start with 22438809
+thread0 preempt directly at 409680
+preempt finish with 3000
+preempt start with 22606361
+thread0 preempt directly at 408168
+thread2 preempt directly at 409500
+preempt finish with 2774
+preempt start with 22772505
+thread1 preempt directly at 409176
+thread0 preempt directly at 409500
+preempt finish with 3385
+preempt start with 22940441
+thread2 preempt directly at 409500
+preempt finish with 2842
+preempt start with 23106713
+thread2 preempt directly at 409680
+preempt finish with 3238
+preempt start with 23273369
+thread0 preempt directly at 409248
+preempt finish with 4508
+preempt start with 23442457
+thread0 preempt directly at 409248
+preempt finish with 2675
+preempt start with 23609753
+thread2 preempt directly at 408936
+thread0 preempt directly at 409680
+preempt finish with 2820
+preempt start with 23777177
+thread1 preempt directly at 409500
+preempt finish with 2752
+preempt start with 23943321
+thread0 preempt directly at 408168
+preempt finish with 3057
+preempt start with 24111001
+thread0 preempt directly at 409560
+preempt finish with 2656
+preempt start with 24278297
+thread0 preempt directly at 409500
+thread1 preempt directly at 408660
+preempt finish with 2842
+fthread 8 meet barrier24423231
+preempt start with 24444569
+thread2 preempt directly at 409500
+preempt finish with 2701
+preempt start with 24610713
+thread0 preempt directly at 409248
+preempt finish with 3576
+preempt start with 24778905
+thread2 preempt directly at 409308
+preempt finish with 2796
+preempt start with 24945049
+thread0 preempt directly at 409248
+preempt finish with 4501
+fthread 9 meet barrier25090324
+preempt start with 25114137
+thread0 preempt directly at 409248
+preempt finish with 4909
+preempt start with 25283609
+thread0 preempt directly at 409248
+preempt finish with 4431
+preempt start with 25452569
+thread2 preempt directly at 409188
+preempt finish with 2754
+fthread 10 meet barrier25561478
+preempt start with 25619865
+thread1 preempt directly at 409248
+preempt finish with 4686
+preempt start with 25787929
+thread1 preempt directly at 409248
+preempt finish with 5584
+preempt start with 25956889
+thread0 preempt directly at 409668
+thread1 preempt directly at 409176
+preempt finish with 3036
+preempt start with 26123289
+thread0 preempt directly at 403908
+preempt finish with 2665
+preempt start with 26289305
+thread0 preempt directly at 410184
+preempt finish with 2739
+preempt start with 26455449
+thread1 preempt directly at 409248
+thread0 preempt directly at 408900
+preempt finish with 3095
+preempt start with 26623129
+thread2 preempt directly at 409500
+preempt finish with 2899
+preempt start with 26789401
+thread0 preempt directly at 409152
+preempt finish with 2714
+preempt start with 26955545
+thread2 preempt directly at 409248
+preempt finish with 3488
+preempt start with 27122457
+thread0 preempt directly at 409908
+preempt finish with 2883
+preempt start with 27289881
+thread0 preempt directly at 409176
+preempt finish with 3031
+preempt start with 27457561
+thread1 preempt directly at 409248
+preempt finish with 2774
+preempt start with 27623705
+thread1 preempt directly at 410184
+preempt finish with 3046
+preempt start with 27790105
+thread0 preempt directly at 409176
+thread1 preempt directly at 408168
+preempt finish with 3622
+preempt start with 27957145
+thread2 preempt directly at 409176
+preempt finish with 2907
+preempt start with 28124697
+thread1 preempt directly at 409248
+preempt finish with 4952
+preempt start with 28293017
+thread2 preempt directly at 409176
+preempt finish with 2966
+fthread 12 meet barrier28387276
+preempt start with 28460569
+thread0 preempt directly at 409248
+preempt finish with 5061
+fthread 11 meet barrier28600871
+preempt start with 28630169
+thread1 preempt directly at 409248
+preempt finish with 3654
+preempt start with 28797209
+thread1 preempt directly at 409440
+preempt finish with 2786
+preempt start with 28963353
+thread2 preempt directly at 408168
+thread0 preempt directly at 408660
+preempt finish with 2985
+preempt start with 29130905
+thread1 preempt directly at 409500
+thread0 preempt directly at 409248
+preempt finish with 5257
+preempt start with 29300761
+thread1 preempt directly at 408900
+thread0 preempt directly at 409248
+preempt finish with 5353
+preempt start with 29470745
+thread2 preempt directly at 409176
+preempt finish with 2882
+preempt start with 29637017
+thread0 preempt directly at 409176
+preempt finish with 3042
+preempt start with 29804697
+thread1 preempt directly at 408900
+thread2 preempt directly at 409176
+preempt finish with 3410
+fthread 13 meet barrier29920821
+preempt start with 29971481
+thread1 preempt directly at 409500
+thread0 preempt directly at 409248
+preempt finish with 3380
+preempt start with 30139417
+thread0 preempt directly at 409500
+thread1 preempt directly at 408168
+preempt finish with 3282
+preempt start with 30306073
+thread0 preempt directly at 409680
+thread1 preempt directly at 409176
+preempt finish with 3043
+preempt start with 30472473
+thread2 preempt directly at 408168
+preempt finish with 2746
+fthread 15 meet barrier30581267
+preempt start with 30638617
+thread1 preempt directly at 409500
+preempt finish with 3047
+fthread 14 meet barrier30802083
+preempt start with 30805145
+thread1 preempt directly at 410676
+preempt finish with 8229
+preempt start with 30978457
+thread15 preempt directly at 404292
+preempt finish with 4099
+fthread 14 leave barrier30994087
+fthread 14 meet barrier30994201
+fthread 0 leave barrier31064702
+fthread 1 leave barrier31071436
+fthread 1 meet barrier31071513
+fthread 2 leave barrier31081943
+fthread 2 meet barrier31082020
+fthread 3 leave barrier31116649
+fthread 3 meet barrier31116726
+fthread 4 leave barrier31123578
+fthread 4 meet barrier31123655
+preempt start with 31146393
+preempt finish with 3893
+fthread 5 leave barrier31234010
+fthread 5 meet barrier31234087
+fthread 6 leave barrier31240875
+fthread 6 meet barrier31240952
+fthread 7 leave barrier31273050
+fthread 7 meet barrier31273127
+fthread 8 leave barrier31281607
+fthread 8 meet barrier31281684
+preempt start with 31314841
+thread2 preempt directly at 404292
+preempt finish with 4616
+fthread 9 leave barrier31327780
+fthread 9 meet barrier31327894
+fthread 10 leave barrier31404416
+fthread 10 meet barrier31404493
+fthread 11 leave barrier31440222
+fthread 11 meet barrier31440299
+fthread 12 leave barrier31450407
+fthread 12 meet barrier31450484
+preempt start with 31482777
+thread0 preempt directly at 404292
+preempt finish with 5186
+fthread 13 leave barrier31499120
+fthread 13 meet barrier31499234
+fthread 15 leave barrier31607000
+fthread 15 meet barrier31607077
+********time:31620393*******
+ReadSocket event for pid: 1 at time: 0
+********time:31620394*******
+flag set:32
+in level:4
+********time:31743263*******
+flag set:32
+fthread 0 meet barrier31781205
+fthread 0 leave barrier31916881
+preempt start with 31937231
+thread1 preempt directly at 407448
+thread0 preempt directly at 405060
+preempt finish with 8565
+fthread 1 leave barrier31954000
+fthread 2 leave barrier32025329
+fthread 3 leave barrier32028764
+fthread 4 leave barrier32032676
+fthread 5 leave barrier32037070
+fthread 6 leave barrier32042082
+fthread 1 meet barrier32044379
+fthread 7 leave barrier32047858
+fthread 0 meet barrier32049997
+fthread 8 leave barrier32059784
+fthread 9 leave barrier32073269
+fthread 10 leave barrier32088433
+fthread 11 leave barrier32105507
+preempt start with 32111567
+thread5 preempt directly at 407352
+thread7 preempt directly at 407256
+thread8 preempt directly at 407268
+thread6 preempt directly at 407556
+thread4 preempt directly at 407448
+thread1 preempt directly at 403164
+thread0 preempt directly at 407448
+thread11 preempt directly at 406512
+thread2 preempt directly at 403164
+thread3 preempt directly at 407448
+thread9 preempt directly at 407448
+thread10 preempt directly at 407448
+preempt finish with 6522
+fthread 2 meet barrier32170025
+fthread 3 meet barrier32187912
+fthread 12 leave barrier32202057
+fthread 4 meet barrier32221258
+fthread 13 leave barrier32223791
+fthread 6 meet barrier32245620
+fthread 14 leave barrier32246653
+fthread 15 leave barrier32265645
+fthread 7 meet barrier32269356
+preempt start with 32281423
+thread0 preempt directly at 403908
+thread15 preempt directly at 407448
+thread14 preempt directly at 407556
+thread10 preempt directly at 407556
+thread9 preempt directly at 407448
+thread13 preempt directly at 407556
+thread11 preempt directly at 407556
+thread12 preempt directly at 407448
+thread6 preempt directly at 407556
+thread4 preempt directly at 403092
+thread5 preempt directly at 403164
+thread7 preempt directly at 402708
+thread8 preempt directly at 402708
+thread1 preempt directly at 403164
+thread2 preempt directly at 403164
+thread3 preempt directly at 403164
+preempt finish with 8498
+fthread 5 meet barrier32310317
+fthread 8 meet barrier32327363
+fthread 9 meet barrier32371136
+fthread 11 meet barrier32390969
+fthread 10 meet barrier32400947
+preempt start with 32454991
+thread13 preempt directly at 407244
+thread15 preempt directly at 403860
+thread0 preempt directly at 407448
+thread14 preempt directly at 407448
+thread10 preempt directly at 403092
+thread11 preempt directly at 402708
+thread12 preempt directly at 403164
+thread1 preempt directly at 403164
+thread2 preempt directly at 403164
+thread3 preempt directly at 403164
+thread4 preempt directly at 403164
+thread5 preempt directly at 403164
+thread6 preempt directly at 403164
+thread7 preempt directly at 403164
+thread8 preempt directly at 403164
+thread9 preempt directly at 403164
+preempt finish with 9508
+fthread 12 meet barrier32523944
+fthread 13 meet barrier32533626
+fthread 14 meet barrier32561943
+fthread 15 meet barrier32608178
+preempt start with 32629583
+thread13 preempt directly at 403092
+thread14 preempt directly at 403164
+thread15 preempt directly at 402708
+thread0 preempt directly at 402708
+thread1 preempt directly at 403164
+thread2 preempt directly at 403164
+thread3 preempt directly at 403164
+thread4 preempt directly at 403164
+thread5 preempt directly at 403164
+thread6 preempt directly at 403164
+thread7 preempt directly at 403164
+thread8 preempt directly at 403164
+thread9 preempt directly at 403164
+thread10 preempt directly at 403164
+thread11 preempt directly at 403164
+thread12 preempt directly at 403164
+preempt finish with 8114
+fthread 15 leave barrier32720398
+fthread 0 leave barrier32726264
+fthread 1 leave barrier32732153
+fthread 2 leave barrier32738025
+fthread 3 leave barrier32743833
+fthread 4 leave barrier32749746
+fthread 5 leave barrier32759373
+fthread 6 leave barrier32773832
+preempt start with 32802767
+thread2 preempt directly at 408168
+thread9 preempt directly at 403164
+thread5 preempt directly at 409680
+thread10 preempt directly at 403164
+thread11 preempt directly at 403164
+thread12 preempt directly at 403164
+thread13 preempt directly at 403164
+thread14 preempt directly at 403164
+thread15 preempt directly at 403164
+thread0 preempt directly at 409248
+thread8 preempt directly at 403332
+preempt finish with 9716
+fthread 7 leave barrier32826418
+fthread 8 leave barrier32927173
+fthread 9 leave barrier32944168
+fthread 10 leave barrier32960448
+preempt start with 32977615
+thread3 preempt directly at 409500
+thread6 preempt directly at 409680
+thread5 preempt directly at 409500
+thread2 preempt directly at 409680
+thread9 preempt directly at 403164
+thread7 preempt directly at 409500
+thread10 preempt directly at 403164
+thread11 preempt directly at 403164
+thread0 preempt directly at 409248
+thread8 preempt directly at 403332
+preempt finish with 8738
+fthread 11 leave barrier33017321
+fthread 12 leave barrier33093806
+fthread 13 leave barrier33116947
+fthread 14 leave barrier33121925
+preempt start with 33149775
+thread5 preempt directly at 403872
+thread9 preempt directly at 409884
+thread6 preempt directly at 408168
+thread7 preempt directly at 408168
+thread3 preempt directly at 408900
+thread11 preempt directly at 408660
+thread4 preempt directly at 409680
+thread1 preempt directly at 409248
+thread2 preempt directly at 408168
+thread0 preempt directly at 409500
+preempt finish with 6053
+preempt start with 33319247
+thread5 preempt directly at 408168
+thread10 preempt directly at 409248
+preempt finish with 4080
+preempt start with 33486671
+thread4 preempt directly at 409680
+thread0 preempt directly at 409680
+thread7 preempt directly at 409248
+preempt finish with 4629
+preempt start with 33654735
+thread1 preempt directly at 409056
+thread6 preempt directly at 408696
+thread7 preempt directly at 403920
+thread4 preempt directly at 408168
+thread2 preempt directly at 409680
+thread5 preempt directly at 409680
+thread0 preempt directly at 409680
+preempt finish with 4856
+preempt start with 33824207
+thread3 preempt directly at 409368
+thread1 preempt directly at 409500
+thread2 preempt directly at 409680
+thread7 preempt directly at 408168
+preempt finish with 3827
+preempt start with 33991375
+thread0 preempt directly at 409680
+thread1 preempt directly at 409680
+thread4 preempt directly at 410184
+thread2 preempt directly at 409500
+thread3 preempt directly at 409500
+preempt finish with 3664
+preempt start with 34158415
+thread3 preempt directly at 409356
+thread0 preempt directly at 409908
+thread4 preempt directly at 409500
+thread2 preempt directly at 409248
+preempt finish with 4194
+preempt start with 34325967
+thread5 preempt directly at 409296
+thread4 preempt directly at 409248
+preempt finish with 4423
+preempt start with 34493775
+thread0 preempt directly at 403920
+thread3 preempt directly at 409500
+thread2 preempt directly at 409680
+thread6 preempt directly at 409500
+thread5 preempt directly at 409500
+thread1 preempt directly at 409500
+thread4 preempt directly at 409248
+preempt finish with 5532
+preempt start with 34662735
+thread4 preempt directly at 403920
+thread7 preempt directly at 410064
+thread0 preempt directly at 409908
+thread1 preempt directly at 409500
+thread8 preempt directly at 409500
+thread6 preempt directly at 409680
+thread3 preempt directly at 408168
+thread2 preempt directly at 409500
+thread5 preempt directly at 409500
+preempt finish with 5122
+preempt start with 34831183
+thread0 preempt directly at 409500
+thread2 preempt directly at 409680
+thread8 preempt directly at 409680
+thread4 preempt directly at 409500
+thread1 preempt directly at 409248
+preempt finish with 4417
+preempt start with 34998991
+thread3 preempt directly at 409344
+thread5 preempt directly at 403896
+thread2 preempt directly at 408168
+thread1 preempt directly at 408660
+thread0 preempt directly at 408168
+thread4 preempt directly at 409248
+preempt finish with 4894
+preempt start with 35168463
+thread1 preempt directly at 409680
+thread6 preempt directly at 409680
+thread0 preempt directly at 409680
+thread2 preempt directly at 409248
+preempt finish with 4526
+preempt start with 35336399
+thread1 preempt directly at 409680
+thread5 preempt directly at 409488
+thread4 preempt directly at 409680
+thread2 preempt directly at 409680
+thread3 preempt directly at 408660
+thread6 preempt directly at 409500
+thread7 preempt directly at 410184
+preempt finish with 4349
+preempt start with 35504079
+thread1 preempt directly at 409680
+thread5 preempt directly at 408900
+thread4 preempt directly at 409500
+thread7 preempt directly at 409680
+thread3 preempt directly at 409500
+thread6 preempt directly at 409248
+preempt finish with 4733
+preempt start with 35672143
+thread2 preempt directly at 409248
+thread1 preempt directly at 408168
+preempt finish with 3324
+preempt start with 35838799
+thread7 preempt directly at 409584
+thread5 preempt directly at 409500
+thread6 preempt directly at 409248
+preempt finish with 4679
+fthread 4 meet barrier35986274
+preempt start with 36006863
+thread1 preempt directly at 409680
+thread4 preempt directly at 409176
+preempt finish with 6635
+preempt start with 36176847
+thread1 preempt directly at 403872
+thread4 preempt directly at 409656
+thread8 preempt directly at 409368
+thread7 preempt directly at 408900
+thread0 preempt directly at 409680
+thread9 preempt directly at 410184
+thread2 preempt directly at 409500
+thread6 preempt directly at 409500
+thread3 preempt directly at 409680
+preempt finish with 5177
+preempt start with 36345423
+thread0 preempt directly at 408660
+thread6 preempt directly at 408900
+thread7 preempt directly at 409680
+thread2 preempt directly at 409248
+preempt finish with 3626
+fthread 1 meet barrier36454863
+preempt start with 36512463
+thread1 preempt directly at 409440
+thread2 preempt directly at 409500
+thread4 preempt directly at 409176
+thread3 preempt directly at 409500
+thread0 preempt directly at 409680
+preempt finish with 3687
+preempt start with 36680783
+thread2 preempt directly at 409500
+thread3 preempt directly at 409500
+thread5 preempt directly at 409500
+thread0 preempt directly at 409680
+thread1 preempt directly at 409680
+thread6 preempt directly at 409248
+preempt finish with 4559
+fthread 3 meet barrier36840137
+preempt start with 36848719
+thread5 preempt directly at 409332
+thread7 preempt directly at 409356
+thread9 preempt directly at 410052
+thread0 preempt directly at 408168
+thread3 preempt directly at 409500
+thread8 preempt directly at 409500
+thread4 preempt directly at 409680
+thread6 preempt directly at 409680
+preempt finish with 7185
+preempt start with 37019343
+thread2 preempt directly at 409500
+thread3 preempt directly at 409500
+thread8 preempt directly at 408660
+thread6 preempt directly at 409500
+thread0 preempt directly at 409680
+thread7 preempt directly at 409248
+preempt finish with 6158
+fthread 2 meet barrier37070036
+preempt start with 37188815
+thread4 preempt directly at 409932
+thread5 preempt directly at 409500
+thread6 preempt directly at 408168
+thread3 preempt directly at 409500
+thread0 preempt directly at 409248
+preempt finish with 5567
+preempt start with 37357775
+thread5 preempt directly at 409356
+thread7 preempt directly at 409500
+thread6 preempt directly at 408168
+thread1 preempt directly at 409680
+thread4 preempt directly at 409680
+thread2 preempt directly at 409248
+preempt finish with 5716
+preempt start with 37528143
+thread7 preempt directly at 409884
+thread6 preempt directly at 408168
+thread1 preempt directly at 409500
+thread3 preempt directly at 409248
+thread4 preempt directly at 408900
+thread9 preempt directly at 409680
+thread5 preempt directly at 409680
+thread2 preempt directly at 409500
+preempt finish with 5607
+fthread 7 meet barrier37636334
+preempt start with 37697103
+thread6 preempt directly at 408348
+thread10 preempt directly at 409680
+thread3 preempt directly at 409680
+thread8 preempt directly at 409680
+thread7 preempt directly at 409680
+thread2 preempt directly at 409680
+thread0 preempt directly at 409248
+preempt finish with 6856
+preempt start with 37867343
+thread5 preempt directly at 409404
+thread2 preempt directly at 409680
+thread3 preempt directly at 409680
+thread7 preempt directly at 409680
+thread6 preempt directly at 409680
+thread4 preempt directly at 409680
+thread0 preempt directly at 409248
+preempt finish with 6273
+preempt start with 38036943
+thread3 preempt directly at 409548
+thread8 preempt directly at 409428
+thread4 preempt directly at 408900
+thread0 preempt directly at 408900
+thread1 preempt directly at 409248
+preempt finish with 3900
+fthread 0 meet barrier38151915
+preempt start with 38204239
+thread6 preempt directly at 409344
+thread1 preempt directly at 408168
+thread4 preempt directly at 409680
+thread5 preempt directly at 409500
+thread0 preempt directly at 409248
+preempt finish with 4951
+fthread 8 meet barrier38247571
+fthread 5 meet barrier38336389
+preempt start with 38373839
+thread1 preempt directly at 393216
+thread5 preempt directly at 408660
+thread3 preempt directly at 408660
+thread0 preempt directly at 409680
+thread2 preempt directly at 409500
+preempt finish with 3652
+preempt start with 38540879
+thread5 preempt directly at 408900
+thread0 preempt directly at 410364
+thread3 preempt directly at 410040
+thread1 preempt directly at 409500
+thread4 preempt directly at 409500
+thread6 preempt directly at 409500
+preempt finish with 4092
+fthread 9 meet barrier38684410
+fthread 6 meet barrier38695389
+preempt start with 38708303
+thread6 preempt directly at 409680
+thread3 preempt directly at 408900
+thread4 preempt directly at 409500
+thread0 preempt directly at 409500
+thread1 preempt directly at 408900
+preempt finish with 4193
+fthread 10 meet barrier38758343
+fthread 11 meet barrier38796175
+preempt start with 38875855
+thread5 preempt directly at 408168
+thread4 preempt directly at 408660
+thread3 preempt directly at 409680
+thread6 preempt directly at 408168
+preempt finish with 3384
+fthread 12 meet barrier39017435
+preempt start with 39042639
+thread2 preempt directly at 409500
+thread1 preempt directly at 409500
+thread0 preempt directly at 408168
+preempt finish with 3480
+fthread 14 meet barrier39131118
+fthread 13 meet barrier39191919
+preempt start with 39210703
+thread3 preempt directly at 408168
+preempt finish with 2960
+fthread 15 meet barrier39317491
+fthread 15 leave barrier39375747
+fthread 15 meet barrier39375864
+preempt start with 39377103
+preempt finish with 7464
+fthread 0 leave barrier39466053
+fthread 1 leave barrier39468573
+fthread 1 meet barrier39468650
+fthread 2 leave barrier39483413
+fthread 2 meet barrier39483490
+fthread 3 leave barrier39514191
+fthread 3 meet barrier39514268
+fthread 4 leave barrier39521120
+fthread 4 meet barrier39521197
+preempt start with 39549647
+thread1 preempt directly at 404292
+preempt finish with 4583
+fthread 5 leave barrier39560939
+fthread 5 meet barrier39561053
+fthread 6 leave barrier39635423
+fthread 6 meet barrier39635500
+fthread 7 leave barrier39670745
+fthread 7 meet barrier39670822
+fthread 8 leave barrier39679302
+fthread 8 meet barrier39679379
+fthread 9 leave barrier39714858
+fthread 9 meet barrier39714935
+preempt start with 39717583
+thread1 preempt directly at 404220
+preempt finish with 2857
+fthread 10 leave barrier39805379
+fthread 10 meet barrier39805456
+fthread 11 leave barrier39835334
+fthread 11 meet barrier39835411
+fthread 12 leave barrier39845518
+fthread 12 meet barrier39845595
+fthread 13 leave barrier39881434
+fthread 13 meet barrier39881511
+preempt start with 39883855
+preempt finish with 2843
+fthread 14 leave barrier39973749
+fthread 14 meet barrier39973826
+********time:40020746*******
+ReadSocket event for pid: 1 at time: 0
+********time:40020747*******
+flag set:32
+in level:5
+********time:40143615*******
+flag set:32
+fthread 0 meet barrier40181556
+fthread 0 leave barrier40317232
+preempt start with 40337583
+thread1 preempt directly at 407316
+thread0 preempt directly at 405060
+preempt finish with 7900
+fthread 1 leave barrier40353684
+fthread 2 leave barrier40425021
+fthread 3 leave barrier40428460
+fthread 0 meet barrier40429465
+fthread 4 leave barrier40435045
+fthread 5 leave barrier40441198
+fthread 5 meet barrier40444469
+fthread 6 leave barrier40448034
+fthread 1 meet barrier40448751
+fthread 7 leave barrier40458762
+fthread 8 leave barrier40470553
+fthread 6 meet barrier40471315
+fthread 9 leave barrier40480721
+fthread 3 meet barrier40483761
+fthread 4 meet barrier40486053
+fthread 10 leave barrier40495347
+fthread 2 meet barrier40498395
+fthread 10 meet barrier40499588
+fthread 7 meet barrier40502959
+fthread 8 meet barrier40503759
+fthread 9 meet barrier40507976
+fthread 11 leave barrier40508132
+preempt start with 40511279
+thread1 preempt directly at 403164
+thread2 preempt directly at 403164
+thread11 preempt directly at 406884
+thread3 preempt directly at 402708
+thread4 preempt directly at 402708
+thread5 preempt directly at 403164
+thread6 preempt directly at 403164
+thread7 preempt directly at 402708
+thread8 preempt directly at 402708
+thread9 preempt directly at 402708
+thread10 preempt directly at 402708
+thread0 preempt directly at 403164
+preempt finish with 7523
+fthread 11 meet barrier40559804
+fthread 12 leave barrier40590614
+fthread 12 meet barrier40594815
+fthread 13 leave barrier40604257
+fthread 13 meet barrier40608780
+fthread 14 leave barrier40623751
+fthread 14 meet barrier40628565
+fthread 15 leave barrier40643715
+fthread 15 meet barrier40648696
+preempt start with 40683439
+thread14 preempt directly at 403908
+thread15 preempt directly at 403920
+thread0 preempt directly at 402672
+thread1 preempt directly at 403164
+thread2 preempt directly at 403164
+thread3 preempt directly at 403164
+thread4 preempt directly at 403164
+thread5 preempt directly at 403164
+thread6 preempt directly at 403164
+thread7 preempt directly at 403164
+thread8 preempt directly at 403164
+thread9 preempt directly at 403164
+thread10 preempt directly at 403164
+thread11 preempt directly at 403164
+thread12 preempt directly at 403164
+thread13 preempt directly at 403164
+preempt finish with 7589
+fthread 13 leave barrier40849453
+fthread 14 leave barrier40855320
+preempt start with 40856111
+thread4 preempt directly at 403896
+thread5 preempt directly at 403104
+thread15 preempt directly at 407856
+thread6 preempt directly at 403164
+thread7 preempt directly at 403164
+thread8 preempt directly at 403164
+thread14 preempt directly at 408168
+thread9 preempt directly at 403164
+thread10 preempt directly at 403164
+thread11 preempt directly at 403164
+thread12 preempt directly at 403164
+thread13 preempt directly at 403164
+thread0 preempt directly at 403332
+thread1 preempt directly at 403164
+thread2 preempt directly at 403164
+thread3 preempt directly at 403164
+preempt finish with 9536
+fthread 15 leave barrier40932632
+fthread 0 leave barrier40935771
+fthread 1 leave barrier40941633
+fthread 2 leave barrier40947464
+fthread 3 leave barrier40953260
+fthread 4 leave barrier40959022
+fthread 5 leave barrier40964757
+fthread 6 leave barrier40971630
+fthread 7 leave barrier40978444
+fthread 8 leave barrier40985184
+fthread 9 leave barrier40991850
+fthread 10 leave barrier40998432
+fthread 11 leave barrier41004906
+fthread 12 leave barrier41011442
+preempt start with 41030703
+thread1 preempt directly at 409920
+thread5 preempt directly at 409572
+thread7 preempt directly at 409896
+thread14 preempt directly at 403860
+thread0 preempt directly at 410364
+thread3 preempt directly at 409680
+thread11 preempt directly at 408168
+thread15 preempt directly at 408168
+thread9 preempt directly at 408168
+thread12 preempt directly at 408168
+thread6 preempt directly at 408168
+thread10 preempt directly at 409680
+thread4 preempt directly at 408900
+thread8 preempt directly at 408168
+thread2 preempt directly at 409500
+thread13 preempt directly at 408168
+preempt finish with 6879
+fthread 13 meet barrier41151086
+fthread 5 meet barrier41164041
+fthread 14 meet barrier41177477
+fthread 15 meet barrier41196866
+preempt start with 41202735
+thread4 preempt directly at 409524
+thread12 preempt directly at 408432
+thread13 preempt directly at 403896
+thread5 preempt directly at 409680
+thread8 preempt directly at 408168
+thread2 preempt directly at 409680
+thread3 preempt directly at 408660
+thread9 preempt directly at 408168
+thread11 preempt directly at 408168
+thread7 preempt directly at 408900
+thread1 preempt directly at 409680
+thread10 preempt directly at 409680
+preempt finish with 9443
+fthread 10 meet barrier41271743
+fthread 11 meet barrier41290440
+fthread 12 meet barrier41306993
+fthread 9 meet barrier41324476
+fthread 6 meet barrier41334139
+preempt start with 41376943
+thread4 preempt directly at 393216
+thread5 preempt directly at 409860
+thread2 preempt directly at 408168
+thread0 preempt directly at 410532
+thread1 preempt directly at 409680
+thread7 preempt directly at 409680
+thread8 preempt directly at 408168
+thread3 preempt directly at 408168
+preempt finish with 5598
+fthread 8 meet barrier41432480
+fthread 7 meet barrier41505746
+preempt start with 41545903
+thread2 preempt directly at 408840
+thread5 preempt directly at 408900
+thread1 preempt directly at 409680
+thread4 preempt directly at 409500
+thread3 preempt directly at 409680
+preempt finish with 3643
+fthread 4 meet barrier41688969
+preempt start with 41712943
+thread1 preempt directly at 409284
+thread2 preempt directly at 409680
+thread3 preempt directly at 409680
+thread4 preempt directly at 409500
+preempt finish with 3317
+fthread 3 meet barrier41768447
+preempt start with 41879727
+thread3 preempt directly at 403896
+thread2 preempt directly at 409500
+thread1 preempt directly at 409680
+preempt finish with 3007
+preempt start with 42046255
+thread3 preempt directly at 409680
+thread2 preempt directly at 409500
+thread1 preempt directly at 409500
+preempt finish with 3324
+fthread 2 meet barrier42099995
+preempt start with 42213039
+thread2 preempt directly at 409680
+thread1 preempt directly at 409500
+preempt finish with 3268
+preempt start with 42379823
+thread1 preempt directly at 409500
+thread2 preempt directly at 409680
+preempt finish with 3158
+fthread 0 meet barrier42494279
+fthread 1 meet barrier42508181
+preempt start with 42546479
+thread2 preempt directly at 404292
+preempt finish with 7783
+fthread 1 leave barrier42561761
+fthread 1 meet barrier42561875
+fthread 0 leave barrier42639104
+fthread 2 leave barrier42675233
+fthread 2 meet barrier42675310
+fthread 3 leave barrier42705922
+fthread 3 meet barrier42705999
+fthread 4 leave barrier42712843
+fthread 4 meet barrier42712920
+preempt start with 42719279
+preempt finish with 3947
+fthread 5 leave barrier42812898
+fthread 5 meet barrier42812975
+fthread 6 leave barrier42820641
+fthread 6 meet barrier42820718
+fthread 7 leave barrier42855831
+fthread 7 meet barrier42855908
+fthread 8 leave barrier42864388
+fthread 8 meet barrier42864465
+preempt start with 42887855
+preempt finish with 3197
+fthread 9 leave barrier42976924
+fthread 9 meet barrier42977001
+fthread 10 leave barrier42984317
+fthread 10 meet barrier42984394
+fthread 11 leave barrier43018076
+fthread 11 meet barrier43018153
+fthread 12 leave barrier43028261
+fthread 12 meet barrier43028338
+preempt start with 43055663
+preempt finish with 2748
+fthread 13 leave barrier43145191
+fthread 13 meet barrier43145268
+fthread 14 leave barrier43153112
+fthread 14 meet barrier43153189
+fthread 15 leave barrier43188124
+fthread 15 meet barrier43188201
+********time:43205202*******
+ReadSocket event for pid: 1 at time: 0
+********time:43205203*******
+flag set:32
+********time:43328072*******
+sucess

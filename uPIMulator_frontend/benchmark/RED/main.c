@@ -37,7 +37,7 @@ struct barrier b;
 // main_kernel1
 void main1()
 {
-   unsigned int fthread_id = get_jid();
+  unsigned int fthread_id = get_jid();
   if (fthread_id == 0)
   {
     char ok;
@@ -50,7 +50,6 @@ void main1()
   wait_barrier(&b);
   print_debug(fthread_id, 2);
 
- 
   // int i = 0;
   // Barrier
 
@@ -74,8 +73,6 @@ void main1()
   // Local count
   T l_count = 0;
 
-#if !PERF_SYNC // COMMENT OUT TO COMPARE SYNC PRIMITIVES (Experiment in
-               // Appendix)
   for (unsigned int byte_index = base_tasklet;
        byte_index < input_size_dpu_bytes;
        byte_index += BLOCK_SIZE * NR_FTHREAD)
@@ -93,72 +90,29 @@ void main1()
     // Reduction in each tasklet
     l_count += reduction(cache_A, l_size_bytes >> DIV);
   }
-
-#endif
+  //print_debug(l_count,3);
 
   // Reduce local counts
   message[fthread_id] = l_count;
 
-  // #if PERF && PERF_SYNC // TIMER FOR SYNC PRIMITIVES
-  //   result->cycles = 0;
-  //   perfcounter_cycles cycles;
-  //   timer_start(&cycles); // START TIMER
-  // #endif
-  // #ifdef TREE // Tree-based reduction
 
-  // #ifdef BARRIER
-  //   // Barrier
-  //   wait_barrier(&b);
-
-  // #endif
-
-  // #pragma unroll
-  //   for (unsigned int offset = 1; offset < NR_TASKLETS; offset <<= 1) {
-
-  //     if ((fthread_id & (2 * offset - 1)) == 0) {
-  // // #ifndef BARRIER
-  // //       // Wait
-
-  // //       handshake_wait_for(fthread_id + offset);
-  // // #endif
-  //       message[fthread_id] += message[fthread_id + offset];
-  //     }
-
-  // #ifdef BARRIER
-  //     // Barrier
-  //     wait_barrier(&b);
-
-  // #else
-  //     else if ((fthread_id & (offset - 1)) ==
-  //              0) { // Ensure that wait and notify are in pair
-  //       // Notify
-
-  //       handshake_notify();
-  //     }
-  // #endif
-  //   }
-
-  // #else // Single-thread reduction
-  // Barrier
   print_debug(fthread_id, 1);
   wait_barrier(&b);
   print_debug(fthread_id, 2);
 
   if (fthread_id == 0)
-#pragma unroll
+  {
+    print_debug(message[0],6);
     for (unsigned int each_tasklet = 1; each_tasklet < NR_FTHREAD;
          each_tasklet++)
     {
       message[0] += message[each_tasklet];
+      print_debug(message[each_tasklet],3);
+      print_debug(message[0],4);
     }
-
-  if (fthread_id == 0)
-  {
     result->t_count = message[fthread_id];
-  }
+    print_debug(message[0],5);
 
-  if (fthread_id == 0)
-  {
     CHK(umram_write(DPU_RESULTS, sizeof(DPU_RESULTS),
                     input_size_dpu_bytes +
                         sizeof(dpu_arguments_t))); // comment tranformer la var

@@ -9,9 +9,6 @@
 #define MAX_PRG 10
 #define BUFFER_BIT_MAP 400
 #define JOB_PER_PROCESS 100
-#define QUANTOM_STOP_DPU 50000000
-#define PROCESS_QUANTOM QUANTOM_STOP_DPU / 100
-#define QUANTOM_JOB PROCESS_QUANTOM / 20
 #define SIZE_BIT_MAP 4000
 #define BIT_MAP (INODE_BLOCK - SIZE_BIT_MAP)
 #define INODE_BLOCK (1 << 16) // 64KB total_inode=64M/64KB=1024
@@ -23,7 +20,6 @@
 #define SIZE_STACK 512
 #define SIZE_SOCKET (INODE_BLOCK >> 2)
 #define SIZE_BLOCK INODE_BLOCK
-#define JOB_PER_PROCESS 100
 #define __aligned(a) __attribute__((aligned(a)))
 #define __dma_aligned __aligned(8)
 #include <fcntl.h>

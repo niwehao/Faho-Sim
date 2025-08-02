@@ -195,7 +195,7 @@ namespace upmem_sim::simulator::reg
 
       pc_reg_->increment();
       int64_t pc_value = pc_reg_->read();
-     //print_jump(pc_value);
+      //print_jump(pc_value);
       // if(pc_reg_->read()  == 570432+12) {
       //   std::cout << "pc_reg increment to: " << pc_reg_->read() << std::endl;
       // }

@@ -5633,6 +5633,16 @@ namespace upmem_sim::simulator::dpu
             std::cout << "fthread " << rc << " leave barrier"  <<performance_counter_->get_true_value()<< std::endl;
           }
         }
+        else if (sign == 3 || sign == 4){
+          if (sign == 3)
+          {
+            std::cout << "fthread " << rc << " start cal at " <<performance_counter_->get_true_value()<< std::endl;
+          }
+          else{
+            std::cout << "fthread " << rc << " end cal at "  <<performance_counter_->get_true_value()<< std::endl;
+          }
+
+         }
         else{
           std::cout << "debug" << sign << " for " <<rc<< std::endl;
         }

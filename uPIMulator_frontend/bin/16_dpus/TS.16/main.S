@@ -575,6 +575,173 @@ stdio.__stdout_cache_buffer:
 	$addrsig_sym, __atomic_bit___stdout_buffer_lock
 	$addrsig_sym, stdio.__stdout_cache_buffer
 	$text,
+	$file,	"div32.c"
+	$section,	%text, __udiv32,"ax",@progbits
+	$globl,	__udiv32                        //  -  -  Begin function __udiv32
+	$type,	__udiv32,@function
+__udiv32:                               // @__udiv32
+div32..Lfunc_begin0:
+// %bb.0:
+	// inline asm
+
+	$clz , r3, r1, max, div32.__udiv32_division_by_zero
+	$clz , r4, r0
+	$sub , r3, r4, r3, gtu, div32.__udiv32_result_0
+	$move , r4, r1
+	$move .u, d0, r0
+	$jump , r3, div32.__udiv32_base
+	$div_step , d0, r4, d0, 31
+	$div_step , d0, r4, d0, 30
+	$div_step , d0, r4, d0, 29
+	$div_step , d0, r4, d0, 28
+	$div_step , d0, r4, d0, 27
+	$div_step , d0, r4, d0, 26
+	$div_step , d0, r4, d0, 25
+	$div_step , d0, r4, d0, 24
+	$div_step , d0, r4, d0, 23
+	$div_step , d0, r4, d0, 22
+	$div_step , d0, r4, d0, 21
+	$div_step , d0, r4, d0, 20
+	$div_step , d0, r4, d0, 19
+	$div_step , d0, r4, d0, 18
+	$div_step , d0, r4, d0, 17
+	$div_step , d0, r4, d0, 16
+	$div_step , d0, r4, d0, 15
+	$div_step , d0, r4, d0, 14
+	$div_step , d0, r4, d0, 13
+	$div_step , d0, r4, d0, 12
+	$div_step , d0, r4, d0, 11
+	$div_step , d0, r4, d0, 10
+	$div_step , d0, r4, d0, 9
+	$div_step , d0, r4, d0, 8
+	$div_step , d0, r4, d0, 7
+	$div_step , d0, r4, d0, 6
+	$div_step , d0, r4, d0, 5
+	$div_step , d0, r4, d0, 4
+	$div_step , d0, r4, d0, 3
+	$div_step , d0, r4, d0, 2
+	$div_step , d0, r4, d0, 1
+div32.__udiv32_base:
+	$div_step , d0, r4, d0, 0
+div32.__udiv32_exit:
+	$jump , r23
+div32.__udiv32_result_0:
+	$move .u, d0, r0, true, div32.__udiv32_exit
+div32.__udiv32_division_by_zero:
+	$fault , 2
+	// inline asm
+div32..Lfunc_end0:
+	$size,	__udiv32, div32..Lfunc_end0 - __udiv32
+	$section,	%stack_sizes,"o",@progbits,%text, __udiv32
+	$long,	div32..Lfunc_begin0
+	$byte,	0
+	$section,	%text, __udiv32,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%text, __div32,"ax",@progbits
+	$globl,	__div32                         //  -  -  Begin function __div32
+	$type,	__div32,@function
+__div32:                                // @__div32
+div32..Lfunc_begin1:
+// %bb.0:
+	// inline asm
+
+	$sd , r22, 0, d22
+	$add , r22, r22, 8
+	$clo , r3, r0, z, div32.__div32_pos_dividend
+	$clo , r3, r1, z, div32.__div32_neg_dividend_pos_divider
+div32.__div32_neg_dividend_neg_divider:
+	$neg , r0, r0
+	$neg , r1, r1
+	$call , r23, __udiv32
+	$neg , r1, r1, true, div32.__div32_exit
+div32.__div32_neg_dividend_pos_divider:
+	$neg , r0, r0
+	$call , r23, __udiv32
+	$neg , r1, r1
+	$neg , r0, r0, true, div32.__div32_exit
+div32.__div32_pos_dividend:
+	$clo , r3, r1, z, div32.__div32_pos_dividend_pos_divider
+	$neg , r1, r1
+	$call , r23, __udiv32
+	$neg , r0, r0, true, div32.__div32_exit
+div32.__div32_pos_dividend_pos_divider:
+	$call , r23, __udiv32
+div32.__div32_exit:
+	$ld , d22, r22,  - 8
+	$jump , r23
+
+	// inline asm
+div32..Lfunc_end1:
+	$size,	__div32, div32..Lfunc_end1 - __div32
+	$section,	%stack_sizes,"o",@progbits,%text, __div32
+	$long,	div32..Lfunc_begin1
+	$byte,	0
+	$section,	%text, __div32,"ax",@progbits
+                                        //  -  -  End function
+	$addrsig,
+	$text,
+	$file,	"mul32.c"
+	$section,	%text, __mulsi3,"ax",@progbits
+	$globl,	__mulsi3                        //  -  -  Begin function __mulsi3
+	$type,	__mulsi3,@function
+__mulsi3:                               // @__mulsi3
+mul32..Lfunc_begin0:
+// %bb.0:
+	// inline asm
+	$jgtu , r1, r0, mul32.__mulsi3_swap
+	$move , r2, r0
+	$move , r0, r1, true, mul32.__mulsi3_start
+mul32.__mulsi3_swap:
+	$move , r2, r1
+	$move , r0, r0
+mul32.__mulsi3_start:
+	$move , r1, zero
+	$mul_step , d0, r2, d0, 0, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 1, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 2, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 3, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 4, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 5, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 6, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 7, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 8, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 9, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 10, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 11, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 12, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 13, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 14, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 15, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 16, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 17, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 18, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 19, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 20, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 21, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 22, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 23, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 24, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 25, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 26, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 27, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 28, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 29, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 30, z, mul32.__mulsi3_exit
+	$mul_step , d0, r2, d0, 31, z, mul32.__mulsi3_exit
+mul32.__mulsi3_exit:
+	$move , r0, r1
+
+	// inline asm
+	$jump , r23
+mul32..Lfunc_end0:
+	$size,	__mulsi3, mul32..Lfunc_end0 - __mulsi3
+	$section,	%stack_sizes,"o",@progbits,%text, __mulsi3
+	$long,	mul32..Lfunc_begin0
+	$byte,	0
+	$section,	%text, __mulsi3,"ax",@progbits
+                                        //  -  -  End function
+	$addrsig,
+	$text,
 	$file,	"memset.c"
 	$section,	%text, __memset_wram_4align,"ax",@progbits
 	$globl,	__memset_wram_4align            //  -  -  Begin function __memset_wram_4align
@@ -1809,7 +1976,7 @@ main1:                                  // @main1
 	$move , r2, r0
 	$move , r3, r0
 	$call , r23, syscall
-	$move , r17, r0, nz, .LBB29_3
+	$move , r17, r0, nz, .LBB29_4
 // %bb.1:
 	$lw , r0, zero, sd_host
 	$add , r14, r22,  - 136
@@ -1836,9 +2003,10 @@ main1:                                  // @main1
 // %bb.2:
 	$call , r23, fault_notif
 .LBB29_3:
-	$move , r1, 1
-	$move , r0, r17
+	$move , r0, 0
+	$move , r1, 3
 	$call , r23, print_debug
+.LBB29_4:
 	$move , r14, b
 	$move , r1, 0
 	$move , r4, 15
@@ -1850,8 +2018,8 @@ main1:                                  // @main1
 	$add , r0, r0, 1
 	$sw , r14, 4, r0
 	$lw , r1, r14, 8
-	$jneq , r0, r1, .LBB29_5
-// %bb.4:
+	$jneq , r0, r1, .LBB29_6
+// %bb.5:
 	$move , r1, 0
 	$move , r4, 18
 	$move , r0, r14
@@ -1859,15 +2027,15 @@ main1:                                  // @main1
 	$move , r3, r1
 	$call , r23, syscall
 	$sw , r14, 4, 0
-	$jump , .LBB29_6
-.LBB29_5:
+	$jump , .LBB29_7
+.LBB29_6:
 	$move , r0, b
 	$move , r2, 0
 	$move , r4, 17
 	$move , r1, r0
 	$move , r3, r2
 	$call , r23, syscall
-.LBB29_6:
+.LBB29_7:
 	$move , r0, b
 	$move , r15, 0
 	$move , r4, 16
@@ -1875,9 +2043,6 @@ main1:                                  // @main1
 	$move , r2, r15
 	$move , r3, r15
 	$call , r23, syscall
-	$move , r1, 2
-	$move , r0, r17
-	$call , r23, print_debug
 	$move , r0, DPU_INPUT_ARGUMENTS
 	$lw , r16, r0, 4
 	$lw , r14, r0, 16
@@ -1890,13 +2055,13 @@ main1:                                  // @main1
 	$call , r23, __mulsi3
 	$move , r19, r0
 	$sw , r22,  - 24, r17
-	$jneq , r17, 15, .LBB29_8
-// %bb.7:
+	$jneq , r17, 15, .LBB29_9
+// %bb.8:
 	$not , r1, r16
-	$add , r17, r14, r1, true, .LBB29_9
-.LBB29_8:
-	$lsr_add , r17, r19, r14, 4
+	$add , r17, r14, r1, true, .LBB29_10
 .LBB29_9:
+	$lsr_add , r17, r19, r14, 4
+.LBB29_10:
 	$move , r0, 32
 	$lsl_add , r0, r0, r16, 2
 	$sw , r22,  - 20, r0
@@ -1947,8 +2112,8 @@ main1:                                  // @main1
 	$move , r4, r21
 	$call , r23, syscall
 	$move , r1, 2147483647
-	$jleu , r17, r19, .LBB29_35
-// %bb.10:
+	$jleu , r17, r19, .LBB29_36
+// %bb.11:
 	$lw , r1, r22,  - 20
 	$lsl_add , r3, r1, r19, 2
 	$lw , r2, r22,  - 16
@@ -1987,11 +2152,11 @@ main1:                                  // @main1
 	$sw , r22,  - 56, r19
 	$sw , r22,  - 32, r17
 	$sw , r22,  - 116, r16
-	$jump , .LBB29_11
-.LBB29_34:                              //   in Loop: Header=BB29_11 Depth=1
+	$jump , .LBB29_12
+.LBB29_35:                              //   in Loop: Header=BB29_12 Depth=1
 	$lw , r1, r22,  - 44
 	$lw , r15, r22,  - 88
-.LBB29_48:                              //   in Loop: Header=BB29_11 Depth=1
+.LBB29_49:                              //   in Loop: Header=BB29_12 Depth=1
 	$add , r21, r21, 512
 	$lw , r0, r22,  - 60
 	$add , r0, r0, 512
@@ -2006,26 +2171,26 @@ main1:                                  // @main1
 	$lw , r16, r22,  - 116
 	$sw , r22,  - 84, r2
 	$lw , r19, r22,  - 56
-	$jleu , r17, r2, .LBB29_35
-.LBB29_11:                              // =>This Loop Header: Depth=1
-                                        //     Child Loop BB29_18 Depth 2
-                                        //       Child Loop BB29_22 Depth 3
-                                        //         Child Loop BB29_24 Depth 4
-                                        //     Child Loop BB29_45 Depth 2
+	$jleu , r17, r2, .LBB29_36
+.LBB29_12:                              // =>This Loop Header: Depth=1
+                                        //     Child Loop BB29_19 Depth 2
+                                        //       Child Loop BB29_23 Depth 3
+                                        //         Child Loop BB29_25 Depth 4
+                                        //     Child Loop BB29_46 Depth 2
 	$sw , r22,  - 80, r0
-	$jltu , r0, 128, .LBB29_13
-// %bb.12:                              //   in Loop: Header=BB29_11 Depth=1
+	$jltu , r0, 128, .LBB29_14
+// %bb.13:                              //   in Loop: Header=BB29_12 Depth=1
 	$move , r1, 128
 	$sw , r22,  - 80, r1
-.LBB29_13:                              //   in Loop: Header=BB29_11 Depth=1
+.LBB29_14:                              //   in Loop: Header=BB29_12 Depth=1
 	$sw , r22,  - 44, r4
 	$sw , r22,  - 88, r3
 	$move , r15, r0
 	$sw , r22,  - 48, r0
-	$jltu , r0, 128, .LBB29_15
-// %bb.14:                              //   in Loop: Header=BB29_11 Depth=1
+	$jltu , r0, 128, .LBB29_16
+// %bb.15:                              //   in Loop: Header=BB29_12 Depth=1
 	$move , r15, 128
-.LBB29_15:                              //   in Loop: Header=BB29_11 Depth=1
+.LBB29_16:                              //   in Loop: Header=BB29_12 Depth=1
 	$sw , r22,  - 52, r21
 	$lw , r0, r22,  - 84
 	$sub , r17, r17, r0
@@ -2035,28 +2200,28 @@ main1:                                  // @main1
 	$move , r1, r14
 	$call , r23, __memset_wram_4align
 	$sw , r22,  - 120, r17
-	$jltu , r17, 128, .LBB29_17
-// %bb.16:                              //   in Loop: Header=BB29_11 Depth=1
+	$jltu , r17, 128, .LBB29_18
+// %bb.17:                              //   in Loop: Header=BB29_12 Depth=1
 	$move , r0, 128
 	$sw , r22,  - 120, r0
-.LBB29_17:                              //   in Loop: Header=BB29_11 Depth=1
+.LBB29_18:                              //   in Loop: Header=BB29_12 Depth=1
 	$lw , r0, r22,  - 84
 	$sub , r0, r0, r19
 	$lw , r1, r22,  - 28
 	$lsl_add , r19, r1, r0, 2
-	$move , r21, 32, true, .LBB29_18
-.LBB29_28:                              //   in Loop: Header=BB29_18 Depth=2
+	$move , r21, 32, true, .LBB29_19
+.LBB29_29:                              //   in Loop: Header=BB29_19 Depth=2
 	$lw , r21, r22,  - 108
 	$add , r21, r21, 512
 	$lw , r0, r22,  - 104
 	$add , r14, r0, 1
 	$lw , r16, r22,  - 116
 	$lw , r19, r22,  - 112
-	$jeq , r0, r16, .LBB29_29
-.LBB29_18:                              //   Parent Loop BB29_11 Depth=1
+	$jeq , r0, r16, .LBB29_30
+.LBB29_19:                              //   Parent Loop BB29_12 Depth=1
                                         // =>  This Loop Header: Depth=2
-                                        //       Child Loop BB29_22 Depth 3
-                                        //         Child Loop BB29_24 Depth 4
+                                        //       Child Loop BB29_23 Depth 3
+                                        //         Child Loop BB29_25 Depth 4
 	$move , r16, r14
 	$move , r14, 512
 	$move , r17, 0
@@ -2085,34 +2250,34 @@ main1:                                  // @main1
 	$lw , r0, r22,  - 92
 	$lw , r1, r22,  - 116
 	$sw , r22,  - 104, r16
-	$jeq , r16, r1, .LBB29_20
-// %bb.19:                              //   in Loop: Header=BB29_18 Depth=2
+	$jeq , r16, r1, .LBB29_21
+// %bb.20:                              //   in Loop: Header=BB29_19 Depth=2
 	$move , r0, 128
-.LBB29_20:                              //   in Loop: Header=BB29_18 Depth=2
-	$jeq , r0, 0, .LBB29_28
-// %bb.21:                              //   in Loop: Header=BB29_18 Depth=2
+.LBB29_21:                              //   in Loop: Header=BB29_19 Depth=2
+	$jeq , r0, 0, .LBB29_29
+// %bb.22:                              //   in Loop: Header=BB29_19 Depth=2
 	$move , r17, 0
 	$lw , r14, r22,  - 100
 	$lw , r21, r22,  - 64
 	$sw , r22,  - 124, r0
-	$jump , .LBB29_22
-.LBB29_27:                              //   in Loop: Header=BB29_22 Depth=3
+	$jump , .LBB29_23
+.LBB29_28:                              //   in Loop: Header=BB29_23 Depth=3
 	$add , r17, r17, 1
 	$add , r21, r21, 4
 	$add , r14, r14, 4
 	$lw , r0, r22,  - 124
-	$jeq , r17, r0, .LBB29_28
-.LBB29_22:                              //   Parent Loop BB29_11 Depth=1
-                                        //     Parent Loop BB29_18 Depth=2
+	$jeq , r17, r0, .LBB29_29
+.LBB29_23:                              //   Parent Loop BB29_12 Depth=1
+                                        //     Parent Loop BB29_19 Depth=2
                                         // =>    This Loop Header: Depth=3
-                                        //         Child Loop BB29_24 Depth 4
+                                        //         Child Loop BB29_25 Depth 4
 	$lw , r0, r22,  - 120
-	$jeq , r0, 0, .LBB29_27
-// %bb.23:                              //   in Loop: Header=BB29_22 Depth=3
+	$jeq , r0, 0, .LBB29_28
+// %bb.24:                              //   in Loop: Header=BB29_23 Depth=3
 	$move , r19, 0
 	$move , r20, r14
-	$move , r16, r21, true, .LBB29_24
-.LBB29_26:                              //   in Loop: Header=BB29_24 Depth=4
+	$move , r16, r21, true, .LBB29_25
+.LBB29_27:                              //   in Loop: Header=BB29_25 Depth=4
 	$lw , r1, r0, 0
 	$lw , r0, r22,  - 128
 	$lsl_add , r0, r0, r17, 2
@@ -2125,17 +2290,17 @@ main1:                                  // @main1
 	$add , r19, r19, 1
 	$add , r16, r16, 4
 	$add , r20, r20, 4
-	$jeq , r15, r19, .LBB29_27
-.LBB29_24:                              //   Parent Loop BB29_11 Depth=1
-                                        //     Parent Loop BB29_18 Depth=2
-                                        //       Parent Loop BB29_22 Depth=3
+	$jeq , r15, r19, .LBB29_28
+.LBB29_25:                              //   Parent Loop BB29_12 Depth=1
+                                        //     Parent Loop BB29_19 Depth=2
+                                        //       Parent Loop BB29_23 Depth=3
                                         // =>      This Inner Loop Header: Depth=4
 	$move , r0, r16
 	$add , r1, r17, r19
-	$jgtu , r1, 127, .LBB29_26
-// %bb.25:                              //   in Loop: Header=BB29_24 Depth=4
-	$move , r0, r20, true, .LBB29_26
-.LBB29_29:                              //   in Loop: Header=BB29_11 Depth=1
+	$jgtu , r1, 127, .LBB29_27
+// %bb.26:                              //   in Loop: Header=BB29_25 Depth=4
+	$move , r0, r20, true, .LBB29_27
+.LBB29_30:                              //   in Loop: Header=BB29_12 Depth=1
 	$move , r1, 512
 	$move , r3, 0
 	$move , r4, 22
@@ -2143,10 +2308,10 @@ main1:                                  // @main1
 	$lw , r21, r22,  - 52
 	$move , r2, r21
 	$call , r23, syscall
-	$jges , r0, 0, .LBB29_31
-// %bb.30:                              //   in Loop: Header=BB29_11 Depth=1
+	$jges , r0, 0, .LBB29_32
+// %bb.31:                              //   in Loop: Header=BB29_12 Depth=1
 	$call , r23, fault_notif
-.LBB29_31:                              //   in Loop: Header=BB29_11 Depth=1
+.LBB29_32:                              //   in Loop: Header=BB29_12 Depth=1
 	$move , r1, 512
 	$move , r3, 0
 	$move , r4, 22
@@ -2156,26 +2321,26 @@ main1:                                  // @main1
 	$lw , r17, r22,  - 40
 	$lw , r19, r22,  - 36
 	$lw , r14, r22,  - 56
-	$jles , r0,  - 1, .LBB29_32
-// %bb.33:                              //   in Loop: Header=BB29_11 Depth=1
+	$jles , r0,  - 1, .LBB29_33
+// %bb.34:                              //   in Loop: Header=BB29_12 Depth=1
 	$lw , r0, r22,  - 120
-	$jneq , r0, 0, .LBB29_44
-	$jump , .LBB29_34
-.LBB29_32:                              //   in Loop: Header=BB29_11 Depth=1
+	$jneq , r0, 0, .LBB29_45
+	$jump , .LBB29_35
+.LBB29_33:                              //   in Loop: Header=BB29_12 Depth=1
 	$call , r23, fault_notif
 	$lw , r0, r22,  - 120
-	$jeq , r0, 0, .LBB29_34
-.LBB29_44:                              //   in Loop: Header=BB29_11 Depth=1
+	$jeq , r0, 0, .LBB29_35
+.LBB29_45:                              //   in Loop: Header=BB29_12 Depth=1
 	$move , r16, 0
 	$lw , r20, r22,  - 44
-	$jump , .LBB29_45
-.LBB29_47:                              //   in Loop: Header=BB29_45 Depth=2
+	$jump , .LBB29_46
+.LBB29_48:                              //   in Loop: Header=BB29_46 Depth=2
 	$add , r16, r16, 1
 	$sw , r22,  - 88, r15
 	$move , r20, r1
 	$lw , r0, r22,  - 80
-	$jeq , r0, r16, .LBB29_48
-.LBB29_45:                              //   Parent Loop BB29_11 Depth=1
+	$jeq , r0, r16, .LBB29_49
+.LBB29_46:                              //   Parent Loop BB29_12 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	$lsl_add , r0, r18, r16, 2
 	$lw , r1, r22,  - 76
@@ -2198,12 +2363,12 @@ main1:                                  // @main1
 	$lsl , r1, r0, 1
 	$lw , r0, r22,  - 84
 	$add , r15, r0, r16
-	$jlts , r1, r20, .LBB29_47
-// %bb.46:                              //   in Loop: Header=BB29_45 Depth=2
+	$jlts , r1, r20, .LBB29_48
+// %bb.47:                              //   in Loop: Header=BB29_46 Depth=2
 	$move , r1, r20
 	$lw , r15, r22,  - 88
-	$jump , .LBB29_47
-.LBB29_35:
+	$jump , .LBB29_48
+.LBB29_36:
 	$move , r0, DPU_RESULTS
 	$lw , r16, r22,  - 24
 	$lsl_add , r0, r0, r16, 4
@@ -2224,8 +2389,8 @@ main1:                                  // @main1
 	$add , r0, r0, 1
 	$sw , r14, 4, r0
 	$lw , r1, r14, 8
-	$jneq , r0, r1, .LBB29_37
-// %bb.36:
+	$jneq , r0, r1, .LBB29_38
+// %bb.37:
 	$move , r1, 0
 	$move , r4, 18
 	$move , r0, r14
@@ -2233,15 +2398,15 @@ main1:                                  // @main1
 	$move , r3, r1
 	$call , r23, syscall
 	$sw , r14, 4, 0
-	$jump , .LBB29_38
-.LBB29_37:
+	$jump , .LBB29_39
+.LBB29_38:
 	$move , r0, b
 	$move , r2, 0
 	$move , r4, 17
 	$move , r1, r0
 	$move , r3, r2
 	$call , r23, syscall
-.LBB29_38:
+.LBB29_39:
 	$move , r14, b
 	$move , r1, 0
 	$move , r4, 16
@@ -2252,8 +2417,8 @@ main1:                                  // @main1
 	$move , r1, 2
 	$move , r0, r16
 	$call , r23, print_debug
-	$jneq , r16, 0, .LBB29_42
-// %bb.39:
+	$jneq , r16, 0, .LBB29_43
+// %bb.40:
 	$lw , r1, r22,  - 16
 	$lsl , r0, r1, 2
 	$lsl_add , r0, r0, r1, 3
@@ -2264,10 +2429,10 @@ main1:                                  // @main1
 	$move , r3, 0
 	$move , r4, 23
 	$call , r23, syscall
-	$jgts , r0,  - 1, .LBB29_41
-// %bb.40:
+	$jgts , r0,  - 1, .LBB29_42
+// %bb.41:
 	$call , r23, fault_notif
-.LBB29_41:
+.LBB29_42:
 	$lw , r0, zero, sd_host
 	$add , r15, r22,  - 132
 	$move , r16, 1
@@ -2277,13 +2442,16 @@ main1:                                  // @main1
 	$move , r2, r16
 	$move , r3, r17
 	$call , r23, syscall
+	$move , r1, 4
+	$move , r0, r17
+	$call , r23, print_debug
 	$lw , r0, zero, sd_host
 	$move , r4, 11
 	$move , r1, r15
 	$move , r2, r16
 	$move , r3, r17
 	$call , r23, syscall
-.LBB29_42:
+.LBB29_43:
 	$move , r1, 0
 	$move , r4, 15
 	$move , r0, r14
@@ -2294,8 +2462,8 @@ main1:                                  // @main1
 	$add , r0, r0, 1
 	$sw , r14, 4, r0
 	$lw , r1, r14, 8
-	$jneq , r0, r1, .LBB29_49
-// %bb.43:
+	$jneq , r0, r1, .LBB29_50
+// %bb.44:
 	$move , r14, b
 	$move , r1, 0
 	$move , r4, 18
@@ -2304,15 +2472,15 @@ main1:                                  // @main1
 	$move , r3, r1
 	$call , r23, syscall
 	$sw , r14, 4, 0
-	$jump , .LBB29_50
-.LBB29_49:
+	$jump , .LBB29_51
+.LBB29_50:
 	$move , r0, b
 	$move , r2, 0
 	$move , r4, 17
 	$move , r1, r0
 	$move , r3, r2
 	$call , r23, syscall
-.LBB29_50:
+.LBB29_51:
 	$move , r0, b
 	$move , r1, 0
 	$move , r4, 16
@@ -2596,170 +2764,3 @@ DPU_RESULTS:
 	$addrsig_sym, DPU_INPUT_ARGUMENTS
 	$addrsig_sym, b
 	$addrsig_sym, DPU_RESULTS
-	$text,
-	$file,	"div32.c"
-	$section,	%text, __udiv32,"ax",@progbits
-	$globl,	__udiv32                        //  -  -  Begin function __udiv32
-	$type,	__udiv32,@function
-__udiv32:                               // @__udiv32
-div32..Lfunc_begin0:
-// %bb.0:
-	// inline asm
-
-	$clz , r3, r1, max, div32.__udiv32_division_by_zero
-	$clz , r4, r0
-	$sub , r3, r4, r3, gtu, div32.__udiv32_result_0
-	$move , r4, r1
-	$move .u, d0, r0
-	$jump , r3, div32.__udiv32_base
-	$div_step , d0, r4, d0, 31
-	$div_step , d0, r4, d0, 30
-	$div_step , d0, r4, d0, 29
-	$div_step , d0, r4, d0, 28
-	$div_step , d0, r4, d0, 27
-	$div_step , d0, r4, d0, 26
-	$div_step , d0, r4, d0, 25
-	$div_step , d0, r4, d0, 24
-	$div_step , d0, r4, d0, 23
-	$div_step , d0, r4, d0, 22
-	$div_step , d0, r4, d0, 21
-	$div_step , d0, r4, d0, 20
-	$div_step , d0, r4, d0, 19
-	$div_step , d0, r4, d0, 18
-	$div_step , d0, r4, d0, 17
-	$div_step , d0, r4, d0, 16
-	$div_step , d0, r4, d0, 15
-	$div_step , d0, r4, d0, 14
-	$div_step , d0, r4, d0, 13
-	$div_step , d0, r4, d0, 12
-	$div_step , d0, r4, d0, 11
-	$div_step , d0, r4, d0, 10
-	$div_step , d0, r4, d0, 9
-	$div_step , d0, r4, d0, 8
-	$div_step , d0, r4, d0, 7
-	$div_step , d0, r4, d0, 6
-	$div_step , d0, r4, d0, 5
-	$div_step , d0, r4, d0, 4
-	$div_step , d0, r4, d0, 3
-	$div_step , d0, r4, d0, 2
-	$div_step , d0, r4, d0, 1
-div32.__udiv32_base:
-	$div_step , d0, r4, d0, 0
-div32.__udiv32_exit:
-	$jump , r23
-div32.__udiv32_result_0:
-	$move .u, d0, r0, true, div32.__udiv32_exit
-div32.__udiv32_division_by_zero:
-	$fault , 2
-	// inline asm
-div32..Lfunc_end0:
-	$size,	__udiv32, div32..Lfunc_end0 - __udiv32
-	$section,	%stack_sizes,"o",@progbits,%text, __udiv32
-	$long,	div32..Lfunc_begin0
-	$byte,	0
-	$section,	%text, __udiv32,"ax",@progbits
-                                        //  -  -  End function
-	$section,	%text, __div32,"ax",@progbits
-	$globl,	__div32                         //  -  -  Begin function __div32
-	$type,	__div32,@function
-__div32:                                // @__div32
-div32..Lfunc_begin1:
-// %bb.0:
-	// inline asm
-
-	$sd , r22, 0, d22
-	$add , r22, r22, 8
-	$clo , r3, r0, z, div32.__div32_pos_dividend
-	$clo , r3, r1, z, div32.__div32_neg_dividend_pos_divider
-div32.__div32_neg_dividend_neg_divider:
-	$neg , r0, r0
-	$neg , r1, r1
-	$call , r23, __udiv32
-	$neg , r1, r1, true, div32.__div32_exit
-div32.__div32_neg_dividend_pos_divider:
-	$neg , r0, r0
-	$call , r23, __udiv32
-	$neg , r1, r1
-	$neg , r0, r0, true, div32.__div32_exit
-div32.__div32_pos_dividend:
-	$clo , r3, r1, z, div32.__div32_pos_dividend_pos_divider
-	$neg , r1, r1
-	$call , r23, __udiv32
-	$neg , r0, r0, true, div32.__div32_exit
-div32.__div32_pos_dividend_pos_divider:
-	$call , r23, __udiv32
-div32.__div32_exit:
-	$ld , d22, r22,  - 8
-	$jump , r23
-
-	// inline asm
-div32..Lfunc_end1:
-	$size,	__div32, div32..Lfunc_end1 - __div32
-	$section,	%stack_sizes,"o",@progbits,%text, __div32
-	$long,	div32..Lfunc_begin1
-	$byte,	0
-	$section,	%text, __div32,"ax",@progbits
-                                        //  -  -  End function
-	$addrsig,
-	$text,
-	$file,	"mul32.c"
-	$section,	%text, __mulsi3,"ax",@progbits
-	$globl,	__mulsi3                        //  -  -  Begin function __mulsi3
-	$type,	__mulsi3,@function
-__mulsi3:                               // @__mulsi3
-mul32..Lfunc_begin0:
-// %bb.0:
-	// inline asm
-	$jgtu , r1, r0, mul32.__mulsi3_swap
-	$move , r2, r0
-	$move , r0, r1, true, mul32.__mulsi3_start
-mul32.__mulsi3_swap:
-	$move , r2, r1
-	$move , r0, r0
-mul32.__mulsi3_start:
-	$move , r1, zero
-	$mul_step , d0, r2, d0, 0, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 1, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 2, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 3, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 4, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 5, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 6, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 7, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 8, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 9, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 10, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 11, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 12, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 13, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 14, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 15, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 16, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 17, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 18, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 19, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 20, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 21, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 22, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 23, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 24, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 25, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 26, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 27, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 28, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 29, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 30, z, mul32.__mulsi3_exit
-	$mul_step , d0, r2, d0, 31, z, mul32.__mulsi3_exit
-mul32.__mulsi3_exit:
-	$move , r0, r1
-
-	// inline asm
-	$jump , r23
-mul32..Lfunc_end0:
-	$size,	__mulsi3, mul32..Lfunc_end0 - __mulsi3
-	$section,	%stack_sizes,"o",@progbits,%text, __mulsi3
-	$long,	mul32..Lfunc_begin0
-	$byte,	0
-	$section,	%text, __mulsi3,"ax",@progbits
-                                        //  -  -  End function
-	$addrsig,

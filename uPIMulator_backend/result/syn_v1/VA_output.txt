@@ -1,0 +1,60 @@
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/atomic.bin
+DMA to atomic completed...
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/iram.bin
+num of instructions: 3483
+DMA to IRAM completed...
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/wram.bin
+DMA to WRAM completed...
+init completed...
+launch completed...
+********time:4306*******
+text section size is 4a90
+flag set:0
+break point 2 happen in cycle:5053
+break point 3 happen in cycle:5984
+break point 4 happen in cycle:6105
+break point 5 happen in cycle:19124
+break point 6 happen in cycle:28232
+break point 7 happen in cycle:28666
+********time:366137*******
+ReadSocket event for pid: 1 at time: 0
+********time:366138*******
+flag set:32
+fthread 0 start cal at 403985
+fthread 0 meet barrier2555398
+fthread 1 meet barrier2700369
+fthread 2 meet barrier2707668
+fthread 3 meet barrier2713281
+fthread 4 meet barrier2721385
+fthread 5 meet barrier2729937
+fthread 6 meet barrier2735250
+fthread 7 meet barrier2744835
+fthread 8 meet barrier2751626
+fthread 9 meet barrier2760017
+fthread 10 meet barrier2766261
+fthread 11 meet barrier2776944
+fthread 12 meet barrier2782550
+fthread 13 meet barrier2789834
+fthread 14 meet barrier2797462
+fthread 15 meet barrier2822942
+fthread 15 leave barrier2946205
+fthread 0 leave barrier3037883
+fthread 0 end cal at 3039892
+fthread 1 leave barrier3070650
+fthread 2 leave barrier3075642
+fthread 3 leave barrier3103913
+fthread 4 leave barrier3109533
+fthread 5 leave barrier3138170
+fthread 6 leave barrier3144471
+fthread 7 leave barrier3173358
+fthread 8 leave barrier3180342
+fthread 9 leave barrier3209727
+fthread 10 leave barrier3217392
+fthread 11 leave barrier3247159
+fthread 12 leave barrier3255507
+fthread 13 leave barrier3285508
+fthread 14 leave barrier3294537
+********time:3338281*******
+ReadSocket event for pid: 1 at time: 0
+********time:3338282*******
+sucess

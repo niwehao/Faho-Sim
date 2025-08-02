@@ -19,7 +19,7 @@ void main_prog(void);
 // main
 int main(void)
 {
-   print_debug(7, 0);
+  print_debug(7, 0);
   nb_thread = NR_FTHREAD;
   init_barrier(&my_barrier, nb_thread);
   init_barrier(&bfsBarrier, nb_thread);
@@ -42,13 +42,9 @@ void main_prog()
   int me = get_jid();
   int nb_loop = 0;
   int r;
-
-  while (1)
-  {
-    if (me == 0)
+  if (me == 0)
     {
       socket_write(sd_host, &ok, 1);
-
       socket_read(sd_host, &ok, 1);
 
       // Load parameters
@@ -61,10 +57,14 @@ void main_prog()
       {
         fault_notif();
       }
+      print_debug(me, 3);
     }
-    print_debug(me, 1);
+
+  while (1)
+  {
+    
     wait_barrier(&my_barrier); //!
-    print_debug(me, 2);
+
 
     // Extract parameters
     uint32_t numGlobalNodes = params_w->numNodes;
@@ -252,9 +252,27 @@ void main_prog()
     //   //   debug_int(nb_loop++);
     //   socket_read(sd_host, &ok, 1);
     // }
-    print_debug(me, 1);
-    wait_barrier(&my_barrier); //!
-    print_debug(me, 2);
+    print_debug(me,1);//rc,ra
+    wait_barrier(&my_barrier);
+    print_debug(me,2);
+    if (me == 0)
+    {
+      socket_write(sd_host, &ok, 1);
+      print_debug(me, 4);
+      socket_read(sd_host, &ok, 1);
+
+      // Load parameters
+      //   uint32_t params_m = (uint32_t)DPU_MRAM_HEAP_POINTER;
+      uint32_t params_m = 0;
+      r = umram_read(params_w,
+                     ROUND_UP_TO_MULTIPLE_OF_8(sizeof(struct DPUParams)),
+                     params_m);
+      if (r != 0)
+      {
+        fault_notif();
+      }
+      print_debug(me, 3);
+    }
   }
   return;
 }

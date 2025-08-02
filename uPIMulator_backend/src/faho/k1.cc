@@ -757,12 +757,14 @@ namespace upmem_sim::simulator::faho::k1
                                   // do not overwrite the previous value of rr and rw
                                     si = si_penpal;
                                 }
+                                
                             }
                             si.w = 0;
                             free(buf);
                             def::write_inode(dpu_manager, process->sd[j].inode, &si, sizeof(si), 0);
                             process->sd[j].flags |= SOCKET_UPDATE;
                             set_flags(dpu_manager, SOCKET_UPDATE);
+                            
                             dpu_manager->dpu_flag->dpu_process_change = 1;
                             found_sockets_connections = 1;
                             break;

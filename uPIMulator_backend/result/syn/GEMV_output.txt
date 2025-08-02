@@ -1,0 +1,58 @@
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/atomic.bin
+DMA to atomic completed...
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/iram.bin
+num of instructions: 3483
+DMA to IRAM completed...
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/wram.bin
+DMA to WRAM completed...
+init completed...
+launch completed...
+********time:4306*******
+text section size is 5dc0
+flag set:0
+break point 2 happen in cycle:5053
+break point 3 happen in cycle:5994
+break point 4 happen in cycle:6115
+break point 5 happen in cycle:22398
+break point 6 happen in cycle:31506
+break point 7 happen in cycle:31940
+********time:364665*******
+ReadSocket event for pid: 1 at time: 0
+********time:364666*******
+flag set:32
+fthread 0 start cal at 508712
+fthread 1 start cal at 600745
+fthread 2 start cal at 605825
+fthread 3 start cal at 609051
+fthread 4 start cal at 612662
+fthread 5 start cal at 616683
+fthread 6 start cal at 621176
+fthread 7 start cal at 626366
+fthread 8 start cal at 632378
+fthread 9 start cal at 639711
+fthread 10 start cal at 648386
+fthread 11 start cal at 658507
+fthread 12 start cal at 670184
+fthread 13 start cal at 683305
+fthread 14 start cal at 698455
+fthread 15 start cal at 713161
+fthread 0 end cal at 2640148
+fthread 1 end cal at 2798563
+fthread 2 end cal at 2813302
+fthread 3 end cal at 2823403
+fthread 4 end cal at 2829543
+fthread 5 end cal at 2835618
+fthread 6 end cal at 2838697
+fthread 7 end cal at 2846285
+fthread 8 end cal at 2854951
+fthread 9 end cal at 2862198
+fthread 10 end cal at 2869775
+fthread 11 end cal at 2880114
+fthread 12 end cal at 2885988
+fthread 13 end cal at 2894141
+fthread 14 end cal at 2903834
+fthread 15 end cal at 2914808
+********time:3436936*******
+ReadSocket event for pid: 1 at time: 0
+********time:3436937*******
+sucess

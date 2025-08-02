@@ -49,10 +49,11 @@ void main1()
     socket_read(sd_host, &ok, 1);
     if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0)
       fault_notif();
-    print_debug(fthread_id, 3);
+    
   }
 
     wait_barrier(&b);
+    print_debug(fthread_id, 3);
  
   int ret;
 
@@ -204,11 +205,12 @@ void main1()
                                sizeof(DPU_INPUT_ARGUMENTS))) < 0)
       fault_notif();
     char ok;
-    socket_write(sd_host, &ok, 1);
     print_debug(fthread_id, 4);
+    socket_write(sd_host, &ok, 1);
     socket_read(sd_host, &ok, 1);
     
   }
+  print_debug(fthread_id, 4);
   wait_barrier(&b);
 }
 

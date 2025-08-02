@@ -36,10 +36,11 @@ void main1()
     socket_read(sd_host, &ok, 1);
     if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0)
       exit_proc(3);
-    print_debug(fthread_id, 3);
+   
   }
   //print_debug(fthread_id, 1); // rc,ra
   wait_barrier(&b);
+  print_debug(fthread_id,3);
   
 
   int32_t n_size = DPU_INPUT_ARGUMENTS.n_size;
@@ -218,16 +219,15 @@ void main1()
     // Update memory address
     mram_base_addr_C += 8;
   }
-  print_debug(fthread_id, 1); // rc,ra
+  print_debug(fthread_id,4);
   wait_barrier(&b);
-  print_debug(fthread_id, 2);
   if (fthread_id == 0)
   {
     char ok;
     socket_write(sd_host, &ok, 1);
-    print_debug(fthread_id,4);
     socket_read(sd_host, &ok, 1);
   }
+  
   wait_barrier(&b);
 }
 

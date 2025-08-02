@@ -1,0 +1,91 @@
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/atomic.bin
+DMA to atomic completed...
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/iram.bin
+num of instructions: 3483
+DMA to IRAM completed...
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/wram.bin
+DMA to WRAM completed...
+init completed...
+launch completed...
+********time:4306*******
+text section size is 5b10
+flag set:0
+break point 2 happen in cycle:5053
+break point 3 happen in cycle:6071
+break point 4 happen in cycle:6192
+break point 5 happen in cycle:22051
+break point 6 happen in cycle:31159
+break point 7 happen in cycle:31593
+********time:364318*******
+ReadSocket event for pid: 1 at time: 0
+********time:364319*******
+flag set:32
+fthread 0 start cal at 508382
+fthread 1 start cal at 599115
+fthread 2 start cal at 604196
+fthread 3 start cal at 607447
+fthread 4 start cal at 611084
+fthread 5 start cal at 615133
+fthread 6 start cal at 619551
+fthread 7 start cal at 624392
+fthread 8 start cal at 629614
+fthread 9 start cal at 635293
+fthread 10 start cal at 641432
+fthread 11 start cal at 647982
+fthread 12 start cal at 655221
+fthread 13 start cal at 662479
+fthread 14 start cal at 670243
+fthread 15 start cal at 677265
+fthread 8 meet barrier2460863
+fthread 9 meet barrier2500683
+fthread 10 meet barrier2559307
+fthread 0 meet barrier2598227
+fthread 4 meet barrier2651109
+fthread 11 meet barrier2663205
+fthread 5 meet barrier2675951
+fthread 6 meet barrier2725740
+fthread 7 meet barrier2767087
+fthread 1 meet barrier2788234
+fthread 2 meet barrier2834415
+fthread 12 meet barrier2839273
+fthread 13 meet barrier2856578
+fthread 3 meet barrier2865502
+fthread 14 meet barrier2914144
+fthread 15 meet barrier2949553
+fthread 15 leave barrier3086119
+fthread 15 end cal at 3086196
+fthread 0 leave barrier3094951
+fthread 0 end cal at 3097774
+fthread 1 leave barrier3100124
+fthread 1 end cal at 3100201
+fthread 2 leave barrier3109002
+fthread 2 end cal at 3109079
+fthread 3 leave barrier3137435
+fthread 3 end cal at 3137512
+fthread 4 leave barrier3143055
+fthread 4 end cal at 3143132
+fthread 5 leave barrier3171692
+fthread 5 end cal at 3171769
+fthread 6 leave barrier3177993
+fthread 6 end cal at 3178070
+fthread 7 leave barrier3206880
+fthread 7 end cal at 3206957
+fthread 8 leave barrier3213864
+fthread 8 end cal at 3213941
+fthread 9 leave barrier3243249
+fthread 9 end cal at 3243326
+fthread 10 leave barrier3250914
+fthread 10 end cal at 3250991
+fthread 11 leave barrier3280681
+fthread 11 end cal at 3280758
+fthread 12 leave barrier3289029
+fthread 12 end cal at 3289106
+fthread 13 leave barrier3319030
+fthread 13 end cal at 3319107
+fthread 14 leave barrier3328059
+fthread 14 end cal at 3328136
+********time:3371803*******
+ReadSocket event for pid: 1 at time: 0
+********time:3371804*******
+510510
+sucess

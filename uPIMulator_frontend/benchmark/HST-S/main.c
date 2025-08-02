@@ -37,9 +37,10 @@ void main1()
     socket_read(sd_host, &ok, 1);
     if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0)
       exit_proc(3);
-    print_debug(tasklet_id, 3);
+   
   }
   wait_barrier(&b); //!
+   print_debug(tasklet_id, 3);
 
   unsigned int fthread_id = get_jid();
 
@@ -121,10 +122,11 @@ void main1()
                     mram_base_addr_histo + (offset << 11));
       }
     char ok;
+     print_debug(fthread_id,4);
     socket_write(sd_host, &ok, 1);
-    print_debug(fthread_id,4);
     socket_read(sd_host, &ok, 1);
   }
+  print_debug(fthread_id,4);
   //print_debug(tasklet_id, 1);
   wait_barrier(&b); //!
   //print_debug(tasklet_id, 2);

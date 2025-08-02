@@ -83,13 +83,14 @@ void main1()
 
         fault_notif();
       }
-      print_debug(tasklet_id, 3);
+      
     }
   for (;;)
   {
     
     
     wait_barrier(&my_barrier); //!
+    print_debug(tasklet_id, 3);
 
 
     int32_t n_size = DPU_INPUT_ARGUMENTS.n_size;
@@ -146,9 +147,8 @@ void main1()
       uint32_t mram_temp_addr_B = mram_base_addr_B;
       if (lay)
       {
-        print_debug(tasklet_id, 1);
+        print_debug(tasklet_id, 4);
         wait_barrier(&my_barrier); //!
-        print_debug(tasklet_id, 2);
         if (tasklet_id == 0)
         {
           should_break = 0;
@@ -159,11 +159,11 @@ void main1()
           {
             fault_notif();
           }
-          print_debug(tasklet_id, 4);
+          
 
           r = socket_read(sd_host, &new_processing,
                           1); // wait to start 2
-          print_debug(tasklet_id, 3);
+          
           if (r != 0)
           {
 
@@ -174,12 +174,14 @@ void main1()
             should_break = 1;
             //print_debug(tasklet_id, 1);
             wait_barrier(&my_barrier); //!
+            print_debug(tasklet_id, 3);
             //print_debug(tasklet_id, 2);
             break;
           }
         }
         //print_debug(tasklet_id, 1);
         wait_barrier(&my_barrier); //!
+        print_debug(tasklet_id, 3);
         //print_debug(tasklet_id, 2);
         if (should_break)
           break;
@@ -346,9 +348,8 @@ void main1()
         mram_base_addr_C += 2 * sizeof(T);
       }
     }
-    print_debug(tasklet_id, 1);
+    print_debug(tasklet_id, 4);
     wait_barrier(&my_barrier); //!
-    print_debug(tasklet_id, 2);
     if (tasklet_id == 0)
     {
       char ok = 1;
@@ -358,14 +359,12 @@ void main1()
 
         fault_notif();
       }
-      print_debug(tasklet_id, 4);
       r = socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
       if (r != 0)
       {
 
         fault_notif();
       }
-      print_debug(tasklet_id, 3);
     }
   }
   return;

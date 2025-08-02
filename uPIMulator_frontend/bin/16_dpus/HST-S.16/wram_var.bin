@@ -16,10 +16,10 @@
 824    histo_dpu
 828    bss.DPU_INPUT_ARGUMENTS
 828    DPU_INPUT_ARGUMENTS
-844    bss.stdio.__stdout_nr_of_wrapping
-844    stdio.__stdout_nr_of_wrapping
-848    bss.perfcounter_end_value
-848    perfcounter_end_value
+844    bss.perfcounter_end_value
+844    perfcounter_end_value
+848    bss.stdio.__stdout_nr_of_wrapping
+848    stdio.__stdout_nr_of_wrapping
 852    bss.b
 852    b
 868    bss.stdio.__stdout_cache_buffer

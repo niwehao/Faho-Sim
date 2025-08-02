@@ -2057,9 +2057,9 @@ main1:                                  // @main1
 	$move , r2, r15
 	$move , r3, r15
 	$call , r23, syscall
-	$sw , r22,  - 24, r0
 	$jneq , r0, 0, .LBB31_6
 // %bb.1:
+	$move , r15, r0
 	$sb , r22,  - 104, 1
 	$lw , r0, zero, sd_host
 	$add , r1, r22,  - 104
@@ -2081,10 +2081,7 @@ main1:                                  // @main1
 // %bb.4:
 	$call , r23, fault_notif
 .LBB31_5:
-	$move , r0, 0
-	$move , r1, 3
-	$call , r23, print_debug
-	$lw , r0, r22,  - 24
+	$move , r0, r15
 .LBB31_6:
 	$add , r15, r14,  - 1032
 	$add , r1, r16,  - 8
@@ -2092,13 +2089,9 @@ main1:                                  // @main1
 	$add , r17, r17,  - 1024
 	$add , r1, r18,  - 8
 	$sw , r22,  - 72, r1
+	$sw , r22,  - 28, r0
 	$lsl , r0, r0, 1
 	$sw , r22,  - 16, r0
-	$jump , .LBB31_7
-.LBB31_87:                              //   in Loop: Header=BB31_7 Depth=1
-	$move , r0, 0
-	$move , r1, 3
-	$call , r23, print_debug
 .LBB31_7:                               // =>This Loop Header: Depth=1
                                         //     Child Loop BB31_22 Depth 2
                                         //       Child Loop BB31_44 Depth 3
@@ -2143,6 +2136,9 @@ main1:                                  // @main1
 	$move , r2, r1
 	$move , r3, r1
 	$call , r23, syscall
+	$move , r1, 3
+	$lw , r0, r22,  - 28
+	$call , r23, print_debug
 	$move , r0, DPU_INPUT_ARGUMENTS
 	$lw , r1, r0, 8
 	$lw , r2, zero, DPU_INPUT_ARGUMENTS
@@ -2169,7 +2165,7 @@ main1:                                  // @main1
 .LBB31_19:                              //   in Loop: Header=BB31_7 Depth=1
 	$move , r0, r20
 .LBB31_20:                              //   in Loop: Header=BB31_7 Depth=1
-	$lw , r1, r22,  - 24
+	$lw , r1, r22,  - 28
 	$call , r23, __mulsi3
 	$move , r18, r0, true, .LBB31_21
 .LBB31_14:                              //   in Loop: Header=BB31_7 Depth=1
@@ -2181,14 +2177,14 @@ main1:                                  // @main1
 	$move , r1, r21
 	$call , r23, __mulsi3
 	$move , r18, r0
-	$lw , r0, r22,  - 24
+	$lw , r0, r22,  - 28
 	$sub , r0, r0, r21, true, .LBB31_16
 .LBB31_15:                              //   in Loop: Header=BB31_7 Depth=1
 	$add , r0, r21, 1
 	$call , r23, __mulsi3
 	$move , r18, r0
 	$not , r0, r21
-	$lw , r1, r22,  - 24
+	$lw , r1, r22,  - 28
 	$add , r0, r1, r0
 .LBB31_16:                              //   in Loop: Header=BB31_7 Depth=1
 	$move , r1, r20
@@ -2215,7 +2211,7 @@ main1:                                  // @main1
 	$sw , r22,  - 36, r18
 	$jump , .LBB31_22
 .LBB31_80:                              //   in Loop: Header=BB31_22 Depth=2
-	$lw , r0, r22,  - 28
+	$lw , r0, r22,  - 24
 	$add , r0, r0, 1
 .LBB31_22:                              //   Parent Loop BB31_7 Depth=1
                                         // =>  This Loop Header: Depth=2
@@ -2226,11 +2222,11 @@ main1:                                  // @main1
                                         //             Child Loop BB31_60 Depth 6
                                         //           Child Loop BB31_66 Depth 5
                                         //           Child Loop BB31_74 Depth 5
-	$sw , r22,  - 28, r0
+	$sw , r22,  - 24, r0
 	$jeq , r0, 0, .LBB31_42
 // %bb.23:                              //   in Loop: Header=BB31_22 Depth=2
-	$move , r1, 1
-	$lw , r0, r22,  - 24
+	$move , r1, 4
+	$lw , r0, r22,  - 28
 	$call , r23, print_debug
 	$move , r14, my_barrier
 	$move , r1, 0
@@ -2268,11 +2264,8 @@ main1:                                  // @main1
 	$move , r2, r1
 	$move , r3, r1
 	$call , r23, syscall
-	$move , r1, 2
-	$lw , r16, r22,  - 24
-	$move , r0, r16
-	$call , r23, print_debug
-	$jneq , r16, 0, .LBB31_38
+	$lw , r0, r22,  - 28
+	$jneq , r0, 0, .LBB31_38
 // %bb.27:                              //   in Loop: Header=BB31_22 Depth=2
 	$move , r0, should_break
 	$sb , r0, 0, 0
@@ -2287,26 +2280,17 @@ main1:                                  // @main1
 // %bb.28:                              //   in Loop: Header=BB31_22 Depth=2
 	$call , r23, fault_notif
 .LBB31_29:                              //   in Loop: Header=BB31_22 Depth=2
-	$move , r19, 0
-	$move , r1, 4
-	$move , r0, r19
-	$call , r23, print_debug
 	$lw , r0, zero, sd_host
 	$add , r1, r22,  - 96
 	$move , r2, 1
+	$move , r3, 0
 	$move , r4, 11
-	$move , r3, r19
 	$call , r23, syscall
-	$move , r20, r0
-	$move , r1, 3
-	$move , r0, r19
-	$call , r23, print_debug
-	$jeq , r20, 0, .LBB31_31
+	$jeq , r0, 0, .LBB31_31
 // %bb.30:                              //   in Loop: Header=BB31_22 Depth=2
 	$call , r23, fault_notif
 .LBB31_31:                              //   in Loop: Header=BB31_22 Depth=2
 	$lbu , r0, r22,  - 96
-	$lw , r18, r22,  - 36
 	$jneq , r0, 0, .LBB31_32
 .LBB31_38:                              //   in Loop: Header=BB31_22 Depth=2
 	$move , r1, 0
@@ -2344,6 +2328,9 @@ main1:                                  // @main1
 	$move , r2, r1
 	$move , r3, r1
 	$call , r23, syscall
+	$move , r1, 3
+	$lw , r0, r22,  - 28
+	$call , r23, print_debug
 	$lbu , r0, zero, should_break
 	$jneq , r0, 0, .LBB31_36
 .LBB31_42:                              //   in Loop: Header=BB31_22 Depth=2
@@ -2635,14 +2622,18 @@ main1:                                  // @main1
 	$call , r23, syscall
 .LBB31_35:                              //   in Loop: Header=BB31_7 Depth=1
 	$move , r0, my_barrier
-	$move , r1, 0
+	$move , r14, 0
 	$move , r4, 16
-	$move , r2, r1
-	$move , r3, r1
+	$move , r1, r14
+	$move , r2, r14
+	$move , r3, r14
 	$call , r23, syscall
+	$move , r1, 3
+	$move , r0, r14
+	$call , r23, print_debug
 .LBB31_36:                              //   in Loop: Header=BB31_7 Depth=1
-	$move , r1, 1
-	$lw , r0, r22,  - 24
+	$move , r1, 4
+	$lw , r0, r22,  - 28
 	$call , r23, print_debug
 	$move , r14, my_barrier
 	$move , r1, 0
@@ -2679,11 +2670,8 @@ main1:                                  // @main1
 	$move , r2, r1
 	$move , r3, r1
 	$call , r23, syscall
-	$move , r1, 2
-	$lw , r14, r22,  - 24
-	$move , r0, r14
-	$call , r23, print_debug
-	$jneq , r14, 0, .LBB31_7
+	$lw , r0, r22,  - 28
+	$jneq , r0, 0, .LBB31_7
 // %bb.83:                              //   in Loop: Header=BB31_7 Depth=1
 	$sb , r22,  - 92, 1
 	$lw , r0, zero, sd_host
@@ -2696,20 +2684,16 @@ main1:                                  // @main1
 // %bb.84:                              //   in Loop: Header=BB31_7 Depth=1
 	$call , r23, fault_notif
 .LBB31_85:                              //   in Loop: Header=BB31_7 Depth=1
-	$move , r14, 0
-	$move , r1, 4
-	$move , r0, r14
-	$call , r23, print_debug
 	$lw , r0, zero, sd_host
 	$move , r1, DPU_INPUT_ARGUMENTS
 	$move , r2, 16
+	$move , r3, 0
 	$move , r4, 11
-	$move , r3, r14
 	$call , r23, syscall
-	$jeq , r0, 0, .LBB31_87
+	$jeq , r0, 0, .LBB31_7
 // %bb.86:                              //   in Loop: Header=BB31_7 Depth=1
 	$call , r23, fault_notif
-	$jump , .LBB31_87
+	$jump , .LBB31_7
 .Lfunc_end31:
 	$size,	main1, .Lfunc_end31 - main1
 	$section,	%stack_sizes,"o",@progbits,%text, main1

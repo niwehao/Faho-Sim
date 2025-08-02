@@ -1,0 +1,136 @@
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/atomic.bin
+DMA to atomic completed...
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/iram.bin
+num of instructions: 3483
+DMA to IRAM completed...
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/wram.bin
+DMA to WRAM completed...
+init completed...
+launch completed...
+********time:4306*******
+text section size is 5e70
+flag set:0
+break point 2 happen in cycle:5053
+break point 3 happen in cycle:5994
+break point 4 happen in cycle:6115
+break point 5 happen in cycle:22504
+break point 6 happen in cycle:31612
+break point 7 happen in cycle:32046
+********time:363872*******
+ReadSocket event for pid: 1 at time: 0
+********time:363873*******
+flag set:32
+fthread 0 start cal at 507844
+fthread 1 start cal at 599982
+fthread 2 start cal at 605063
+fthread 3 start cal at 608287
+fthread 4 start cal at 611911
+fthread 5 start cal at 615964
+fthread 6 start cal at 620546
+fthread 7 start cal at 625822
+fthread 8 start cal at 632088
+fthread 9 start cal at 639530
+fthread 10 start cal at 648167
+fthread 11 start cal at 658397
+fthread 12 start cal at 670063
+fthread 13 start cal at 683274
+fthread 14 start cal at 698305
+fthread 15 start cal at 713128
+fthread 0 end cal at 2303055
+fthread 1 end cal at 2464235
+fthread 2 end cal at 2473576
+fthread 3 end cal at 2479913
+fthread 4 end cal at 2487057
+fthread 5 end cal at 2494528
+fthread 6 end cal at 2502885
+fthread 7 end cal at 2511437
+fthread 8 end cal at 2520040
+fthread 9 end cal at 2528255
+fthread 10 end cal at 2536293
+fthread 11 end cal at 2544312
+fthread 12 end cal at 2551954
+fthread 13 end cal at 2559408
+fthread 14 end cal at 2567081
+fthread 15 end cal at 2573684
+********time:3113411*******
+ReadSocket event for pid: 1 at time: 0
+********time:3113412*******
+flag set:32
+excution:2
+********time:3218787*******
+flag set:32
+fthread 0 start cal at 3362763
+fthread 1 start cal at 3454848
+fthread 2 start cal at 3459929
+fthread 3 start cal at 3463158
+fthread 4 start cal at 3466772
+fthread 5 start cal at 3470813
+fthread 6 start cal at 3475383
+fthread 7 start cal at 3480706
+fthread 8 start cal at 3487029
+fthread 9 start cal at 3494380
+fthread 10 start cal at 3503058
+fthread 11 start cal at 3513285
+fthread 12 start cal at 3524981
+fthread 13 start cal at 3538192
+fthread 14 start cal at 3553148
+fthread 15 start cal at 3567849
+fthread 0 end cal at 5149381
+fthread 1 end cal at 5309582
+fthread 2 end cal at 5318857
+fthread 3 end cal at 5325190
+fthread 4 end cal at 5332326
+fthread 5 end cal at 5339833
+fthread 6 end cal at 5348145
+fthread 7 end cal at 5356449
+fthread 8 end cal at 5365297
+fthread 9 end cal at 5373395
+fthread 10 end cal at 5381345
+fthread 11 end cal at 5389351
+fthread 12 end cal at 5396959
+fthread 13 end cal at 5404377
+fthread 14 end cal at 5412025
+fthread 15 end cal at 5418653
+********time:5957719*******
+ReadSocket event for pid: 1 at time: 0
+********time:5957720*******
+flag set:32
+excution:3
+********time:6063095*******
+flag set:32
+fthread 0 start cal at 6207070
+fthread 1 start cal at 6299155
+fthread 2 start cal at 6304236
+fthread 3 start cal at 6307461
+fthread 4 start cal at 6311079
+fthread 5 start cal at 6315114
+fthread 6 start cal at 6319701
+fthread 7 start cal at 6325021
+fthread 8 start cal at 6331315
+fthread 9 start cal at 6338677
+fthread 10 start cal at 6347348
+fthread 11 start cal at 6357507
+fthread 12 start cal at 6369393
+fthread 13 start cal at 6382585
+fthread 14 start cal at 6397500
+fthread 15 start cal at 6412037
+fthread 0 end cal at 7996551
+fthread 1 end cal at 8156903
+fthread 2 end cal at 8166362
+fthread 3 end cal at 8172695
+fthread 4 end cal at 8179765
+fthread 5 end cal at 8187309
+fthread 6 end cal at 8195583
+fthread 7 end cal at 8204016
+fthread 8 end cal at 8212697
+fthread 9 end cal at 8220817
+fthread 10 end cal at 8228821
+fthread 11 end cal at 8236755
+fthread 12 end cal at 8244342
+fthread 13 end cal at 8251879
+fthread 14 end cal at 8259605
+fthread 15 end cal at 8266267
+********time:8802774*******
+ReadSocket event for pid: 1 at time: 0
+********time:8802775*******
+sucess

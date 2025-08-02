@@ -1893,7 +1893,7 @@ main1:                                  // @main1
 	$move , r2, r0
 	$move , r3, r0
 	$call , r23, syscall
-	$move , r17, r0, nz, .LBB30_4
+	$move , r17, r0, nz, .LBB30_3
 // %bb.1:
 	$lw , r0, zero, sd_host
 	$add , r14, r22,  - 88
@@ -1925,10 +1925,6 @@ main1:                                  // @main1
 	$move , r3, r1
 	$call , r23, syscall
 .LBB30_3:
-	$move , r0, 0
-	$move , r1, 3
-	$call , r23, print_debug
-.LBB30_4:
 	$move , r14, b
 	$move , r1, 0
 	$move , r4, 15
@@ -1940,8 +1936,8 @@ main1:                                  // @main1
 	$add , r0, r0, 1
 	$sw , r14, 4, r0
 	$lw , r1, r14, 8
-	$jneq , r0, r1, .LBB30_6
-// %bb.5:
+	$jneq , r0, r1, .LBB30_5
+// %bb.4:
 	$move , r1, 0
 	$move , r4, 18
 	$move , r0, r14
@@ -1949,21 +1945,24 @@ main1:                                  // @main1
 	$move , r3, r1
 	$call , r23, syscall
 	$sw , r14, 4, 0
-	$jump , .LBB30_7
-.LBB30_6:
+	$jump , .LBB30_6
+.LBB30_5:
 	$move , r0, b
 	$move , r2, 0
 	$move , r4, 17
 	$move , r1, r0
 	$move , r3, r2
 	$call , r23, syscall
-.LBB30_7:
+.LBB30_6:
 	$move , r0, b
 	$move , r1, 0
 	$move , r4, 16
 	$move , r2, r1
 	$move , r3, r1
 	$call , r23, syscall
+	$move , r1, 3
+	$move , r0, r17
+	$call , r23, print_debug
 	$move , r2, DPU_INPUT_ARGUMENTS
 	$lw , r4, r2, 8
 	$lsr , r0, r4, 4
@@ -1972,10 +1971,10 @@ main1:                                  // @main1
 	$lsl , r3, r17, 1
 	$add , r1, r0, 2
 	$move , r6, r1
-	$jltu , r3, r15, .LBB30_9
-// %bb.8:
+	$jltu , r3, r15, .LBB30_8
+// %bb.7:
 	$move , r6, r0
-.LBB30_9:
+.LBB30_8:
 	$lw , r5, zero, DPU_INPUT_ARGUMENTS
 	$sw , r22,  - 40, r5
 	$lw , r16, r2, 4
@@ -1983,16 +1982,16 @@ main1:                                  // @main1
 	$sw , r22,  - 44, r4
 	$sw , r22,  - 16, r17
 	$sw , r22,  - 80, r6
-	$jeq , r15, 0, .LBB30_15
-// %bb.10:
-	$jgeu , r3, r15, .LBB30_11
-// %bb.14:
+	$jeq , r15, 0, .LBB30_14
+// %bb.9:
+	$jgeu , r3, r15, .LBB30_10
+// %bb.13:
 	$move , r0, r1
-.LBB30_15:
+.LBB30_14:
 	$move , r1, r17
 	$call , r23, __mulsi3
 	$move , r20, r0
-.LBB30_16:
+.LBB30_15:
 	$move , r0, r16
 	$move , r1, r14
 	$call , r23, __mulsi3
@@ -2033,8 +2032,8 @@ main1:                                  // @main1
 	$add , r1, r20, r1
 	$lw , r19, r22,  - 44
 	$sw , r22,  - 24, r1
-	$jgeu , r20, r1, .LBB30_22
-// %bb.17:
+	$jgeu , r20, r1, .LBB30_21
+// %bb.16:
 	$move , r1, 16
 	$lsl_add , r1, r1, r15, 2
 	$add , r16, r16,  - 2056
@@ -2053,8 +2052,8 @@ main1:                                  // @main1
 	$sw , r22,  - 72, r0
 	$lw , r21, r22,  - 76
 	$sw , r22,  - 68, r15
-	$jump , .LBB30_18
-.LBB30_50:                              //   in Loop: Header=BB30_18 Depth=1
+	$jump , .LBB30_17
+.LBB30_49:                              //   in Loop: Header=BB30_17 Depth=1
 	$move , r1, 8
 	$move , r3, 0
 	$move , r4, 23
@@ -2066,19 +2065,19 @@ main1:                                  // @main1
 	$add , r20, r20, 2
 	$add , r17, r17, 8
 	$lw , r0, r22,  - 24
-	$jgeu , r20, r0, .LBB30_22
-.LBB30_18:                              // =>This Loop Header: Depth=1
-                                        //     Child Loop BB30_20 Depth 2
-                                        //       Child Loop BB30_30 Depth 3
-                                        //         Child Loop BB30_32 Depth 4
-                                        //         Child Loop BB30_35 Depth 4
-                                        //       Child Loop BB30_41 Depth 3
-                                        //       Child Loop BB30_47 Depth 3
+	$jgeu , r20, r0, .LBB30_21
+.LBB30_17:                              // =>This Loop Header: Depth=1
+                                        //     Child Loop BB30_19 Depth 2
+                                        //       Child Loop BB30_29 Depth 3
+                                        //         Child Loop BB30_31 Depth 4
+                                        //         Child Loop BB30_34 Depth 4
+                                        //       Child Loop BB30_40 Depth 3
+                                        //       Child Loop BB30_46 Depth 3
 	$sw , r22,  - 28, r17
 	$sw , r15, 4, 0
 	$sw , r15, 0, 0
-	$jgeu , r20, r19, .LBB30_50
-// %bb.19:                              //   in Loop: Header=BB30_18 Depth=1
+	$jgeu , r20, r19, .LBB30_49
+// %bb.18:                              //   in Loop: Header=BB30_17 Depth=1
 	$lw , r0, r22,  - 20
 	$move , r1, r20
 	$call , r23, __mulsi3
@@ -2088,8 +2087,8 @@ main1:                                  // @main1
 	$sw , r22,  - 32, r0
 	$sw , r22,  - 80, r0
 	$sw , r22,  - 48, r20
-	$jump , .LBB30_20
-.LBB30_49:                              //   in Loop: Header=BB30_20 Depth=2
+	$jump , .LBB30_19
+.LBB30_48:                              //   in Loop: Header=BB30_19 Depth=2
 	$lw , r0, r22,  - 56
 	$lw , r1, r22,  - 60
 	$add , r0, r1, r0
@@ -2109,26 +2108,26 @@ main1:                                  // @main1
 	$and , r5, r0,  - 8
 	$move , r0, 1
 	$sw , r22,  - 80, r0
-	$jz , r1, .LBB30_50
-.LBB30_20:                              //   Parent Loop BB30_18 Depth=1
+	$jz , r1, .LBB30_49
+.LBB30_19:                              //   Parent Loop BB30_17 Depth=1
                                         // =>  This Loop Header: Depth=2
-                                        //       Child Loop BB30_30 Depth 3
-                                        //         Child Loop BB30_32 Depth 4
-                                        //         Child Loop BB30_35 Depth 4
-                                        //       Child Loop BB30_41 Depth 3
-                                        //       Child Loop BB30_47 Depth 3
+                                        //       Child Loop BB30_29 Depth 3
+                                        //         Child Loop BB30_31 Depth 4
+                                        //         Child Loop BB30_34 Depth 4
+                                        //       Child Loop BB30_40 Depth 3
+                                        //       Child Loop BB30_46 Depth 3
 	$sw , r22,  - 56, r21
 	$lw , r0, r22,  - 72
 	$sw , r22,  - 52, r2
-	$jlts , r0, 1, .LBB30_21
-// %bb.29:                              //   in Loop: Header=BB30_20 Depth=2
+	$jlts , r0, 1, .LBB30_20
+// %bb.28:                              //   in Loop: Header=BB30_19 Depth=2
 	$move , r21, 0
 	$lw , r20, r22,  - 36
-.LBB30_30:                              //   Parent Loop BB30_18 Depth=1
-                                        //     Parent Loop BB30_20 Depth=2
+.LBB30_29:                              //   Parent Loop BB30_17 Depth=1
+                                        //     Parent Loop BB30_19 Depth=2
                                         // =>    This Loop Header: Depth=3
-                                        //         Child Loop BB30_32 Depth 4
-                                        //         Child Loop BB30_35 Depth 4
+                                        //         Child Loop BB30_31 Depth 4
+                                        //         Child Loop BB30_34 Depth 4
 	$move , r19, 2048
 	$move , r15, 0
 	$move , r17, 22
@@ -2146,19 +2145,19 @@ main1:                                  // @main1
 	$move , r4, r17
 	$call , r23, syscall
 	$lw , r0, r22,  - 76
-	$jeq , r0, 0, .LBB30_34
-// %bb.31:                              //   in Loop: Header=BB30_30 Depth=3
+	$jeq , r0, 0, .LBB30_33
+// %bb.30:                              //   in Loop: Header=BB30_29 Depth=3
 	$move , r0, 1
-.LBB30_32:                              //   Parent Loop BB30_18 Depth=1
-                                        //     Parent Loop BB30_20 Depth=2
-                                        //       Parent Loop BB30_30 Depth=3
+.LBB30_31:                              //   Parent Loop BB30_17 Depth=1
+                                        //     Parent Loop BB30_19 Depth=2
+                                        //       Parent Loop BB30_29 Depth=3
                                         // =>      This Inner Loop Header: Depth=4
 	$lsl_add , r1, r16, r0, 2
 	$lw , r2, r1, 0
 	$sw , r1,  - 4, r2
 	$add , r0, r0, 1
-	$jneq , r0, 512, .LBB30_32
-// %bb.33:                              //   in Loop: Header=BB30_30 Depth=3
+	$jneq , r0, 512, .LBB30_31
+// %bb.32:                              //   in Loop: Header=BB30_29 Depth=3
 	$add , r2, r14, 2048
 	$move , r1, 8
 	$move , r3, 0
@@ -2168,14 +2167,14 @@ main1:                                  // @main1
 	$call , r23, syscall
 	$lw , r0, r17, 0
 	$sw , r16, 2044, r0
-.LBB30_34:                              //   in Loop: Header=BB30_30 Depth=3
+.LBB30_33:                              //   in Loop: Header=BB30_29 Depth=3
 	$lw , r0, r22,  - 68
 	$lw , r1, r22,  - 80
 	$lsl_add , r17, r0, r1, 2
 	$lw , r19, r17, 0
-.LBB30_35:                              //   Parent Loop BB30_18 Depth=1
-                                        //     Parent Loop BB30_20 Depth=2
-                                        //       Parent Loop BB30_30 Depth=3
+.LBB30_34:                              //   Parent Loop BB30_17 Depth=1
+                                        //     Parent Loop BB30_19 Depth=2
+                                        //       Parent Loop BB30_29 Depth=3
                                         // =>      This Inner Loop Header: Depth=4
 	$lsl_add , r0, r16, r15, 2
 	$lw , r1, r0, 0
@@ -2185,19 +2184,19 @@ main1:                                  // @main1
 	$add , r19, r0, r19
 	$sw , r17, 0, r19
 	$add , r15, r15, 1
-	$jneq , r15, 512, .LBB30_35
-// %bb.36:                              //   in Loop: Header=BB30_30 Depth=3
+	$jneq , r15, 512, .LBB30_34
+// %bb.35:                              //   in Loop: Header=BB30_29 Depth=3
 	$move , r5, r14
 	$add , r5, r5, 2048
 	$add , r21, r21, 512
 	$add , r20, r20, 2048
 	$lw , r0, r22,  - 72
-	$jlts , r21, r0, .LBB30_30
-	$jump , .LBB30_37
-.LBB30_21:                              //   in Loop: Header=BB30_20 Depth=2
+	$jlts , r21, r0, .LBB30_29
+	$jump , .LBB30_36
+.LBB30_20:                              //   in Loop: Header=BB30_19 Depth=2
 	$lw , r20, r22,  - 36
 	$lw , r21, r22,  - 32
-.LBB30_37:                              //   in Loop: Header=BB30_20 Depth=2
+.LBB30_36:                              //   in Loop: Header=BB30_19 Depth=2
 	$move , r1, 2048
 	$move , r3, 0
 	$move , r4, 22
@@ -2205,30 +2204,30 @@ main1:                                  // @main1
 	$sw , r22,  - 60, r5
 	$move , r2, r5
 	$call , r23, syscall
-	$jles , r0,  - 1, .LBB30_38
-// %bb.39:                              //   in Loop: Header=BB30_20 Depth=2
+	$jles , r0,  - 1, .LBB30_37
+// %bb.38:                              //   in Loop: Header=BB30_19 Depth=2
 	$lw , r0, r22,  - 76
-	$jneq , r0, 0, .LBB30_40
-	$jump , .LBB30_45
-.LBB30_38:                              //   in Loop: Header=BB30_20 Depth=2
+	$jneq , r0, 0, .LBB30_39
+	$jump , .LBB30_44
+.LBB30_37:                              //   in Loop: Header=BB30_19 Depth=2
 	$move , r1, 0
 	$move , r4, 7
 	$move , r2, r1
 	$move , r3, r1
 	$call , r23, syscall
 	$lw , r0, r22,  - 76
-	$jeq , r0, 0, .LBB30_45
-.LBB30_40:                              //   in Loop: Header=BB30_20 Depth=2
+	$jeq , r0, 0, .LBB30_44
+.LBB30_39:                              //   in Loop: Header=BB30_19 Depth=2
 	$move , r0, 1
-.LBB30_41:                              //   Parent Loop BB30_18 Depth=1
-                                        //     Parent Loop BB30_20 Depth=2
+.LBB30_40:                              //   Parent Loop BB30_17 Depth=1
+                                        //     Parent Loop BB30_19 Depth=2
                                         // =>    This Inner Loop Header: Depth=3
 	$lsl_add , r1, r16, r0, 2
 	$lw , r2, r1, 0
 	$sw , r1,  - 4, r2
 	$add , r0, r0, 1
-	$jneq , r0, 512, .LBB30_41
-// %bb.42:                              //   in Loop: Header=BB30_20 Depth=2
+	$jneq , r0, 512, .LBB30_40
+// %bb.41:                              //   in Loop: Header=BB30_19 Depth=2
 	$lw , r0, r22,  - 60
 	$add , r2, r0, 2048
 	$move , r1, 8
@@ -2237,18 +2236,18 @@ main1:                                  // @main1
 	$lw , r14, r22,  - 64
 	$move , r0, r14
 	$call , r23, syscall
-	$jges , r0, 0, .LBB30_44
-// %bb.43:                              //   in Loop: Header=BB30_20 Depth=2
+	$jges , r0, 0, .LBB30_43
+// %bb.42:                              //   in Loop: Header=BB30_19 Depth=2
 	$move , r0,  - 2
 	$move , r1, 0
 	$move , r4, 7
 	$move , r2, r1
 	$move , r3, r1
 	$call , r23, syscall
-.LBB30_44:                              //   in Loop: Header=BB30_20 Depth=2
+.LBB30_43:                              //   in Loop: Header=BB30_19 Depth=2
 	$lw , r0, r14, 0
 	$sw , r16, 2044, r0
-.LBB30_45:                              //   in Loop: Header=BB30_20 Depth=2
+.LBB30_44:                              //   in Loop: Header=BB30_19 Depth=2
 	$move , r1, 2048
 	$move , r14, 0
 	$move , r4, 22
@@ -2258,14 +2257,14 @@ main1:                                  // @main1
 	$call , r23, syscall
 	$lw , r0, r22,  - 40
 	$sub , r15, r0, r21
-	$jlts , r15, 1, .LBB30_49
-// %bb.46:                              //   in Loop: Header=BB30_20 Depth=2
+	$jlts , r15, 1, .LBB30_48
+// %bb.45:                              //   in Loop: Header=BB30_19 Depth=2
 	$lw , r0, r22,  - 68
 	$lw , r1, r22,  - 80
 	$lsl_add , r17, r0, r1, 2
 	$lw , r19, r17, 0
-.LBB30_47:                              //   Parent Loop BB30_18 Depth=1
-                                        //     Parent Loop BB30_20 Depth=2
+.LBB30_46:                              //   Parent Loop BB30_17 Depth=1
+                                        //     Parent Loop BB30_19 Depth=2
                                         // =>    This Inner Loop Header: Depth=3
 	$move , r20, r14
 	$lsl_add , r0, r16, r20, 2
@@ -2276,12 +2275,12 @@ main1:                                  // @main1
 	$add , r19, r19, r0
 	$add , r14, r20, 1
 	$sw , r17, 0, r19
-	$jges , r14, r15, .LBB30_49
-// %bb.48:                              //   in Loop: Header=BB30_47 Depth=3
-	$jltu , r20, 511, .LBB30_47
-	$jump , .LBB30_49
-.LBB30_22:
-	$move , r1, 1
+	$jges , r14, r15, .LBB30_48
+// %bb.47:                              //   in Loop: Header=BB30_46 Depth=3
+	$jltu , r20, 511, .LBB30_46
+	$jump , .LBB30_48
+.LBB30_21:
+	$move , r1, 4
 	$lw , r15, r22,  - 16
 	$move , r0, r15
 	$call , r23, print_debug
@@ -2296,8 +2295,8 @@ main1:                                  // @main1
 	$add , r0, r0, 1
 	$sw , r14, 4, r0
 	$lw , r1, r14, 8
-	$jneq , r0, r1, .LBB30_24
-// %bb.23:
+	$jneq , r0, r1, .LBB30_23
+// %bb.22:
 	$move , r1, 0
 	$move , r4, 18
 	$move , r0, r14
@@ -2305,15 +2304,15 @@ main1:                                  // @main1
 	$move , r3, r1
 	$call , r23, syscall
 	$sw , r14, 4, 0
-	$jump , .LBB30_25
-.LBB30_24:
+	$jump , .LBB30_24
+.LBB30_23:
 	$move , r0, b
 	$move , r2, 0
 	$move , r4, 17
 	$move , r1, r0
 	$move , r3, r2
 	$call , r23, syscall
-.LBB30_25:
+.LBB30_24:
 	$move , r14, b
 	$move , r1, 0
 	$move , r4, 16
@@ -2321,11 +2320,8 @@ main1:                                  // @main1
 	$move , r2, r1
 	$move , r3, r1
 	$call , r23, syscall
-	$move , r1, 2
-	$move , r0, r15
-	$call , r23, print_debug
-	$jneq , r15, 0, .LBB30_27
-// %bb.26:
+	$jneq , r15, 0, .LBB30_26
+// %bb.25:
 	$lw , r0, zero, sd_host
 	$add , r15, r22,  - 84
 	$move , r16, 1
@@ -2335,16 +2331,13 @@ main1:                                  // @main1
 	$move , r2, r16
 	$move , r3, r17
 	$call , r23, syscall
-	$move , r1, 4
-	$move , r0, r17
-	$call , r23, print_debug
 	$lw , r0, zero, sd_host
 	$move , r4, 11
 	$move , r1, r15
 	$move , r2, r16
 	$move , r3, r17
 	$call , r23, syscall
-.LBB30_27:
+.LBB30_26:
 	$move , r1, 0
 	$move , r4, 15
 	$move , r0, r14
@@ -2355,8 +2348,8 @@ main1:                                  // @main1
 	$add , r0, r0, 1
 	$sw , r14, 4, r0
 	$lw , r1, r14, 8
-	$jneq , r0, r1, .LBB30_51
-// %bb.28:
+	$jneq , r0, r1, .LBB30_50
+// %bb.27:
 	$move , r14, b
 	$move , r1, 0
 	$move , r4, 18
@@ -2365,15 +2358,15 @@ main1:                                  // @main1
 	$move , r3, r1
 	$call , r23, syscall
 	$sw , r14, 4, 0
-	$jump , .LBB30_52
-.LBB30_51:
+	$jump , .LBB30_51
+.LBB30_50:
 	$move , r0, b
 	$move , r2, 0
 	$move , r4, 17
 	$move , r1, r0
 	$move , r3, r2
 	$call , r23, syscall
-.LBB30_52:
+.LBB30_51:
 	$move , r0, b
 	$move , r1, 0
 	$move , r4, 16
@@ -2386,18 +2379,18 @@ main1:                                  // @main1
 	$ld , d14, r22,  - 96
 	$ld , d22, r22,  - 8
 	$jump , r23
-.LBB30_11:
-	$and , r1, r4, 1, nz, .LBB30_12
-// %bb.13:
+.LBB30_10:
+	$and , r1, r4, 1, nz, .LBB30_11
+// %bb.12:
 	$move , r1, r17
 	$call , r23, __mulsi3
-	$add , r20, r0, r15, true, .LBB30_16
-.LBB30_12:
+	$add , r20, r0, r15, true, .LBB30_15
+.LBB30_11:
 	$and , r15, r4, 30
 	$move , r1, r17
 	$call , r23, __mulsi3
 	$add , r0, r15, r0
-	$add , r20, r0, 2, true, .LBB30_16
+	$add , r20, r0, 2, true, .LBB30_15
 .Lfunc_end30:
 	$size,	main1, .Lfunc_end30 - main1
 	$section,	%stack_sizes,"o",@progbits,%text, main1

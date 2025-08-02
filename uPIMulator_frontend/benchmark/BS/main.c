@@ -18,14 +18,14 @@ static DTYPE search(DTYPE *bufferA, DTYPE searching_for, uint32_t search_size)
   //     print_debug(searching_for,0);
   //   }
   DTYPE found = -2;
-  if (bufferA[0] <= searching_for)
+  if ((int)bufferA[0] <= (int)searching_for)
   {
     found = -1;
     for (uint32_t i = 0; i < search_size / sizeof(DTYPE); i++)
     {
      
       
-      if (bufferA[i] == searching_for)
+      if ((int)bufferA[i] == (int)searching_for)
       {
 
         found = i;
@@ -129,10 +129,10 @@ void main1()
         // BLOCK_SIZE)
         r=umram_read(cache_A, BLOCK_SIZE, start_mram_block_addr_A);
         found = search(cache_A, searching_for, BLOCK_SIZE);
-        print_debug(found,4);//without it .. bug happen, maybe becuase of 64bit ops
+        //print_debug(found,4);//without it .. bug happen, maybe becuase of 64bit ops
       
 
-        if (found > -1)
+        if ((int)found > -1)
         {
           result->found =
               found + (start_mram_block_addr_A - start_mram_block_addr_aux) /
@@ -154,7 +154,7 @@ void main1()
           }
           found = search(cache_A, searching_for, remain_bytes_to_search);
 
-          if (found > -1)
+          if ((int)found > -1)
           {
             result->found = found + (start_mram_block_addr_A + BLOCK_SIZE -
                                      start_mram_block_addr_aux) /
@@ -180,7 +180,7 @@ void main1()
       found = search(cache_A, searching_for, BLOCK_SIZE);
 
       // If found > -1, we found the searching_for query
-      if (found > -1)
+      if ((int)found > -1)
       {
         result->found =
             found + (current_mram_block_addr_A - start_mram_block_addr_aux) /
@@ -189,13 +189,13 @@ void main1()
       }
 
       // If found == -2, we need to discard right part of the input vector
-      if (found == -2)
+      if ((int)found == -2)
       {
         end_mram_block_addr_A = current_mram_block_addr_A;
       }
 
       // If found == -1, we need to discard left part of the input vector
-      else if (found == -1)
+      else if ((int)found == -1)
       {
         start_mram_block_addr_A = current_mram_block_addr_A;
       }

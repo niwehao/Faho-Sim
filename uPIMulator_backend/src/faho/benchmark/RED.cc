@@ -1,5 +1,5 @@
 #include "host.h"
-#define T int32_t
+#define T int64_t
 #define NR_FTHREAD 16
 #define NR_DPUS 1
 // Pointer declaration
@@ -93,14 +93,11 @@ namespace upmem_sim::simulator::faho::def
             count += results[i].t_count;
         }
         int status = true;
-        if (count != count_host){
+        if ((int)count != (int)count_host){
             status = false;
             std::cout<<"host:"<<count_host<<std::endl;
             std::cout<<"dpu:"<<count<<std::endl;
-            
-
         }
-            
          free(A);
         if (status)
         {

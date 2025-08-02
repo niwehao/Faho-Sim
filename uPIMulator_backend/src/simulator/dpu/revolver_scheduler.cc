@@ -117,10 +117,11 @@ namespace upmem_sim::simulator::dpu
         {                                   // check if in user state
           if (ifpreempt == 0)
           {
+            std::cout << "preempt start"<< std::endl;
             ifpreempt = 1;
             preempt_fin = threads_.size();
             preempt_start = performance_counter_->get_true_value();
-            std::cout << "preempt start with " << preempt_start << std::endl;
+           
           }
           if (thread->state() == Thread::BLOCK)
           {
@@ -130,8 +131,9 @@ namespace upmem_sim::simulator::dpu
           int64_t pc = thread->reg_file()->read_pc_reg();
           if (pc >= space_flag)
           { // in kernel
-            if (flag1 != 1)
+            if (flag1 != 1 && flag3 != 1)
             {
+              //std::cout << "thread" << thread->id() << " preempt not directly at " << pc << std::endl;
               flag3 = 1;
               value = (value << 3) + (flag3 << 2) + (flag2 << 1) + flag1;
               thread->reg_file()->write_gp_reg(26, value);
@@ -142,7 +144,7 @@ namespace upmem_sim::simulator::dpu
           {
             continue;
           }
-          std::cout << "thread" << thread->id() << " preempt directly at " << pc << std::endl;
+          //std::cout << "thread" << thread->id() << " preempt directly at " << pc << std::endl;
           thread->reg_file()->write_gp_reg(25, pc);
           thread->reg_file()->write_pc_reg(thread->reg_file()->read_gp_reg(24));
           flag1 = 1;
@@ -154,6 +156,7 @@ namespace upmem_sim::simulator::dpu
       {
         if (ifpreempt == 1 && preempt_broad[thread->id()] == 1)
         {
+          //std::cout << "thread" << thread->id() << " preempt over " << std::endl;
           preempt_fin--;
           preempt_broad[thread->id()] = 0;
           if (preempt_fin == 0)

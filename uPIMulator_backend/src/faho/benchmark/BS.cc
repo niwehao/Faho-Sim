@@ -134,7 +134,7 @@ namespace upmem_sim::simulator::faho::def
             std::cout << "not support multiple dpus" << std::endl;
         }
         uint64_t input_size = data_prep;
-        uint64_t num_querys = 16;
+        uint64_t num_querys = data_prep/8;
         // Create an input file with arbitrary data
         input = (DTYPE *)malloc((input_size) * sizeof(DTYPE));
         querys = (DTYPE *)malloc((num_querys) * sizeof(DTYPE));

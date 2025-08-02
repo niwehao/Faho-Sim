@@ -174,6 +174,7 @@ int find_inode(int proc_idx, uint32_t offset) { // put a mutex
 
 int chained_inode_operation(void *buf, unsigned int size, unsigned int offset,
                             enum inode_operation op) {
+  
 
   if (size > SIZE_BLOCK)
     return BUFFER_TOO_BIG;
@@ -189,6 +190,7 @@ int chained_inode_operation(void *buf, unsigned int size, unsigned int offset,
     ret = inode_table[cur_process_index][0][0] + nb_travel;
   else
     ret = find_inode(cur_process_index, offset);
+
 
   if (ret >= 1024 || ret < 0)
     return MRAM_FULL;

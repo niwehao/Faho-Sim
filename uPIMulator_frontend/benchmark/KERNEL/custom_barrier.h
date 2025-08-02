@@ -71,7 +71,6 @@ int sp_wait(struct custom_barriere *cp) {
     return 0;
   } else {
     mutex_unlock(cp->mutex);
-    
     // big big critical section (same in the SKD), solution ?
     __stop();
   }

@@ -325,16 +325,17 @@ int scheduler_jobs(void)
     {
 
       // barrier_wait(&barrier_jobs); // wait the end of everyone before quit
-
-      if (sp_wait(&cp) != 0)
+      if (sp_wait(&cp) != 0){
         continue;
-      kernel_preempt_check();
+      }
+      r26_cfg(0,PROCESS_QUANTOM);
+      //print_debug(me_new(),3);
       if(ifpreempt==1){
         all_end_or_waiting=0;
         ifpreempt=0;
       }
       //__asm__ volatile("\tmove r15, id\n");//r15记录的me可能会发生变化
-      if (me_new() == 0)
+      if (me_new() == 0 )
         return all_end_or_waiting; // return the all_end_or_waiting if it is
                                    // 1 mark the process at waiting
       // barrier_wait(&barrier_jobs);

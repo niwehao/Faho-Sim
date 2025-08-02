@@ -1,7 +1,7 @@
 LIB := dpu/
 NR_FTHREAD ?= 16
 BL ?= 11
-TYPE ?= INT32
+TYPE ?= INT64
 ENERGY ?= 0
 PERF ?= 0
 VERSION ?= SINGLE

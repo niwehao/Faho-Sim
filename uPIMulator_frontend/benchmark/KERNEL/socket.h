@@ -202,6 +202,7 @@ int socket_open(unsigned int penpal) {
         return MRAM_FULL;
       }
       p->sd[i].inode = inode;
+     
 
       p->sd[i].flags = SOCKET_NEW | SOCKET_USED;
 
@@ -298,6 +299,7 @@ int socket_read(unsigned int sd, unsigned int _buf, unsigned int len) {
   inode_operation(inode, &si, sizeof(si), 0, INODE_WRITE);
 end:
   mutex_unlock(mutex_sockets);
+  
   return ret;
 }
 

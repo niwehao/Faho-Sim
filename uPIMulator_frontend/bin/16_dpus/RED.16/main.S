@@ -1,4 +1,197 @@
 	$text,
+	$file,	"crt0.c"
+	$section,	%text, __bootstrap,"ax",@progbits
+	$globl,	__bootstrap                     //  -  -  Begin function __bootstrap
+	$type,	__bootstrap,@function
+__bootstrap:                            // @__bootstrap
+crt0..Lfunc_begin0:
+// %bb.0:
+	// inline asm
+	$jnz , id, crt0.__sys_start_thread
+
+	$sd , zero, __stdout_buffer_state, 0
+	$move , r23, __atomic_end_addr
+crt0.__sys_atomic_bit_clear:
+	$jeq , r23, __atomic_used_addr, crt0.__sys_start_thread
+crt0..Ltmp0:
+	$release , r23, 0, nz, crt0..Ltmp0 + 1
+	$add , r23, r23,  - 1, true, crt0.__sys_atomic_bit_clear
+crt0.__sys_start_thread:
+crt0..Ltmp1:
+	$jeq , id, NR_TASKLETS - 1, crt0..Ltmp1 + 2
+	$boot , id, 1
+	$ld , d22, id8, __sys_thread_stack_table_ptr
+	$call , r23, main
+	$globl,	__sys_end
+__sys_end:
+
+	$stop , true, __sys_end
+	// inline asm
+crt0..Lfunc_end0:
+	$size,	__bootstrap, crt0..Lfunc_end0 - __bootstrap
+	$section,	%stack_sizes,"o",@progbits,%text, __bootstrap
+	$long,	crt0..Lfunc_begin0
+	$byte,	0
+	$section,	%text, __bootstrap,"ax",@progbits
+                                        //  -  -  End function
+	$type,	__sys_null_pointer,@object      // @__sys_null_pointer
+	$section,	%data, __sys_zero,"aw",@progbits
+	$globl,	__sys_null_pointer
+	$p2align,	3
+__sys_null_pointer:
+	$quad,	0                               // 0x0
+	$size,	__sys_null_pointer, 8
+
+	$type,	__sys_thread_stack_table_ptr,@object // @__sys_thread_stack_table_ptr
+	$section,	%data, __sys_keep,"aw",@progbits
+	$globl,	__sys_thread_stack_table_ptr
+	$p2align,	3
+__sys_thread_stack_table_ptr:
+	$long,	STACK_SIZE_TASKLET_0
+	$long,	__sys_stack_thread_0
+	$long,	STACK_SIZE_TASKLET_1
+	$long,	__sys_stack_thread_1
+	$long,	STACK_SIZE_TASKLET_2
+	$long,	__sys_stack_thread_2
+	$long,	STACK_SIZE_TASKLET_3
+	$long,	__sys_stack_thread_3
+	$long,	STACK_SIZE_TASKLET_4
+	$long,	__sys_stack_thread_4
+	$long,	STACK_SIZE_TASKLET_5
+	$long,	__sys_stack_thread_5
+	$long,	STACK_SIZE_TASKLET_6
+	$long,	__sys_stack_thread_6
+	$long,	STACK_SIZE_TASKLET_7
+	$long,	__sys_stack_thread_7
+	$long,	STACK_SIZE_TASKLET_8
+	$long,	__sys_stack_thread_8
+	$long,	STACK_SIZE_TASKLET_9
+	$long,	__sys_stack_thread_9
+	$long,	STACK_SIZE_TASKLET_10
+	$long,	__sys_stack_thread_10
+	$long,	STACK_SIZE_TASKLET_11
+	$long,	__sys_stack_thread_11
+	$long,	STACK_SIZE_TASKLET_12
+	$long,	__sys_stack_thread_12
+	$long,	STACK_SIZE_TASKLET_13
+	$long,	__sys_stack_thread_13
+	$long,	STACK_SIZE_TASKLET_14
+	$long,	__sys_stack_thread_14
+	$long,	STACK_SIZE_TASKLET_15
+	$long,	__sys_stack_thread_15
+	$long,	STACK_SIZE_TASKLET_16
+	$long,	__sys_stack_thread_16
+	$long,	STACK_SIZE_TASKLET_17
+	$long,	__sys_stack_thread_17
+	$long,	STACK_SIZE_TASKLET_18
+	$long,	__sys_stack_thread_18
+	$long,	STACK_SIZE_TASKLET_19
+	$long,	__sys_stack_thread_19
+	$long,	STACK_SIZE_TASKLET_20
+	$long,	__sys_stack_thread_20
+	$long,	STACK_SIZE_TASKLET_21
+	$long,	__sys_stack_thread_21
+	$long,	STACK_SIZE_TASKLET_22
+	$long,	__sys_stack_thread_22
+	$long,	STACK_SIZE_TASKLET_23
+	$long,	__sys_stack_thread_23
+	$size,	__sys_thread_stack_table_ptr, 192
+
+	$type,	__sys_used_mram_end,@object     // @__sys_used_mram_end
+	$section,	%mram, noinit,"aw",@progbits
+	$globl,	__sys_used_mram_end
+	$p2align,	3
+__sys_used_mram_end:
+	$size,	__sys_used_mram_end, 0
+
+	$type,	thread_profiling,@object        // @thread_profiling
+	$section,	%data, immediate_memory.thread_profiling,"aw",@progbits
+	$globl,	thread_profiling
+	$p2align,	2
+thread_profiling:
+	$zero,	96
+	$size,	thread_profiling, 96
+
+	$type,	perfcounter_end_value,@object   // @perfcounter_end_value
+	$section,	%bss, perfcounter_end_value,"aw",@nobits
+	$globl,	perfcounter_end_value
+	$p2align,	2
+perfcounter_end_value:
+	$long,	0                               // 0x0
+	$size,	perfcounter_end_value, 4
+
+	$type,	CLOCKS_PER_SEC,@object          // @CLOCKS_PER_SEC
+	$section,	%dpu_host,"a",@progbits
+	$globl,	CLOCKS_PER_SEC
+	$p2align,	3
+CLOCKS_PER_SEC:
+	$long,	0                               // 0x0
+	$size,	CLOCKS_PER_SEC, 4
+
+	$type,	error_storage,@object           // @error_storage
+	$globl,	error_storage
+	$p2align,	3
+error_storage:
+	$long,	0                               // 0x0
+	$size,	error_storage, 4
+
+	$addrsig,
+	$addrsig_sym, __bootstrap
+	$addrsig_sym, __sys_null_pointer
+	$addrsig_sym, STACK_SIZE_TASKLET_0
+	$addrsig_sym, __sys_stack_thread_0
+	$addrsig_sym, STACK_SIZE_TASKLET_1
+	$addrsig_sym, __sys_stack_thread_1
+	$addrsig_sym, STACK_SIZE_TASKLET_2
+	$addrsig_sym, __sys_stack_thread_2
+	$addrsig_sym, STACK_SIZE_TASKLET_3
+	$addrsig_sym, __sys_stack_thread_3
+	$addrsig_sym, STACK_SIZE_TASKLET_4
+	$addrsig_sym, __sys_stack_thread_4
+	$addrsig_sym, STACK_SIZE_TASKLET_5
+	$addrsig_sym, __sys_stack_thread_5
+	$addrsig_sym, STACK_SIZE_TASKLET_6
+	$addrsig_sym, __sys_stack_thread_6
+	$addrsig_sym, STACK_SIZE_TASKLET_7
+	$addrsig_sym, __sys_stack_thread_7
+	$addrsig_sym, STACK_SIZE_TASKLET_8
+	$addrsig_sym, __sys_stack_thread_8
+	$addrsig_sym, STACK_SIZE_TASKLET_9
+	$addrsig_sym, __sys_stack_thread_9
+	$addrsig_sym, STACK_SIZE_TASKLET_10
+	$addrsig_sym, __sys_stack_thread_10
+	$addrsig_sym, STACK_SIZE_TASKLET_11
+	$addrsig_sym, __sys_stack_thread_11
+	$addrsig_sym, STACK_SIZE_TASKLET_12
+	$addrsig_sym, __sys_stack_thread_12
+	$addrsig_sym, STACK_SIZE_TASKLET_13
+	$addrsig_sym, __sys_stack_thread_13
+	$addrsig_sym, STACK_SIZE_TASKLET_14
+	$addrsig_sym, __sys_stack_thread_14
+	$addrsig_sym, STACK_SIZE_TASKLET_15
+	$addrsig_sym, __sys_stack_thread_15
+	$addrsig_sym, STACK_SIZE_TASKLET_16
+	$addrsig_sym, __sys_stack_thread_16
+	$addrsig_sym, STACK_SIZE_TASKLET_17
+	$addrsig_sym, __sys_stack_thread_17
+	$addrsig_sym, STACK_SIZE_TASKLET_18
+	$addrsig_sym, __sys_stack_thread_18
+	$addrsig_sym, STACK_SIZE_TASKLET_19
+	$addrsig_sym, __sys_stack_thread_19
+	$addrsig_sym, STACK_SIZE_TASKLET_20
+	$addrsig_sym, __sys_stack_thread_20
+	$addrsig_sym, STACK_SIZE_TASKLET_21
+	$addrsig_sym, __sys_stack_thread_21
+	$addrsig_sym, STACK_SIZE_TASKLET_22
+	$addrsig_sym, __sys_stack_thread_22
+	$addrsig_sym, STACK_SIZE_TASKLET_23
+	$addrsig_sym, __sys_stack_thread_23
+	$addrsig_sym, __sys_thread_stack_table_ptr
+	$addrsig_sym, __sys_used_mram_end
+	$addrsig_sym, thread_profiling
+	$addrsig_sym, CLOCKS_PER_SEC
+	$addrsig_sym, error_storage
+	$text,
 	$file,	"main.c"
 $section,	%text, syscall,"ax",@progbits
 	$globl,	syscall                         //  -  -  Begin function syscall
@@ -874,11 +1067,10 @@ main1:                                  // @main1
 	$add , r15, r22,  - 32
 	$move , r16, 1
 	$move , r17, 0
-	$move , r18, 12
+	$move , r4, 12
 	$move , r1, r15
 	$move , r2, r16
 	$move , r3, r17
-	$move , r4, r18
 	$call , r23, syscall
 	$lw , r0, zero, sd_host
 	$move , r4, 11
@@ -887,8 +1079,8 @@ main1:                                  // @main1
 	$move , r3, r17
 	$call , r23, syscall
 	$move , r0, DPU_INPUT_ARGUMENTS
+	$move , r1, 16
 	$move , r4, 22
-	$move , r1, r18
 	$move , r2, r17
 	$move , r3, r17
 	$call , r23, syscall
@@ -934,105 +1126,106 @@ main1:                                  // @main1
 	$call , r23, syscall
 .LBB30_6:
 	$move , r0, b
-	$move , r16, 0
+	$move , r17, 0
 	$move , r4, 16
 	$sw , r22,  - 12, r0
-	$move , r1, r16
-	$move , r2, r16
-	$move , r3, r16
-	$call , r23, syscall
-	$move , r17, 2
-	$move , r0, r14
 	$move , r1, r17
-	$call , r23, print_debug
-	$lw , r20, zero, DPU_INPUT_ARGUMENTS
-	$sw , r22,  - 16, r14
-	$lsl , r14, r14, 11
-	$move , r0, 2048
-	$move , r1, r16
-	$move , r2, r16
-	$move , r3, r16
-	$move , r4, r17
+	$move , r2, r17
+	$move , r3, r17
 	$call , r23, syscall
-	$jleu , r20, r14, .LBB30_18
+	$move , r16, 2
+	$move , r0, r14
+	$move , r1, r16
+	$call , r23, print_debug
+	$lw , r18, zero, DPU_INPUT_ARGUMENTS
+	$sw , r22,  - 16, r14
+	$lsl , r20, r14, 11
+	$move , r0, 2048
+	$move , r1, r17
+	$move , r2, r17
+	$move , r3, r17
+	$move , r4, r16
+	$call , r23, syscall
+	$move .s, d14, 0
+	$sw , r22,  - 20, r18
+	$jleu , r18, r20, .LBB30_16
 // %bb.7:
-	$add , r21, r0,  - 2048
-	$add , r15, r14, 2048
-	$move , r16, 0
-	$lw , r0, r22,  - 16
-	$lsl_sub , r17, r16, r0, 11
-	$sw , r22,  - 20, r21
-	$jump , .LBB30_8
-.LBB30_17:                              //   in Loop: Header=BB30_8 Depth=1
-	$add , r16, r18, r16
-	$add , r14, r14, 32768
-	$add , r15, r15, 32768
-	$add , r17, r17,  - 32768
-	$jleu , r20, r14, .LBB30_18
-.LBB30_8:                               // =>This Loop Header: Depth=1
-                                        //     Child Loop BB30_16 Depth 2
-	$move , r0, r20
-	$jltu , r20, r15, .LBB30_10
-// %bb.9:                               //   in Loop: Header=BB30_8 Depth=1
-	$move , r0, r15
-.LBB30_10:                              //   in Loop: Header=BB30_8 Depth=1
+	$add , r0, r0,  - 2048
 	$sw , r22,  - 24, r0
-	$add , r0, r14, 2048
-	$move , r19, 2048
-	$jltu , r0, r20, .LBB30_12
+	$add , r21, r20, 2048
+	$lw , r0, r22,  - 16
+	$lsl_sub , r19, r17, r0, 11
+	$move .s, d14, 0
+	$jump , .LBB30_8
+.LBB30_15:                              //   in Loop: Header=BB30_8 Depth=1
+	$move .s, d0, 0
+.LBB30_27:                              //   in Loop: Header=BB30_8 Depth=1
+	$add , r15, r1, r15
+	$addc , r14, r0, r14
+	$add , r20, r20, 32768
+	$add , r21, r21, 32768
+	$add , r19, r19,  - 32768
+	$jleu , r18, r20, .LBB30_16
+.LBB30_8:                               // =>This Loop Header: Depth=1
+                                        //     Child Loop BB30_26 Depth 2
+	$move , r16, r18
+	$jltu , r18, r21, .LBB30_10
+// %bb.9:                               //   in Loop: Header=BB30_8 Depth=1
+	$move , r16, r21
+.LBB30_10:                              //   in Loop: Header=BB30_8 Depth=1
+	$add , r0, r20, 2048
+	$move , r17, 2048
+	$jltu , r0, r18, .LBB30_12
 // %bb.11:                              //   in Loop: Header=BB30_8 Depth=1
-	$sub , r19, r20, r14
+	$sub , r17, r18, r20
 .LBB30_12:                              //   in Loop: Header=BB30_8 Depth=1
-	$or , r2, r14, 12
-	$move , r18, 0
+	$or , r2, r20, 16
+	$move , r3, 0
 	$move , r4, 22
-	$move , r0, r21
-	$move , r1, r19
-	$move , r3, r18
+	$lw , r0, r22,  - 24
+	$move , r1, r17
 	$call , r23, syscall
 	$jeq , r0, 0, .LBB30_14
 // %bb.13:                              //   in Loop: Header=BB30_8 Depth=1
 	$move , r0, .L.str
-	$move , r21, r20
-	$move , r20, 0
+	$move , r18, 0
 	$move , r4, 8
-	$move , r1, r20
-	$move , r2, r20
-	$move , r3, r20
+	$move , r1, r18
+	$move , r2, r18
+	$move , r3, r18
 	$call , r23, syscall
 	$move , r0,  - 1
 	$move , r4, 7
-	$move , r1, r20
-	$move , r2, r20
-	$move , r3, r20
-	$move , r20, r21
-	$lw , r21, r22,  - 20
+	$move , r1, r18
+	$move , r2, r18
+	$move , r3, r18
+	$lw , r18, r22,  - 20
 	$call , r23, syscall
 .LBB30_14:                              //   in Loop: Header=BB30_8 Depth=1
-	$lsr , r0, r19, 2, z, .LBB30_17
-// %bb.15:                              //   in Loop: Header=BB30_8 Depth=1
-	$lw , r0, r22,  - 24
-	$add , r0, r0, r17
-	$lsr , r0, r0, 2
-	$neg , r1, r0
-	$move , r18, 0
-	$move , r0, r21
-.LBB30_16:                              //   Parent Loop BB30_8 Depth=1
+	$lsr , r0, r17, 3, z, .LBB30_15
+// %bb.25:                              //   in Loop: Header=BB30_8 Depth=1
+	$add , r0, r16, r19
+	$lsr , r0, r0, 3
+	$neg , r3, r0
+	$move .s, d0, 0
+	$lw , r2, r22,  - 24
+.LBB30_26:                              //   Parent Loop BB30_8 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
-	$lw , r2, r0, 0
-	$add , r18, r2, r18
-	$add , r2, r1, 1
-	$sub , r3, r2, r1, ltu
-	$add , r0, r0, 4
-	$move , r1, r2
-	$jneq , r3, 1, .LBB30_16
-	$jump , .LBB30_17
-.LBB30_18:
-	$lw , r17, r22,  - 16
-	$lsl , r0, r17, 2
-	$sw , r0, message, r16
+	$ld , d4, r2, 0
+	$add , r1, r5, r1
+	$addc , r0, r4, r0
+	$add , r4, r3, 1
+	$sub , r5, r4, r3, ltu
+	$add , r2, r2, 8
+	$move , r3, r4
+	$jneq , r5, 1, .LBB30_26
+	$jump , .LBB30_27
+.LBB30_16:
+	$lw , r18, r22,  - 16
+	$lsl , r0, r18, 3
+	$sd , r0, message, d14
 	$move , r1, 1
-	$move , r0, r17
+	$move , r0, r18
 	$call , r23, print_debug
 	$move , r1, 0
 	$move , r4, 15
@@ -1045,8 +1238,8 @@ main1:                                  // @main1
 	$add , r0, r0, 1
 	$sw , r14, 4, r0
 	$lw , r1, r14, 8
-	$jneq , r0, r1, .LBB30_20
-// %bb.19:
+	$jneq , r0, r1, .LBB30_18
+// %bb.17:
 	$move , r15, b
 	$move , r1, 0
 	$move , r4, 18
@@ -1055,15 +1248,15 @@ main1:                                  // @main1
 	$move , r3, r1
 	$call , r23, syscall
 	$sw , r15, 4, 0
-	$jump , .LBB30_21
-.LBB30_20:
+	$jump , .LBB30_19
+.LBB30_18:
 	$move , r0, b
 	$move , r2, 0
 	$move , r4, 17
 	$move , r1, r0
 	$move , r3, r2
 	$call , r23, syscall
-.LBB30_21:
+.LBB30_19:
 	$move , r15, b
 	$move , r1, 0
 	$move , r4, 16
@@ -1072,43 +1265,144 @@ main1:                                  // @main1
 	$move , r3, r1
 	$call , r23, syscall
 	$move , r1, 2
-	$move , r0, r17
+	$move , r0, r18
 	$call , r23, print_debug
-	$jneq , r17, 0, .LBB30_27
-// %bb.22:
-	$lw , r0, zero, message
-	$move , r1, 6
+	$jneq , r18, 0, .LBB30_23
+// %bb.20:
+	$move , r17, message
+	$ld , d0, r17, 8
+	$ld , d2, zero, message
+	$add , r3, r3, r1
+	$addc , r2, r2, r0
+	$sd , zero, message, d2
+	$move , r16, 3
+	$move , r0, r1
+	$move , r1, r16
 	$call , r23, print_debug
-	$move , r14, 15
-.LBB30_23:                              // =>This Inner Loop Header: Depth=1
-	$move , r0, message
-	$lsl_sub , r0, r0, r14, 2
-	$lw , r0, r0, 64
-	$lw , r1, zero, message
-	$add , r1, r1, r0
-	$sw , zero, message, r1
-	$move , r1, 3
+	$ld , d0, r17, 16
+	$ld , d2, zero, message
+	$add , r3, r3, r1
+	$addc , r2, r2, r0
+	$sd , zero, message, d2
+	$move , r0, r1
+	$move , r1, r16
 	$call , r23, print_debug
-	$lw , r0, zero, message
-	$move , r1, 4
+	$ld , d0, r17, 24
+	$ld , d2, zero, message
+	$add , r3, r3, r1
+	$addc , r2, r2, r0
+	$sd , zero, message, d2
+	$move , r0, r1
+	$move , r1, r16
 	$call , r23, print_debug
-	$add , r14, r14,  - 1, nz, .LBB30_23
-// %bb.24:
-	$lsl , r0, r17, 2
-	$lw , r1, r0, message
-	$lw , r0, zero, message
-	$move , r14, DPU_RESULTS
-	$sw , r14, 8, r1
-	$move , r1, 5
+	$ld , d0, r17, 32
+	$ld , d2, zero, message
+	$add , r3, r3, r1
+	$addc , r2, r2, r0
+	$sd , zero, message, d2
+	$move , r0, r1
+	$move , r1, r16
 	$call , r23, print_debug
-	$add , r2, r20, 12
+	$ld , d0, r17, 40
+	$ld , d2, zero, message
+	$add , r3, r3, r1
+	$addc , r2, r2, r0
+	$sd , zero, message, d2
+	$move , r0, r1
+	$move , r1, r16
+	$call , r23, print_debug
+	$ld , d0, r17, 48
+	$ld , d2, zero, message
+	$add , r3, r3, r1
+	$addc , r2, r2, r0
+	$sd , zero, message, d2
+	$move , r0, r1
+	$move , r1, r16
+	$call , r23, print_debug
+	$ld , d0, r17, 56
+	$ld , d2, zero, message
+	$add , r3, r3, r1
+	$addc , r2, r2, r0
+	$sd , zero, message, d2
+	$move , r0, r1
+	$move , r1, r16
+	$call , r23, print_debug
+	$ld , d0, r17, 64
+	$ld , d2, zero, message
+	$add , r3, r3, r1
+	$addc , r2, r2, r0
+	$sd , zero, message, d2
+	$move , r0, r1
+	$move , r1, r16
+	$call , r23, print_debug
+	$ld , d0, r17, 72
+	$ld , d2, zero, message
+	$add , r3, r3, r1
+	$addc , r2, r2, r0
+	$sd , zero, message, d2
+	$move , r0, r1
+	$move , r1, r16
+	$call , r23, print_debug
+	$ld , d0, r17, 80
+	$ld , d2, zero, message
+	$add , r3, r3, r1
+	$addc , r2, r2, r0
+	$sd , zero, message, d2
+	$move , r0, r1
+	$move , r1, r16
+	$call , r23, print_debug
+	$ld , d0, r17, 88
+	$ld , d2, zero, message
+	$add , r3, r3, r1
+	$addc , r2, r2, r0
+	$sd , zero, message, d2
+	$move , r0, r1
+	$move , r1, r16
+	$call , r23, print_debug
+	$ld , d0, r17, 96
+	$ld , d2, zero, message
+	$add , r3, r3, r1
+	$addc , r2, r2, r0
+	$sd , zero, message, d2
+	$move , r0, r1
+	$move , r1, r16
+	$call , r23, print_debug
+	$ld , d0, r17, 104
+	$ld , d2, zero, message
+	$add , r3, r3, r1
+	$addc , r2, r2, r0
+	$sd , zero, message, d2
+	$move , r0, r1
+	$move , r1, r16
+	$call , r23, print_debug
+	$ld , d0, r17, 112
+	$ld , d2, zero, message
+	$add , r3, r3, r1
+	$addc , r2, r2, r0
+	$sd , zero, message, d2
+	$move , r0, r1
+	$move , r1, r16
+	$call , r23, print_debug
+	$ld , d0, r17, 120
+	$ld , d2, zero, message
+	$add , r3, r3, r1
+	$addc , r2, r2, r0
+	$sd , zero, message, d2
+	$move , r0, r1
+	$move , r1, r16
+	$call , r23, print_debug
+	$lsl , r0, r18, 3
+	$ld , d2, r0, message
+	$move , r0, DPU_RESULTS
+	$sd , r0, 8, d2
+	$lw , r1, r22,  - 20
+	$add , r2, r1, 16
 	$move , r1, 256
 	$move , r3, 0
 	$move , r4, 23
-	$move , r0, r14
 	$call , r23, syscall
-	$jeq , r0, 0, .LBB30_26
-// %bb.25:
+	$jeq , r0, 0, .LBB30_22
+// %bb.21:
 	$move , r0, .L.str.1
 	$move , r14, 0
 	$move , r4, 8
@@ -1122,7 +1416,7 @@ main1:                                  // @main1
 	$move , r2, r14
 	$move , r3, r14
 	$call , r23, syscall
-.LBB30_26:
+.LBB30_22:
 	$lw , r0, zero, sd_host
 	$add , r14, r22,  - 28
 	$move , r16, 1
@@ -1138,7 +1432,7 @@ main1:                                  // @main1
 	$move , r2, r16
 	$move , r3, r17
 	$call , r23, syscall
-.LBB30_27:
+.LBB30_23:
 	$move , r1, 0
 	$move , r4, 15
 	$move , r0, r15
@@ -1149,8 +1443,8 @@ main1:                                  // @main1
 	$add , r0, r0, 1
 	$sw , r15, 4, r0
 	$lw , r1, r15, 8
-	$jneq , r0, r1, .LBB30_29
-// %bb.28:
+	$jneq , r0, r1, .LBB30_28
+// %bb.24:
 	$move , r14, b
 	$move , r1, 0
 	$move , r4, 18
@@ -1159,15 +1453,15 @@ main1:                                  // @main1
 	$move , r3, r1
 	$call , r23, syscall
 	$sw , r14, 4, 0
-	$jump , .LBB30_30
-.LBB30_29:
+	$jump , .LBB30_29
+.LBB30_28:
 	$move , r0, b
 	$move , r2, 0
 	$move , r4, 17
 	$move , r1, r0
 	$move , r3, r2
 	$call , r23, syscall
-.LBB30_30:
+.LBB30_29:
 	$move , r0, b
 	$move , r1, 0
 	$move , r4, 16
@@ -1427,8 +1721,8 @@ sd_host:
 	$globl,	DPU_INPUT_ARGUMENTS
 	$p2align,	3
 DPU_INPUT_ARGUMENTS:
-	$zero,	12
-	$size,	DPU_INPUT_ARGUMENTS, 12
+	$zero,	16
+	$size,	DPU_INPUT_ARGUMENTS, 16
 
 	$type,	b,@object                       // @b
 	$section,	%bss, b,"aw",@nobits
@@ -1455,10 +1749,10 @@ DPU_RESULTS:
 	$type,	message,@object                 // @message
 	$section,	%bss, message,"aw",@nobits
 	$globl,	message
-	$p2align,	2
+	$p2align,	3
 message:
-	$zero,	64
-	$size,	message, 64
+	$zero,	128
+	$size,	message, 128
 
 	$type,	.L.str.1,@object                // @.str.1
 	$section,	%rodata, str1.1,"aMS",@progbits,1
@@ -2241,196 +2535,3 @@ stdio.__stdout_cache_buffer:
 	$addrsig_sym, __stdout_buffer_state
 	$addrsig_sym, __atomic_bit___stdout_buffer_lock
 	$addrsig_sym, stdio.__stdout_cache_buffer
-	$text,
-	$file,	"crt0.c"
-	$section,	%text, __bootstrap,"ax",@progbits
-	$globl,	__bootstrap                     //  -  -  Begin function __bootstrap
-	$type,	__bootstrap,@function
-__bootstrap:                            // @__bootstrap
-crt0..Lfunc_begin0:
-// %bb.0:
-	// inline asm
-	$jnz , id, crt0.__sys_start_thread
-
-	$sd , zero, __stdout_buffer_state, 0
-	$move , r23, __atomic_end_addr
-crt0.__sys_atomic_bit_clear:
-	$jeq , r23, __atomic_used_addr, crt0.__sys_start_thread
-crt0..Ltmp0:
-	$release , r23, 0, nz, crt0..Ltmp0 + 1
-	$add , r23, r23,  - 1, true, crt0.__sys_atomic_bit_clear
-crt0.__sys_start_thread:
-crt0..Ltmp1:
-	$jeq , id, NR_TASKLETS - 1, crt0..Ltmp1 + 2
-	$boot , id, 1
-	$ld , d22, id8, __sys_thread_stack_table_ptr
-	$call , r23, main
-	$globl,	__sys_end
-__sys_end:
-
-	$stop , true, __sys_end
-	// inline asm
-crt0..Lfunc_end0:
-	$size,	__bootstrap, crt0..Lfunc_end0 - __bootstrap
-	$section,	%stack_sizes,"o",@progbits,%text, __bootstrap
-	$long,	crt0..Lfunc_begin0
-	$byte,	0
-	$section,	%text, __bootstrap,"ax",@progbits
-                                        //  -  -  End function
-	$type,	__sys_null_pointer,@object      // @__sys_null_pointer
-	$section,	%data, __sys_zero,"aw",@progbits
-	$globl,	__sys_null_pointer
-	$p2align,	3
-__sys_null_pointer:
-	$quad,	0                               // 0x0
-	$size,	__sys_null_pointer, 8
-
-	$type,	__sys_thread_stack_table_ptr,@object // @__sys_thread_stack_table_ptr
-	$section,	%data, __sys_keep,"aw",@progbits
-	$globl,	__sys_thread_stack_table_ptr
-	$p2align,	3
-__sys_thread_stack_table_ptr:
-	$long,	STACK_SIZE_TASKLET_0
-	$long,	__sys_stack_thread_0
-	$long,	STACK_SIZE_TASKLET_1
-	$long,	__sys_stack_thread_1
-	$long,	STACK_SIZE_TASKLET_2
-	$long,	__sys_stack_thread_2
-	$long,	STACK_SIZE_TASKLET_3
-	$long,	__sys_stack_thread_3
-	$long,	STACK_SIZE_TASKLET_4
-	$long,	__sys_stack_thread_4
-	$long,	STACK_SIZE_TASKLET_5
-	$long,	__sys_stack_thread_5
-	$long,	STACK_SIZE_TASKLET_6
-	$long,	__sys_stack_thread_6
-	$long,	STACK_SIZE_TASKLET_7
-	$long,	__sys_stack_thread_7
-	$long,	STACK_SIZE_TASKLET_8
-	$long,	__sys_stack_thread_8
-	$long,	STACK_SIZE_TASKLET_9
-	$long,	__sys_stack_thread_9
-	$long,	STACK_SIZE_TASKLET_10
-	$long,	__sys_stack_thread_10
-	$long,	STACK_SIZE_TASKLET_11
-	$long,	__sys_stack_thread_11
-	$long,	STACK_SIZE_TASKLET_12
-	$long,	__sys_stack_thread_12
-	$long,	STACK_SIZE_TASKLET_13
-	$long,	__sys_stack_thread_13
-	$long,	STACK_SIZE_TASKLET_14
-	$long,	__sys_stack_thread_14
-	$long,	STACK_SIZE_TASKLET_15
-	$long,	__sys_stack_thread_15
-	$long,	STACK_SIZE_TASKLET_16
-	$long,	__sys_stack_thread_16
-	$long,	STACK_SIZE_TASKLET_17
-	$long,	__sys_stack_thread_17
-	$long,	STACK_SIZE_TASKLET_18
-	$long,	__sys_stack_thread_18
-	$long,	STACK_SIZE_TASKLET_19
-	$long,	__sys_stack_thread_19
-	$long,	STACK_SIZE_TASKLET_20
-	$long,	__sys_stack_thread_20
-	$long,	STACK_SIZE_TASKLET_21
-	$long,	__sys_stack_thread_21
-	$long,	STACK_SIZE_TASKLET_22
-	$long,	__sys_stack_thread_22
-	$long,	STACK_SIZE_TASKLET_23
-	$long,	__sys_stack_thread_23
-	$size,	__sys_thread_stack_table_ptr, 192
-
-	$type,	__sys_used_mram_end,@object     // @__sys_used_mram_end
-	$section,	%mram, noinit,"aw",@progbits
-	$globl,	__sys_used_mram_end
-	$p2align,	3
-__sys_used_mram_end:
-	$size,	__sys_used_mram_end, 0
-
-	$type,	thread_profiling,@object        // @thread_profiling
-	$section,	%data, immediate_memory.thread_profiling,"aw",@progbits
-	$globl,	thread_profiling
-	$p2align,	2
-thread_profiling:
-	$zero,	96
-	$size,	thread_profiling, 96
-
-	$type,	perfcounter_end_value,@object   // @perfcounter_end_value
-	$section,	%bss, perfcounter_end_value,"aw",@nobits
-	$globl,	perfcounter_end_value
-	$p2align,	2
-perfcounter_end_value:
-	$long,	0                               // 0x0
-	$size,	perfcounter_end_value, 4
-
-	$type,	CLOCKS_PER_SEC,@object          // @CLOCKS_PER_SEC
-	$section,	%dpu_host,"a",@progbits
-	$globl,	CLOCKS_PER_SEC
-	$p2align,	3
-CLOCKS_PER_SEC:
-	$long,	0                               // 0x0
-	$size,	CLOCKS_PER_SEC, 4
-
-	$type,	error_storage,@object           // @error_storage
-	$globl,	error_storage
-	$p2align,	3
-error_storage:
-	$long,	0                               // 0x0
-	$size,	error_storage, 4
-
-	$addrsig,
-	$addrsig_sym, __bootstrap
-	$addrsig_sym, __sys_null_pointer
-	$addrsig_sym, STACK_SIZE_TASKLET_0
-	$addrsig_sym, __sys_stack_thread_0
-	$addrsig_sym, STACK_SIZE_TASKLET_1
-	$addrsig_sym, __sys_stack_thread_1
-	$addrsig_sym, STACK_SIZE_TASKLET_2
-	$addrsig_sym, __sys_stack_thread_2
-	$addrsig_sym, STACK_SIZE_TASKLET_3
-	$addrsig_sym, __sys_stack_thread_3
-	$addrsig_sym, STACK_SIZE_TASKLET_4
-	$addrsig_sym, __sys_stack_thread_4
-	$addrsig_sym, STACK_SIZE_TASKLET_5
-	$addrsig_sym, __sys_stack_thread_5
-	$addrsig_sym, STACK_SIZE_TASKLET_6
-	$addrsig_sym, __sys_stack_thread_6
-	$addrsig_sym, STACK_SIZE_TASKLET_7
-	$addrsig_sym, __sys_stack_thread_7
-	$addrsig_sym, STACK_SIZE_TASKLET_8
-	$addrsig_sym, __sys_stack_thread_8
-	$addrsig_sym, STACK_SIZE_TASKLET_9
-	$addrsig_sym, __sys_stack_thread_9
-	$addrsig_sym, STACK_SIZE_TASKLET_10
-	$addrsig_sym, __sys_stack_thread_10
-	$addrsig_sym, STACK_SIZE_TASKLET_11
-	$addrsig_sym, __sys_stack_thread_11
-	$addrsig_sym, STACK_SIZE_TASKLET_12
-	$addrsig_sym, __sys_stack_thread_12
-	$addrsig_sym, STACK_SIZE_TASKLET_13
-	$addrsig_sym, __sys_stack_thread_13
-	$addrsig_sym, STACK_SIZE_TASKLET_14
-	$addrsig_sym, __sys_stack_thread_14
-	$addrsig_sym, STACK_SIZE_TASKLET_15
-	$addrsig_sym, __sys_stack_thread_15
-	$addrsig_sym, STACK_SIZE_TASKLET_16
-	$addrsig_sym, __sys_stack_thread_16
-	$addrsig_sym, STACK_SIZE_TASKLET_17
-	$addrsig_sym, __sys_stack_thread_17
-	$addrsig_sym, STACK_SIZE_TASKLET_18
-	$addrsig_sym, __sys_stack_thread_18
-	$addrsig_sym, STACK_SIZE_TASKLET_19
-	$addrsig_sym, __sys_stack_thread_19
-	$addrsig_sym, STACK_SIZE_TASKLET_20
-	$addrsig_sym, __sys_stack_thread_20
-	$addrsig_sym, STACK_SIZE_TASKLET_21
-	$addrsig_sym, __sys_stack_thread_21
-	$addrsig_sym, STACK_SIZE_TASKLET_22
-	$addrsig_sym, __sys_stack_thread_22
-	$addrsig_sym, STACK_SIZE_TASKLET_23
-	$addrsig_sym, __sys_stack_thread_23
-	$addrsig_sym, __sys_thread_stack_table_ptr
-	$addrsig_sym, __sys_used_mram_end
-	$addrsig_sym, thread_profiling
-	$addrsig_sym, CLOCKS_PER_SEC
-	$addrsig_sym, error_storage

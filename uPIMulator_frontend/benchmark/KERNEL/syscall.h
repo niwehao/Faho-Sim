@@ -42,7 +42,7 @@ int global __attribute__((section(".data"))) = 0;
 int syscall(unsigned int arg1, unsigned int arg2, unsigned int arg3,
             unsigned int arg4, unsigned int value) {
   (void)arg4;
-  //print_debug(value,0);
+ 
   if (value == 0)
     return 0;
   //unsigned int time = 0;
@@ -118,12 +118,16 @@ int syscall(unsigned int arg1, unsigned int arg2, unsigned int arg3,
   }
 
   if (value == 22 || value == 23) { // place here beacause more often call
+    
     if (arg1 == 0)
       return 0;
+
     if (((arg2 & 7) != 0))
       return SIZE_LESS_8_OR_NOT_8_MULT;
+
     if ((arg3 & 7) != 0)
       return OFFSET_NOT_8_ALIGN;
+    
 
     return chained_inode_operation((void *)arg1, arg2, arg3,
                                    (value == 22) ? INODE_READ : INODE_WRITE);

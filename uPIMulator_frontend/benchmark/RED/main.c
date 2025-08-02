@@ -43,8 +43,10 @@ void main1()
     char ok;
     socket_write(sd_host, &ok, 1);
     socket_read(sd_host, &ok, 1);
-    if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0)
+    if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0){
       exit_proc(3);
+    }
+     
   }
   print_debug(fthread_id, 1);
   wait_barrier(&b);
@@ -102,16 +104,16 @@ void main1()
 
   if (fthread_id == 0)
   {
-    print_debug(message[0],6);
+  
     for (unsigned int each_tasklet = 1; each_tasklet < NR_FTHREAD;
          each_tasklet++)
     {
       message[0] += message[each_tasklet];
       print_debug(message[each_tasklet],3);
-      print_debug(message[0],4);
+     
     }
     result->t_count = message[fthread_id];
-    print_debug(message[0],5);
+
 
     CHK(umram_write(DPU_RESULTS, sizeof(DPU_RESULTS),
                     input_size_dpu_bytes +

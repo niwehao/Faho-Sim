@@ -139,10 +139,12 @@ void main1()
     for (uint32_t j = 0; j < cycle + 1; // 一个不理解的修改
          j++)
     {
+      print_debug(fthread_id, 5);
       umram_read(cache_TS, BLOCK_SIZE, current_mram_block_addr_TS);
       umram_read(cache_TS_aux, BLOCK_SIZE,
                  current_mram_block_addr_TS + BLOCK_SIZE);
       umram_read(cache_query, BLOCK_SIZE, current_mram_block_addr_query);
+      print_debug(fthread_id, 6);
 
       current_mram_block_addr_TS += BLOCK_SIZE;
       current_mram_block_addr_query += BLOCK_SIZE;
@@ -160,6 +162,7 @@ void main1()
 
       dot_product(cache_TS, cache_TS_aux, cache_query, cache_dotprods, res, query_length_);
     }
+    print_debug(fthread_id, 5);
 
     if ((ret = umram_read(cache_TSMean, BLOCK_SIZE,
                           current_mram_block_addr_TSMean)) < 0)
@@ -167,6 +170,7 @@ void main1()
     if ((ret = umram_read(cache_TSSigma, BLOCK_SIZE,
                           current_mram_block_addr_TSSigma)) < 0)
       fault_notif();
+    print_debug(fthread_id, 6);
     current_mram_block_addr_TSMean += BLOCK_SIZE;
     current_mram_block_addr_TSSigma += BLOCK_SIZE;
     
@@ -199,12 +203,14 @@ void main1()
   print_debug(fthread_id, 2);
   if (fthread_id == 0)
   {
+    print_debug(fthread_id, 5);
     if ((ret = umram_write(DPU_RESULTS, sizeof(DPU_RESULTS),
                            3 * (slice_per_dpu + query_length) * sizeof(DTYPE) +
                                query_length * sizeof(DTYPE) +
                                sizeof(DPU_INPUT_ARGUMENTS))) < 0)
       fault_notif();
     char ok;
+    print_debug(fthread_id, 6);
     print_debug(fthread_id, 4);
     socket_write(sd_host, &ok, 1);
     socket_read(sd_host, &ok, 1);

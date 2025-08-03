@@ -1150,6 +1150,9 @@ main1:                                  // @main1
 .LBB33_13:                              // =>This Loop Header: Depth=1
                                         //     Child Loop BB33_16 Depth 2
                                         //     Child Loop BB33_32 Depth 2
+	move r1, 5
+	move r0, r15
+	call r23, print_debug
 	or r2, r20, 8
 	move r1, 1024
 	move r16, 0
@@ -1157,11 +1160,15 @@ main1:                                  // @main1
 	move r0, r17
 	move r3, r16
 	call r23, syscall
-	jeq r0, 0, .LBB33_15
+	move r14, r0
+	move r1, 6
+	move r0, r15
+	call r23, print_debug
+	jeq r14, 0, .LBB33_15
 // %bb.14:                              //   in Loop: Header=BB33_13 Depth=1
 	call r23, fault_notif
 .LBB33_15:                              //   in Loop: Header=BB33_13 Depth=1
-	move r14, r16, true, .LBB33_16
+	move r19, r16, true, .LBB33_16
 .LBB33_18:                              //   in Loop: Header=BB33_16 Depth=2
 	add r16, r16, 1
 	jeq r16, 128, .LBB33_19
@@ -1177,9 +1184,9 @@ main1:                                  // @main1
 	jeq r2, r4, .LBB33_18
 .LBB33_42:                              //   in Loop: Header=BB33_16 Depth=2
 // %bb.17:                              //   in Loop: Header=BB33_16 Depth=2
-	lsl_add r2, r18, r14, 3
+	lsl_add r2, r18, r19, 3
 	sd r2, 0, d0
-	add r14, r14, 1, true, .LBB33_18
+	add r19, r19, 1, true, .LBB33_18
 .LBB33_19:                              //   in Loop: Header=BB33_13 Depth=1
 	move r1, 1
 	move r0, r15
@@ -1189,13 +1196,13 @@ main1:                                  // @main1
 	lw r0, r22, -16
 	call r23, active_handshake_wait
 	lsl r0, r15, 2
-	lw r19, r0, message
+	lw r16, r0, message
 	jleu r15, 14, .LBB33_31
 	jump .LBB33_34
 .LBB33_20:                              //   in Loop: Header=BB33_13 Depth=1
-	move r19, 0
+	move r16, 0
 .LBB33_31:                              //   in Loop: Header=BB33_13 Depth=1
-	add r0, r19, r14
+	add r0, r16, r19
 	move r1, message
 	lsl_add r1, r1, r15, 2
 	sw r1, 4, r0
@@ -1211,22 +1218,22 @@ main1:                                  // @main1
 // %bb.33:                              //   in Loop: Header=BB33_13 Depth=1
 	lw r0, r22, -24
 	sb r0, 0, 1
-	move r16, 0
+	move r14, 0
 	move r4, 18
-	move r1, r16
-	move r2, r16
-	move r3, r16
+	move r1, r14
+	move r2, r14
+	move r3, r14
 	call r23, syscall
 	move r4, 16
 	move r0, r21
-	move r1, r16
-	move r2, r16
-	move r3, r16
+	move r1, r14
+	move r2, r14
+	move r3, r14
 	call r23, syscall
 .LBB33_34:                              //   in Loop: Header=BB33_13 Depth=1
-	move r16, 2
+	move r14, 2
 	move r0, r15
-	move r1, r16
+	move r1, r14
 	call r23, print_debug
 	move r1, 1
 	move r0, r15
@@ -1234,18 +1241,25 @@ main1:                                  // @main1
 	move r0, a
 	call r23, active_wait_barrier
 	move r0, r15
-	move r1, r16
+	move r1, r14
+	call r23, print_debug
+	move r1, 5
+	move r0, r15
 	call r23, print_debug
 	lw r0, zero, message_partial_count
-	lsl r1, r14, 3
-	add r0, r0, r19
+	lsl r1, r19, 3
+	add r0, r0, r16
 	lw r2, r22, -28
 	lsl_add r2, r2, r0, 3
 	move r3, 0
 	move r4, 23
 	move r0, r18
 	call r23, syscall
-	jeq r0, 0, .LBB33_36
+	move r14, r0
+	move r1, 6
+	move r0, r15
+	call r23, print_debug
+	jeq r14, 0, .LBB33_36
 // %bb.35:                              //   in Loop: Header=BB33_13 Depth=1
 	call r23, fault_notif
 .LBB33_36:                              //   in Loop: Header=BB33_13 Depth=1
@@ -1260,7 +1274,7 @@ main1:                                  // @main1
 	jneq r15, 15, .LBB33_38
 // %bb.37:                              //   in Loop: Header=BB33_13 Depth=1
 	lw r0, zero, message_partial_count
-	add r1, r19, r14
+	add r1, r16, r19
 	add r0, r1, r0
 	lw r1, r22, -20
 	lsl r1, r1, 3
@@ -1313,14 +1327,22 @@ main1:                                  // @main1
 	call r23, print_debug
 	jneq r15, 0, .LBB33_28
 // %bb.25:
+	move r16, 0
+	move r1, 5
+	move r0, r16
+	call r23, print_debug
 	lw r0, zero, DPU_INPUT_ARGUMENTS
 	add r2, r0, 8
 	move r0, DPU_RESULTS
 	move r1, 128
-	move r3, 0
 	move r4, 23
+	move r3, r16
 	call r23, syscall
-	jeq r0, 0, .LBB33_27
+	move r17, r0
+	move r1, 6
+	move r0, r16
+	call r23, print_debug
+	jeq r17, 0, .LBB33_27
 // %bb.26:
 	call r23, fault_notif
 .LBB33_27:

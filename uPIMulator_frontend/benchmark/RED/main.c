@@ -88,8 +88,11 @@ void main1()
                                 : BLOCK_SIZE;
 
     // Load cache with current MRAM block
+     print_debug(fthread_id, 5);
 
     CHK(umram_read(cache_A, l_size_bytes, (mram_base_addr_A + byte_index)));
+    print_debug(fthread_id, 6);
+
 
     // Reduction in each tasklet
     l_count += reduction(cache_A, l_size_bytes >> DIV);
@@ -160,10 +163,12 @@ void main1()
 
   if (fthread_id == 0)
   {
+    print_debug(fthread_id, 5);
     CHK(umram_write(DPU_RESULTS, sizeof(DPU_RESULTS),
                     input_size_dpu_bytes +
                         sizeof(dpu_arguments_t))); // comment tranformer la var
                                                    // input_size_dpu_8bytes
+    print_debug(fthread_id, 6);
 
     char ok;
     print_debug(fthread_id, 4);

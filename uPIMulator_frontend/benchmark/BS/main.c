@@ -54,7 +54,6 @@ void main1()
     socket_read(sd_host, &ok, 1);
     if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0)
       fault_notif();
-    
   }
   wait_barrier(&b);
   print_debug(tasklet_id, 3);
@@ -84,12 +83,9 @@ void main1()
   for (int targets = 0; targets < (DPU_INPUT_ARGUMENTS.slice_per_dpu / NR_FTHREAD); targets++) // 循环不要用64位
   {
     found = -1;
-
+    print_debug(tasklet_id, 5);
     r = umram_read(&searching_for, 8, current_mram_block_addr_query);
-    if (tasklet_id == 15)
-    {
-      //print_debug(searching_for, 9);
-    }
+    print_debug(tasklet_id, 6);
 
     if (r != 0)
     {
@@ -107,15 +103,18 @@ void main1()
     uint32_t current_mram_block_addr_A = start_mram_block_addr_A;
 
     // Bring first and last values to WRAM
-
+    print_debug(tasklet_id, 5);
     r = umram_read(cache_aux_A, BLOCK_SIZE, current_mram_block_addr_A);
+    print_debug(tasklet_id, 6);
     if (r != 0)
     {
 
       fault_notif();
     }
+    print_debug(tasklet_id, 5);
     r = umram_read(cache_aux_B, BLOCK_SIZE,
                    (end_mram_block_addr_A - BLOCK_SIZE * sizeof(DTYPE)));
+    print_debug(tasklet_id, 6);
     if (r != 0)
     {
 
@@ -128,16 +127,17 @@ void main1()
       current_mram_block_addr_A =
           (start_mram_block_addr_A + end_mram_block_addr_A) / 2;
       current_mram_block_addr_A &= WORD_MASK;
-      
 
       // Boundary check
       if (current_mram_block_addr_A < (start_mram_block_addr_A + BLOCK_SIZE))
       {
         // Search inside (start_mram_block_addr_A, start_mram_block_addr_A +
         // BLOCK_SIZE)
+        print_debug(tasklet_id, 5);
         r = umram_read(cache_A, BLOCK_SIZE, start_mram_block_addr_A);
+        print_debug(tasklet_id, 6);
         found = search(cache_A, searching_for, BLOCK_SIZE);
-        //print_debug(found, 5);
+        // print_debug(found, 5);
 
         if ((int)found > -1)
         {
@@ -152,15 +152,17 @@ void main1()
         {
           uint32_t remain_bytes_to_search =
               end_mram_block_addr_A - (start_mram_block_addr_A + BLOCK_SIZE);
+          print_debug(tasklet_id, 5);
           r = umram_read(cache_A, remain_bytes_to_search,
                          start_mram_block_addr_A + BLOCK_SIZE);
+          print_debug(tasklet_id, 6);
           if (r != 0)
           {
 
             fault_notif();
           }
           found = search(cache_A, searching_for, remain_bytes_to_search);
-          //print_debug(found, 6);
+          // print_debug(found, 6);
 
           if ((int)found > -1)
           {
@@ -171,7 +173,7 @@ void main1()
           }
           else
           {
-            //print_debug(searching_for, 8);
+            // print_debug(searching_for, 8);
           }
         }
         break;
@@ -182,7 +184,9 @@ void main1()
       // }
 
       // Load cache with current MRAM block
+      print_debug(tasklet_id, 5);
       r = umram_read(cache_A, BLOCK_SIZE, current_mram_block_addr_A);
+      print_debug(tasklet_id, 6);
       if (r != 0)
       {
 
@@ -191,7 +195,7 @@ void main1()
 
       // Search inside block
       found = search(cache_A, searching_for, BLOCK_SIZE);
-      //print_debug(found, 7);
+      // print_debug(found, 7);
 
       // If found > -1, we found the searching_for query
       if ((int)found > -1)
@@ -221,15 +225,17 @@ void main1()
   print_debug(tasklet_id, 2);
   if (tasklet_id == 0)
   {
+    print_debug(tasklet_id, 5);
     r = umram_write(DPU_RESULTS, sizeof(DPU_RESULTS),
                     input_size * sizeof(DTYPE) + sizeof(DPU_INPUT_ARGUMENTS) +
                         input_size * sizeof(DTYPE));
+    print_debug(tasklet_id, 6);
     if (r != 0)
     {
 
       fault_notif();
     }
-    print_debug(tasklet_id,4);
+    print_debug(tasklet_id, 4);
     char ok;
     socket_write(sd_host, &ok, 1);
     socket_read(sd_host, &ok, 1);

@@ -1,0 +1,442 @@
+DMA to atomic completed...
+DMA to IRAM completed...
+DMA to WRAM completed...
+DMA to MRAM completed...
+init completed...
+sched 0 completed...
+launch completed...
+fthread 1 start cal at 88247
+fthread 2 start cal at 88292
+fthread 3 start cal at 88337
+fthread 4 start cal at 88382
+fthread 5 start cal at 88428
+fthread 6 start cal at 88474
+fthread 7 start cal at 88523
+fthread 8 start cal at 88574
+fthread 9 start cal at 88631
+fthread 10 start cal at 88690
+fthread 11 start cal at 88756
+fthread 12 start cal at 88826
+fthread 13 start cal at 88905
+fthread 14 start cal at 88982
+fthread 15 start cal at 89066
+fthread 0 start cal at 89148
+fthread 1 start dma 109308
+fthread 2 start dma 109555
+fthread 3 start dma 109794
+fthread 4 start dma 110017
+fthread 1 end dma 110224
+fthread 5 start dma 110226
+fthread 6 start dma 110431
+fthread 7 start dma 110623
+fthread 8 start dma 110801
+fthread 9 start dma 110970
+fthread 10 start dma 111122
+fthread 11 start dma 111258
+fthread 12 start dma 111382
+fthread 13 start dma 111506
+fthread 14 start dma 111630
+fthread 15 start dma 111753
+fthread 0 start dma 111875
+fthread 2 end dma 112097
+fthread 3 end dma 112564
+fthread 4 end dma 114780
+fthread 5 end dma 114935
+fthread 6 end dma 115550
+fthread 7 end dma 115565
+fthread 8 end dma 115899
+fthread 9 end dma 116057
+fthread 10 end dma 116217
+fthread 11 end dma 116367
+fthread 12 end dma 116531
+fthread 13 end dma 116700
+fthread 14 end dma 116864
+fthread 15 end dma 117023
+fthread 0 end dma 117181
+fthread 1 start dma 2748346
+fthread 1 end dma 2748973
+fthread 2 start dma 2751502
+fthread 15 start dma 2751797
+fthread 2 end dma 2752119
+fthread 3 start dma 2752121
+fthread 14 start dma 2752568
+fthread 15 end dma 2752652
+fthread 3 end dma 2752833
+fthread 14 end dma 2753256
+fthread 13 start dma 2753326
+fthread 13 end dma 2753975
+fthread 12 start dma 2754048
+fthread 12 end dma 2754672
+fthread 11 start dma 2754692
+fthread 10 start dma 2755299
+fthread 11 end dma 2755323
+fthread 9 start dma 2755814
+fthread 10 end dma 2755965
+fthread 5 start dma 2756172
+fthread 7 start dma 2756289
+fthread 8 start dma 2756291
+fthread 4 start dma 2756329
+fthread 9 end dma 2756437
+fthread 6 start dma 2756805
+fthread 5 end dma 2757241
+fthread 7 end dma 2757582
+fthread 4 end dma 2757930
+fthread 8 end dma 2757933
+fthread 6 end dma 2758105
+fthread 0 start dma 2761671
+fthread 0 end dma 2762323
+fthread 15 meet barrier2870942
+fthread 1 start dma 2872266
+fthread 1 end dma 2873130
+fthread 2 start dma 2875321
+fthread 3 start dma 2876010
+fthread 2 end dma 2876146
+fthread 14 start dma 2876395
+fthread 3 end dma 2876948
+fthread 13 start dma 2876959
+fthread 14 end dma 2877483
+fthread 12 start dma 2877523
+fthread 13 end dma 2877867
+fthread 11 start dma 2878050
+fthread 10 start dma 2878551
+fthread 12 end dma 2878593
+fthread 9 start dma 2878925
+fthread 11 end dma 2879085
+fthread 10 end dma 2879573
+fthread 5 start dma 2879940
+fthread 9 end dma 2879966
+fthread 7 start dma 2880087
+fthread 8 start dma 2880404
+fthread 4 start dma 2880621
+fthread 6 start dma 2880659
+fthread 5 end dma 2881109
+fthread 7 end dma 2881588
+fthread 4 end dma 2882250
+fthread 8 end dma 2882409
+fthread 6 end dma 2882569
+fthread 0 start dma 2883727
+fthread 0 end dma 2884541
+fthread 1 start dma 5229741
+fthread 1 end dma 5230354
+fthread 2 start dma 5232927
+fthread 2 end dma 5233553
+fthread 3 start dma 5234112
+fthread 3 end dma 5234736
+fthread 5 start dma 5239953
+fthread 5 end dma 5240588
+fthread 4 start dma 5241012
+fthread 9 start dma 5241020
+fthread 10 start dma 5241351
+fthread 11 start dma 5241552
+fthread 7 start dma 5241695
+fthread 4 end dma 5241709
+fthread 12 start dma 5241794
+fthread 13 start dma 5241861
+fthread 6 start dma 5242120
+fthread 0 start dma 5242167
+fthread 9 end dma 5242179
+fthread 14 start dma 5242198
+fthread 10 end dma 5242644
+fthread 8 start dma 5242739
+fthread 11 end dma 5243139
+fthread 7 end dma 5244093
+fthread 12 end dma 5244264
+fthread 6 end dma 5244290
+fthread 13 end dma 5244306
+fthread 14 end dma 5244625
+fthread 0 end dma 5244627
+fthread 8 end dma 5244809
+fthread 1 meet barrier5341732
+fthread 2 meet barrier5345026
+fthread 3 meet barrier5346219
+fthread 5 meet barrier5351279
+fthread 4 meet barrier5352218
+fthread 9 meet barrier5352909
+fthread 10 meet barrier5353445
+fthread 11 meet barrier5353956
+fthread 7 meet barrier5354880
+fthread 12 meet barrier5354908
+fthread 13 meet barrier5354910
+fthread 6 meet barrier5354946
+fthread 14 meet barrier5355069
+fthread 0 meet barrier5355093
+fthread 8 meet barrier5355305
+fthread 15 leave barrier5355881
+fthread 1 leave barrier5355926
+fthread 15 end cal at 5355947
+fthread 2 leave barrier5355971
+fthread 1 end cal at 5355992
+fthread 3 leave barrier5356016
+fthread 2 end cal at 5356039
+fthread 5 leave barrier5356065
+fthread 3 end cal at 5356086
+fthread 4 leave barrier5356111
+fthread 5 end cal at 5356136
+fthread 9 leave barrier5356152
+fthread 4 end cal at 5356180
+fthread 10 leave barrier5356199
+fthread 9 end cal at 5356220
+fthread 11 leave barrier5356246
+fthread 10 end cal at 5356268
+fthread 7 leave barrier5356296
+fthread 11 end cal at 5356313
+fthread 12 leave barrier5356336
+fthread 7 end cal at 5356363
+fthread 13 leave barrier5356384
+fthread 12 end cal at 5356405
+fthread 14 leave barrier5356432
+fthread 13 end cal at 5356453
+fthread 0 leave barrier5356471
+fthread 14 end cal at 5356500
+fthread 6 leave barrier5356519
+fthread 0 end cal at 5356538
+fthread 8 leave barrier5356569
+fthread 6 end cal at 5356585
+fthread 8 end cal at 5356635
+check 0 completed...
+benchmark: TS
+bindir: /home/krakos/niwe/normal/python_cpp/uPIMulator_frontend/bin/1_dpus
+logdir: .
+logic_frequency: 350
+memory_frequency: 2400
+memory_scheduling_policy: frfcfs
+num_dpus: 1
+num_pipeline_stages: 14
+num_revolver_scheduling_cycles: 11
+num_tasklets: 16
+rank_read_bandwidth: 1
+rank_write_bandwidth: 3
+t_bl: 8
+t_cl: 32
+t_ras: 78
+t_rcd: 32
+t_rp: 32
+verbose: 0
+wordline_size: 1024
+////CycleRule/0_cycle_rule: 82680
+////CycleRule/10_cycle_rule: 82751
+////CycleRule/11_cycle_rule: 82751
+////CycleRule/12_cycle_rule: 82751
+////CycleRule/13_cycle_rule: 82751
+////CycleRule/14_cycle_rule: 82751
+////CycleRule/15_cycle_rule: 43194
+////CycleRule/1_cycle_rule: 82747
+////CycleRule/2_cycle_rule: 82749
+////CycleRule/3_cycle_rule: 82749
+////CycleRule/4_cycle_rule: 82750
+////CycleRule/5_cycle_rule: 82750
+////CycleRule/6_cycle_rule: 82750
+////CycleRule/7_cycle_rule: 82750
+////CycleRule/8_cycle_rule: 82748
+////CycleRule/9_cycle_rule: 82751
+////CycleRule/cycle_rule: 1284373
+////RevolverScheduler/0_revolver_wait: 2497517
+////RevolverScheduler/10_revolver_wait: 2494954
+////RevolverScheduler/11_revolver_wait: 2495141
+////RevolverScheduler/12_revolver_wait: 2495416
+////RevolverScheduler/13_revolver_wait: 2495735
+////RevolverScheduler/14_revolver_wait: 2495900
+////RevolverScheduler/15_revolver_wait: 1264208
+////RevolverScheduler/1_revolver_wait: 2493271
+////RevolverScheduler/2_revolver_wait: 2493458
+////RevolverScheduler/3_revolver_wait: 2493645
+////RevolverScheduler/4_revolver_wait: 2493832
+////RevolverScheduler/5_revolver_wait: 2494019
+////RevolverScheduler/6_revolver_wait: 2494811
+////RevolverScheduler/7_revolver_wait: 2494393
+////RevolverScheduler/8_revolver_wait: 2495570
+////RevolverScheduler/9_revolver_wait: 2494767
+////RevolverScheduler/active_tasklets_0: 88003
+////RevolverScheduler/active_tasklets_1: 476
+////RevolverScheduler/active_tasklets_10: 1553
+////RevolverScheduler/active_tasklets_11: 2343
+////RevolverScheduler/active_tasklets_12: 7804
+////RevolverScheduler/active_tasklets_13: 4895
+////RevolverScheduler/active_tasklets_14: 10254
+////RevolverScheduler/active_tasklets_15: 2462420
+////RevolverScheduler/active_tasklets_16: 2769236
+////RevolverScheduler/active_tasklets_2: 1008
+////RevolverScheduler/active_tasklets_3: 2573
+////RevolverScheduler/active_tasklets_4: 801
+////RevolverScheduler/active_tasklets_5: 1235
+////RevolverScheduler/active_tasklets_6: 717
+////RevolverScheduler/active_tasklets_7: 2358
+////RevolverScheduler/active_tasklets_8: 2088
+////RevolverScheduler/active_tasklets_9: 1568
+////RevolverScheduler/breakdown_dma: 2998
+////RevolverScheduler/breakdown_etc: 89918
+////RevolverScheduler/breakdown_run: 3517168
+////RevolverScheduler/current_active_tasklets: 0
+////RevolverScheduler/revolver_wait: 38686637
+////RevolverScheduler/total_BLOCK: 114256
+////RevolverScheduler/total_EMBRYO: 1371767
+////RevolverScheduler/total_RUNNABLE: 81657432
+////RevolverScheduler/total_SLEEP: 2559218
+////RevolverScheduler/total_ZOMBIE: 46639
+////Scheduler/num_fcfs: 3937
+////Scheduler/num_fr: 902
+////Scheduler/row_buffer_hit: 4839
+////Scheduler/row_buffer_miss: 121
+////row_buffer/0_num_reads: 320
+////row_buffer/0_read_bytes: 2560
+////row_buffer/10_num_reads: 320
+////row_buffer/10_read_bytes: 2560
+////row_buffer/11_num_reads: 320
+////row_buffer/11_read_bytes: 2560
+////row_buffer/12_num_reads: 320
+////row_buffer/12_read_bytes: 2560
+////row_buffer/13_num_reads: 320
+////row_buffer/13_read_bytes: 2560
+////row_buffer/14_num_reads: 320
+////row_buffer/14_read_bytes: 2560
+////row_buffer/15_num_reads: 160
+////row_buffer/15_read_bytes: 1280
+////row_buffer/1_num_reads: 320
+////row_buffer/1_read_bytes: 2560
+////row_buffer/2_num_reads: 320
+////row_buffer/2_read_bytes: 2560
+////row_buffer/3_num_reads: 320
+////row_buffer/3_read_bytes: 2560
+////row_buffer/4_num_reads: 320
+////row_buffer/4_read_bytes: 2560
+////row_buffer/5_num_reads: 320
+////row_buffer/5_read_bytes: 2560
+////row_buffer/6_num_reads: 320
+////row_buffer/6_read_bytes: 2560
+////row_buffer/7_num_reads: 320
+////row_buffer/7_read_bytes: 2560
+////row_buffer/8_num_reads: 320
+////row_buffer/8_read_bytes: 2560
+////row_buffer/9_num_reads: 320
+////row_buffer/9_read_bytes: 2560
+////row_buffer/num_activations: 121
+////row_buffer/num_precharges: 120
+////row_buffer/num_reads: 4960
+////row_buffer/read_bytes: 39680
+///Logic/0_num_instructions: 227059
+///Logic/10_num_instructions: 226827
+///Logic/11_num_instructions: 226844
+///Logic/12_num_instructions: 226869
+///Logic/13_num_instructions: 226898
+///Logic/14_num_instructions: 226913
+///Logic/15_num_instructions: 114936
+///Logic/1_num_instructions: 226674
+///Logic/2_num_instructions: 226691
+///Logic/3_num_instructions: 226708
+///Logic/4_num_instructions: 226725
+///Logic/5_num_instructions: 226742
+///Logic/6_num_instructions: 226814
+///Logic/7_num_instructions: 226776
+///Logic/8_num_instructions: 226882
+///Logic/9_num_instructions: 226810
+///Logic/active_tasklets_0: 1837251
+///Logic/active_tasklets_1: 476
+///Logic/active_tasklets_10: 1086
+///Logic/active_tasklets_11: 1585
+///Logic/active_tasklets_12: 4993
+///Logic/active_tasklets_13: 3281
+///Logic/active_tasklets_14: 6757
+///Logic/active_tasklets_15: 1663996
+///Logic/active_tasklets_16: 1829540
+///Logic/active_tasklets_2: 987
+///Logic/active_tasklets_3: 2542
+///Logic/active_tasklets_4: 771
+///Logic/active_tasklets_5: 1178
+///Logic/active_tasklets_6: 636
+///Logic/active_tasklets_7: 1755
+///Logic/active_tasklets_8: 1435
+///Logic/active_tasklets_9: 1063
+///Logic/backpressuer: 1749248
+///Logic/logic_cycle: 5359332
+///Logic/mram_access_size: -1
+///Logic/mram_access_thread: -1
+///Logic/mram_address: -1
+///Logic/num_instructions: 3517168
+///MemoryController/mem_cycle: 36749705
+//DPU#0/0_latency_breakdown_ARITHMETIC: 2680062
+//DPU#0/0_latency_breakdown_SPM_ACCESS: 482692
+//DPU#0/0_latency_breakdown_WAIT_DATA: 6753
+//DPU#0/0_latency_breakdown_WAIT_SCHEDULE: 3285624
+//DPU#0/0_latency_breakdown_WAIT_SYNC: 15932
+//DPU#0/10_latency_breakdown_ARITHMETIC: 2679572
+//DPU#0/10_latency_breakdown_SPM_ACCESS: 482482
+//DPU#0/10_latency_breakdown_WAIT_DATA: 6197
+//DPU#0/10_latency_breakdown_WAIT_SCHEDULE: 3285100
+//DPU#0/10_latency_breakdown_WAIT_SYNC: 13384
+//DPU#0/11_latency_breakdown_ARITHMETIC: 2679572
+//DPU#0/11_latency_breakdown_SPM_ACCESS: 482482
+//DPU#0/11_latency_breakdown_WAIT_DATA: 6389
+//DPU#0/11_latency_breakdown_WAIT_SCHEDULE: 3285210
+//DPU#0/11_latency_breakdown_WAIT_SYNC: 13622
+//DPU#0/12_latency_breakdown_ARITHMETIC: 2679544
+//DPU#0/12_latency_breakdown_SPM_ACCESS: 482482
+//DPU#0/12_latency_breakdown_WAIT_DATA: 6984
+//DPU#0/12_latency_breakdown_WAIT_SCHEDULE: 3285172
+//DPU#0/12_latency_breakdown_WAIT_SYNC: 14000
+//DPU#0/13_latency_breakdown_ARITHMETIC: 2679544
+//DPU#0/13_latency_breakdown_SPM_ACCESS: 482482
+//DPU#0/13_latency_breakdown_WAIT_DATA: 6841
+//DPU#0/13_latency_breakdown_WAIT_SCHEDULE: 3285261
+//DPU#0/13_latency_breakdown_WAIT_SYNC: 14406
+//DPU#0/14_latency_breakdown_ARITHMETIC: 2679544
+//DPU#0/14_latency_breakdown_SPM_ACCESS: 482482
+//DPU#0/14_latency_breakdown_WAIT_DATA: 6991
+//DPU#0/14_latency_breakdown_WAIT_SCHEDULE: 3285015
+//DPU#0/14_latency_breakdown_WAIT_SYNC: 14616
+//DPU#0/15_latency_breakdown_ARITHMETIC: 1352638
+//DPU#0/15_latency_breakdown_SPM_ACCESS: 241808
+//DPU#0/15_latency_breakdown_WAIT_DATA: 5073
+//DPU#0/15_latency_breakdown_WAIT_SCHEDULE: 1720965
+//DPU#0/15_latency_breakdown_WAIT_SYNC: 14588
+//DPU#0/1_latency_breakdown_ARITHMETIC: 2679544
+//DPU#0/1_latency_breakdown_SPM_ACCESS: 482454
+//DPU#0/1_latency_breakdown_WAIT_DATA: 1297
+//DPU#0/1_latency_breakdown_WAIT_SCHEDULE: 3279259
+//DPU#0/1_latency_breakdown_WAIT_SYNC: 11298
+//DPU#0/2_latency_breakdown_ARITHMETIC: 2679544
+//DPU#0/2_latency_breakdown_SPM_ACCESS: 482482
+//DPU#0/2_latency_breakdown_WAIT_DATA: 2645
+//DPU#0/2_latency_breakdown_WAIT_SCHEDULE: 3280562
+//DPU#0/2_latency_breakdown_WAIT_SYNC: 11508
+//DPU#0/3_latency_breakdown_ARITHMETIC: 2679544
+//DPU#0/3_latency_breakdown_SPM_ACCESS: 482482
+//DPU#0/3_latency_breakdown_WAIT_DATA: 3098
+//DPU#0/3_latency_breakdown_WAIT_SCHEDULE: 3281332
+//DPU#0/3_latency_breakdown_WAIT_SYNC: 11746
+//DPU#0/4_latency_breakdown_ARITHMETIC: 2679558
+//DPU#0/4_latency_breakdown_SPM_ACCESS: 482482
+//DPU#0/4_latency_breakdown_WAIT_DATA: 6282
+//DPU#0/4_latency_breakdown_WAIT_SCHEDULE: 3283494
+//DPU#0/4_latency_breakdown_WAIT_SYNC: 11970
+//DPU#0/5_latency_breakdown_ARITHMETIC: 2679558
+//DPU#0/5_latency_breakdown_SPM_ACCESS: 482482
+//DPU#0/5_latency_breakdown_WAIT_DATA: 5565
+//DPU#0/5_latency_breakdown_WAIT_SCHEDULE: 3283825
+//DPU#0/5_latency_breakdown_WAIT_SYNC: 12208
+//DPU#0/6_latency_breakdown_ARITHMETIC: 2679558
+//DPU#0/6_latency_breakdown_SPM_ACCESS: 482482
+//DPU#0/6_latency_breakdown_WAIT_DATA: 7750
+//DPU#0/6_latency_breakdown_WAIT_SCHEDULE: 3284385
+//DPU#0/6_latency_breakdown_WAIT_SYNC: 13216
+//DPU#0/7_latency_breakdown_ARITHMETIC: 2679558
+//DPU#0/7_latency_breakdown_SPM_ACCESS: 482482
+//DPU#0/7_latency_breakdown_WAIT_DATA: 7489
+//DPU#0/7_latency_breakdown_WAIT_SCHEDULE: 3284564
+//DPU#0/7_latency_breakdown_WAIT_SYNC: 12684
+//DPU#0/8_latency_breakdown_ARITHMETIC: 2679936
+//DPU#0/8_latency_breakdown_SPM_ACCESS: 482664
+//DPU#0/8_latency_breakdown_WAIT_DATA: 7965
+//DPU#0/8_latency_breakdown_WAIT_SCHEDULE: 3284592
+//DPU#0/8_latency_breakdown_WAIT_SYNC: 13608
+//DPU#0/9_latency_breakdown_ARITHMETIC: 2679572
+//DPU#0/9_latency_breakdown_SPM_ACCESS: 482482
+//DPU#0/9_latency_breakdown_WAIT_DATA: 6054
+//DPU#0/9_latency_breakdown_WAIT_SCHEDULE: 3284893
+//DPU#0/9_latency_breakdown_WAIT_SYNC: 13146
+//DPU#0/cycle: 5359332
+/Rank/communication_cycle: 87986
+/Rank/num_reads: 1
+/Rank/num_writes: 2
+/Rank/rank_cycle: 5359332
+/Rank/read_bytes: 256
+/Rank/write_bytes: 25628

@@ -8,83 +8,149 @@ DMA to WRAM completed...
 init completed...
 launch completed...
 ********time:4306*******
-text section size is 6310
+text section size is 6480
 flag set:0
 break point 2 happen in cycle:5053
 break point 3 happen in cycle:6153
 break point 4 happen in cycle:6274
-break point 5 happen in cycle:23514
-break point 6 happen in cycle:32622
-break point 7 happen in cycle:33056
-********time:365781*******
+break point 5 happen in cycle:23746
+break point 6 happen in cycle:32854
+break point 7 happen in cycle:33288
+********time:366010*******
 ReadSocket event for pid: 1 at time: 0
-********time:365782*******
+********time:366011*******
 flag set:32
-fthread 0 start cal at 509824
-fthread 1 start cal at 601387
-fthread 2 start cal at 606469
-fthread 3 start cal at 609705
-fthread 4 start cal at 613336
-fthread 5 start cal at 617381
-fthread 6 start cal at 621929
-fthread 7 start cal at 627097
-fthread 8 start cal at 633158
-fthread 9 start cal at 640250
-fthread 10 start cal at 648483
-fthread 11 start cal at 658171
-fthread 12 start cal at 669324
-fthread 13 start cal at 681948
-fthread 14 start cal at 696221
-fthread 15 start cal at 710279
-fthread 15 meet barrier3588915
-fthread 0 meet barrier5953716
-fthread 1 meet barrier6112151
-fthread 2 meet barrier6122554
-fthread 3 meet barrier6129358
-fthread 4 meet barrier6135945
-fthread 5 meet barrier6142836
-fthread 6 meet barrier6150628
-fthread 7 meet barrier6158471
-fthread 8 meet barrier6166710
-fthread 9 meet barrier6174853
-fthread 10 meet barrier6182893
-fthread 11 meet barrier6190404
-fthread 12 meet barrier6197654
-fthread 13 meet barrier6204871
-fthread 14 meet barrier6212345
-fthread 14 leave barrier6340486
-fthread 14 end cal at 6340605
-fthread 0 leave barrier6432471
-fthread 0 end cal at 6434063
-fthread 1 leave barrier6465223
-fthread 1 end cal at 6465300
-fthread 2 leave barrier6470215
-fthread 2 end cal at 6470292
-fthread 3 leave barrier6498486
-fthread 3 end cal at 6498563
-fthread 4 leave barrier6504106
-fthread 4 end cal at 6504183
-fthread 5 leave barrier6532743
-fthread 5 end cal at 6532820
-fthread 6 leave barrier6539044
-fthread 6 end cal at 6539121
-fthread 7 leave barrier6567931
-fthread 7 end cal at 6568008
-fthread 8 leave barrier6574915
-fthread 8 end cal at 6574992
-fthread 9 leave barrier6604300
-fthread 9 end cal at 6604377
-fthread 10 leave barrier6611965
-fthread 10 end cal at 6612042
-fthread 11 leave barrier6641732
-fthread 11 end cal at 6641809
-fthread 12 leave barrier6650080
-fthread 12 end cal at 6650157
-fthread 13 leave barrier6680081
-fthread 13 end cal at 6680158
-fthread 15 leave barrier6713378
-fthread 15 end cal at 6713455
-********time:6726745*******
+fthread 0 start cal at 510045
+fthread 0 start dma 527497
+fthread 0 end dma 534043
+fthread 1 start cal at 601817
+fthread 2 start cal at 606899
+fthread 3 start cal at 610135
+fthread 1 start dma 613274
+fthread 4 start cal at 613781
+fthread 5 start cal at 617827
+fthread 1 end dma 618176
+fthread 2 start dma 618540
+fthread 3 start dma 621900
+fthread 6 start cal at 622381
+fthread 2 end dma 623621
+fthread 4 start dma 625729
+fthread 3 end dma 627394
+fthread 7 start cal at 627594
+fthread 5 start dma 630589
+fthread 4 end dma 631454
+fthread 8 start cal at 633732
+fthread 6 start dma 636051
+fthread 5 end dma 636399
+fthread 9 start cal at 641005
+fthread 7 start dma 642061
+fthread 6 end dma 642271
+fthread 7 end dma 648639
+fthread 10 start cal at 649466
+fthread 8 start dma 649480
+fthread 8 end dma 656615
+fthread 9 start dma 658190
+fthread 11 start cal at 659439
+fthread 9 end dma 665731
+fthread 10 start dma 668201
+fthread 12 start cal at 670845
+fthread 10 end dma 676169
+fthread 11 start dma 679578
+fthread 13 start cal at 683837
+fthread 11 end dma 687912
+fthread 12 start dma 692497
+fthread 14 start cal at 698520
+fthread 12 end dma 701233
+fthread 13 start dma 706872
+fthread 15 start cal at 712795
+fthread 13 end dma 715984
+fthread 14 start dma 722609
+fthread 14 end dma 731834
+fthread 15 start dma 737076
+fthread 15 end dma 746276
+fthread 15 start dma 3540107
+fthread 15 end dma 3546631
+fthread 15 meet barrier3661590
+fthread 0 start dma 5846673
+fthread 0 end dma 5852867
+fthread 1 start dma 6011818
+fthread 1 end dma 6018009
+fthread 2 start dma 6022820
+fthread 2 end dma 6029063
+fthread 3 start dma 6030122
+fthread 3 end dma 6036290
+fthread 4 start dma 6037327
+fthread 4 end dma 6043544
+fthread 5 start dma 6045754
+fthread 5 end dma 6051966
+fthread 6 start dma 6055076
+fthread 6 end dma 6061324
+fthread 7 start dma 6064628
+fthread 7 end dma 6070836
+fthread 0 meet barrier6074031
+fthread 8 start dma 6075529
+fthread 8 end dma 6081745
+fthread 9 start dma 6087109
+fthread 9 end dma 6093318
+fthread 10 start dma 6099683
+fthread 10 end dma 6105619
+fthread 11 start dma 6112293
+fthread 11 end dma 6118193
+fthread 12 start dma 6125751
+fthread 12 end dma 6131768
+fthread 13 start dma 6140108
+fthread 13 end dma 6146031
+fthread 14 start dma 6155186
+fthread 14 end dma 6161151
+fthread 1 meet barrier6232965
+fthread 2 meet barrier6243472
+fthread 3 meet barrier6250225
+fthread 4 meet barrier6256710
+fthread 5 meet barrier6263680
+fthread 6 meet barrier6271430
+fthread 7 meet barrier6279314
+fthread 8 meet barrier6287561
+fthread 9 meet barrier6295698
+fthread 10 meet barrier6303775
+fthread 11 meet barrier6311272
+fthread 12 meet barrier6318563
+fthread 13 meet barrier6325775
+fthread 14 meet barrier6333255
+fthread 14 leave barrier6486528
+fthread 14 end cal at 6486643
+fthread 0 leave barrier6574666
+fthread 0 start dma 6574754
+fthread 0 end dma 6576314
+fthread 0 end cal at 6576380
+fthread 1 leave barrier6584239
+fthread 1 end cal at 6584316
+fthread 2 leave barrier6592702
+fthread 2 end cal at 6592779
+fthread 3 leave barrier6624496
+fthread 3 end cal at 6624573
+fthread 4 leave barrier6630113
+fthread 4 end cal at 6630190
+fthread 5 leave barrier6658758
+fthread 5 end cal at 6658835
+fthread 6 leave barrier6665060
+fthread 6 end cal at 6665137
+fthread 7 leave barrier6694071
+fthread 7 end cal at 6694148
+fthread 8 leave barrier6701054
+fthread 8 end cal at 6701131
+fthread 9 leave barrier6730315
+fthread 9 end cal at 6730392
+fthread 10 leave barrier6737981
+fthread 10 end cal at 6738058
+fthread 11 leave barrier6767740
+fthread 11 end cal at 6767817
+fthread 12 leave barrier6776087
+fthread 12 end cal at 6776164
+fthread 13 leave barrier6806228
+fthread 13 end cal at 6806305
+fthread 15 leave barrier6835531
+fthread 15 end cal at 6835608
+********time:6852764*******
 ReadSocket event for pid: 1 at time: 0
-********time:6726746*******
+********time:6852765*******
 sucess

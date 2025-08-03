@@ -114,9 +114,11 @@ void main1()
        byte_index < input_size_dpu_bytes;
        byte_index += BLOCK_SIZE * NR_FTHREAD)
   {
+    print_debug(fthread_id, 5);
 
     // Load cache with current MRAM block
     r = umram_read(cache_A, BLOCK_SIZE, mram_base_addr_A + byte_index);
+    print_debug(fthread_id, 6);
     if (r != 0)
     {
       fault_notif();
@@ -137,9 +139,11 @@ void main1()
     print_debug(fthread_id, 2);
 
     // Write cache to current MRAM block
+    print_debug(fthread_id, 5);
     r = umram_write(cache_B, l_count * sizeof(T),
                     mram_base_addr_B +
                         (message_partial_count + p_count) * sizeof(T));
+    print_debug(fthread_id, 6);
 
     if (r != 0)
     {
@@ -166,8 +170,10 @@ void main1()
 
   if (fthread_id == 0)
   {
+    print_debug(fthread_id, 5);
     r = umram_write(DPU_RESULTS, sizeof(dpu_results_t) * NR_FTHREAD,
                     sizeof(dpu_arguments_t) + DPU_INPUT_ARGUMENTS.size);
+    print_debug(fthread_id, 6);
 
     if (r != 0)
     {

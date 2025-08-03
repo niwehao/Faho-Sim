@@ -210,14 +210,18 @@ void main1()
             // BLOCK_SIZE);
             //   mram_read((__mram_ptr void const *)(mram_temp_addr_B), cache_B,
             // BLOCK_SIZE);
+            print_debug(tasklet_id, 5);
 
             r = umram_read(cache_A, BLOCK_SIZE, mram_temp_addr_A);
+            print_debug(tasklet_id, 6);
             if (r != 0)
             {
 
               fault_notif();
             }
+            print_debug(tasklet_id, 5);
             r = umram_read(cache_B, BLOCK_SIZE, mram_temp_addr_B);
+            print_debug(tasklet_id, 6);
             if (r != 0)
             {
 
@@ -237,7 +241,9 @@ void main1()
               // mram_read((__mram_ptr void const *)(mram_temp_addr_A +
               // BLOCK_SIZE),
               //   cache_A_aux, 8);
+              print_debug(tasklet_id, 5);
               r = umram_read(cache_A_aux, 8, mram_temp_addr_A + BLOCK_SIZE);
+              print_debug(tasklet_id, 6);
               if (r != 0)
               {
 
@@ -257,8 +263,10 @@ void main1()
 
           // mram_read((__mram_ptr void const *)(mram_temp_addr_A), cache_A,
           //   BLOCK_SIZE);
+          print_debug(tasklet_id, 5);
 
           r = umram_read(cache_A, BLOCK_SIZE, mram_temp_addr_A);
+          print_debug(tasklet_id, 6);
           if (r != 0)
           {
 
@@ -276,7 +284,9 @@ void main1()
             //   mram_read((__mram_ptr void const *)(mram_temp_addr_A +
             //   BLOCK_SIZE),
             // cache_A_aux, 8);
+            print_debug(tasklet_id, 5);
             r = umram_read(cache_A_aux, 8, mram_temp_addr_A + BLOCK_SIZE);
+            print_debug(tasklet_id, 6);
             if (r != 0)
             {
 
@@ -288,7 +298,9 @@ void main1()
 
           // mram_read((__mram_ptr void const *)(mram_temp_addr_B), cache_B,
           //   BLOCK_SIZE);
+          print_debug(tasklet_id, 5);
           r = (umram_read(cache_B, BLOCK_SIZE, mram_temp_addr_B));
+          print_debug(tasklet_id, 6);
           if (r != 0)
           {
 
@@ -337,7 +349,9 @@ void main1()
         //    print_debug(cache_C[0],3);
         //   print_debug(mram_base_addr_C,4);//max_rows * n_size_pad * sizeof(T) +n_size_pad * sizeof(T)
         // }
+        print_debug(tasklet_id, 5);
         r = (umram_write(cache_C, 8, mram_base_addr_C));
+        print_debug(tasklet_id, 6);
         if (r != 0)
         {
 

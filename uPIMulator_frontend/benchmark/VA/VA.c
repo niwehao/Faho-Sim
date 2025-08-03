@@ -82,15 +82,19 @@ void main1()
                                   : BLOCK_SIZE;
       // print_debug(1,l_size_bytes);
       //  Load cache with current MRAM inode
+      print_debug(tasklet_id, 5);
       CHK(umram_read(cache_A, l_size_bytes, mram_base_addr_A + byte_index));
       CHK(umram_read(cache_B, l_size_bytes, mram_base_addr_B + byte_index));
+      print_debug(tasklet_id, 6);
 
       // Computer vector addition
       // debug_int(cache_A[0]);
       vector_addition(cache_B, cache_A, l_size_bytes >> DIV);
 
       // Write cache to current MRAM inode
+      print_debug(tasklet_id, 5);
       CHK(umram_write(cache_B, l_size_bytes, mram_base_addr_B + byte_index));
+      print_debug(tasklet_id, 6);
       //-1747751478 0 2090218572 456997246
     }
 

@@ -134,9 +134,11 @@ void main1()
       for (n = 0; n < (int32_t)(n_size - (BLOCK_SIZE / sizeof(T)));
            n += (BLOCK_SIZE / sizeof(T)))
       {
+        print_debug(fthread_id, 5);
 
         umram_read(cache_A, BLOCK_SIZE, mram_temp_addr_A);
         umram_read(cache_B, BLOCK_SIZE, mram_temp_addr_B);
+        print_debug(fthread_id, 6);
 
         if (offset)
         {
@@ -146,8 +148,10 @@ void main1()
           {
             cache_A[off] = cache_A[off + 1];
           }
+          print_debug(fthread_id, 5);
 
           umram_read(cache_A_aux, 8, mram_temp_addr_A + BLOCK_SIZE);
+          print_debug(fthread_id, 6);
 
           cache_A[BLOCK_SIZE / sizeof(T) - 1] = cache_A_aux[0];
         }
@@ -160,8 +164,10 @@ void main1()
         mram_temp_addr_B += BLOCK_SIZE;
       }
       int ret;
+      print_debug(fthread_id, 5);
       if ((ret = umram_read(cache_A, BLOCK_SIZE, mram_temp_addr_A)) < 0)
         exit_proc(ret);
+      print_debug(fthread_id, 6);
 
       if (offset)
       {
@@ -171,14 +177,18 @@ void main1()
 
           cache_A[off] = cache_A[off + 1];
         }
+        print_debug(fthread_id, 5);
 
         if (umram_read(cache_A_aux, 8, mram_temp_addr_A + BLOCK_SIZE) < 0)
           exit_proc(-2);
+        print_debug(fthread_id, 6);
 
         cache_A[BLOCK_SIZE / sizeof(T) - 1] = cache_A_aux[0];
       }
+      print_debug(fthread_id, 5);
 
       umram_read(cache_B, BLOCK_SIZE, mram_temp_addr_B);
+      print_debug(fthread_id, 6);
 
       for (j = 0; j < (int)(n_size - n); j++)
       {
@@ -212,9 +222,11 @@ void main1()
         offset = 0;
       }
     }
+    print_debug(fthread_id, 5);
 
     // Write cache to current MRAM block
     umram_write(cache_C, 8, mram_base_addr_C);
+    print_debug(fthread_id, 6);
 
     // Update memory address
     mram_base_addr_C += 8;

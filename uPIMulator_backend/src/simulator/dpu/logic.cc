@@ -5627,24 +5627,38 @@ namespace upmem_sim::simulator::dpu
         {
           if (sign == 1)
           {
-            std::cout << "fthread " << rc << " meet barrier" <<performance_counter_->get_true_value()<< std::endl;
+            std::cout << "fthread " << rc << " meet barrier" << performance_counter_->get_true_value() << std::endl;
           }
-          else{
-            std::cout << "fthread " << rc << " leave barrier"  <<performance_counter_->get_true_value()<< std::endl;
+          else
+          {
+            std::cout << "fthread " << rc << " leave barrier" << performance_counter_->get_true_value() << std::endl;
           }
         }
-        else if (sign == 3 || sign == 4){
+        else if (sign == 3 || sign == 4)
+        {
           if (sign == 3)
           {
-            std::cout << "fthread " << rc << " start cal at " <<performance_counter_->get_true_value()<< std::endl;
+            std::cout << "fthread " << rc << " start cal at " << performance_counter_->get_true_value() << std::endl;
           }
-          else{
-            std::cout << "fthread " << rc << " end cal at "  <<performance_counter_->get_true_value()<< std::endl;
+          else
+          {
+            std::cout << "fthread " << rc << " end cal at " << performance_counter_->get_true_value() << std::endl;
           }
-
-         }
-        else{
-          std::cout << "debug" << sign << " for " <<rc<< std::endl;
+        }
+        else if (sign == 5 || sign == 6)
+        {
+          if (sign == 5)
+          {
+            std::cout << "fthread " << rc << " start dma " << performance_counter_->get_true_value() << std::endl;
+          }
+          else
+          {
+            std::cout << "fthread " << rc << " end dma " << performance_counter_->get_true_value() << std::endl;
+          }
+        }
+        else
+        {
+          std::cout << "debug" << sign << " for " << rc << std::endl;
         }
       }
 

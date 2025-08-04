@@ -316,7 +316,7 @@ class Logic {
   basic::Queue<abi::instruction::Instruction> *wait_instruction_q_;
 
   util::StatFactory *stat_factory_;
-  int break_point_set=-1;
+  int break_point_set[8]={0};
 };
 
 }  // namespace upmem_sim::simulator::dpu

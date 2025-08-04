@@ -270,7 +270,6 @@ void main_prog()
     if (me == 0)
     {
       socket_write(sd_host, &ok, 1);
-      print_debug(me, 4);
       socket_read(sd_host, &ok, 1);
 
       // Load parameters

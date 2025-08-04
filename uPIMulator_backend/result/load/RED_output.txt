@@ -1,0 +1,24 @@
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/atomic.bin
+DMA to atomic completed...
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/iram.bin
+num of instructions: 3625
+DMA to IRAM completed...
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/wram.bin
+DMA to WRAM completed...
+init completed...
+launch completed...
+********time:4322*******
+text section size is 4590
+flag set:0
+break point 6 happen in cycle:27158
+break point 7 happen in cycle:27592
+********time:358001*******
+ReadSocket event for pid: 1 at time: 0
+********time:358002*******
+flag set:32
+break point 0 happen in cycle:390385
+break point 1 happen in cycle:417323
+break point 2 happen in cycle:417477
+break point 3 happen in cycle:444437
+break point 4 happen in cycle:444558
+break point 5 happen in cycle:456668

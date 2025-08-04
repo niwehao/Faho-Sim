@@ -34,6 +34,9 @@ class PathCollector:
     @staticmethod
     def benchmark_path_in_local() -> str:
         return os.path.join(PathCollector.root_path_in_local(), "benchmark")
+    @staticmethod
+    def benchmark_path_load_in_local() -> str:
+        return os.path.join(PathCollector.root_path_in_local(), "benchmark_load")
 
     @staticmethod
     def benchmark_path_in_docker() -> str:

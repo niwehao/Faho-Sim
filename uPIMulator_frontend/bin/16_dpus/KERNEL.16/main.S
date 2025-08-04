@@ -575,6 +575,52 @@ stdio.__stdout_cache_buffer:
 	$addrsig_sym, __atomic_bit___stdout_buffer_lock
 	$addrsig_sym, stdio.__stdout_cache_buffer
 	$text,
+	$file,	"perfcounter.c"
+	$section,	%text, perfcounter_get,"ax",@progbits
+	$globl,	perfcounter_get                 //  -  -  Begin function perfcounter_get
+	$type,	perfcounter_get,@function
+perfcounter_get:                        // @perfcounter_get
+perfcounter..Lfunc_begin0:
+// %bb.0:
+	// inline asm
+	$time , r0
+	// inline asm
+	$move .u, d2, r0
+	$lslx , r0, r3, 4
+	$lsl_add , r0, r0, r2, 4
+	$lsl , r1, r3, 4
+	$jump , r23
+perfcounter..Lfunc_end0:
+	$size,	perfcounter_get, perfcounter..Lfunc_end0 - perfcounter_get
+	$section,	%stack_sizes,"o",@progbits,%text, perfcounter_get
+	$long,	perfcounter..Lfunc_begin0
+	$byte,	0
+	$section,	%text, perfcounter_get,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%text, perfcounter_config,"ax",@progbits
+	$globl,	perfcounter_config              //  -  -  Begin function perfcounter_config
+	$type,	perfcounter_config,@function
+perfcounter_config:                     // @perfcounter_config
+perfcounter..Lfunc_begin1:
+// %bb.0:
+	$lsl_add , r0, r1, r0, 1
+	// inline asm
+	$time_cfg , r0, r0
+	// inline asm
+	$move .u, d2, r0
+	$lslx , r0, r3, 4
+	$lsl_add , r0, r0, r2, 4
+	$lsl , r1, r3, 4
+	$jump , r23
+perfcounter..Lfunc_end1:
+	$size,	perfcounter_config, perfcounter..Lfunc_end1 - perfcounter_config
+	$section,	%stack_sizes,"o",@progbits,%text, perfcounter_config
+	$long,	perfcounter..Lfunc_begin1
+	$byte,	0
+	$section,	%text, perfcounter_config,"ax",@progbits
+                                        //  -  -  End function
+	$addrsig,
+	$text,
 	$file,	"memset.c"
 	$section,	%text, __memset_wram_4align,"ax",@progbits
 	$globl,	__memset_wram_4align            //  -  -  Begin function __memset_wram_4align
@@ -768,6 +814,199 @@ memset..Lfunc_end3:
 	$addrsig_sym, __memset_wram_4align
 	$addrsig_sym, __memset_mram_8align
 	$addrsig_sym, __memset_mram
+	$text,
+	$file,	"crt0.c"
+	$section,	%text, __bootstrap,"ax",@progbits
+	$globl,	__bootstrap                     //  -  -  Begin function __bootstrap
+	$type,	__bootstrap,@function
+__bootstrap:                            // @__bootstrap
+crt0..Lfunc_begin0:
+// %bb.0:
+	// inline asm
+	$jnz , id, crt0.__sys_start_thread
+
+	$sd , zero, __stdout_buffer_state, 0
+	$move , r23, __atomic_end_addr
+crt0.__sys_atomic_bit_clear:
+	$jeq , r23, __atomic_used_addr, crt0.__sys_start_thread
+crt0..Ltmp0:
+	$release , r23, 0, nz, crt0..Ltmp0 + 1
+	$add , r23, r23,  - 1, true, crt0.__sys_atomic_bit_clear
+crt0.__sys_start_thread:
+crt0..Ltmp1:
+	$jeq , id, NR_TASKLETS - 1, crt0..Ltmp1 + 2
+	$boot , id, 1
+	$ld , d22, id8, __sys_thread_stack_table_ptr
+	$call , r23, main
+	$globl,	__sys_end
+__sys_end:
+
+	$stop , true, __sys_end
+	// inline asm
+crt0..Lfunc_end0:
+	$size,	__bootstrap, crt0..Lfunc_end0 - __bootstrap
+	$section,	%stack_sizes,"o",@progbits,%text, __bootstrap
+	$long,	crt0..Lfunc_begin0
+	$byte,	0
+	$section,	%text, __bootstrap,"ax",@progbits
+                                        //  -  -  End function
+	$type,	__sys_null_pointer,@object      // @__sys_null_pointer
+	$section,	%data, __sys_zero,"aw",@progbits
+	$globl,	__sys_null_pointer
+	$p2align,	3
+__sys_null_pointer:
+	$quad,	0                               // 0x0
+	$size,	__sys_null_pointer, 8
+
+	$type,	__sys_thread_stack_table_ptr,@object // @__sys_thread_stack_table_ptr
+	$section,	%data, __sys_keep,"aw",@progbits
+	$globl,	__sys_thread_stack_table_ptr
+	$p2align,	3
+__sys_thread_stack_table_ptr:
+	$long,	STACK_SIZE_TASKLET_0
+	$long,	__sys_stack_thread_0
+	$long,	STACK_SIZE_TASKLET_1
+	$long,	__sys_stack_thread_1
+	$long,	STACK_SIZE_TASKLET_2
+	$long,	__sys_stack_thread_2
+	$long,	STACK_SIZE_TASKLET_3
+	$long,	__sys_stack_thread_3
+	$long,	STACK_SIZE_TASKLET_4
+	$long,	__sys_stack_thread_4
+	$long,	STACK_SIZE_TASKLET_5
+	$long,	__sys_stack_thread_5
+	$long,	STACK_SIZE_TASKLET_6
+	$long,	__sys_stack_thread_6
+	$long,	STACK_SIZE_TASKLET_7
+	$long,	__sys_stack_thread_7
+	$long,	STACK_SIZE_TASKLET_8
+	$long,	__sys_stack_thread_8
+	$long,	STACK_SIZE_TASKLET_9
+	$long,	__sys_stack_thread_9
+	$long,	STACK_SIZE_TASKLET_10
+	$long,	__sys_stack_thread_10
+	$long,	STACK_SIZE_TASKLET_11
+	$long,	__sys_stack_thread_11
+	$long,	STACK_SIZE_TASKLET_12
+	$long,	__sys_stack_thread_12
+	$long,	STACK_SIZE_TASKLET_13
+	$long,	__sys_stack_thread_13
+	$long,	STACK_SIZE_TASKLET_14
+	$long,	__sys_stack_thread_14
+	$long,	STACK_SIZE_TASKLET_15
+	$long,	__sys_stack_thread_15
+	$long,	STACK_SIZE_TASKLET_16
+	$long,	__sys_stack_thread_16
+	$long,	STACK_SIZE_TASKLET_17
+	$long,	__sys_stack_thread_17
+	$long,	STACK_SIZE_TASKLET_18
+	$long,	__sys_stack_thread_18
+	$long,	STACK_SIZE_TASKLET_19
+	$long,	__sys_stack_thread_19
+	$long,	STACK_SIZE_TASKLET_20
+	$long,	__sys_stack_thread_20
+	$long,	STACK_SIZE_TASKLET_21
+	$long,	__sys_stack_thread_21
+	$long,	STACK_SIZE_TASKLET_22
+	$long,	__sys_stack_thread_22
+	$long,	STACK_SIZE_TASKLET_23
+	$long,	__sys_stack_thread_23
+	$size,	__sys_thread_stack_table_ptr, 192
+
+	$type,	__sys_used_mram_end,@object     // @__sys_used_mram_end
+	$section,	%mram, noinit,"aw",@progbits
+	$globl,	__sys_used_mram_end
+	$p2align,	3
+__sys_used_mram_end:
+	$size,	__sys_used_mram_end, 0
+
+	$type,	thread_profiling,@object        // @thread_profiling
+	$section,	%data, immediate_memory.thread_profiling,"aw",@progbits
+	$globl,	thread_profiling
+	$p2align,	2
+thread_profiling:
+	$zero,	96
+	$size,	thread_profiling, 96
+
+	$type,	perfcounter_end_value,@object   // @perfcounter_end_value
+	$section,	%bss, perfcounter_end_value,"aw",@nobits
+	$globl,	perfcounter_end_value
+	$p2align,	2
+perfcounter_end_value:
+	$long,	0                               // 0x0
+	$size,	perfcounter_end_value, 4
+
+	$type,	CLOCKS_PER_SEC,@object          // @CLOCKS_PER_SEC
+	$section,	%dpu_host,"a",@progbits
+	$globl,	CLOCKS_PER_SEC
+	$p2align,	3
+CLOCKS_PER_SEC:
+	$long,	0                               // 0x0
+	$size,	CLOCKS_PER_SEC, 4
+
+	$type,	error_storage,@object           // @error_storage
+	$globl,	error_storage
+	$p2align,	3
+error_storage:
+	$long,	0                               // 0x0
+	$size,	error_storage, 4
+
+	$addrsig,
+	$addrsig_sym, __bootstrap
+	$addrsig_sym, __sys_null_pointer
+	$addrsig_sym, STACK_SIZE_TASKLET_0
+	$addrsig_sym, __sys_stack_thread_0
+	$addrsig_sym, STACK_SIZE_TASKLET_1
+	$addrsig_sym, __sys_stack_thread_1
+	$addrsig_sym, STACK_SIZE_TASKLET_2
+	$addrsig_sym, __sys_stack_thread_2
+	$addrsig_sym, STACK_SIZE_TASKLET_3
+	$addrsig_sym, __sys_stack_thread_3
+	$addrsig_sym, STACK_SIZE_TASKLET_4
+	$addrsig_sym, __sys_stack_thread_4
+	$addrsig_sym, STACK_SIZE_TASKLET_5
+	$addrsig_sym, __sys_stack_thread_5
+	$addrsig_sym, STACK_SIZE_TASKLET_6
+	$addrsig_sym, __sys_stack_thread_6
+	$addrsig_sym, STACK_SIZE_TASKLET_7
+	$addrsig_sym, __sys_stack_thread_7
+	$addrsig_sym, STACK_SIZE_TASKLET_8
+	$addrsig_sym, __sys_stack_thread_8
+	$addrsig_sym, STACK_SIZE_TASKLET_9
+	$addrsig_sym, __sys_stack_thread_9
+	$addrsig_sym, STACK_SIZE_TASKLET_10
+	$addrsig_sym, __sys_stack_thread_10
+	$addrsig_sym, STACK_SIZE_TASKLET_11
+	$addrsig_sym, __sys_stack_thread_11
+	$addrsig_sym, STACK_SIZE_TASKLET_12
+	$addrsig_sym, __sys_stack_thread_12
+	$addrsig_sym, STACK_SIZE_TASKLET_13
+	$addrsig_sym, __sys_stack_thread_13
+	$addrsig_sym, STACK_SIZE_TASKLET_14
+	$addrsig_sym, __sys_stack_thread_14
+	$addrsig_sym, STACK_SIZE_TASKLET_15
+	$addrsig_sym, __sys_stack_thread_15
+	$addrsig_sym, STACK_SIZE_TASKLET_16
+	$addrsig_sym, __sys_stack_thread_16
+	$addrsig_sym, STACK_SIZE_TASKLET_17
+	$addrsig_sym, __sys_stack_thread_17
+	$addrsig_sym, STACK_SIZE_TASKLET_18
+	$addrsig_sym, __sys_stack_thread_18
+	$addrsig_sym, STACK_SIZE_TASKLET_19
+	$addrsig_sym, __sys_stack_thread_19
+	$addrsig_sym, STACK_SIZE_TASKLET_20
+	$addrsig_sym, __sys_stack_thread_20
+	$addrsig_sym, STACK_SIZE_TASKLET_21
+	$addrsig_sym, __sys_stack_thread_21
+	$addrsig_sym, STACK_SIZE_TASKLET_22
+	$addrsig_sym, __sys_stack_thread_22
+	$addrsig_sym, STACK_SIZE_TASKLET_23
+	$addrsig_sym, __sys_stack_thread_23
+	$addrsig_sym, __sys_thread_stack_table_ptr
+	$addrsig_sym, __sys_used_mram_end
+	$addrsig_sym, thread_profiling
+	$addrsig_sym, CLOCKS_PER_SEC
+	$addrsig_sym, error_storage
 	$text,
 	$file,	"kernel.c"
 $section,	%text, boot_me,"ax",@progbits
@@ -5942,242 +6181,3 @@ __atomic_bit_mutex_mutex_inode:
 	$addrsig_sym, __atomic_bit_mutex_mutex_jobs
 	$addrsig_sym, __atomic_bit_mutex_mutex_sockets
 	$addrsig_sym, __atomic_bit_mutex_mutex_mram
-	$text,
-	$file,	"crt0.c"
-	$section,	%text, __bootstrap,"ax",@progbits
-	$globl,	__bootstrap                     //  -  -  Begin function __bootstrap
-	$type,	__bootstrap,@function
-__bootstrap:                            // @__bootstrap
-crt0..Lfunc_begin0:
-// %bb.0:
-	// inline asm
-	$jnz , id, crt0.__sys_start_thread
-
-	$sd , zero, __stdout_buffer_state, 0
-	$move , r23, __atomic_end_addr
-crt0.__sys_atomic_bit_clear:
-	$jeq , r23, __atomic_used_addr, crt0.__sys_start_thread
-crt0..Ltmp0:
-	$release , r23, 0, nz, crt0..Ltmp0 + 1
-	$add , r23, r23,  - 1, true, crt0.__sys_atomic_bit_clear
-crt0.__sys_start_thread:
-crt0..Ltmp1:
-	$jeq , id, NR_TASKLETS - 1, crt0..Ltmp1 + 2
-	$boot , id, 1
-	$ld , d22, id8, __sys_thread_stack_table_ptr
-	$call , r23, main
-	$globl,	__sys_end
-__sys_end:
-
-	$stop , true, __sys_end
-	// inline asm
-crt0..Lfunc_end0:
-	$size,	__bootstrap, crt0..Lfunc_end0 - __bootstrap
-	$section,	%stack_sizes,"o",@progbits,%text, __bootstrap
-	$long,	crt0..Lfunc_begin0
-	$byte,	0
-	$section,	%text, __bootstrap,"ax",@progbits
-                                        //  -  -  End function
-	$type,	__sys_null_pointer,@object      // @__sys_null_pointer
-	$section,	%data, __sys_zero,"aw",@progbits
-	$globl,	__sys_null_pointer
-	$p2align,	3
-__sys_null_pointer:
-	$quad,	0                               // 0x0
-	$size,	__sys_null_pointer, 8
-
-	$type,	__sys_thread_stack_table_ptr,@object // @__sys_thread_stack_table_ptr
-	$section,	%data, __sys_keep,"aw",@progbits
-	$globl,	__sys_thread_stack_table_ptr
-	$p2align,	3
-__sys_thread_stack_table_ptr:
-	$long,	STACK_SIZE_TASKLET_0
-	$long,	__sys_stack_thread_0
-	$long,	STACK_SIZE_TASKLET_1
-	$long,	__sys_stack_thread_1
-	$long,	STACK_SIZE_TASKLET_2
-	$long,	__sys_stack_thread_2
-	$long,	STACK_SIZE_TASKLET_3
-	$long,	__sys_stack_thread_3
-	$long,	STACK_SIZE_TASKLET_4
-	$long,	__sys_stack_thread_4
-	$long,	STACK_SIZE_TASKLET_5
-	$long,	__sys_stack_thread_5
-	$long,	STACK_SIZE_TASKLET_6
-	$long,	__sys_stack_thread_6
-	$long,	STACK_SIZE_TASKLET_7
-	$long,	__sys_stack_thread_7
-	$long,	STACK_SIZE_TASKLET_8
-	$long,	__sys_stack_thread_8
-	$long,	STACK_SIZE_TASKLET_9
-	$long,	__sys_stack_thread_9
-	$long,	STACK_SIZE_TASKLET_10
-	$long,	__sys_stack_thread_10
-	$long,	STACK_SIZE_TASKLET_11
-	$long,	__sys_stack_thread_11
-	$long,	STACK_SIZE_TASKLET_12
-	$long,	__sys_stack_thread_12
-	$long,	STACK_SIZE_TASKLET_13
-	$long,	__sys_stack_thread_13
-	$long,	STACK_SIZE_TASKLET_14
-	$long,	__sys_stack_thread_14
-	$long,	STACK_SIZE_TASKLET_15
-	$long,	__sys_stack_thread_15
-	$long,	STACK_SIZE_TASKLET_16
-	$long,	__sys_stack_thread_16
-	$long,	STACK_SIZE_TASKLET_17
-	$long,	__sys_stack_thread_17
-	$long,	STACK_SIZE_TASKLET_18
-	$long,	__sys_stack_thread_18
-	$long,	STACK_SIZE_TASKLET_19
-	$long,	__sys_stack_thread_19
-	$long,	STACK_SIZE_TASKLET_20
-	$long,	__sys_stack_thread_20
-	$long,	STACK_SIZE_TASKLET_21
-	$long,	__sys_stack_thread_21
-	$long,	STACK_SIZE_TASKLET_22
-	$long,	__sys_stack_thread_22
-	$long,	STACK_SIZE_TASKLET_23
-	$long,	__sys_stack_thread_23
-	$size,	__sys_thread_stack_table_ptr, 192
-
-	$type,	__sys_used_mram_end,@object     // @__sys_used_mram_end
-	$section,	%mram, noinit,"aw",@progbits
-	$globl,	__sys_used_mram_end
-	$p2align,	3
-__sys_used_mram_end:
-	$size,	__sys_used_mram_end, 0
-
-	$type,	thread_profiling,@object        // @thread_profiling
-	$section,	%data, immediate_memory.thread_profiling,"aw",@progbits
-	$globl,	thread_profiling
-	$p2align,	2
-thread_profiling:
-	$zero,	96
-	$size,	thread_profiling, 96
-
-	$type,	perfcounter_end_value,@object   // @perfcounter_end_value
-	$section,	%bss, perfcounter_end_value,"aw",@nobits
-	$globl,	perfcounter_end_value
-	$p2align,	2
-perfcounter_end_value:
-	$long,	0                               // 0x0
-	$size,	perfcounter_end_value, 4
-
-	$type,	CLOCKS_PER_SEC,@object          // @CLOCKS_PER_SEC
-	$section,	%dpu_host,"a",@progbits
-	$globl,	CLOCKS_PER_SEC
-	$p2align,	3
-CLOCKS_PER_SEC:
-	$long,	0                               // 0x0
-	$size,	CLOCKS_PER_SEC, 4
-
-	$type,	error_storage,@object           // @error_storage
-	$globl,	error_storage
-	$p2align,	3
-error_storage:
-	$long,	0                               // 0x0
-	$size,	error_storage, 4
-
-	$addrsig,
-	$addrsig_sym, __bootstrap
-	$addrsig_sym, __sys_null_pointer
-	$addrsig_sym, STACK_SIZE_TASKLET_0
-	$addrsig_sym, __sys_stack_thread_0
-	$addrsig_sym, STACK_SIZE_TASKLET_1
-	$addrsig_sym, __sys_stack_thread_1
-	$addrsig_sym, STACK_SIZE_TASKLET_2
-	$addrsig_sym, __sys_stack_thread_2
-	$addrsig_sym, STACK_SIZE_TASKLET_3
-	$addrsig_sym, __sys_stack_thread_3
-	$addrsig_sym, STACK_SIZE_TASKLET_4
-	$addrsig_sym, __sys_stack_thread_4
-	$addrsig_sym, STACK_SIZE_TASKLET_5
-	$addrsig_sym, __sys_stack_thread_5
-	$addrsig_sym, STACK_SIZE_TASKLET_6
-	$addrsig_sym, __sys_stack_thread_6
-	$addrsig_sym, STACK_SIZE_TASKLET_7
-	$addrsig_sym, __sys_stack_thread_7
-	$addrsig_sym, STACK_SIZE_TASKLET_8
-	$addrsig_sym, __sys_stack_thread_8
-	$addrsig_sym, STACK_SIZE_TASKLET_9
-	$addrsig_sym, __sys_stack_thread_9
-	$addrsig_sym, STACK_SIZE_TASKLET_10
-	$addrsig_sym, __sys_stack_thread_10
-	$addrsig_sym, STACK_SIZE_TASKLET_11
-	$addrsig_sym, __sys_stack_thread_11
-	$addrsig_sym, STACK_SIZE_TASKLET_12
-	$addrsig_sym, __sys_stack_thread_12
-	$addrsig_sym, STACK_SIZE_TASKLET_13
-	$addrsig_sym, __sys_stack_thread_13
-	$addrsig_sym, STACK_SIZE_TASKLET_14
-	$addrsig_sym, __sys_stack_thread_14
-	$addrsig_sym, STACK_SIZE_TASKLET_15
-	$addrsig_sym, __sys_stack_thread_15
-	$addrsig_sym, STACK_SIZE_TASKLET_16
-	$addrsig_sym, __sys_stack_thread_16
-	$addrsig_sym, STACK_SIZE_TASKLET_17
-	$addrsig_sym, __sys_stack_thread_17
-	$addrsig_sym, STACK_SIZE_TASKLET_18
-	$addrsig_sym, __sys_stack_thread_18
-	$addrsig_sym, STACK_SIZE_TASKLET_19
-	$addrsig_sym, __sys_stack_thread_19
-	$addrsig_sym, STACK_SIZE_TASKLET_20
-	$addrsig_sym, __sys_stack_thread_20
-	$addrsig_sym, STACK_SIZE_TASKLET_21
-	$addrsig_sym, __sys_stack_thread_21
-	$addrsig_sym, STACK_SIZE_TASKLET_22
-	$addrsig_sym, __sys_stack_thread_22
-	$addrsig_sym, STACK_SIZE_TASKLET_23
-	$addrsig_sym, __sys_stack_thread_23
-	$addrsig_sym, __sys_thread_stack_table_ptr
-	$addrsig_sym, __sys_used_mram_end
-	$addrsig_sym, thread_profiling
-	$addrsig_sym, CLOCKS_PER_SEC
-	$addrsig_sym, error_storage
-	$text,
-	$file,	"perfcounter.c"
-	$section,	%text, perfcounter_get,"ax",@progbits
-	$globl,	perfcounter_get                 //  -  -  Begin function perfcounter_get
-	$type,	perfcounter_get,@function
-perfcounter_get:                        // @perfcounter_get
-perfcounter..Lfunc_begin0:
-// %bb.0:
-	// inline asm
-	$time , r0
-	// inline asm
-	$move .u, d2, r0
-	$lslx , r0, r3, 4
-	$lsl_add , r0, r0, r2, 4
-	$lsl , r1, r3, 4
-	$jump , r23
-perfcounter..Lfunc_end0:
-	$size,	perfcounter_get, perfcounter..Lfunc_end0 - perfcounter_get
-	$section,	%stack_sizes,"o",@progbits,%text, perfcounter_get
-	$long,	perfcounter..Lfunc_begin0
-	$byte,	0
-	$section,	%text, perfcounter_get,"ax",@progbits
-                                        //  -  -  End function
-	$section,	%text, perfcounter_config,"ax",@progbits
-	$globl,	perfcounter_config              //  -  -  Begin function perfcounter_config
-	$type,	perfcounter_config,@function
-perfcounter_config:                     // @perfcounter_config
-perfcounter..Lfunc_begin1:
-// %bb.0:
-	$lsl_add , r0, r1, r0, 1
-	// inline asm
-	$time_cfg , r0, r0
-	// inline asm
-	$move .u, d2, r0
-	$lslx , r0, r3, 4
-	$lsl_add , r0, r0, r2, 4
-	$lsl , r1, r3, 4
-	$jump , r23
-perfcounter..Lfunc_end1:
-	$size,	perfcounter_config, perfcounter..Lfunc_end1 - perfcounter_config
-	$section,	%stack_sizes,"o",@progbits,%text, perfcounter_config
-	$long,	perfcounter..Lfunc_begin1
-	$byte,	0
-	$section,	%text, perfcounter_config,"ax",@progbits
-                                        //  -  -  End function
-	$addrsig,

@@ -34,8 +34,8 @@ def compile_library(lib,num_tasklets) -> None:
 def compile_sdk(num_tasklets: int) -> None:
     for lib in ["misc", "stdlib", "syslib"]:
         compile_library(lib,num_tasklets)
-def compile_by_toolchain(benchmark: str, num_tasklets: int) -> None:#简单编译
-    path=os.path.join(PathCollector.benchmark_path_in_local(), benchmark)#kernel文件夹
+def compile_by_toolchain(base:str,benchmark: str, num_tasklets: int) -> None:#简单编译
+    path=os.path.join(base, benchmark)#kernel文件夹
     asm_dir = os.path.join(PathCollector.asm_path_in_local(), f"{benchmark}.{num_tasklets}")
 
 
@@ -126,11 +126,14 @@ if __name__ == "__main__":
 
     elif args.mode == "all":
         compile_sdk(args.num_tasklets)
-        compile_by_toolchain(args.benchmark, args.num_tasklets)
+        compile_by_toolchain(PathCollector.benchmark_path_in_local(),args.benchmark, args.num_tasklets)
         link(args.benchmark, args.num_dpus, args.num_tasklets, data_prep_param)
 
     elif args.mode == "compile_by_toolchain":
-        compile_by_toolchain(args.benchmark, args.num_tasklets)
+        compile_by_toolchain(PathCollector.benchmark_path_in_local(),args.benchmark, args.num_tasklets)
+        link(args.benchmark, args.num_dpus, args.num_tasklets, data_prep_param)
+    elif args.mode == "compile_load":
+        compile_by_toolchain(PathCollector.benchmark_path_load_in_local(),args.benchmark, args.num_tasklets)
         link(args.benchmark, args.num_dpus, args.num_tasklets, data_prep_param)
     else:
         raise ValueError

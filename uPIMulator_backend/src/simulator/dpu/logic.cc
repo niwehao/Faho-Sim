@@ -5616,10 +5616,10 @@ namespace upmem_sim::simulator::dpu
             instruction->rc(), abi::word::SIGNED);
         if (rc <= 7 && sign == 0)
         {
-          if (rc > break_point_set)
+          if (break_point_set[rc]==0)
           {
             std::cout << "break point " << rc << " happen in cycle:" << performance_counter_->get_true_value() << std::endl;
-            break_point_set = rc;
+            break_point_set[rc] = 1;
           }
         }
 

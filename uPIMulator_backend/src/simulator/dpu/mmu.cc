@@ -109,14 +109,19 @@ namespace upmem_sim::simulator::dpu
             assert(0);
         physics_address = (ret << 16) + rest_dic_offset + MRAM_OFFSET;
 
-        dma_command->revise_commend(physics_address,buf, cur_size);
-        //assert(ready_q_->can_push);
         
         size -= cur_size;
         if (size == 0){
+            dma_command->revise_commend(physics_address,buf, cur_size);
             ready_q_->push(dma_command);
             return 0;
         }
+        std::vector<int> bytes_new(size);
+        for(int i = cur_size; i < size+cur_size; i++)
+        {
+            bytes_new[i-cur_size] = dma_command->bytes_read(i);
+        }
+        dma_command->revise_commend(physics_address,buf, cur_size);
 
         offset += cur_size;
         buf += cur_size;
@@ -126,10 +131,22 @@ namespace upmem_sim::simulator::dpu
         if (ret >= 1024 || ret < 0)
             assert(0);
         physics_address = (ret << 16) + 0 + MRAM_OFFSET;
-        DMACommand *new_dmacommend=new DMACommand(dma_command->operation(), buf,
+        DMACommand *new_dmacommend;
+        if (dma_command->operation()== DMACommand::READ_I || dma_command->operation() == DMACommand::READ)
+        {
+            new_dmacommend=new DMACommand(dma_command->operation(), buf,
                                       physics_address, size, dma_command->instruction());
+        }
+        else
+        {
+            
+            new_dmacommend=new DMACommand(dma_command->operation(), buf,
+                                      physics_address, size,bytes_new, dma_command->instruction());
+        }
+
         ready_q_->push(new_dmacommend);
         ready_q_->push(dma_command);
+        return 0;
         
     }
 
@@ -148,11 +165,14 @@ namespace upmem_sim::simulator::dpu
             inode_info |= (1 << (i % 8));
         }
         bit_map[0][count] = inode_info;
+         return;
     }
-    int MMU::alloc_first_inode(int Proc_id){
+    void MMU::alloc_first_inode(int Proc_id){
         int first_inode=alloc_inode();
         inode_table[Proc_id][0][0] = first_inode;
         inode_table[Proc_id][0][1] = 1;
+    
+        
     }
     int MMU::alloc_inode()
     {
@@ -190,6 +210,7 @@ namespace upmem_sim::simulator::dpu
         uint32_t j = ((inode - k) / 8) % 400;
         // uint32_t off_buf = j / 8;
         bit_map[i][j] = bit_map[i][j] & (~(1 << k));
+        return;
 
     }
     

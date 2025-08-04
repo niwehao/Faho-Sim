@@ -42,6 +42,9 @@ class DMACommand {
 
   std::vector<int> bytes();
   std::vector<int> bytes(Address mram_address, Address size);
+  int bytes_read(int pos){
+    return bytes_[pos];
+  }
 
   void set_bytes(Address mram_address, Address size, std::vector<int> bytes);
   void ack_bytes(Address mram_address, Address size);

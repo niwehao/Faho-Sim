@@ -204,6 +204,7 @@ void RowBuffer::service_activation_q() {
     row_address_->set_value(memory_command->address());
 
     row_buffer_ = read_from_mram();//从MRAM读取数据到行缓冲区
+    assert(row_buffer_.size() == wordline_size_);//行缓冲区大小应该等于字线大小
   }
 
   if (activation_q_->can_pop() and ready_q_->can_push()) {

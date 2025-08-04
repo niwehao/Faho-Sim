@@ -149,6 +149,7 @@ namespace upmem_sim::simulator::faho::k1
             }
             if (dpumanager->dpu_flag->load_proc) // 载入Proc
             {
+                //std::cout << "xxxx" << std::endl;
                 load_event(dpumanager);
             }
             if (dpumanager->dpu_flag->launch_proc)
@@ -493,13 +494,14 @@ namespace upmem_sim::simulator::faho::k1
             if (p->prg.size_data >= INODE_BLOCK ||
                 p->prg.size_text > INODE_BLOCK)
                 p->state = def::STATE::FAILED;
-
+        
             p->prg.inode_data = def::write_content_inode(buf_wram, p->prg.size_data - SIZE_STACK, dpu_manager->dpu);
             delete buf_wram;
             p->prg.inode_text = def::write_content_inode(temp_iram, p->prg.size_text, dpu_manager->dpu);
             delete buf_atomic;
             delete temp_iram;
-            int first_inode = dpu_manager->dpu->mmu()->alloc_first_inode(event->index);
+      
+            dpu_manager->dpu->mmu()->alloc_first_inode(event->index);
          
             dpu_manager->processes[event->index] = p; // 更新进程表
             dpu_manager->load_processes.push_back(event);

@@ -33,11 +33,13 @@ void create_test_file(DTYPE *input, DTYPE *querys, uint64_t nr_elements,
     for (uint64_t i = 1; i < nr_elements; i++)
     {
         input[i] = input[i - 1] + 1;
+       
     }
     for (uint64_t i = 0; i < nr_querys; i++)
     {
         querys[i] = i;
     }
+
 }
 int64_t binarySearch(DTYPE *input, DTYPE *querys, DTYPE input_size,
                      uint64_t num_querys)
@@ -110,6 +112,8 @@ namespace upmem_sim::simulator::faho::def
         }
         free(input);
         free(querys);
+        std::cout << result_dpu<<""<<result_host<< std::endl;
+
         int status = (result_dpu == result_host);
         if (status)
         {
@@ -133,7 +137,7 @@ namespace upmem_sim::simulator::faho::def
             std::cout << "not support multiple dpus" << std::endl;
         }
         uint64_t input_size = data_prep;
-        uint64_t num_querys = 16;
+        uint64_t num_querys = data_prep/8;
         // Create an input file with arbitrary data
         input = (DTYPE *)malloc((input_size) * sizeof(DTYPE));
         querys = (DTYPE *)malloc((num_querys) * sizeof(DTYPE));

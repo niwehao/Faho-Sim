@@ -28,7 +28,7 @@ class PerformanceCounter {
         assert(mode==1 || mode==2 || mode==0);
         if (mode_==mode)
         {
-            int sub_counter_=sub_counter+value;
+             sub_counter=sub_counter+value;
             int mult=sub_counter/16;
             sub_counter=sub_counter%16;
             if (mult>0)
@@ -38,8 +38,8 @@ class PerformanceCounter {
                 counter_word->set_bit_slice(4,36,value_t);
                 //std::cout<<"after:"<<counter_word->bit_slice(abi::word::UNSIGNED,4,36)<<std::endl;
             }
+            real_time_debug=value+real_time_debug;
         }
-        real_time_debug=value+real_time_debug;
     }
     int get_fProc(){
         int value_t = counter_word->bit_slice(abi::word::UNSIGNED, 36, 40);
@@ -56,7 +56,6 @@ class PerformanceCounter {
                 int mode_t = counter_word->bit_slice(abi::word::UNSIGNED, 1, 3);
                 if (flag_t == 1)
                 {
-                    std::cout << "set zero" << std::endl;
                     counter_word->set_bit_slice(4, 36, 0);
                     counter_word->set_bit_slice(0, 1, 0);
                     sub_counter = 0;

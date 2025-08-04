@@ -35,7 +35,7 @@ namespace upmem_sim::simulator::dpu
         }
         void cycle();
         int alloc_inode();
-        int alloc_first_inode(int proc_id);
+        void alloc_first_inode(int proc_id);
         void free_inode(int inode);
         void free_chained_inode(int proc_id);
         int find_inode(int cur_process_index,int offset);

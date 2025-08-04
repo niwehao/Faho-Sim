@@ -57,6 +57,8 @@ void MRAM::write(Address address, std::vector<int> bytes) {
   //  }
  // }
  // std::cout << std::endl;
+  int index_ = index(address);
+  assert(wordlines_.size()> index_);
   wordlines_[index(address)]->write(std::move(bytes));
 }
 

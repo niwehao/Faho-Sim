@@ -12,10 +12,10 @@
 131968    stdio.__stdout_cache_buffer
 131976    bss.stdio.__stdout_cache_write_index
 131976    stdio.__stdout_cache_write_index
-131980    bss.perfcounter_end_value
-131980    perfcounter_end_value
-131984    bss.begin_mram
-131984    begin_mram
+131980    bss.begin_mram
+131980    begin_mram
+131996    bss.perfcounter_end_value
+131996    perfcounter_end_value
 132000    bss.stdio.__stdout_nr_of_wrapping
 132000    stdio.__stdout_nr_of_wrapping
 132004    bss.stdio.__stdout_buffer_write_pointer_initial

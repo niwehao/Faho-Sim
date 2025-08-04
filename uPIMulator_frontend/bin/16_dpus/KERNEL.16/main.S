@@ -1758,7 +1758,7 @@ check_time_process:                     // @check_time_process
 	$add , r1, r2, r1
 	$lw , r1, r1, 20
 	$sub , r0, r0, r1
-	$move , r1, 2000
+	$move , r1, 5000
 	$sub , r0, r0, r1, gtu
 	$jump , r23
 .Lfunc_end11:
@@ -1784,7 +1784,7 @@ kernel_preempt_check:                   // @kernel_preempt_check
 	$and , r1, r1, 4, z, .LBB12_4
 // %bb.3:
 	$move , r0, 0
-	$move , r1, 2000
+	$move , r1, 5000
 	$call , r23, r26_cfg
 	$move , r0, 3
 .LBB12_4:
@@ -1792,7 +1792,7 @@ kernel_preempt_check:                   // @kernel_preempt_check
 	$jump , r23
 .LBB12_1:
 	$move , r0, 0
-	$move , r1, 2000
+	$move , r1, 5000
 	$call , r23, r26_cfg
 	$move , r0, ifpreempt
 	$sw , r0, 0, 1
@@ -1868,7 +1868,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	// inline asm
 .LBB13_8:
 	$move , r0, 2
-	$move , r1, 2000
+	$move , r1, 5000
 	$call , r23, r26_cfg
 	$move , r15, 0, true, .LBB13_12
 .LBB13_9:                               //   in Loop: Header=BB13_12 Depth=1
@@ -1882,7 +1882,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	// inline asm
 .LBB13_10:                              //   in Loop: Header=BB13_12 Depth=1
 	$move , r0, 2
-	$move , r1, 2000
+	$move , r1, 5000
 	$call , r23, r26_cfg
 .LBB13_11:                              //   in Loop: Header=BB13_12 Depth=1
 	$move , r0, all_end_or_waiting
@@ -1916,7 +1916,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	$move , r0, 1, true, .LBB13_16
 .LBB13_23:                              //   in Loop: Header=BB13_16 Depth=3
 	$move , r14, 0
-	$move , r1, 2000
+	$move , r1, 5000
 	$move , r0, r14
 	$call , r23, r26_cfg
 	$move , r0, ifpreempt
@@ -1963,7 +1963,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	$jump , .LBB13_23
 .LBB13_24:                              //   in Loop: Header=BB13_16 Depth=3
 	$move , r0, 0
-	$move , r1, 2000
+	$move , r1, 5000
 	$call , r23, r26_cfg
 	$move , r0, ifpreempt
 	$sw , r0, 0, 1
@@ -1986,7 +1986,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	$jump , .LBB13_32
 .LBB13_29:                              //   in Loop: Header=BB13_13 Depth=2
 	$move , r0, 0
-	$move , r1, 2000
+	$move , r1, 5000
 	$call , r23, r26_cfg
 	$jump , .LBB13_31
 .LBB13_30:                              //   in Loop: Header=BB13_13 Depth=2
@@ -1995,7 +1995,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	$move , r1, jobs
 	$add , r14, r1, r0
 	$move , r0, 0
-	$move , r1, 2000
+	$move , r1, 5000
 	$call , r23, r26_cfg
 	$move , r0, ifpreempt
 	$sw , r0, 0, 1
@@ -2067,7 +2067,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	// inline asm
 .LBB13_41:                              //   in Loop: Header=BB13_12 Depth=1
 	$move , r0, 0
-	$move , r1, 2000
+	$move , r1, 5000
 	$call , r23, r26_cfg
 	$lw , r0, zero, ifpreempt
 	$jneq , r0, 1, .LBB13_43

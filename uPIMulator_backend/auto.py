@@ -56,11 +56,11 @@ def main():
         #{"name": "TS", "data_prep": 2048},
         
         #{"name": "SEL", "data_prep": 8192}, 
-        {"name": "BS", "data_prep": 4096},
+        #{"name": "BS", "data_prep": 4096},
         #{"name": "MLP", "data_prep": 256},  # 注释说明：初始是256，太大
         #{"name": "BFS", "data_prep": 0}, #with100*5
        
-        #{"name": "NW", "data_prep": 128},
+        {"name": "NW", "data_prep": 128},
         #{"name": "VA", "data_prep": 131072},
        #{"name": "HST-S", "data_prep": 65536},
         #{"name": "GEMV", "data_prep": 256},

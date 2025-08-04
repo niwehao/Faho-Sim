@@ -1,0 +1,3109 @@
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/atomic.bin
+DMA to atomic completed...
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/iram.bin
+num of instructions: 3556
+DMA to IRAM completed...
+/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/bin/16_dpus//KERNEL.16/wram.bin
+DMA to WRAM completed...
+init completed...
+launch completed...
+********time:3715*******
+text section size is 5a30
+flag set:0
+break point 2 happen in cycle:4429
+break point 3 happen in cycle:5370
+break point 4 happen in cycle:5491
+break point 5 happen in cycle:21215
+break point 6 happen in cycle:30527
+break point 7 happen in cycle:31027
+fthread 1 meet barrier48629
+fthread 2 meet barrier58013
+fthread 3 meet barrier67528
+fthread 4 meet barrier76371
+fthread 5 meet barrier88299
+fthread 6 meet barrier101230
+preempt start
+preempt finish with 12399
+fthread 7 meet barrier133096
+fthread 8 meet barrier140554
+fthread 9 meet barrier195403
+fthread 10 meet barrier196591
+preempt start
+preempt finish with 8611
+fthread 11 meet barrier231071
+preempt start
+preempt finish with 5300
+fthread 12 meet barrier322265
+fthread 13 meet barrier328404
+preempt start
+preempt finish with 12679
+fthread 14 meet barrier419826
+fthread 15 meet barrier426777
+preempt start
+preempt finish with 5102
+preempt start
+preempt finish with 3879
+preempt start
+preempt finish with 4472
+preempt start
+preempt finish with 4688
+preempt start
+preempt finish with 4911
+preempt start
+preempt finish with 4994
+preempt start
+preempt finish with 4871
+********time:1105918*******
+ReadSocket event for pid: 1 at time: 0
+********time:1105919*******
+flag set:32
+fthread 0 meet barrier1143322
+preempt start
+preempt finish with 7306
+fthread 0 leave barrier1300268
+fthread 0 meet barrier1301461
+preempt start
+preempt finish with 7589
+fthread 1 leave barrier1328085
+fthread 1 meet barrier1329255
+fthread 2 leave barrier1400321
+fthread 2 meet barrier1401080
+preempt start
+preempt finish with 3637
+preempt start
+preempt finish with 3528
+fthread 3 leave barrier1580997
+fthread 3 meet barrier1581756
+preempt start
+preempt finish with 2323
+fthread 4 leave barrier1668258
+fthread 4 meet barrier1669017
+preempt start
+preempt finish with 2390
+preempt start
+preempt finish with 2398
+preempt start
+preempt finish with 2974
+fthread 5 leave barrier1931089
+fthread 5 meet barrier1931848
+preempt start
+preempt finish with 2371
+fthread 6 leave barrier2015583
+fthread 6 meet barrier2016342
+preempt start
+preempt finish with 2791
+preempt start
+preempt finish with 2267
+preempt start
+preempt finish with 2247
+preempt start
+preempt finish with 2492
+fthread 7 leave barrier2285585
+fthread 7 meet barrier2286739
+fthread 8 leave barrier2361185
+preempt start
+preempt finish with 2754
+fthread 8 meet barrier2377672
+preempt start
+preempt finish with 2469
+preempt start
+preempt finish with 3266
+fthread 9 leave barrier2550494
+fthread 9 meet barrier2551648
+preempt start
+preempt finish with 3072
+preempt start
+preempt finish with 3771
+fthread 10 leave barrier2725123
+fthread 10 meet barrier2726277
+preempt start
+preempt finish with 4009
+preempt start
+preempt finish with 4350
+fthread 11 leave barrier2901234
+fthread 11 meet barrier2902388
+preempt start
+preempt finish with 4932
+preempt start
+preempt finish with 4640
+fthread 12 leave barrier3078464
+fthread 12 meet barrier3079618
+preempt start
+preempt finish with 5085
+preempt start
+preempt finish with 4800
+fthread 13 leave barrier3256076
+fthread 13 meet barrier3257230
+preempt start
+preempt finish with 5108
+preempt start
+preempt finish with 4811
+fthread 14 leave barrier3433795
+fthread 14 meet barrier3434949
+preempt start
+preempt finish with 5238
+preempt start
+preempt finish with 5076
+fthread 15 leave barrier3611896
+fthread 15 meet barrier3613050
+preempt start
+preempt finish with 5168
+preempt start
+preempt finish with 9979
+preempt start
+preempt finish with 7668
+fthread 15 leave barrier3883996
+fthread 15 meet barrier3885092
+fthread 0 leave barrier3954651
+preempt start
+preempt finish with 3635
+fthread 1 leave barrier3966691
+fthread 1 meet barrier3967839
+fthread 2 leave barrier4036298
+fthread 2 meet barrier4037013
+preempt start
+preempt finish with 3826
+fthread 0 meet barrier4099181
+preempt start
+preempt finish with 3567
+fthread 3 leave barrier4144316
+fthread 3 meet barrier4145412
+preempt start
+preempt finish with 3700
+fthread 4 leave barrier4234403
+fthread 4 meet barrier4235499
+preempt start
+preempt finish with 4184
+fthread 5 leave barrier4324147
+fthread 5 meet barrier4325243
+preempt start
+preempt finish with 4132
+fthread 6 leave barrier4413867
+fthread 6 meet barrier4414963
+preempt start
+preempt finish with 2952
+fthread 7 leave barrier4574960
+preempt start
+preempt finish with 2334
+fthread 7 meet barrier4589059
+preempt start
+preempt finish with 2369
+preempt start
+preempt finish with 2753
+fthread 8 leave barrier4760897
+fthread 8 meet barrier4761993
+preempt start
+preempt finish with 2399
+preempt start
+preempt finish with 3193
+fthread 9 leave barrier4934309
+fthread 9 meet barrier4935405
+preempt start
+preempt finish with 3135
+preempt start
+preempt finish with 3831
+fthread 10 leave barrier5108943
+fthread 10 meet barrier5110039
+preempt start
+preempt finish with 4077
+preempt start
+preempt finish with 4287
+fthread 11 leave barrier5285059
+fthread 11 meet barrier5286155
+preempt start
+preempt finish with 4877
+preempt start
+preempt finish with 4582
+fthread 12 leave barrier5462294
+fthread 12 meet barrier5463390
+preempt start
+preempt finish with 5035
+preempt start
+preempt finish with 4875
+fthread 13 leave barrier5639911
+fthread 13 meet barrier5641007
+preempt start
+preempt finish with 5191
+preempt start
+preempt finish with 4891
+fthread 14 leave barrier5817635
+fthread 14 meet barrier5818731
+preempt start
+preempt finish with 5326
+preempt start
+preempt finish with 4898
+preempt start
+preempt finish with 9812
+preempt start
+preempt finish with 7515
+fthread 14 leave barrier6177059
+fthread 14 meet barrier6178157
+fthread 0 leave barrier6247716
+preempt start
+preempt finish with 3746
+fthread 1 leave barrier6260306
+fthread 2 leave barrier6331591
+fthread 2 meet barrier6332306
+preempt start
+preempt finish with 3397
+fthread 3 leave barrier6352248
+fthread 3 meet barrier6353438
+fthread 0 meet barrier6397341
+fthread 1 meet barrier6400862
+preempt start
+preempt finish with 3770
+fthread 4 leave barrier6438046
+fthread 4 meet barrier6439144
+preempt start
+preempt finish with 3645
+preempt start
+preempt finish with 2317
+preempt start
+preempt finish with 3026
+fthread 5 leave barrier6776590
+fthread 5 meet barrier6777305
+preempt start
+preempt finish with 2278
+fthread 6 leave barrier6860940
+fthread 6 meet barrier6861655
+preempt start
+preempt finish with 2825
+preempt start
+preempt finish with 2301
+preempt start
+preempt finish with 2281
+preempt start
+preempt finish with 2395
+fthread 7 leave barrier7130944
+fthread 7 meet barrier7132042
+fthread 8 leave barrier7206546
+preempt start
+preempt finish with 2792
+fthread 8 meet barrier7223048
+preempt start
+preempt finish with 2388
+preempt start
+preempt finish with 3182
+fthread 9 leave barrier7395866
+fthread 9 meet barrier7396964
+preempt start
+preempt finish with 3126
+preempt start
+preempt finish with 3822
+fthread 10 leave barrier7570502
+fthread 10 meet barrier7571600
+preempt start
+preempt finish with 4070
+preempt start
+preempt finish with 4280
+fthread 11 leave barrier7746620
+fthread 11 meet barrier7747718
+preempt start
+preempt finish with 4872
+preempt start
+preempt finish with 4577
+fthread 12 leave barrier7923857
+fthread 12 meet barrier7924955
+preempt start
+preempt finish with 5032
+preempt start
+preempt finish with 4872
+fthread 13 leave barrier8101476
+fthread 13 meet barrier8102574
+preempt start
+preempt finish with 5190
+preempt start
+preempt finish with 4755
+preempt start
+preempt finish with 5112
+preempt start
+preempt finish with 4998
+fthread 15 leave barrier8450459
+fthread 15 meet barrier8451557
+preempt start
+preempt finish with 2912
+preempt start
+preempt finish with 9904
+preempt start
+preempt finish with 7721
+fthread 15 leave barrier8726673
+fthread 15 meet barrier8727771
+fthread 0 leave barrier8797330
+preempt start
+preempt finish with 3690
+fthread 1 leave barrier8809370
+fthread 2 leave barrier8880652
+fthread 3 leave barrier8884081
+fthread 3 meet barrier8884801
+preempt start
+preempt finish with 4108
+fthread 4 leave barrier8904740
+fthread 4 meet barrier8905960
+fthread 0 meet barrier8949347
+fthread 1 meet barrier8952724
+preempt start
+preempt finish with 3843
+fthread 5 leave barrier8990093
+fthread 5 meet barrier8991240
+fthread 2 meet barrier9035530
+preempt start
+preempt finish with 3644
+preempt start
+preempt finish with 3930
+preempt start
+preempt finish with 2251
+fthread 6 leave barrier9326757
+preempt start
+preempt finish with 2285
+fthread 6 meet barrier9337105
+fthread 7 leave barrier9411558
+fthread 7 meet barrier9412273
+preempt start
+preempt finish with 2711
+preempt start
+preempt finish with 2303
+preempt start
+preempt finish with 2282
+preempt start
+preempt finish with 2934
+fthread 8 leave barrier9681393
+fthread 8 meet barrier9682491
+preempt start
+preempt finish with 2906
+fthread 9 leave barrier9772161
+fthread 9 meet barrier9773259
+preempt start
+preempt finish with 3101
+preempt start
+preempt finish with 3797
+fthread 10 leave barrier9946797
+fthread 10 meet barrier9947895
+preempt start
+preempt finish with 4045
+preempt start
+preempt finish with 4255
+fthread 11 leave barrier10122915
+fthread 11 meet barrier10124013
+preempt start
+preempt finish with 4700
+preempt start
+preempt finish with 4533
+fthread 12 leave barrier10299877
+fthread 12 meet barrier10300975
+preempt start
+preempt finish with 4988
+preempt start
+preempt finish with 4828
+fthread 13 leave barrier10477496
+fthread 13 meet barrier10478594
+preempt start
+preempt finish with 5146
+preempt start
+preempt finish with 4846
+fthread 14 leave barrier10655222
+fthread 14 meet barrier10656320
+preempt start
+preempt finish with 5283
+preempt start
+preempt finish with 4983
+preempt start
+preempt finish with 9769
+preempt start
+preempt finish with 7600
+fthread 14 leave barrier11014648
+fthread 14 meet barrier11015746
+fthread 0 leave barrier11085305
+preempt start
+preempt finish with 3556
+fthread 1 leave barrier11097620
+fthread 2 leave barrier11168878
+fthread 3 leave barrier11172305
+preempt start
+preempt finish with 4001
+fthread 4 leave barrier11191710
+fthread 4 meet barrier11192968
+fthread 0 meet barrier11238666
+fthread 1 meet barrier11242315
+fthread 5 leave barrier11254377
+fthread 5 meet barrier11255109
+preempt start
+preempt finish with 4695
+fthread 2 meet barrier11327536
+fthread 3 meet barrier11333859
+preempt start
+preempt finish with 3791
+preempt start
+preempt finish with 3689
+preempt start
+preempt finish with 2266
+fthread 6 leave barrier11614516
+preempt start
+preempt finish with 2293
+fthread 6 meet barrier11624816
+fthread 7 leave barrier11699432
+fthread 7 meet barrier11700147
+preempt start
+preempt finish with 2713
+preempt start
+preempt finish with 2305
+preempt start
+preempt finish with 2284
+preempt start
+preempt finish with 2936
+fthread 8 leave barrier11969267
+fthread 8 meet barrier11970365
+preempt start
+preempt finish with 2908
+fthread 9 leave barrier12060035
+fthread 9 meet barrier12061133
+preempt start
+preempt finish with 3103
+preempt start
+preempt finish with 3799
+fthread 10 leave barrier12234671
+fthread 10 meet barrier12235769
+preempt start
+preempt finish with 4047
+preempt start
+preempt finish with 4257
+fthread 11 leave barrier12410789
+fthread 11 meet barrier12411887
+preempt start
+preempt finish with 4702
+preempt start
+preempt finish with 4535
+fthread 12 leave barrier12587751
+fthread 12 meet barrier12588849
+preempt start
+preempt finish with 4990
+preempt start
+preempt finish with 4830
+fthread 13 leave barrier12765370
+fthread 13 meet barrier12766468
+preempt start
+preempt finish with 5148
+preempt start
+preempt finish with 4713
+preempt start
+preempt finish with 5070
+preempt start
+preempt finish with 4956
+fthread 15 leave barrier13114353
+fthread 15 meet barrier13115451
+preempt start
+preempt finish with 2870
+preempt start
+preempt finish with 9862
+preempt start
+preempt finish with 7679
+fthread 15 leave barrier13390567
+fthread 15 meet barrier13390884
+fthread 0 leave barrier13461184
+preempt start
+preempt finish with 3608
+fthread 1 leave barrier13473226
+fthread 2 leave barrier13544376
+fthread 3 leave barrier13547801
+fthread 3 meet barrier13548010
+preempt start
+preempt finish with 4008
+fthread 4 leave barrier13568442
+fthread 4 meet barrier13568801
+fthread 0 meet barrier13612712
+fthread 1 meet barrier13615559
+preempt start
+preempt finish with 3916
+fthread 5 leave barrier13653856
+fthread 5 meet barrier13654190
+fthread 2 meet barrier13697662
+preempt start
+preempt finish with 3751
+preempt start
+preempt finish with 3907
+preempt start
+preempt finish with 2079
+fthread 6 leave barrier13990393
+fthread 6 meet barrier13990602
+preempt start
+preempt finish with 2362
+fthread 7 leave barrier14075278
+fthread 7 meet barrier14075487
+preempt start
+preempt finish with 2623
+preempt start
+preempt finish with 2066
+preempt start
+preempt finish with 2299
+preempt start
+preempt finish with 2951
+fthread 8 leave barrier14344834
+fthread 8 meet barrier14345151
+preempt start
+preempt finish with 2883
+fthread 9 leave barrier14435560
+fthread 9 meet barrier14435877
+preempt start
+preempt finish with 3036
+preempt start
+preempt finish with 3732
+fthread 10 leave barrier14610154
+fthread 10 meet barrier14610471
+preempt start
+preempt finish with 4066
+preempt start
+preempt finish with 4276
+fthread 11 leave barrier14786230
+fthread 11 meet barrier14786547
+preempt start
+preempt finish with 4826
+preempt start
+preempt finish with 4806
+fthread 12 leave barrier14963700
+fthread 12 meet barrier14964017
+preempt start
+preempt finish with 4963
+preempt start
+preempt finish with 4803
+fthread 13 leave barrier15141277
+fthread 13 meet barrier15141594
+preempt start
+preempt finish with 5079
+preempt start
+preempt finish with 5054
+fthread 14 leave barrier15319236
+fthread 14 meet barrier15319553
+preempt start
+preempt finish with 5193
+preempt start
+preempt finish with 5019
+preempt start
+preempt finish with 9801
+preempt start
+preempt finish with 7504
+fthread 14 leave barrier15678600
+fthread 14 meet barrier15678798
+fthread 0 leave barrier15749222
+preempt start
+preempt finish with 3695
+fthread 1 leave barrier15761806
+fthread 2 leave barrier15832921
+fthread 2 meet barrier15833053
+preempt start
+preempt finish with 3191
+fthread 3 leave barrier15852329
+fthread 3 meet barrier15852549
+fthread 0 meet barrier15895827
+fthread 1 meet barrier15899932
+preempt start
+preempt finish with 3637
+fthread 4 leave barrier15938055
+fthread 4 meet barrier15938253
+preempt start
+preempt finish with 3598
+preempt start
+preempt finish with 2323
+preempt start
+preempt finish with 3030
+fthread 5 leave barrier16276615
+fthread 5 meet barrier16276747
+preempt start
+preempt finish with 2759
+fthread 6 leave barrier16363150
+fthread 6 meet barrier16363282
+preempt start
+preempt finish with 2600
+preempt start
+preempt finish with 2059
+preempt start
+preempt finish with 2293
+preempt start
+preempt finish with 2407
+fthread 7 leave barrier16630972
+fthread 7 meet barrier16631170
+fthread 8 leave barrier16706539
+fthread 8 meet barrier16706671
+preempt start
+preempt finish with 2798
+preempt start
+preempt finish with 2259
+preempt start
+preempt finish with 2774
+preempt start
+preempt finish with 3452
+fthread 9 leave barrier16977021
+fthread 9 meet barrier16977219
+preempt start
+preempt finish with 3816
+fthread 10 leave barrier17069097
+fthread 10 meet barrier17069295
+preempt start
+preempt finish with 4017
+preempt start
+preempt finish with 4355
+fthread 11 leave barrier17245173
+fthread 11 meet barrier17245371
+preempt start
+preempt finish with 4905
+preempt start
+preempt finish with 4610
+fthread 12 leave barrier17422368
+fthread 12 meet barrier17422566
+preempt start
+preempt finish with 5023
+preempt start
+preempt finish with 4863
+fthread 13 leave barrier17599945
+fthread 13 meet barrier17600143
+preempt start
+preempt finish with 5139
+preempt start
+preempt finish with 4702
+preempt start
+preempt finish with 5057
+preempt start
+preempt finish with 5071
+fthread 15 leave barrier17948884
+fthread 15 meet barrier17949082
+preempt start
+preempt finish with 2817
+preempt start
+preempt finish with 9933
+preempt start
+preempt finish with 7622
+fthread 15 leave barrier18225054
+fthread 15 meet barrier18225252
+fthread 0 leave barrier18295676
+preempt start
+preempt finish with 3551
+fthread 1 leave barrier18307713
+fthread 1 meet barrier18307919
+fthread 2 leave barrier18377273
+fthread 2 meet barrier18377405
+preempt start
+preempt finish with 3692
+fthread 0 meet barrier18439932
+preempt start
+preempt finish with 3515
+fthread 3 leave barrier18485238
+fthread 3 meet barrier18485436
+preempt start
+preempt finish with 3736
+fthread 4 leave barrier18575285
+fthread 4 meet barrier18575483
+preempt start
+preempt finish with 4180
+fthread 5 leave barrier18664989
+fthread 5 meet barrier18665187
+preempt start
+preempt finish with 4363
+fthread 6 leave barrier18754944
+fthread 6 meet barrier18755142
+preempt start
+preempt finish with 2887
+fthread 7 leave barrier18916004
+preempt start
+preempt finish with 2276
+fthread 7 meet barrier18929174
+preempt start
+preempt finish with 2545
+preempt start
+preempt finish with 2673
+fthread 8 leave barrier19102047
+fthread 8 meet barrier19102245
+preempt start
+preempt finish with 2407
+preempt start
+preempt finish with 3201
+fthread 9 leave barrier19275419
+fthread 9 meet barrier19275617
+preempt start
+preempt finish with 3103
+preempt start
+preempt finish with 3799
+fthread 10 leave barrier19450013
+fthread 10 meet barrier19450211
+preempt start
+preempt finish with 4005
+preempt start
+preempt finish with 4343
+fthread 11 leave barrier19626089
+fthread 11 meet barrier19626287
+preempt start
+preempt finish with 4893
+preempt start
+preempt finish with 4598
+fthread 12 leave barrier19803284
+fthread 12 meet barrier19803482
+preempt start
+preempt finish with 5011
+preempt start
+preempt finish with 4851
+fthread 13 leave barrier19980861
+fthread 13 meet barrier19981059
+preempt start
+preempt finish with 5127
+preempt start
+preempt finish with 4827
+fthread 14 leave barrier20158545
+fthread 14 meet barrier20158743
+preempt start
+preempt finish with 5222
+preempt start
+preempt finish with 4920
+preempt start
+preempt finish with 9830
+preempt start
+preempt finish with 7533
+fthread 14 leave barrier20517925
+fthread 14 meet barrier20518389
+fthread 0 leave barrier20588553
+preempt start
+preempt finish with 3731
+fthread 1 leave barrier20601123
+fthread 1 meet barrier20601597
+preempt start
+preempt finish with 3293
+fthread 2 leave barrier20688705
+fthread 2 meet barrier20689169
+preempt start
+preempt finish with 3700
+fthread 3 leave barrier20777954
+fthread 3 meet barrier20778418
+preempt start
+preempt finish with 3896
+fthread 4 leave barrier20867413
+fthread 4 meet barrier20867877
+preempt start
+preempt finish with 4218
+fthread 5 leave barrier20957123
+fthread 5 meet barrier20957587
+preempt start
+preempt finish with 4132
+fthread 6 leave barrier21046809
+fthread 6 meet barrier21047273
+preempt start
+preempt finish with 2918
+fthread 7 leave barrier21207875
+preempt start
+preempt finish with 2300
+fthread 7 meet barrier21221286
+preempt start
+preempt finish with 2575
+preempt start
+preempt finish with 2703
+fthread 8 leave barrier21394045
+fthread 8 meet barrier21394509
+preempt start
+preempt finish with 2443
+preempt start
+preempt finish with 3237
+fthread 9 leave barrier21567423
+fthread 9 meet barrier21567887
+preempt start
+preempt finish with 3145
+preempt start
+preempt finish with 3841
+fthread 10 leave barrier21742023
+fthread 10 meet barrier21742487
+preempt start
+preempt finish with 4053
+preempt start
+preempt finish with 4263
+fthread 11 leave barrier21918105
+fthread 11 meet barrier21918569
+preempt start
+preempt finish with 4947
+preempt start
+preempt finish with 4799
+fthread 12 leave barrier22095581
+fthread 12 meet barrier22096045
+preempt start
+preempt finish with 4962
+preempt start
+preempt finish with 4802
+fthread 13 leave barrier22273164
+fthread 13 meet barrier22273628
+preempt start
+preempt finish with 5084
+preempt start
+preempt finish with 4922
+preempt start
+preempt finish with 5149
+preempt start
+preempt finish with 5035
+fthread 15 leave barrier22622384
+fthread 15 meet barrier22622848
+preempt start
+preempt finish with 2915
+preempt start
+preempt finish with 4867
+********time:22874741*******
+ReadSocket event for pid: 1 at time: 0
+********time:22874742*******
+flag set:32
+preempt start
+preempt finish with 2084
+blk:2
+********time:22993522*******
+flag set:32
+fthread 0 meet barrier23030943
+preempt start
+preempt finish with 7307
+fthread 0 leave barrier23187873
+fthread 0 meet barrier23189066
+preempt start
+preempt finish with 7590
+fthread 1 leave barrier23215690
+fthread 1 meet barrier23216860
+fthread 2 leave barrier23287926
+fthread 2 meet barrier23288685
+preempt start
+preempt finish with 3638
+preempt start
+preempt finish with 3529
+fthread 3 leave barrier23468602
+fthread 3 meet barrier23469361
+preempt start
+preempt finish with 2324
+fthread 4 leave barrier23555863
+fthread 4 meet barrier23556622
+preempt start
+preempt finish with 2391
+preempt start
+preempt finish with 2399
+preempt start
+preempt finish with 2975
+fthread 5 leave barrier23818694
+fthread 5 meet barrier23819453
+preempt start
+preempt finish with 2372
+fthread 6 leave barrier23903188
+fthread 6 meet barrier23903947
+preempt start
+preempt finish with 2792
+preempt start
+preempt finish with 2268
+preempt start
+preempt finish with 2248
+preempt start
+preempt finish with 2493
+fthread 7 leave barrier24173190
+fthread 7 meet barrier24174344
+fthread 8 leave barrier24248790
+preempt start
+preempt finish with 2755
+fthread 8 meet barrier24265277
+preempt start
+preempt finish with 2470
+preempt start
+preempt finish with 3267
+fthread 9 leave barrier24438099
+fthread 9 meet barrier24439253
+preempt start
+preempt finish with 3073
+preempt start
+preempt finish with 3772
+fthread 10 leave barrier24612728
+fthread 10 meet barrier24613882
+preempt start
+preempt finish with 4010
+preempt start
+preempt finish with 4351
+fthread 11 leave barrier24788839
+fthread 11 meet barrier24789993
+preempt start
+preempt finish with 4933
+preempt start
+preempt finish with 4641
+fthread 12 leave barrier24966069
+fthread 12 meet barrier24967223
+preempt start
+preempt finish with 5086
+preempt start
+preempt finish with 4801
+fthread 13 leave barrier25143681
+fthread 13 meet barrier25144835
+preempt start
+preempt finish with 5109
+preempt start
+preempt finish with 4812
+fthread 14 leave barrier25321400
+fthread 14 meet barrier25322554
+preempt start
+preempt finish with 5239
+preempt start
+preempt finish with 5077
+fthread 15 leave barrier25499501
+fthread 15 meet barrier25500655
+preempt start
+preempt finish with 5169
+preempt start
+preempt finish with 9980
+preempt start
+preempt finish with 7669
+fthread 15 leave barrier25771601
+fthread 15 meet barrier25772697
+fthread 0 leave barrier25842256
+preempt start
+preempt finish with 3636
+fthread 1 leave barrier25854296
+fthread 1 meet barrier25855444
+fthread 2 leave barrier25923916
+fthread 2 meet barrier25924631
+preempt start
+preempt finish with 3840
+fthread 0 meet barrier25986961
+preempt start
+preempt finish with 3537
+fthread 3 leave barrier26031890
+fthread 3 meet barrier26032986
+preempt start
+preempt finish with 3670
+fthread 4 leave barrier26121977
+fthread 4 meet barrier26123073
+preempt start
+preempt finish with 4154
+fthread 5 leave barrier26211721
+fthread 5 meet barrier26212817
+preempt start
+preempt finish with 4230
+fthread 6 leave barrier26301441
+fthread 6 meet barrier26302537
+preempt start
+preempt finish with 2922
+fthread 7 leave barrier26462534
+preempt start
+preempt finish with 2304
+fthread 7 meet barrier26476581
+preempt start
+preempt finish with 2335
+preempt start
+preempt finish with 2719
+fthread 8 leave barrier26648467
+fthread 8 meet barrier26649563
+preempt start
+preempt finish with 2493
+preempt start
+preempt finish with 3287
+fthread 9 leave barrier26821879
+fthread 9 meet barrier26822975
+preempt start
+preempt finish with 3101
+preempt start
+preempt finish with 3797
+fthread 10 leave barrier26996513
+fthread 10 meet barrier26997609
+preempt start
+preempt finish with 4043
+preempt start
+preempt finish with 4381
+fthread 11 leave barrier27172629
+fthread 11 meet barrier27173725
+preempt start
+preempt finish with 4971
+preempt start
+preempt finish with 4548
+fthread 12 leave barrier27349864
+fthread 12 meet barrier27350960
+preempt start
+preempt finish with 5001
+preempt start
+preempt finish with 4841
+fthread 13 leave barrier27527481
+fthread 13 meet barrier27528577
+preempt start
+preempt finish with 5157
+preempt start
+preempt finish with 4857
+fthread 14 leave barrier27705205
+fthread 14 meet barrier27706301
+preempt start
+preempt finish with 5292
+preempt start
+preempt finish with 4992
+preempt start
+preempt finish with 9778
+preempt start
+preempt finish with 7609
+fthread 14 leave barrier28064629
+fthread 14 meet barrier28065727
+fthread 0 leave barrier28135286
+preempt start
+preempt finish with 3565
+fthread 1 leave barrier28147601
+fthread 2 leave barrier28218896
+fthread 2 meet barrier28219611
+preempt start
+preempt finish with 3356
+fthread 3 leave barrier28239527
+fthread 3 meet barrier28240719
+fthread 0 meet barrier28284549
+fthread 1 meet barrier28288071
+preempt start
+preempt finish with 3675
+fthread 4 leave barrier28325299
+fthread 4 meet barrier28326397
+preempt start
+preempt finish with 3550
+preempt start
+preempt finish with 2321
+preempt start
+preempt finish with 3022
+fthread 5 leave barrier28663934
+fthread 5 meet barrier28664649
+preempt start
+preempt finish with 2285
+fthread 6 leave barrier28748296
+fthread 6 meet barrier28749011
+preempt start
+preempt finish with 2833
+preempt start
+preempt finish with 2309
+preempt start
+preempt finish with 2289
+preempt start
+preempt finish with 2403
+fthread 7 leave barrier29018300
+fthread 7 meet barrier29019398
+fthread 8 leave barrier29093902
+preempt start
+preempt finish with 2800
+fthread 8 meet barrier29110404
+preempt start
+preempt finish with 2396
+preempt start
+preempt finish with 3190
+fthread 9 leave barrier29283222
+fthread 9 meet barrier29284320
+preempt start
+preempt finish with 3134
+preempt start
+preempt finish with 3830
+fthread 10 leave barrier29457858
+fthread 10 meet barrier29458956
+preempt start
+preempt finish with 4078
+preempt start
+preempt finish with 4288
+fthread 11 leave barrier29633976
+fthread 11 meet barrier29635074
+preempt start
+preempt finish with 4880
+preempt start
+preempt finish with 4585
+fthread 12 leave barrier29811213
+fthread 12 meet barrier29812311
+preempt start
+preempt finish with 5040
+preempt start
+preempt finish with 4880
+fthread 13 leave barrier29988832
+fthread 13 meet barrier29989930
+preempt start
+preempt finish with 5198
+preempt start
+preempt finish with 4910
+preempt start
+preempt finish with 5139
+preempt start
+preempt finish with 5025
+fthread 15 leave barrier30338090
+fthread 15 meet barrier30339188
+preempt start
+preempt finish with 2939
+preempt start
+preempt finish with 9931
+preempt start
+preempt finish with 7620
+fthread 15 leave barrier30614304
+fthread 15 meet barrier30615402
+fthread 0 leave barrier30684961
+preempt start
+preempt finish with 3589
+fthread 1 leave barrier30697001
+fthread 2 leave barrier30768296
+fthread 3 leave barrier30771723
+fthread 3 meet barrier30772438
+preempt start
+preempt finish with 4651
+fthread 4 leave barrier30791656
+fthread 4 meet barrier30792888
+fthread 0 meet barrier30836268
+fthread 1 meet barrier30839930
+preempt start
+preempt finish with 3916
+fthread 5 leave barrier30877001
+fthread 5 meet barrier30878148
+fthread 2 meet barrier30922513
+preempt start
+preempt finish with 3839
+preempt start
+preempt finish with 3869
+preempt start
+preempt finish with 2318
+fthread 6 leave barrier31213916
+preempt start
+preempt finish with 2345
+fthread 6 meet barrier31224299
+fthread 7 leave barrier31298834
+fthread 7 meet barrier31299549
+preempt start
+preempt finish with 2767
+preempt start
+preempt finish with 2084
+preempt start
+preempt finish with 2319
+preempt start
+preempt finish with 2971
+fthread 8 leave barrier31568394
+fthread 8 meet barrier31569492
+preempt start
+preempt finish with 2943
+fthread 9 leave barrier31659162
+fthread 9 meet barrier31660260
+preempt start
+preempt finish with 3138
+preempt start
+preempt finish with 3834
+fthread 10 leave barrier31833798
+fthread 10 meet barrier31834896
+preempt start
+preempt finish with 4082
+preempt start
+preempt finish with 4292
+fthread 11 leave barrier32009916
+fthread 11 meet barrier32011014
+preempt start
+preempt finish with 4884
+preempt start
+preempt finish with 4589
+fthread 12 leave barrier32187153
+fthread 12 meet barrier32188251
+preempt start
+preempt finish with 5044
+preempt start
+preempt finish with 4884
+fthread 13 leave barrier32364772
+fthread 13 meet barrier32365870
+preempt start
+preempt finish with 5202
+preempt start
+preempt finish with 5049
+fthread 14 leave barrier32542773
+fthread 14 meet barrier32543871
+preempt start
+preempt finish with 5230
+preempt start
+preempt finish with 4930
+preempt start
+preempt finish with 9844
+preempt start
+preempt finish with 7547
+fthread 14 leave barrier32902199
+fthread 14 meet barrier32903297
+fthread 0 leave barrier32972856
+preempt start
+preempt finish with 3503
+fthread 1 leave barrier32985171
+fthread 2 leave barrier33056418
+fthread 3 leave barrier33059845
+preempt start
+preempt finish with 4040
+fthread 4 leave barrier33079156
+fthread 4 meet barrier33080395
+fthread 0 meet barrier33126096
+fthread 1 meet barrier33129745
+fthread 5 leave barrier33141711
+fthread 5 meet barrier33142438
+preempt start
+preempt finish with 4697
+fthread 2 meet barrier33214822
+fthread 3 meet barrier33221099
+preempt start
+preempt finish with 3745
+preempt start
+preempt finish with 3771
+preempt start
+preempt finish with 2073
+fthread 6 leave barrier33501799
+preempt start
+preempt finish with 2356
+fthread 6 meet barrier33512200
+fthread 7 leave barrier33586719
+fthread 7 meet barrier33587434
+preempt start
+preempt finish with 2652
+preempt start
+preempt finish with 2244
+preempt start
+preempt finish with 2351
+preempt start
+preempt finish with 3003
+fthread 8 leave barrier33856554
+fthread 8 meet barrier33857652
+preempt start
+preempt finish with 2847
+fthread 9 leave barrier33947322
+fthread 9 meet barrier33948420
+preempt start
+preempt finish with 3170
+preempt start
+preempt finish with 3738
+fthread 10 leave barrier34121958
+fthread 10 meet barrier34123056
+preempt start
+preempt finish with 4114
+preempt start
+preempt finish with 4324
+fthread 11 leave barrier34298076
+fthread 11 meet barrier34299174
+preempt start
+preempt finish with 4916
+preempt start
+preempt finish with 4621
+fthread 12 leave barrier34475313
+fthread 12 meet barrier34476411
+preempt start
+preempt finish with 5076
+preempt start
+preempt finish with 4788
+fthread 13 leave barrier34652932
+fthread 13 meet barrier34654030
+preempt start
+preempt finish with 5106
+preempt start
+preempt finish with 4671
+preempt start
+preempt finish with 5156
+preempt start
+preempt finish with 5042
+fthread 15 leave barrier35001915
+fthread 15 meet barrier35003013
+preempt start
+preempt finish with 2828
+preempt start
+preempt finish with 9948
+preempt start
+preempt finish with 7637
+fthread 15 leave barrier35278129
+fthread 15 meet barrier35278446
+fthread 0 leave barrier35348746
+preempt start
+preempt finish with 3566
+fthread 1 leave barrier35360788
+fthread 2 leave barrier35431939
+fthread 3 leave barrier35435361
+fthread 3 meet barrier35435570
+preempt start
+preempt finish with 3983
+fthread 4 leave barrier35455997
+fthread 4 meet barrier35456356
+fthread 0 meet barrier35500260
+fthread 1 meet barrier35503305
+preempt start
+preempt finish with 3978
+fthread 5 leave barrier35540265
+fthread 5 meet barrier35540595
+fthread 2 meet barrier35584041
+preempt start
+preempt finish with 3795
+preempt start
+preempt finish with 3823
+preempt start
+preempt finish with 2270
+fthread 6 leave barrier35877036
+fthread 6 meet barrier35877245
+preempt start
+preempt finish with 2297
+fthread 7 leave barrier35961918
+fthread 7 meet barrier35962127
+preempt start
+preempt finish with 2683
+preempt start
+preempt finish with 2273
+preempt start
+preempt finish with 2250
+preempt start
+preempt finish with 3030
+fthread 8 leave barrier36231749
+fthread 8 meet barrier36232066
+preempt start
+preempt finish with 2834
+fthread 9 leave barrier36322475
+fthread 9 meet barrier36322792
+preempt start
+preempt finish with 3115
+preempt start
+preempt finish with 3811
+fthread 10 leave barrier36497069
+fthread 10 meet barrier36497386
+preempt start
+preempt finish with 4017
+preempt start
+preempt finish with 4355
+fthread 11 leave barrier36673145
+fthread 11 meet barrier36673462
+preempt start
+preempt finish with 4905
+preempt start
+preempt finish with 4610
+fthread 12 leave barrier36850340
+fthread 12 meet barrier36850657
+preempt start
+preempt finish with 5023
+preempt start
+preempt finish with 4863
+fthread 13 leave barrier37027917
+fthread 13 meet barrier37028234
+preempt start
+preempt finish with 5139
+preempt start
+preempt finish with 4839
+fthread 14 leave barrier37205601
+fthread 14 meet barrier37205918
+preempt start
+preempt finish with 5234
+preempt start
+preempt finish with 4932
+preempt start
+preempt finish with 9842
+preempt start
+preempt finish with 7545
+fthread 14 leave barrier37564965
+fthread 14 meet barrier37565163
+fthread 0 leave barrier37635587
+preempt start
+preempt finish with 3736
+fthread 1 leave barrier37648171
+fthread 2 leave barrier37719248
+fthread 2 meet barrier37719380
+preempt start
+preempt finish with 3204
+fthread 3 leave barrier37738667
+fthread 3 meet barrier37738884
+fthread 0 meet barrier37782162
+fthread 1 meet barrier37786267
+preempt start
+preempt finish with 3648
+fthread 4 leave barrier37824390
+fthread 4 meet barrier37824588
+preempt start
+preempt finish with 3609
+preempt start
+preempt finish with 2323
+preempt start
+preempt finish with 3030
+fthread 5 leave barrier38162939
+fthread 5 meet barrier38163071
+preempt start
+preempt finish with 2759
+fthread 6 leave barrier38249474
+fthread 6 meet barrier38249606
+preempt start
+preempt finish with 2600
+preempt start
+preempt finish with 2059
+preempt start
+preempt finish with 2293
+preempt start
+preempt finish with 2407
+fthread 7 leave barrier38517296
+fthread 7 meet barrier38517494
+fthread 8 leave barrier38592863
+fthread 8 meet barrier38592995
+preempt start
+preempt finish with 2798
+preempt start
+preempt finish with 2259
+preempt start
+preempt finish with 2774
+preempt start
+preempt finish with 3452
+fthread 9 leave barrier38863345
+fthread 9 meet barrier38863543
+preempt start
+preempt finish with 3816
+fthread 10 leave barrier38955421
+fthread 10 meet barrier38955619
+preempt start
+preempt finish with 4017
+preempt start
+preempt finish with 4355
+fthread 11 leave barrier39131497
+fthread 11 meet barrier39131695
+preempt start
+preempt finish with 4905
+preempt start
+preempt finish with 4610
+fthread 12 leave barrier39308692
+fthread 12 meet barrier39308890
+preempt start
+preempt finish with 5023
+preempt start
+preempt finish with 4863
+fthread 13 leave barrier39486269
+fthread 13 meet barrier39486467
+preempt start
+preempt finish with 5139
+preempt start
+preempt finish with 4702
+preempt start
+preempt finish with 5057
+preempt start
+preempt finish with 5071
+fthread 15 leave barrier39835208
+fthread 15 meet barrier39835406
+preempt start
+preempt finish with 2817
+preempt start
+preempt finish with 9933
+preempt start
+preempt finish with 7622
+fthread 15 leave barrier40111378
+fthread 15 meet barrier40111576
+fthread 0 leave barrier40182000
+preempt start
+preempt finish with 3551
+fthread 1 leave barrier40194037
+fthread 1 meet barrier40194243
+fthread 2 leave barrier40263597
+fthread 2 meet barrier40263729
+preempt start
+preempt finish with 3692
+fthread 0 meet barrier40326398
+preempt start
+preempt finish with 3493
+fthread 3 leave barrier40371540
+fthread 3 meet barrier40371738
+preempt start
+preempt finish with 3714
+fthread 4 leave barrier40461587
+fthread 4 meet barrier40461785
+preempt start
+preempt finish with 4158
+fthread 5 leave barrier40551291
+fthread 5 meet barrier40551489
+preempt start
+preempt finish with 4194
+fthread 6 leave barrier40640971
+fthread 6 meet barrier40641169
+preempt start
+preempt finish with 2846
+fthread 7 leave barrier40802031
+preempt start
+preempt finish with 2356
+fthread 7 meet barrier40815258
+preempt start
+preempt finish with 2498
+preempt start
+preempt finish with 2754
+fthread 8 leave barrier40988196
+fthread 8 meet barrier40988394
+preempt start
+preempt finish with 2360
+preempt start
+preempt finish with 3282
+fthread 9 leave barrier41161568
+fthread 9 meet barrier41161766
+preempt start
+preempt finish with 3056
+preempt start
+preempt finish with 3752
+fthread 10 leave barrier41336162
+fthread 10 meet barrier41336360
+preempt start
+preempt finish with 4086
+preempt start
+preempt finish with 4296
+fthread 11 leave barrier41512238
+fthread 11 meet barrier41512436
+preempt start
+preempt finish with 4846
+preempt start
+preempt finish with 4551
+fthread 12 leave barrier41689433
+fthread 12 meet barrier41689631
+preempt start
+preempt finish with 4964
+preempt start
+preempt finish with 4804
+fthread 13 leave barrier41867010
+fthread 13 meet barrier41867208
+preempt start
+preempt finish with 5080
+preempt start
+preempt finish with 5055
+fthread 14 leave barrier42044969
+fthread 14 meet barrier42045167
+preempt start
+preempt finish with 5194
+preempt start
+preempt finish with 5020
+preempt start
+preempt finish with 9802
+preempt start
+preempt finish with 7505
+fthread 14 leave barrier42404349
+fthread 14 meet barrier42405536
+fthread 0 leave barrier42475000
+fthread 0 meet barrier42475781
+preempt start
+preempt finish with 3637
+fthread 1 leave barrier42487469
+fthread 1 meet barrier42488656
+preempt start
+preempt finish with 3508
+fthread 2 leave barrier42576491
+fthread 2 meet barrier42577678
+preempt start
+preempt finish with 3502
+fthread 3 leave barrier42665490
+fthread 3 meet barrier42666677
+preempt start
+preempt finish with 3979
+fthread 4 leave barrier42754974
+fthread 4 meet barrier42756161
+preempt start
+preempt finish with 4198
+fthread 5 leave barrier42844709
+fthread 5 meet barrier42845896
+preempt start
+preempt finish with 4137
+fthread 6 leave barrier42934420
+fthread 6 meet barrier42935607
+preempt start
+preempt finish with 2948
+fthread 7 leave barrier43095509
+preempt start
+preempt finish with 2330
+fthread 7 meet barrier43109694
+preempt start
+preempt finish with 2357
+preempt start
+preempt finish with 2741
+fthread 8 leave barrier43281433
+fthread 8 meet barrier43282620
+preempt start
+preempt finish with 2378
+preempt start
+preempt finish with 3300
+fthread 9 leave barrier43454836
+fthread 9 meet barrier43456023
+preempt start
+preempt finish with 3105
+preempt start
+preempt finish with 3801
+fthread 10 leave barrier43629461
+fthread 10 meet barrier43630648
+preempt start
+preempt finish with 4038
+preempt start
+preempt finish with 4376
+fthread 11 leave barrier43805568
+fthread 11 meet barrier43806755
+preempt start
+preempt finish with 4957
+preempt start
+preempt finish with 4534
+fthread 12 leave barrier43982794
+fthread 12 meet barrier43983981
+preempt start
+preempt finish with 4978
+preempt start
+preempt finish with 4818
+fthread 13 leave barrier44160402
+fthread 13 meet barrier44161589
+preempt start
+preempt finish with 5125
+preempt start
+preempt finish with 4690
+preempt start
+preempt finish with 5047
+preempt start
+preempt finish with 5061
+fthread 15 leave barrier44509374
+fthread 15 meet barrier44510561
+preempt start
+preempt finish with 2836
+preempt start
+preempt finish with 9956
+preempt start
+preempt finish with 7645
+fthread 15 leave barrier44785593
+fthread 15 meet barrier44786689
+fthread 0 leave barrier44856248
+preempt start
+preempt finish with 3612
+fthread 1 leave barrier44868288
+fthread 1 meet barrier44869436
+fthread 2 leave barrier44937923
+fthread 2 meet barrier44938638
+preempt start
+preempt finish with 3831
+fthread 0 meet barrier45000953
+preempt start
+preempt finish with 3557
+fthread 3 leave barrier45045926
+fthread 3 meet barrier45047022
+preempt start
+preempt finish with 3690
+fthread 4 leave barrier45136013
+fthread 4 meet barrier45137109
+preempt start
+preempt finish with 4174
+fthread 5 leave barrier45225757
+fthread 5 meet barrier45226853
+preempt start
+preempt finish with 4250
+fthread 6 leave barrier45315477
+fthread 6 meet barrier45316573
+preempt start
+preempt finish with 2942
+fthread 7 leave barrier45476570
+preempt start
+preempt finish with 2324
+fthread 7 meet barrier45490650
+preempt start
+preempt finish with 2356
+preempt start
+preempt finish with 2740
+fthread 8 leave barrier45662504
+fthread 8 meet barrier45663600
+preempt start
+preempt finish with 2386
+preempt start
+preempt finish with 3180
+fthread 9 leave barrier45835916
+fthread 9 meet barrier45837012
+preempt start
+preempt finish with 3122
+preempt start
+preempt finish with 3818
+fthread 10 leave barrier46010550
+fthread 10 meet barrier46011646
+preempt start
+preempt finish with 4064
+preempt start
+preempt finish with 4274
+fthread 11 leave barrier46186666
+fthread 11 meet barrier46187762
+preempt start
+preempt finish with 4864
+preempt start
+preempt finish with 4569
+fthread 12 leave barrier46363901
+fthread 12 meet barrier46364997
+preempt start
+preempt finish with 5022
+preempt start
+preempt finish with 4862
+fthread 13 leave barrier46541518
+fthread 13 meet barrier46542614
+preempt start
+preempt finish with 5178
+preempt start
+preempt finish with 4878
+fthread 14 leave barrier46719242
+fthread 14 meet barrier46720338
+preempt start
+preempt finish with 5313
+preempt start
+preempt finish with 5013
+preempt start
+preempt finish with 9799
+preempt start
+preempt finish with 7502
+fthread 14 leave barrier47078666
+fthread 14 meet barrier47079764
+fthread 0 leave barrier47149323
+preempt start
+preempt finish with 3733
+fthread 1 leave barrier47161913
+fthread 2 leave barrier47233150
+fthread 2 meet barrier47233865
+preempt start
+preempt finish with 3336
+fthread 3 leave barrier47253806
+fthread 3 meet barrier47254990
+fthread 0 meet barrier47298876
+fthread 1 meet barrier47302413
+preempt start
+preempt finish with 3745
+fthread 4 leave barrier47339641
+fthread 4 meet barrier47340739
+preempt start
+preempt finish with 3620
+preempt start
+preempt finish with 2325
+preempt start
+preempt finish with 2055
+fthread 5 leave barrier47675963
+fthread 5 meet barrier47676678
+preempt start
+preempt finish with 2350
+fthread 6 leave barrier47760451
+fthread 6 meet barrier47761166
+preempt start
+preempt finish with 2617
+preempt start
+preempt finish with 2074
+preempt start
+preempt finish with 2310
+preempt start
+preempt finish with 2424
+fthread 7 leave barrier48029905
+fthread 7 meet barrier48031003
+fthread 8 leave barrier48105507
+preempt start
+preempt finish with 2821
+fthread 8 meet barrier48122044
+preempt start
+preempt finish with 2422
+preempt start
+preempt finish with 3216
+fthread 9 leave barrier48294832
+fthread 9 meet barrier48295930
+preempt start
+preempt finish with 3160
+preempt start
+preempt finish with 3728
+fthread 10 leave barrier48469468
+fthread 10 meet barrier48470566
+preempt start
+preempt finish with 4104
+preempt start
+preempt finish with 4314
+fthread 11 leave barrier48645586
+fthread 11 meet barrier48646684
+preempt start
+preempt finish with 4906
+preempt start
+preempt finish with 4611
+fthread 12 leave barrier48822823
+fthread 12 meet barrier48823921
+preempt start
+preempt finish with 5066
+preempt start
+preempt finish with 4906
+fthread 13 leave barrier49000442
+fthread 13 meet barrier49001540
+preempt start
+preempt finish with 5224
+preempt start
+preempt finish with 4661
+preempt start
+preempt finish with 5146
+preempt start
+preempt finish with 5032
+fthread 15 leave barrier49349425
+fthread 15 meet barrier49350523
+preempt start
+preempt finish with 2946
+preempt start
+preempt finish with 9938
+preempt start
+preempt finish with 7627
+fthread 15 leave barrier49625639
+fthread 15 meet barrier49626737
+fthread 0 leave barrier49696296
+preempt start
+preempt finish with 3596
+fthread 1 leave barrier49708336
+fthread 2 leave barrier49779532
+fthread 3 leave barrier49782958
+fthread 3 meet barrier49783676
+preempt start
+preempt finish with 4064
+fthread 4 leave barrier49803588
+fthread 4 meet barrier49804810
+fthread 0 meet barrier49848127
+fthread 1 meet barrier49851724
+preempt start
+preempt finish with 4001
+fthread 5 leave barrier49889182
+fthread 5 meet barrier49890332
+fthread 2 meet barrier49934497
+preempt start
+preempt finish with 3662
+preempt start
+preempt finish with 3820
+preempt start
+preempt finish with 2269
+fthread 6 leave barrier50225835
+preempt start
+preempt finish with 2296
+fthread 6 meet barrier50236135
+fthread 7 leave barrier50310751
+fthread 7 meet barrier50311466
+preempt start
+preempt finish with 2716
+preempt start
+preempt finish with 2308
+preempt start
+preempt finish with 2287
+preempt start
+preempt finish with 2939
+fthread 8 leave barrier50580586
+fthread 8 meet barrier50581684
+preempt start
+preempt finish with 2911
+fthread 9 leave barrier50671354
+fthread 9 meet barrier50672452
+preempt start
+preempt finish with 3106
+preempt start
+preempt finish with 3802
+fthread 10 leave barrier50845990
+fthread 10 meet barrier50847088
+preempt start
+preempt finish with 4050
+preempt start
+preempt finish with 4260
+fthread 11 leave barrier51022108
+fthread 11 meet barrier51023206
+preempt start
+preempt finish with 4705
+preempt start
+preempt finish with 4538
+fthread 12 leave barrier51199070
+fthread 12 meet barrier51200168
+preempt start
+preempt finish with 4993
+preempt start
+preempt finish with 4833
+fthread 13 leave barrier51376689
+fthread 13 meet barrier51377787
+preempt start
+preempt finish with 5151
+preempt start
+preempt finish with 4851
+fthread 14 leave barrier51554415
+fthread 14 meet barrier51555513
+preempt start
+preempt finish with 5288
+preempt start
+preempt finish with 4988
+preempt start
+preempt finish with 9774
+preempt start
+preempt finish with 7605
+fthread 14 leave barrier51913841
+fthread 14 meet barrier51914939
+fthread 0 leave barrier51984498
+preempt start
+preempt finish with 3561
+fthread 1 leave barrier51996813
+fthread 2 leave barrier52068115
+fthread 3 leave barrier52071542
+preempt start
+preempt finish with 4042
+fthread 4 leave barrier52090894
+fthread 4 meet barrier52092134
+fthread 0 meet barrier52137796
+fthread 1 meet barrier52141462
+fthread 5 leave barrier52153538
+fthread 5 meet barrier52154265
+preempt start
+preempt finish with 4809
+fthread 2 meet barrier52226808
+fthread 3 meet barrier52233087
+preempt start
+preempt finish with 3631
+preempt start
+preempt finish with 3785
+preempt start
+preempt finish with 2087
+fthread 6 leave barrier52513397
+preempt start
+preempt finish with 2370
+fthread 6 meet barrier52523813
+fthread 7 leave barrier52598317
+fthread 7 meet barrier52599032
+preempt start
+preempt finish with 2666
+preempt start
+preempt finish with 2258
+preempt start
+preempt finish with 2237
+preempt start
+preempt finish with 3017
+fthread 8 leave barrier52868152
+fthread 8 meet barrier52869250
+preempt start
+preempt finish with 2861
+fthread 9 leave barrier52958920
+fthread 9 meet barrier52960018
+preempt start
+preempt finish with 3184
+preempt start
+preempt finish with 3752
+fthread 10 leave barrier53133556
+fthread 10 meet barrier53134654
+preempt start
+preempt finish with 4128
+preempt start
+preempt finish with 4338
+fthread 11 leave barrier53309674
+fthread 11 meet barrier53310772
+preempt start
+preempt finish with 4930
+preempt start
+preempt finish with 4635
+fthread 12 leave barrier53486911
+fthread 12 meet barrier53488009
+preempt start
+preempt finish with 5090
+preempt start
+preempt finish with 4802
+fthread 13 leave barrier53664530
+fthread 13 meet barrier53665628
+preempt start
+preempt finish with 5120
+preempt start
+preempt finish with 4685
+preempt start
+preempt finish with 5042
+preempt start
+preempt finish with 5056
+fthread 15 leave barrier54013513
+fthread 15 meet barrier54014611
+preempt start
+preempt finish with 2842
+preempt start
+preempt finish with 9962
+preempt start
+preempt finish with 7651
+fthread 15 leave barrier54289727
+fthread 15 meet barrier54290044
+fthread 0 leave barrier54360344
+preempt start
+preempt finish with 3580
+fthread 1 leave barrier54372386
+fthread 2 leave barrier54443613
+fthread 3 leave barrier54447037
+fthread 3 meet barrier54447246
+preempt start
+preempt finish with 4059
+fthread 4 leave barrier54467662
+fthread 4 meet barrier54468019
+fthread 0 meet barrier54512027
+fthread 1 meet barrier54515078
+preempt start
+preempt finish with 3896
+fthread 5 leave barrier54553145
+fthread 5 meet barrier54553478
+fthread 2 meet barrier54596926
+preempt start
+preempt finish with 3838
+preempt start
+preempt finish with 3866
+preempt start
+preempt finish with 2313
+fthread 6 leave barrier54889943
+fthread 6 meet barrier54890152
+preempt start
+preempt finish with 2340
+fthread 7 leave barrier54974826
+fthread 7 meet barrier54975035
+preempt start
+preempt finish with 2727
+preempt start
+preempt finish with 2317
+preempt start
+preempt finish with 2294
+preempt start
+preempt finish with 2946
+fthread 8 leave barrier55244657
+fthread 8 meet barrier55244974
+preempt start
+preempt finish with 2878
+fthread 9 leave barrier55335383
+fthread 9 meet barrier55335700
+preempt start
+preempt finish with 3031
+preempt start
+preempt finish with 3727
+fthread 10 leave barrier55509977
+fthread 10 meet barrier55510294
+preempt start
+preempt finish with 4061
+preempt start
+preempt finish with 4271
+fthread 11 leave barrier55686053
+fthread 11 meet barrier55686370
+preempt start
+preempt finish with 4949
+preempt start
+preempt finish with 4801
+fthread 12 leave barrier55863523
+fthread 12 meet barrier55863840
+preempt start
+preempt finish with 4958
+preempt start
+preempt finish with 4798
+fthread 13 leave barrier56041100
+fthread 13 meet barrier56041417
+preempt start
+preempt finish with 5074
+preempt start
+preempt finish with 5049
+fthread 14 leave barrier56219059
+fthread 14 meet barrier56219376
+preempt start
+preempt finish with 5188
+preempt start
+preempt finish with 5014
+preempt start
+preempt finish with 9796
+preempt start
+preempt finish with 7499
+fthread 14 leave barrier56578423
+fthread 14 meet barrier56578621
+fthread 0 leave barrier56649045
+preempt start
+preempt finish with 3690
+fthread 1 leave barrier56661629
+fthread 2 leave barrier56732688
+fthread 2 meet barrier56732820
+preempt start
+preempt finish with 3416
+fthread 3 leave barrier56752323
+fthread 3 meet barrier56752541
+fthread 0 meet barrier56795809
+fthread 1 meet barrier56799914
+preempt start
+preempt finish with 3609
+fthread 4 leave barrier56838111
+fthread 4 meet barrier56838309
+preempt start
+preempt finish with 3570
+preempt start
+preempt finish with 2317
+preempt start
+preempt finish with 3022
+fthread 5 leave barrier57176691
+fthread 5 meet barrier57176823
+preempt start
+preempt finish with 2604
+fthread 6 leave barrier57262951
+fthread 6 meet barrier57263083
+preempt start
+preempt finish with 2573
+preempt start
+preempt finish with 2307
+preempt start
+preempt finish with 2285
+preempt start
+preempt finish with 2399
+fthread 7 leave barrier57531048
+fthread 7 meet barrier57531246
+fthread 8 leave barrier57606615
+fthread 8 meet barrier57606747
+preempt start
+preempt finish with 2790
+preempt start
+preempt finish with 2251
+preempt start
+preempt finish with 2894
+preempt start
+preempt finish with 3444
+fthread 9 leave barrier57877097
+fthread 9 meet barrier57877295
+preempt start
+preempt finish with 3808
+fthread 10 leave barrier57969173
+fthread 10 meet barrier57969371
+preempt start
+preempt finish with 4009
+preempt start
+preempt finish with 4347
+fthread 11 leave barrier58145249
+fthread 11 meet barrier58145447
+preempt start
+preempt finish with 4897
+preempt start
+preempt finish with 4602
+fthread 12 leave barrier58322444
+fthread 12 meet barrier58322642
+preempt start
+preempt finish with 5015
+preempt start
+preempt finish with 4855
+fthread 13 leave barrier58500021
+fthread 13 meet barrier58500219
+preempt start
+preempt finish with 5131
+preempt start
+preempt finish with 4694
+preempt start
+preempt finish with 5049
+preempt start
+preempt finish with 5063
+fthread 15 leave barrier58848960
+fthread 15 meet barrier58849158
+preempt start
+preempt finish with 2809
+preempt start
+preempt finish with 9925
+preempt start
+preempt finish with 7614
+fthread 15 leave barrier59125130
+fthread 15 meet barrier59125328
+fthread 0 leave barrier59195752
+preempt start
+preempt finish with 3543
+fthread 1 leave barrier59207789
+fthread 1 meet barrier59207993
+fthread 2 leave barrier59277327
+fthread 2 meet barrier59277459
+preempt start
+preempt finish with 3662
+fthread 0 meet barrier59340660
+preempt start
+preempt finish with 3499
+fthread 3 leave barrier59385306
+fthread 3 meet barrier59385504
+preempt start
+preempt finish with 3720
+fthread 4 leave barrier59475353
+fthread 4 meet barrier59475551
+preempt start
+preempt finish with 4164
+fthread 5 leave barrier59565057
+fthread 5 meet barrier59565255
+preempt start
+preempt finish with 4200
+fthread 6 leave barrier59654737
+fthread 6 meet barrier59654935
+preempt start
+preempt finish with 2852
+fthread 7 leave barrier59815797
+preempt start
+preempt finish with 2362
+fthread 7 meet barrier59829024
+preempt start
+preempt finish with 2504
+preempt start
+preempt finish with 2760
+fthread 8 leave barrier60001962
+fthread 8 meet barrier60002160
+preempt start
+preempt finish with 2366
+preempt start
+preempt finish with 3288
+fthread 9 leave barrier60175334
+fthread 9 meet barrier60175532
+preempt start
+preempt finish with 3062
+preempt start
+preempt finish with 3758
+fthread 10 leave barrier60349928
+fthread 10 meet barrier60350126
+preempt start
+preempt finish with 4092
+preempt start
+preempt finish with 4302
+fthread 11 leave barrier60526004
+fthread 11 meet barrier60526202
+preempt start
+preempt finish with 4852
+preempt start
+preempt finish with 4557
+fthread 12 leave barrier60703199
+fthread 12 meet barrier60703397
+preempt start
+preempt finish with 4970
+preempt start
+preempt finish with 4810
+fthread 13 leave barrier60880776
+fthread 13 meet barrier60880974
+preempt start
+preempt finish with 5086
+preempt start
+preempt finish with 5061
+fthread 14 leave barrier61058735
+fthread 14 meet barrier61058933
+preempt start
+preempt finish with 5200
+preempt start
+preempt finish with 4898
+preempt start
+preempt finish with 9808
+preempt start
+preempt finish with 7511
+fthread 14 leave barrier61418115
+fthread 14 meet barrier61418579
+fthread 0 leave barrier61488743
+preempt start
+preempt finish with 3709
+fthread 1 leave barrier61501313
+fthread 1 meet barrier61501787
+preempt start
+preempt finish with 3271
+fthread 2 leave barrier61588895
+fthread 2 meet barrier61589359
+preempt start
+preempt finish with 3678
+fthread 3 leave barrier61678144
+fthread 3 meet barrier61678608
+preempt start
+preempt finish with 3874
+fthread 4 leave barrier61767603
+fthread 4 meet barrier61768067
+preempt start
+preempt finish with 4196
+fthread 5 leave barrier61857313
+fthread 5 meet barrier61857777
+preempt start
+preempt finish with 4110
+fthread 6 leave barrier61946999
+fthread 6 meet barrier61947463
+preempt start
+preempt finish with 2896
+fthread 7 leave barrier62108065
+preempt start
+preempt finish with 2285
+fthread 7 meet barrier62121504
+preempt start
+preempt finish with 2561
+preempt start
+preempt finish with 2689
+fthread 8 leave barrier62294115
+fthread 8 meet barrier62294579
+preempt start
+preempt finish with 2429
+preempt start
+preempt finish with 3223
+fthread 9 leave barrier62467493
+fthread 9 meet barrier62467957
+preempt start
+preempt finish with 3131
+preempt start
+preempt finish with 3827
+fthread 10 leave barrier62642093
+fthread 10 meet barrier62642557
+preempt start
+preempt finish with 4039
+preempt start
+preempt finish with 4377
+fthread 11 leave barrier62818175
+fthread 11 meet barrier62818639
+preempt start
+preempt finish with 4933
+preempt start
+preempt finish with 4638
+fthread 12 leave barrier62995376
+fthread 12 meet barrier62995840
+preempt start
+preempt finish with 5057
+preempt start
+preempt finish with 4897
+fthread 13 leave barrier63172959
+fthread 13 meet barrier63173423
+preempt start
+preempt finish with 5179
+preempt start
+preempt finish with 4742
+preempt start
+preempt finish with 5097
+preempt start
+preempt finish with 4983
+fthread 15 leave barrier63521904
+fthread 15 meet barrier63522368
+preempt start
+preempt finish with 2863
+preempt start
+preempt finish with 4943
+********time:63774261*******
+ReadSocket event for pid: 1 at time: 0
+********time:63774262*******
+flag set:32
+preempt start
+preempt finish with 2085
+blk:3
+********time:63893043*******
+flag set:32
+fthread 0 meet barrier63930480
+preempt start
+preempt finish with 7307
+fthread 0 leave barrier64087394
+fthread 0 meet barrier64088587
+preempt start
+preempt finish with 7590
+fthread 1 leave barrier64115211
+fthread 1 meet barrier64116381
+fthread 2 leave barrier64187447
+fthread 2 meet barrier64188206
+preempt start
+preempt finish with 3638
+preempt start
+preempt finish with 3529
+fthread 3 leave barrier64368123
+fthread 3 meet barrier64368882
+preempt start
+preempt finish with 2324
+fthread 4 leave barrier64455384
+fthread 4 meet barrier64456143
+preempt start
+preempt finish with 2391
+preempt start
+preempt finish with 2399
+preempt start
+preempt finish with 2975
+fthread 5 leave barrier64718215
+fthread 5 meet barrier64718974
+preempt start
+preempt finish with 2372
+fthread 6 leave barrier64802709
+fthread 6 meet barrier64803468
+preempt start
+preempt finish with 2792
+preempt start
+preempt finish with 2268
+preempt start
+preempt finish with 2248
+preempt start
+preempt finish with 2493
+fthread 7 leave barrier65072711
+fthread 7 meet barrier65073865
+fthread 8 leave barrier65148311
+preempt start
+preempt finish with 2755
+fthread 8 meet barrier65164798
+preempt start
+preempt finish with 2470
+preempt start
+preempt finish with 3267
+fthread 9 leave barrier65337620
+fthread 9 meet barrier65338774
+preempt start
+preempt finish with 3073
+preempt start
+preempt finish with 3772
+fthread 10 leave barrier65512249
+fthread 10 meet barrier65513403
+preempt start
+preempt finish with 4010
+preempt start
+preempt finish with 4351
+fthread 11 leave barrier65688360
+fthread 11 meet barrier65689514
+preempt start
+preempt finish with 4933
+preempt start
+preempt finish with 4641
+fthread 12 leave barrier65865590
+fthread 12 meet barrier65866744
+preempt start
+preempt finish with 5086
+preempt start
+preempt finish with 4801
+fthread 13 leave barrier66043202
+fthread 13 meet barrier66044356
+preempt start
+preempt finish with 5109
+preempt start
+preempt finish with 4812
+fthread 14 leave barrier66220921
+fthread 14 meet barrier66222075
+preempt start
+preempt finish with 5239
+preempt start
+preempt finish with 5077
+fthread 15 leave barrier66399022
+fthread 15 meet barrier66400176
+preempt start
+preempt finish with 5169
+preempt start
+preempt finish with 9980
+preempt start
+preempt finish with 7669
+fthread 15 leave barrier66671122
+fthread 15 meet barrier66672218
+fthread 0 leave barrier66741777
+preempt start
+preempt finish with 3636
+fthread 1 leave barrier66753817
+fthread 1 meet barrier66754965
+fthread 2 leave barrier66823424
+fthread 2 meet barrier66824139
+preempt start
+preempt finish with 3827
+fthread 0 meet barrier66886307
+preempt start
+preempt finish with 3568
+fthread 3 leave barrier66931442
+fthread 3 meet barrier66932538
+preempt start
+preempt finish with 3701
+fthread 4 leave barrier67021529
+fthread 4 meet barrier67022625
+preempt start
+preempt finish with 4185
+fthread 5 leave barrier67111273
+fthread 5 meet barrier67112369
+preempt start
+preempt finish with 4133
+fthread 6 leave barrier67200993
+fthread 6 meet barrier67202089
+preempt start
+preempt finish with 2953
+fthread 7 leave barrier67362086
+preempt start
+preempt finish with 2335
+fthread 7 meet barrier67376185
+preempt start
+preempt finish with 2370
+preempt start
+preempt finish with 2754
+fthread 8 leave barrier67548023
+fthread 8 meet barrier67549119
+preempt start
+preempt finish with 2400
+preempt start
+preempt finish with 3194
+fthread 9 leave barrier67721435
+fthread 9 meet barrier67722531
+preempt start
+preempt finish with 3136
+preempt start
+preempt finish with 3832
+fthread 10 leave barrier67896069
+fthread 10 meet barrier67897165
+preempt start
+preempt finish with 4078
+preempt start
+preempt finish with 4288
+fthread 11 leave barrier68072185
+fthread 11 meet barrier68073281
+preempt start
+preempt finish with 4878
+preempt start
+preempt finish with 4583
+fthread 12 leave barrier68249420
+fthread 12 meet barrier68250516
+preempt start
+preempt finish with 5036
+preempt start
+preempt finish with 4876
+fthread 13 leave barrier68427037
+fthread 13 meet barrier68428133
+preempt start
+preempt finish with 5192
+preempt start
+preempt finish with 4892
+fthread 14 leave barrier68604761
+fthread 14 meet barrier68605857
+preempt start
+preempt finish with 5327
+preempt start
+preempt finish with 4899
+preempt start
+preempt finish with 9813
+preempt start
+preempt finish with 7516
+fthread 14 leave barrier68964185
+fthread 14 meet barrier68965283
+fthread 0 leave barrier69034842
+preempt start
+preempt finish with 3472
+fthread 1 leave barrier69047157
+fthread 2 leave barrier69118442
+fthread 2 meet barrier69119157
+preempt start
+preempt finish with 3379
+fthread 3 leave barrier69139097
+fthread 3 meet barrier69140287
+fthread 0 meet barrier69184143
+fthread 1 meet barrier69187686
+preempt start
+preempt finish with 3537
+fthread 4 leave barrier69224682
+fthread 4 meet barrier69225780
+preempt start
+preempt finish with 3540
+preempt start
+preempt finish with 2399
+preempt start
+preempt finish with 2975
+fthread 5 leave barrier69563408
+fthread 5 meet barrier69564123
+preempt start
+preempt finish with 2370
+fthread 6 leave barrier69647898
+fthread 6 meet barrier69648613
+preempt start
+preempt finish with 2786
+preempt start
+preempt finish with 2262
+preempt start
+preempt finish with 2242
+preempt start
+preempt finish with 2484
+fthread 7 leave barrier69917902
+fthread 7 meet barrier69919000
+fthread 8 leave barrier69993504
+preempt start
+preempt finish with 2753
+fthread 8 meet barrier70009940
+preempt start
+preempt finish with 2478
+preempt start
+preempt finish with 3272
+fthread 9 leave barrier70182825
+fthread 9 meet barrier70183923
+preempt start
+preempt finish with 3088
+preempt start
+preempt finish with 3784
+fthread 10 leave barrier70357461
+fthread 10 meet barrier70358559
+preempt start
+preempt finish with 4032
+preempt start
+preempt finish with 4370
+fthread 11 leave barrier70533579
+fthread 11 meet barrier70534677
+preempt start
+preempt finish with 4962
+preempt start
+preempt finish with 4539
+fthread 12 leave barrier70710816
+fthread 12 meet barrier70711914
+preempt start
+preempt finish with 4994
+preempt start
+preempt finish with 4834
+fthread 13 leave barrier70888435
+fthread 13 meet barrier70889533
+preempt start
+preempt finish with 5152
+preempt start
+preempt finish with 4717
+preempt start
+preempt finish with 5074
+preempt start
+preempt finish with 4960
+fthread 15 leave barrier71237418
+fthread 15 meet barrier71238516
+preempt start
+preempt finish with 2874
+preempt start
+preempt finish with 9866
+preempt start
+preempt finish with 7683
+fthread 15 leave barrier71513632
+fthread 15 meet barrier71514730
+fthread 0 leave barrier71584289
+preempt start
+preempt finish with 3652
+fthread 1 leave barrier71596329
+fthread 2 leave barrier71667611
+fthread 3 leave barrier71671040
+fthread 3 meet barrier71671760
+preempt start
+preempt finish with 4705
+fthread 4 leave barrier71690945
+fthread 4 meet barrier71692173
+fthread 0 meet barrier71735627
+fthread 1 meet barrier71739004
+preempt start
+preempt finish with 3788
+fthread 5 leave barrier71776264
+fthread 5 meet barrier71777416
+fthread 2 meet barrier71821682
+preempt start
+preempt finish with 3853
+preempt start
+preempt finish with 3883
+preempt start
+preempt finish with 2057
+fthread 6 leave barrier72112920
+preempt start
+preempt finish with 2340
+fthread 6 meet barrier72123285
+fthread 7 leave barrier72197836
+fthread 7 meet barrier72198551
+preempt start
+preempt finish with 2760
+preempt start
+preempt finish with 2077
+preempt start
+preempt finish with 2312
+preempt start
+preempt finish with 2964
+fthread 8 leave barrier72467396
+fthread 8 meet barrier72468494
+preempt start
+preempt finish with 2936
+fthread 9 leave barrier72558164
+fthread 9 meet barrier72559262
+preempt start
+preempt finish with 3131
+preempt start
+preempt finish with 3827
+fthread 10 leave barrier72732800
+fthread 10 meet barrier72733898
+preempt start
+preempt finish with 4075
+preempt start
+preempt finish with 4285
+fthread 11 leave barrier72908918
+fthread 11 meet barrier72910016
+preempt start
+preempt finish with 4877
+preempt start
+preempt finish with 4582
+fthread 12 leave barrier73086155
+fthread 12 meet barrier73087253
+preempt start
+preempt finish with 5037
+preempt start
+preempt finish with 4877
+fthread 13 leave barrier73263774
+fthread 13 meet barrier73264872
+preempt start
+preempt finish with 5195
+preempt start
+preempt finish with 4895
+fthread 14 leave barrier73441500
+fthread 14 meet barrier73442598
+preempt start
+preempt finish with 5332
+preempt start
+preempt finish with 4904
+preempt start
+preempt finish with 9818
+preempt start
+preempt finish with 7521
+fthread 14 leave barrier73800926
+fthread 14 meet barrier73802024
+fthread 0 leave barrier73871583
+preempt start
+preempt finish with 3477
+fthread 1 leave barrier73883898
+fthread 2 leave barrier73955156
+fthread 3 leave barrier73958583
+preempt start
+preempt finish with 4042
+fthread 4 leave barrier73977974
+fthread 4 meet barrier73979232
+fthread 0 meet barrier74024973
+fthread 1 meet barrier74028618
+fthread 5 leave barrier74040637
+fthread 5 meet barrier74041363
+preempt start
+preempt finish with 4917
+fthread 2 meet barrier74114071
+fthread 3 meet barrier74120338
+preempt start
+preempt finish with 3609
+preempt start
+preempt finish with 3763
+preempt start
+preempt finish with 2065
+fthread 6 leave barrier74400544
+preempt start
+preempt finish with 2348
+fthread 6 meet barrier74410927
+fthread 7 leave barrier74485462
+fthread 7 meet barrier74486177
+preempt start
+preempt finish with 2770
+preempt start
+preempt finish with 2234
+preempt start
+preempt finish with 2341
+preempt start
+preempt finish with 2993
+fthread 8 leave barrier74755297
+fthread 8 meet barrier74756395
+preempt start
+preempt finish with 2965
+fthread 9 leave barrier74846065
+fthread 9 meet barrier74847163
+preempt start
+preempt finish with 3160
+preempt start
+preempt finish with 3728
+fthread 10 leave barrier75020701
+fthread 10 meet barrier75021799
+preempt start
+preempt finish with 4104
+preempt start
+preempt finish with 4314
+fthread 11 leave barrier75196819
+fthread 11 meet barrier75197917
+preempt start
+preempt finish with 4906
+preempt start
+preempt finish with 4611
+fthread 12 leave barrier75374056
+fthread 12 meet barrier75375154
+preempt start
+preempt finish with 5066
+preempt start
+preempt finish with 4906
+fthread 13 leave barrier75551675
+fthread 13 meet barrier75552773
+preempt start
+preempt finish with 5224
+preempt start
+preempt finish with 4661
+preempt start
+preempt finish with 5146
+preempt start
+preempt finish with 5032
+fthread 15 leave barrier75900658
+fthread 15 meet barrier75901756
+preempt start
+preempt finish with 2946
+preempt start
+preempt finish with 9938
+preempt start
+preempt finish with 7627
+fthread 15 leave barrier76176872
+fthread 15 meet barrier76177189
+fthread 0 leave barrier76247489
+preempt start
+preempt finish with 3556
+fthread 1 leave barrier76259531
+fthread 2 leave barrier76330681
+fthread 3 leave barrier76334106
+fthread 3 meet barrier76334315
+preempt start
+preempt finish with 3957
+fthread 4 leave barrier76354740
+fthread 4 meet barrier76355102
+fthread 0 meet barrier76399044
+fthread 1 meet barrier76401895
+preempt start
+preempt finish with 3950
+fthread 5 leave barrier76440242
+fthread 5 meet barrier76440576
+fthread 2 meet barrier76484048
+preempt start
+preempt finish with 3758
+preempt start
+preempt finish with 3914
+preempt start
+preempt finish with 2086
+fthread 6 leave barrier76776757
+fthread 6 meet barrier76776966
+preempt start
+preempt finish with 2369
+fthread 7 leave barrier76861645
+fthread 7 meet barrier76861854
+preempt start
+preempt finish with 2633
+preempt start
+preempt finish with 2076
+preempt start
+preempt finish with 2309
+preempt start
+preempt finish with 2961
+fthread 8 leave barrier77131201
+fthread 8 meet barrier77131518
+preempt start
+preempt finish with 2893
+fthread 9 leave barrier77221927
+fthread 9 meet barrier77222244
+preempt start
+preempt finish with 3046
+preempt start
+preempt finish with 3742
+fthread 10 leave barrier77396521
+fthread 10 meet barrier77396838
+preempt start
+preempt finish with 4076
+preempt start
+preempt finish with 4286
+fthread 11 leave barrier77572597
+fthread 11 meet barrier77572914
+preempt start
+preempt finish with 4836
+preempt start
+preempt finish with 4541
+fthread 12 leave barrier77749792
+fthread 12 meet barrier77750109
+preempt start
+preempt finish with 4954
+preempt start
+preempt finish with 4794
+fthread 13 leave barrier77927369
+fthread 13 meet barrier77927686
+preempt start
+preempt finish with 5070
+preempt start
+preempt finish with 5045
+fthread 14 leave barrier78105328
+fthread 14 meet barrier78105645
+preempt start
+preempt finish with 5184
+preempt start
+preempt finish with 5010
+preempt start
+preempt finish with 9792
+preempt start
+preempt finish with 7495
+fthread 14 leave barrier78464692
+fthread 14 meet barrier78464890
+fthread 0 leave barrier78535314
+preempt start
+preempt finish with 3686
+fthread 1 leave barrier78547898
+fthread 2 leave barrier78619013
+fthread 2 meet barrier78619145
+preempt start
+preempt finish with 3182
+fthread 3 leave barrier78638426
+fthread 3 meet barrier78638644
+fthread 0 meet barrier78681886
+fthread 1 meet barrier78685985
+preempt start
+preempt finish with 3601
+fthread 4 leave barrier78724120
+fthread 4 meet barrier78724318
+preempt start
+preempt finish with 3562
+preempt start
+preempt finish with 2320
+preempt start
+preempt finish with 3025
+fthread 5 leave barrier79062711
+fthread 5 meet barrier79062843
+preempt start
+preempt finish with 2607
+fthread 6 leave barrier79148971
+fthread 6 meet barrier79149103
+preempt start
+preempt finish with 2576
+preempt start
+preempt finish with 2310
+preempt start
+preempt finish with 2288
+preempt start
+preempt finish with 2402
+fthread 7 leave barrier79417068
+fthread 7 meet barrier79417266
+fthread 8 leave barrier79492635
+fthread 8 meet barrier79492767
+preempt start
+preempt finish with 2793
+preempt start
+preempt finish with 2254
+preempt start
+preempt finish with 2769
+preempt start
+preempt finish with 3447
+fthread 9 leave barrier79763117
+fthread 9 meet barrier79763315
+preempt start
+preempt finish with 3811
+fthread 10 leave barrier79855193
+fthread 10 meet barrier79855391
+preempt start
+preempt finish with 4012
+preempt start
+preempt finish with 4350
+fthread 11 leave barrier80031269
+fthread 11 meet barrier80031467
+preempt start
+preempt finish with 4900
+preempt start
+preempt finish with 4605
+fthread 12 leave barrier80208464
+fthread 12 meet barrier80208662
+preempt start
+preempt finish with 5018
+preempt start
+preempt finish with 4858
+fthread 13 leave barrier80386041
+fthread 13 meet barrier80386239
+preempt start
+preempt finish with 5134
+preempt start
+preempt finish with 4697
+preempt start
+preempt finish with 5052
+preempt start
+preempt finish with 5066
+fthread 15 leave barrier80734980
+fthread 15 meet barrier80735178
+preempt start
+preempt finish with 2812
+preempt start
+preempt finish with 9928
+preempt start
+preempt finish with 7617
+fthread 15 leave barrier81011150
+fthread 15 meet barrier81011348
+fthread 0 leave barrier81081772
+preempt start
+preempt finish with 3546
+fthread 1 leave barrier81093809
+fthread 1 meet barrier81094015
+fthread 2 leave barrier81163369
+fthread 2 meet barrier81163501
+preempt start
+preempt finish with 3687
+fthread 0 meet barrier81226028
+preempt start
+preempt finish with 3510
+fthread 3 leave barrier81271334
+fthread 3 meet barrier81271532
+preempt start
+preempt finish with 3731
+fthread 4 leave barrier81361381
+fthread 4 meet barrier81361579
+preempt start
+preempt finish with 4175
+fthread 5 leave barrier81451085
+fthread 5 meet barrier81451283
+preempt start
+preempt finish with 4211
+fthread 6 leave barrier81540765
+fthread 6 meet barrier81540963
+preempt start
+preempt finish with 2863
+fthread 7 leave barrier81701825
+preempt start
+preempt finish with 2373
+fthread 7 meet barrier81715068
+preempt start
+preempt finish with 2514
+preempt start
+preempt finish with 2642
+fthread 8 leave barrier81887989
+fthread 8 meet barrier81888187
+preempt start
+preempt finish with 2376
+preempt start
+preempt finish with 3298
+fthread 9 leave barrier82061361
+fthread 9 meet barrier82061559
+preempt start
+preempt finish with 3072
+preempt start
+preempt finish with 3768
+fthread 10 leave barrier82235955
+fthread 10 meet barrier82236153
+preempt start
+preempt finish with 3974
+preempt start
+preempt finish with 4312
+fthread 11 leave barrier82412031
+fthread 11 meet barrier82412229
+preempt start
+preempt finish with 4862
+preempt start
+preempt finish with 4567
+fthread 12 leave barrier82589226
+fthread 12 meet barrier82589424
+preempt start
+preempt finish with 4980
+preempt start
+preempt finish with 4820
+fthread 13 leave barrier82766803
+fthread 13 meet barrier82767001
+preempt start
+preempt finish with 5096
+preempt start
+preempt finish with 4796
+fthread 14 leave barrier82944487
+fthread 14 meet barrier82944685
+preempt start
+preempt finish with 5191
+preempt start
+preempt finish with 5017
+preempt start
+preempt finish with 9799
+preempt start
+preempt finish with 7502
+fthread 14 leave barrier83303867
+fthread 14 meet barrier83304331
+fthread 0 leave barrier83374495
+preempt start
+preempt finish with 3700
+fthread 1 leave barrier83387065
+fthread 1 meet barrier83387539
+preempt start
+preempt finish with 3262
+fthread 2 leave barrier83474647
+fthread 2 meet barrier83475111
+preempt start
+preempt finish with 3669
+fthread 3 leave barrier83563896
+fthread 3 meet barrier83564360
+preempt start
+preempt finish with 3865
+fthread 4 leave barrier83653355
+fthread 4 meet barrier83653819
+preempt start
+preempt finish with 4187
+fthread 5 leave barrier83743065
+fthread 5 meet barrier83743529
+preempt start
+preempt finish with 4101
+fthread 6 leave barrier83832751
+fthread 6 meet barrier83833215
+preempt start
+preempt finish with 2887
+fthread 7 leave barrier83993817
+preempt start
+preempt finish with 2276
+fthread 7 meet barrier84007256
+preempt start
+preempt finish with 2552
+preempt start
+preempt finish with 2680
+fthread 8 leave barrier84179867
+fthread 8 meet barrier84180331
+preempt start
+preempt finish with 2420
+preempt start
+preempt finish with 3214
+fthread 9 leave barrier84353245
+fthread 9 meet barrier84353709
+preempt start
+preempt finish with 3122
+preempt start
+preempt finish with 3818
+fthread 10 leave barrier84527845
+fthread 10 meet barrier84528309
+preempt start
+preempt finish with 4030
+preempt start
+preempt finish with 4368
+fthread 11 leave barrier84703927
+fthread 11 meet barrier84704391
+preempt start
+preempt finish with 4924
+preempt start
+preempt finish with 4629
+fthread 12 leave barrier84881128
+fthread 12 meet barrier84881592
+preempt start
+preempt finish with 5048
+preempt start
+preempt finish with 4888
+fthread 13 leave barrier85058711
+fthread 13 meet barrier85059175
+preempt start
+preempt finish with 5170
+preempt start
+preempt finish with 4733
+preempt start
+preempt finish with 5088
+preempt start
+preempt finish with 4974
+fthread 15 leave barrier85407656
+fthread 15 meet barrier85408120
+preempt start
+preempt finish with 2854
+preempt start
+preempt finish with 4934
+********time:85660013*******
+ReadSocket event for pid: 1 at time: 0
+********time:85660014*******
+sucess

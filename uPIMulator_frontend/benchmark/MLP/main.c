@@ -17,7 +17,7 @@
 dpu_arguments_t DPU_INPUT_ARGUMENTS;
 
 // GEMV
-static void gemv(T *bufferC, T *bufferA, T *bufferB, int pos)
+static void __attribute__((noinline)) gemv(T *bufferC, T *bufferA, T *bufferB, int pos)
 {
   unsigned int tasklet_id = get_jid();
   for (unsigned int i = 0; i < BLOCK_SIZE / sizeof(T); i++)
@@ -72,17 +72,9 @@ void main1()
     {
       char ok = 1;
       r = socket_write(sd_host, &ok, 1);
-      if (r != 0)
-      {
-
-        fault_notif();
-      }
+      
       r = socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
-      if (r != 0)
-      {
-
-        fault_notif();
-      }
+      
       
     }
   for (;;)
@@ -155,20 +147,13 @@ void main1()
           char ok = 1, new_processing;
 
           r = socket_write(sd_host, &ok, 1);
-          if (r != 0)
-          {
-            fault_notif();
-          }
+          
           
 
           r = socket_read(sd_host, &new_processing,
                           1); // wait to start 2
           
-          if (r != 0)
-          {
-
-            fault_notif();
-          }
+          
           if (new_processing)
           {
             should_break = 1;
@@ -214,19 +199,11 @@ void main1()
 
             r = umram_read(cache_A, BLOCK_SIZE, mram_temp_addr_A);
             print_debug(tasklet_id, 6);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+          
             print_debug(tasklet_id, 5);
             r = umram_read(cache_B, BLOCK_SIZE, mram_temp_addr_B);
             print_debug(tasklet_id, 6);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+            
 
             if (offset)
             {
@@ -244,11 +221,7 @@ void main1()
               print_debug(tasklet_id, 5);
               r = umram_read(cache_A_aux, 8, mram_temp_addr_A + BLOCK_SIZE);
               print_debug(tasklet_id, 6);
-              if (r != 0)
-              {
-
-                fault_notif();
-              }
+              
 
               cache_A[BLOCK_SIZE / sizeof(T) - 1] = cache_A_aux[0];
             }
@@ -267,11 +240,7 @@ void main1()
 
           r = umram_read(cache_A, BLOCK_SIZE, mram_temp_addr_A);
           print_debug(tasklet_id, 6);
-          if (r != 0)
-          {
-
-            fault_notif();
-          }
+          
 
           if (offset)
           {
@@ -288,10 +257,7 @@ void main1()
             r = umram_read(cache_A_aux, 8, mram_temp_addr_A + BLOCK_SIZE);
             print_debug(tasklet_id, 6);
             if (r != 0)
-            {
-
-              fault_notif();
-            }
+            
 
             cache_A[BLOCK_SIZE / sizeof(T) - 1] = cache_A_aux[0];
           }
@@ -301,11 +267,7 @@ void main1()
           print_debug(tasklet_id, 5);
           r = (umram_read(cache_B, BLOCK_SIZE, mram_temp_addr_B));
           print_debug(tasklet_id, 6);
-          if (r != 0)
-          {
-
-            fault_notif();
-          }
+         
 
           for (j = 0; j < (int)(n_size - n); j++)
           {
@@ -352,11 +314,7 @@ void main1()
         print_debug(tasklet_id, 5);
         r = (umram_write(cache_C, 8, mram_base_addr_C));
         print_debug(tasklet_id, 6);
-        if (r != 0)
-        {
-
-          fault_notif();
-        }
+       
 
         // Update memory address
         mram_base_addr_C += 2 * sizeof(T);
@@ -368,17 +326,9 @@ void main1()
     {
       char ok = 1;
       r = socket_write(sd_host, &ok, 1);
-      if (r != 0)
-      {
-
-        fault_notif();
-      }
+      
       r = socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
-      if (r != 0)
-      {
-
-        fault_notif();
-      }
+      
     }
   }
   return;

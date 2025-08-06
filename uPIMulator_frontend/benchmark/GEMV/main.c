@@ -9,10 +9,10 @@
 
 #define roundup(n, m) ((n / m) * m + m)
 int sd_host;
-dpu_arguments_t DPU_INPUT_ARGUMENTS;
+__buffer_aligned dpu_arguments_t DPU_INPUT_ARGUMENTS;
 
 // GEMV
-static void gemv(T *bufferC, T *bufferA, T *bufferB, int pos)
+static void __attribute__((noinline)) gemv(T *bufferC, T *bufferA, T *bufferB, int pos)
 {
   for (unsigned int i = 0; i < BLOCK_SIZE / sizeof(T); i++)
   {

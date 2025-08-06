@@ -10,7 +10,7 @@ dpu_arguments_t DPU_INPUT_ARGUMENTS;
 dpu_results_t DPU_RESULTS[NR_FTHREAD];
 int sd_host;
 // Search
-static DTYPE search(DTYPE *bufferA, DTYPE searching_for, uint32_t search_size)
+static DTYPE __attribute__((noinline)) search(DTYPE *bufferA, DTYPE searching_for, uint32_t search_size)
 {
 
   // if(get_jid()==0){
@@ -52,8 +52,7 @@ void main1()
     char ok;
     socket_write(sd_host, &ok, 1);
     socket_read(sd_host, &ok, 1);
-    if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0)
-      fault_notif();
+    umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0);
   }
   wait_barrier(&b);
   print_debug(tasklet_id, 3);
@@ -87,11 +86,7 @@ void main1()
     r = umram_read(&searching_for, 8, current_mram_block_addr_query);
     print_debug(tasklet_id, 6);
 
-    if (r != 0)
-    {
-
-      fault_notif();
-    }
+   
     current_mram_block_addr_query += 8;
 
     // Initialize input vector boundaries
@@ -106,20 +101,12 @@ void main1()
     print_debug(tasklet_id, 5);
     r = umram_read(cache_aux_A, BLOCK_SIZE, current_mram_block_addr_A);
     print_debug(tasklet_id, 6);
-    if (r != 0)
-    {
-
-      fault_notif();
-    }
+    
     print_debug(tasklet_id, 5);
     r = umram_read(cache_aux_B, BLOCK_SIZE,
                    (end_mram_block_addr_A - BLOCK_SIZE * sizeof(DTYPE)));
     print_debug(tasklet_id, 6);
-    if (r != 0)
-    {
-
-      fault_notif();
-    }
+    
 
     while (1)
     {
@@ -156,11 +143,7 @@ void main1()
           r = umram_read(cache_A, remain_bytes_to_search,
                          start_mram_block_addr_A + BLOCK_SIZE);
           print_debug(tasklet_id, 6);
-          if (r != 0)
-          {
-
-            fault_notif();
-          }
+          
           found = search(cache_A, searching_for, remain_bytes_to_search);
           // print_debug(found, 6);
 
@@ -187,11 +170,7 @@ void main1()
       print_debug(tasklet_id, 5);
       r = umram_read(cache_A, BLOCK_SIZE, current_mram_block_addr_A);
       print_debug(tasklet_id, 6);
-      if (r != 0)
-      {
-
-        fault_notif();
-      }
+      
 
       // Search inside block
       found = search(cache_A, searching_for, BLOCK_SIZE);
@@ -230,11 +209,7 @@ void main1()
                     input_size * sizeof(DTYPE) + sizeof(DPU_INPUT_ARGUMENTS) +
                         input_size * sizeof(DTYPE));
     print_debug(tasklet_id, 6);
-    if (r != 0)
-    {
-
-      fault_notif();
-    }
+    
     print_debug(tasklet_id, 4);
     char ok;
     socket_write(sd_host, &ok, 1);

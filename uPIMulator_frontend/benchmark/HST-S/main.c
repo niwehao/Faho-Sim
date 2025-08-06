@@ -15,7 +15,7 @@ uint32_t *message[NR_FTHREAD];
 uint32_t *histo_dpu;
 
 // Histogram in each tasklet
-static void histogram(uint32_t *histo, uint32_t bins, T *input,
+static void __attribute__((noinline)) histogram(uint32_t *histo, uint32_t bins, T *input,
                       unsigned int l_size)
 {
   for (unsigned int j = 0; j < l_size; j++)

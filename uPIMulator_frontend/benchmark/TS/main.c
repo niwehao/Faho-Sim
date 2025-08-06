@@ -14,7 +14,7 @@ __buffer_aligned dpu_result_t DPU_RESULTS[NR_FTHREAD];
 struct barrier b;
 int sd_host;
 // Dot product
-static void dot_product(DTYPE *vectorA, DTYPE *vectorA_aux, DTYPE *vectorB,
+static void __attribute__((noinline)) dot_product(DTYPE *vectorA, DTYPE *vectorA_aux, DTYPE *vectorB,
                         DTYPE *result)
 {
 
@@ -46,8 +46,8 @@ static void dot_product(DTYPE *vectorA, DTYPE *vectorA_aux, DTYPE *vectorB,
       char ok;
       socket_write(sd_host, &ok, 1);
       socket_read(sd_host, &ok, 1);
-      if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0)
-        fault_notif();
+      umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0);
+        
     }
 
     wait_barrier(&b);
@@ -152,14 +152,14 @@ static void dot_product(DTYPE *vectorA, DTYPE *vectorA_aux, DTYPE *vectorB,
       }
       print_debug(fthread_id, 5);
 
-      if ((ret = umram_read(cache_TSMean, BLOCK_SIZE,
-                            current_mram_block_addr_TSMean)) < 0)
-        fault_notif();
+       umram_read(cache_TSMean, BLOCK_SIZE,
+                            current_mram_block_addr_TSMean);
+       
       print_debug(fthread_id, 6);
       print_debug(fthread_id, 5);
-      if ((ret = umram_read(cache_TSSigma, BLOCK_SIZE,
-                            current_mram_block_addr_TSSigma)) < 0)
-        fault_notif();
+      umram_read(cache_TSSigma, BLOCK_SIZE,
+                            current_mram_block_addr_TSSigma);
+       
       print_debug(fthread_id, 6);
       current_mram_block_addr_TSMean += BLOCK_SIZE;
       current_mram_block_addr_TSSigma += BLOCK_SIZE;
@@ -192,11 +192,10 @@ static void dot_product(DTYPE *vectorA, DTYPE *vectorA_aux, DTYPE *vectorB,
     if (fthread_id == 0)
     {
       print_debug(fthread_id, 5);
-      if ((ret = umram_write(DPU_RESULTS, sizeof(DPU_RESULTS),
+      umram_write(DPU_RESULTS, sizeof(DPU_RESULTS),
                              3 * (slice_per_dpu + query_length) * sizeof(DTYPE) +
                                  query_length * sizeof(DTYPE) +
-                                 sizeof(DPU_INPUT_ARGUMENTS))) < 0)
-        fault_notif();
+                                 sizeof(DPU_INPUT_ARGUMENTS));
       char ok;
       print_debug(fthread_id, 6);
       print_debug(fthread_id, 4);

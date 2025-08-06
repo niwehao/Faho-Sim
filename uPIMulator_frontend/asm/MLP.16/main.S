@@ -1139,12 +1139,12 @@ main:                                   // @main
 main1:                                  // @main1
 .Lfunc_begin33:
 // %bb.0:
-	sd r22, 128, d22
-	add r22, r22, 136
-	sd r22, -112, d14
-	sd r22, -120, d16
-	sd r22, -128, d18
-	sd r22, -136, d20
+	sd r22, 120, d22
+	add r22, r22, 128
+	sd r22, -104, d14
+	sd r22, -112, d16
+	sd r22, -120, d18
+	sd r22, -128, d20
 	move r0, 1032
 	move r14, 0
 	move r18, 2
@@ -1182,75 +1182,68 @@ main1:                                  // @main1
 	move r2, r14
 	move r3, r14
 	call r23, syscall
-	move r21, r0, nz, .LBB33_5
+	move r14, r0, nz, .LBB33_2
 // %bb.1:
-	sb r22, -104, 1
+	sb r22, -96, 1
 	lw r0, zero, sd_host
-	add r1, r22, -104
+	add r1, r22, -96
 	move r2, 1
-	move r3, 0
+	move r19, 0
 	move r4, 12
+	move r3, r19
 	call r23, syscall
-	jeq r0, 0, .LBB33_3
-// %bb.2:
-	call r23, fault_notif
-.LBB33_3:
 	lw r0, zero, sd_host
 	move r1, DPU_INPUT_ARGUMENTS
 	move r2, 16
-	move r3, 0
 	move r4, 11
+	move r3, r19
 	call r23, syscall
-	jeq r0, 0, .LBB33_5
-// %bb.4:
-	call r23, fault_notif
-.LBB33_5:
-	add r20, r15, -1032
+.LBB33_2:
+	add r15, r15, -1032
 	add r0, r16, -8
-	sw r22, -84, r0
-	add r15, r17, -1024
+	sw r22, -80, r0
+	add r16, r17, -1024
 	add r0, r18, -8
 	sw r22, -68, r0
-	lsl r0, r21, 1
+	lsl r0, r14, 1
 	sw r22, -16, r0
-.LBB33_6:                               // =>This Loop Header: Depth=1
-                                        //     Child Loop BB33_21 Depth 2
-                                        //       Child Loop BB33_43 Depth 3
-                                        //         Child Loop BB33_45 Depth 4
-                                        //           Child Loop BB33_52 Depth 5
-                                        //             Child Loop BB33_64 Depth 6
-                                        //             Child Loop BB33_72 Depth 6
-                                        //           Child Loop BB33_81 Depth 5
-                                        //           Child Loop BB33_95 Depth 5
-	move r17, my_barrier
+.LBB33_3:                               // =>This Loop Header: Depth=1
+                                        //     Child Loop BB33_18 Depth 2
+                                        //       Child Loop BB33_37 Depth 3
+                                        //         Child Loop BB33_39 Depth 4
+                                        //           Child Loop BB33_47 Depth 5
+                                        //             Child Loop BB33_55 Depth 6
+                                        //           Child Loop BB33_66 Depth 5
+                                        //           Child Loop BB33_77 Depth 5
+	move r18, my_barrier
 	move r1, 0
 	move r4, 15
-	move r0, r17
+	move r0, r18
 	move r2, r1
 	move r3, r1
 	call r23, syscall
-	lw r0, r17, 4
+	lw r0, r18, 4
 	add r0, r0, 1
-	sw r17, 4, r0
-	lw r1, r17, 8
-	jneq r0, r1, .LBB33_8
-// %bb.7:                               //   in Loop: Header=BB33_6 Depth=1
+	sw r18, 4, r0
+	lw r1, r18, 8
+	jneq r0, r1, .LBB33_5
+// %bb.4:                               //   in Loop: Header=BB33_3 Depth=1
 	move r1, 0
 	move r4, 18
-	move r0, r17
+	move r0, r18
 	move r2, r1
 	move r3, r1
 	call r23, syscall
-	sw r17, 4, 0
-	jump .LBB33_9
-.LBB33_8:                               //   in Loop: Header=BB33_6 Depth=1
+	sw r18, 4, 0
+	jump .LBB33_6
+.LBB33_5:                               //   in Loop: Header=BB33_3 Depth=1
 	move r0, my_barrier
 	move r2, 0
 	move r4, 17
 	move r1, r0
 	move r3, r2
 	call r23, syscall
-.LBB33_9:                               //   in Loop: Header=BB33_6 Depth=1
+.LBB33_6:                               //   in Loop: Header=BB33_3 Depth=1
 	move r0, my_barrier
 	move r1, 0
 	move r4, 16
@@ -1258,96 +1251,96 @@ main1:                                  // @main1
 	move r3, r1
 	call r23, syscall
 	move r1, 3
-	move r0, r21
+	move r0, r14
 	call r23, print_debug
 	move r0, DPU_INPUT_ARGUMENTS
 	lw r1, r0, 8
 	lw r2, zero, DPU_INPUT_ARGUMENTS
 	sw r22, -52, r2
-	lw r17, r0, 4
-	lw r18, r0, 12
+	lw r18, r0, 4
+	lw r21, r0, 12
 	lsr r0, r1, 4
-	and r19, r0, 268435454
+	and r20, r0, 268435454
 	sw r22, -60, r1
 	and r0, r1, 31
-	add r1, r19, 2
-	move r16, r1
+	add r1, r20, 2
+	move r17, r1
 	lw r2, r22, -16
-	jltu r2, r0, .LBB33_11
-// %bb.10:                              //   in Loop: Header=BB33_6 Depth=1
-	move r16, r19
-.LBB33_11:                              //   in Loop: Header=BB33_6 Depth=1
-	jeq r0, 0, .LBB33_18
-// %bb.12:                              //   in Loop: Header=BB33_6 Depth=1
+	jltu r2, r0, .LBB33_8
+// %bb.7:                               //   in Loop: Header=BB33_3 Depth=1
+	move r17, r20
+.LBB33_8:                               //   in Loop: Header=BB33_3 Depth=1
+	jeq r0, 0, .LBB33_15
+// %bb.9:                               //   in Loop: Header=BB33_3 Depth=1
 	lw r2, r22, -16
-	jgeu r2, r0, .LBB33_13
-// %bb.17:                              //   in Loop: Header=BB33_6 Depth=1
-	move r0, r1, true, .LBB33_19
-.LBB33_18:                              //   in Loop: Header=BB33_6 Depth=1
-	move r0, r19
-.LBB33_19:                              //   in Loop: Header=BB33_6 Depth=1
+	jgeu r2, r0, .LBB33_10
+// %bb.14:                              //   in Loop: Header=BB33_3 Depth=1
+	move r0, r1, true, .LBB33_16
+.LBB33_15:                              //   in Loop: Header=BB33_3 Depth=1
+	move r0, r20
+.LBB33_16:                              //   in Loop: Header=BB33_3 Depth=1
+	move r1, r14
+	call r23, __mulsi3
+	move r19, r0, true, .LBB33_17
+.LBB33_10:                              //   in Loop: Header=BB33_3 Depth=1
+	sw r22, -76, r21
+	lsr r21, r0, 1
+	lw r0, r22, -60
+	and r0, r0, 1, nz, .LBB33_11
+// %bb.13:                              //   in Loop: Header=BB33_3 Depth=1
+	move r0, r1
 	move r1, r21
 	call r23, __mulsi3
-	move r14, r0, true, .LBB33_20
-.LBB33_13:                              //   in Loop: Header=BB33_6 Depth=1
-	sw r22, -88, r18
-	lsr r18, r0, 1
-	lw r0, r22, -60
-	and r0, r0, 1, nz, .LBB33_14
-// %bb.16:                              //   in Loop: Header=BB33_6 Depth=1
-	move r0, r1
+	move r19, r0
+	sub r0, r14, r21, true, .LBB33_12
+.LBB33_11:                              //   in Loop: Header=BB33_3 Depth=1
+	add r0, r21, 1
+	call r23, __mulsi3
+	move r19, r0
+	not r0, r21
+	add r0, r14, r0
+.LBB33_12:                              //   in Loop: Header=BB33_3 Depth=1
+	move r1, r20
+	call r23, __mulsi3
+	add r19, r19, r0
+	lw r21, r22, -76
+.LBB33_17:                              //   in Loop: Header=BB33_3 Depth=1
+	move r0, r21
 	move r1, r18
-	call r23, __mulsi3
-	move r14, r0
-	sub r0, r21, r18, true, .LBB33_15
-.LBB33_14:                              //   in Loop: Header=BB33_6 Depth=1
-	add r0, r18, 1
-	call r23, __mulsi3
-	move r14, r0
-	not r0, r18
-	add r0, r21, r0
-.LBB33_15:                              //   in Loop: Header=BB33_6 Depth=1
-	move r1, r19
-	call r23, __mulsi3
-	add r14, r14, r0
-	lw r18, r22, -88
-.LBB33_20:                              //   in Loop: Header=BB33_6 Depth=1
-	move r0, r18
-	move r1, r17
 	call r23, __mulsi3
 	lsl r1, r0, 2
 	sw r22, -48, r1
-	add r0, r0, r17
-	add r0, r0, r14
+	add r0, r0, r18
+	add r0, r0, r19
 	lsl r0, r0, 2
 	sw r22, -20, r0
-	add r0, r14, r16
+	add r0, r19, r17
 	sw r22, -36, r0
 	lw r0, r22, -52
 	lsl r1, r0, 2
-	sw r22, -28, r1
+	sw r22, -32, r1
 	add r0, r0, -256
 	sw r22, -72, r0
 	move r0, 0
-	sw r22, -32, r14
-	jump .LBB33_21
-.LBB33_100:                             //   in Loop: Header=BB33_21 Depth=2
-	lw r0, r22, -24
+	sw r22, -24, r19
+	jump .LBB33_18
+.LBB33_45:                              //   in Loop: Header=BB33_18 Depth=2
+	lw r0, r22, -28
 	add r0, r0, 1
-.LBB33_21:                              //   Parent Loop BB33_6 Depth=1
+	lw r19, r22, -24
+.LBB33_18:                              //   Parent Loop BB33_3 Depth=1
                                         // =>  This Loop Header: Depth=2
-                                        //       Child Loop BB33_43 Depth 3
-                                        //         Child Loop BB33_45 Depth 4
-                                        //           Child Loop BB33_52 Depth 5
-                                        //             Child Loop BB33_64 Depth 6
-                                        //             Child Loop BB33_72 Depth 6
-                                        //           Child Loop BB33_81 Depth 5
-                                        //           Child Loop BB33_95 Depth 5
-	sw r22, -24, r0
-	jeq r0, 0, .LBB33_41
-// %bb.22:                              //   in Loop: Header=BB33_21 Depth=2
+                                        //       Child Loop BB33_37 Depth 3
+                                        //         Child Loop BB33_39 Depth 4
+                                        //           Child Loop BB33_47 Depth 5
+                                        //             Child Loop BB33_55 Depth 6
+                                        //           Child Loop BB33_66 Depth 5
+                                        //           Child Loop BB33_77 Depth 5
+	sw r22, -28, r0
+	jeq r0, 0, .LBB33_35
+// %bb.19:                              //   in Loop: Header=BB33_18 Depth=2
 	move r1, 4
-	move r0, r21
+	move r0, r14
 	call r23, print_debug
 	move r18, my_barrier
 	move r1, 0
@@ -1360,8 +1353,8 @@ main1:                                  // @main1
 	add r0, r0, 1
 	sw r18, 4, r0
 	lw r1, r18, 8
-	jneq r0, r1, .LBB33_24
-// %bb.23:                              //   in Loop: Header=BB33_21 Depth=2
+	jneq r0, r1, .LBB33_21
+// %bb.20:                              //   in Loop: Header=BB33_18 Depth=2
 	move r1, 0
 	move r4, 18
 	move r0, r18
@@ -1369,15 +1362,15 @@ main1:                                  // @main1
 	move r3, r1
 	call r23, syscall
 	sw r18, 4, 0
-	jump .LBB33_25
-.LBB33_24:                              //   in Loop: Header=BB33_21 Depth=2
+	jump .LBB33_22
+.LBB33_21:                              //   in Loop: Header=BB33_18 Depth=2
 	move r0, my_barrier
 	move r2, 0
 	move r4, 17
 	move r1, r0
 	move r3, r2
 	call r23, syscall
-.LBB33_25:                              //   in Loop: Header=BB33_21 Depth=2
+.LBB33_22:                              //   in Loop: Header=BB33_18 Depth=2
 	move r18, my_barrier
 	move r1, 0
 	move r4, 16
@@ -1385,34 +1378,30 @@ main1:                                  // @main1
 	move r2, r1
 	move r3, r1
 	call r23, syscall
-	jneq r21, 0, .LBB33_37
-// %bb.26:                              //   in Loop: Header=BB33_21 Depth=2
-	move r0, should_break
-	sb r0, 0, 0
-	sb r22, -100, 1
+	jneq r14, 0, .LBB33_25
+// %bb.23:                              //   in Loop: Header=BB33_18 Depth=2
+	move r17, should_break
+	sb r17, 0, 0
+	sb r22, -92, 1
 	lw r0, zero, sd_host
-	add r1, r22, -100
-	move r2, 1
-	move r3, 0
+	add r1, r22, -92
+	move r19, 1
+	move r21, 0
 	move r4, 12
+	move r2, r19
+	move r3, r21
 	call r23, syscall
-	jeq r0, 0, .LBB33_28
-// %bb.27:                              //   in Loop: Header=BB33_21 Depth=2
-	call r23, fault_notif
-.LBB33_28:                              //   in Loop: Header=BB33_21 Depth=2
 	lw r0, zero, sd_host
-	add r1, r22, -96
-	move r2, 1
-	move r3, 0
+	add r1, r22, -88
 	move r4, 11
+	move r2, r19
+	move r3, r21
 	call r23, syscall
-	jeq r0, 0, .LBB33_30
-// %bb.29:                              //   in Loop: Header=BB33_21 Depth=2
-	call r23, fault_notif
-.LBB33_30:                              //   in Loop: Header=BB33_21 Depth=2
-	lbu r0, r22, -96
-	jneq r0, 0, .LBB33_31
-.LBB33_37:                              //   in Loop: Header=BB33_21 Depth=2
+	lbu r0, r22, -88
+	jneq r0, 0, .LBB33_27
+// %bb.24:                              //   in Loop: Header=BB33_18 Depth=2
+	lw r19, r22, -24
+.LBB33_25:                              //   in Loop: Header=BB33_18 Depth=2
 	move r1, 0
 	move r4, 15
 	move r0, r18
@@ -1423,8 +1412,8 @@ main1:                                  // @main1
 	add r0, r0, 1
 	sw r18, 4, r0
 	lw r1, r18, 8
-	jneq r0, r1, .LBB33_39
-// %bb.38:                              //   in Loop: Header=BB33_21 Depth=2
+	jneq r0, r1, .LBB33_33
+// %bb.26:                              //   in Loop: Header=BB33_18 Depth=2
 	move r18, my_barrier
 	move r1, 0
 	move r4, 18
@@ -1433,15 +1422,15 @@ main1:                                  // @main1
 	move r3, r1
 	call r23, syscall
 	sw r18, 4, 0
-	jump .LBB33_40
-.LBB33_39:                              //   in Loop: Header=BB33_21 Depth=2
+	jump .LBB33_34
+.LBB33_33:                              //   in Loop: Header=BB33_18 Depth=2
 	move r0, my_barrier
 	move r2, 0
 	move r4, 17
 	move r1, r0
 	move r3, r2
 	call r23, syscall
-.LBB33_40:                              //   in Loop: Header=BB33_21 Depth=2
+.LBB33_34:                              //   in Loop: Header=BB33_18 Depth=2
 	move r0, my_barrier
 	move r1, 0
 	move r4, 16
@@ -1449,463 +1438,420 @@ main1:                                  // @main1
 	move r3, r1
 	call r23, syscall
 	move r1, 3
-	move r0, r21
+	move r0, r14
 	call r23, print_debug
 	lbu r0, zero, should_break
-	lw r14, r22, -32
-	jneq r0, 0, .LBB33_35
-.LBB33_41:                              //   in Loop: Header=BB33_21 Depth=2
+	jneq r0, 0, .LBB33_31
+.LBB33_35:                              //   in Loop: Header=BB33_18 Depth=2
 	lw r0, r22, -36
-	jgeu r14, r0, .LBB33_100
-// %bb.42:                              //   in Loop: Header=BB33_21 Depth=2
-	move r0, 0
-	sw r22, -76, r0
-	move r16, r14
-	lw r1, r22, -20
-	jump .LBB33_43
-.LBB33_49:                              //   in Loop: Header=BB33_43 Depth=3
-	xor r0, r1, -2147483648
-	lw r1, r22, -68
-	sdma r1, r0, 0
-.LBB33_50:                              //   in Loop: Header=BB33_43 Depth=3
+	jgeu r19, r0, .LBB33_45
+// %bb.36:                              //   in Loop: Header=BB33_18 Depth=2
+	move r17, 0
+	lw r18, r22, -24
+	lw r19, r22, -20
+	jump .LBB33_37
+.LBB33_44:                              //   in Loop: Header=BB33_37 Depth=3
 	move r1, 6
-	move r0, r21
+	move r0, r14
 	call r23, print_debug
-.LBB33_99:                              //   in Loop: Header=BB33_43 Depth=3
-	add r16, r16, 2
-	lw r1, r22, -40
-	add r1, r1, 8
-	lw r14, r22, -32
+	add r18, r18, 2
+	add r19, r19, 8
 	lw r0, r22, -36
-	jgeu r16, r0, .LBB33_100
-.LBB33_43:                              //   Parent Loop BB33_6 Depth=1
-                                        //     Parent Loop BB33_21 Depth=2
+	jgeu r18, r0, .LBB33_45
+.LBB33_37:                              //   Parent Loop BB33_3 Depth=1
+                                        //     Parent Loop BB33_18 Depth=2
                                         // =>    This Loop Header: Depth=3
-                                        //         Child Loop BB33_45 Depth 4
-                                        //           Child Loop BB33_52 Depth 5
-                                        //             Child Loop BB33_64 Depth 6
-                                        //             Child Loop BB33_72 Depth 6
-                                        //           Child Loop BB33_81 Depth 5
-                                        //           Child Loop BB33_95 Depth 5
-	sw r22, -40, r1
+                                        //         Child Loop BB33_39 Depth 4
+                                        //           Child Loop BB33_47 Depth 5
+                                        //             Child Loop BB33_55 Depth 6
+                                        //           Child Loop BB33_66 Depth 5
+                                        //           Child Loop BB33_77 Depth 5
 	lw r0, r22, -68
 	sw r0, 0, 0
 	sw r0, 4, 0
 	lw r0, r22, -60
-	jgeu r16, r0, .LBB33_47
-// %bb.44:                              //   in Loop: Header=BB33_43 Depth=3
-	lw r0, r22, -28
-	move r1, r16
+	sw r22, -40, r19
+	jgeu r18, r0, .LBB33_41
+// %bb.38:                              //   in Loop: Header=BB33_37 Depth=3
+	lw r0, r22, -32
+	move r1, r18
 	call r23, __mulsi3
-	move r14, r0
+	move r21, r0
 	move r0, 0
 	move r1, 1
 	sw r22, -44, r0
-	sw r22, -80, r0
-	sw r22, -56, r16
-	jump .LBB33_45
-.LBB33_97:                              //   in Loop: Header=BB33_45 Depth=4
-	lsl_add r0, r18, r16, 2
-	and r14, r0, -8
-	lsr r0, r0, 2
-	and r0, r0, 1
 	sw r22, -76, r0
-	lw r16, r22, -56
-	lw r0, r22, -80
-	add r0, r0, r16
+	sw r22, -56, r18
+	jump .LBB33_39
+.LBB33_79:                              //   in Loop: Header=BB33_39 Depth=4
+	lsl_add r0, r21, r17, 2
+	and r21, r0, -8
+	lsr r0, r0, 2
+	and r17, r0, 1
+	lw r18, r22, -56
+	lw r0, r22, -76
+	add r0, r0, r18
 	add r0, r0, 1
 	lw r1, r22, -60
 	sub r0, r0, r1, ltu
 	lw r1, r22, -64
 	and r0, r1, r0
 	move r1, 1
-	sw r22, -80, r1
+	sw r22, -76, r1
 	move r1, 0
-	jz r0, .LBB33_47
-.LBB33_45:                              //   Parent Loop BB33_6 Depth=1
-                                        //     Parent Loop BB33_21 Depth=2
-                                        //       Parent Loop BB33_43 Depth=3
+	jz r0, .LBB33_41
+.LBB33_39:                              //   Parent Loop BB33_3 Depth=1
+                                        //     Parent Loop BB33_18 Depth=2
+                                        //       Parent Loop BB33_37 Depth=3
                                         // =>      This Loop Header: Depth=4
-                                        //           Child Loop BB33_52 Depth 5
-                                        //             Child Loop BB33_64 Depth 6
-                                        //             Child Loop BB33_72 Depth 6
-                                        //           Child Loop BB33_81 Depth 5
-                                        //           Child Loop BB33_95 Depth 5
+                                        //           Child Loop BB33_47 Depth 5
+                                        //             Child Loop BB33_55 Depth 6
+                                        //           Child Loop BB33_66 Depth 5
+                                        //           Child Loop BB33_77 Depth 5
 	lw r0, r22, -72
 	sw r22, -64, r1
-	jlts r0, 1, .LBB33_46
-// %bb.51:                              //   in Loop: Header=BB33_45 Depth=4
-	move r17, 0
-	lw r16, r22, -48
-.LBB33_52:                              //   Parent Loop BB33_6 Depth=1
-                                        //     Parent Loop BB33_21 Depth=2
-                                        //       Parent Loop BB33_43 Depth=3
-                                        //         Parent Loop BB33_45 Depth=4
-                                        // =>        This Loop Header: Depth=5
-                                        //             Child Loop BB33_64 Depth 6
-                                        //             Child Loop BB33_72 Depth 6
-	move r1, 5
-	move r0, r21
-	call r23, print_debug
-	jeq r20, 0, .LBB33_55
-// %bb.53:                              //   in Loop: Header=BB33_52 Depth=5
-	and r0, r14, 4, nz, .LBB33_56
-// %bb.54:                              //   in Loop: Header=BB33_52 Depth=5
-	xor r0, r14, -2147483648
-	ldma r20, r0, 127
-.LBB33_55:                              //   in Loop: Header=BB33_52 Depth=5
-	move r1, 6
-	move r0, r21
-	call r23, print_debug
-	jump .LBB33_57
-.LBB33_56:                              //   in Loop: Header=BB33_52 Depth=5
-	move r1, 6
-	move r0, r21
-	call r23, print_debug
-	call r23, fault_notif
-.LBB33_57:                              //   in Loop: Header=BB33_52 Depth=5
-	move r1, 5
-	move r0, r21
-	call r23, print_debug
-	sw r22, -88, r17
-	jeq r15, 0, .LBB33_60
-// %bb.58:                              //   in Loop: Header=BB33_52 Depth=5
-	and r0, r16, 4, nz, .LBB33_61
-// %bb.59:                              //   in Loop: Header=BB33_52 Depth=5
-	xor r0, r16, -2147483648
-	ldma r15, r0, 127
-.LBB33_60:                              //   in Loop: Header=BB33_52 Depth=5
-	move r1, 6
-	move r0, r21
-	call r23, print_debug
-	jump .LBB33_62
-.LBB33_61:                              //   in Loop: Header=BB33_52 Depth=5
-	move r1, 6
-	move r0, r21
-	call r23, print_debug
-	call r23, fault_notif
-.LBB33_62:                              //   in Loop: Header=BB33_52 Depth=5
-	move r17, r14
-	lw r0, r22, -76
-	jeq r0, 0, .LBB33_71
-// %bb.63:                              //   in Loop: Header=BB33_52 Depth=5
-	move r0, 1
-.LBB33_64:                              //   Parent Loop BB33_6 Depth=1
-                                        //     Parent Loop BB33_21 Depth=2
-                                        //       Parent Loop BB33_43 Depth=3
-                                        //         Parent Loop BB33_45 Depth=4
-                                        //           Parent Loop BB33_52 Depth=5
-                                        // =>          This Inner Loop Header: Depth=6
-	lsl_add r1, r20, r0, 2
-	lw r2, r1, 0
-	sw r1, -4, r2
-	add r0, r0, 1
-	jneq r0, 256, .LBB33_64
-// %bb.65:                              //   in Loop: Header=BB33_52 Depth=5
-	move r1, 5
-	move r0, r21
-	call r23, print_debug
-	lw r0, r22, -84
-	move r1, r17
-	jeq r0, 0, .LBB33_68
-// %bb.66:                              //   in Loop: Header=BB33_52 Depth=5
-	and r0, r1, 4, nz, .LBB33_69
-// %bb.67:                              //   in Loop: Header=BB33_52 Depth=5
-	add r0, r1, -2147482624
-	lw r1, r22, -84
-	ldma r1, r0, 0
-.LBB33_68:                              //   in Loop: Header=BB33_52 Depth=5
-	move r1, 6
-	move r0, r21
-	call r23, print_debug
-	jump .LBB33_70
-.LBB33_69:                              //   in Loop: Header=BB33_52 Depth=5
-	move r1, 6
-	move r0, r21
-	call r23, print_debug
-	call r23, fault_notif
-.LBB33_70:                              //   in Loop: Header=BB33_52 Depth=5
-	lw r0, r22, -84
-	lw r0, r0, 0
-	sw r20, 1020, r0
-.LBB33_71:                              //   in Loop: Header=BB33_52 Depth=5
-	move r18, r21
+	jlts r0, 1, .LBB33_40
+// %bb.46:                              //   in Loop: Header=BB33_39 Depth=4
 	move r19, 0
-	move r4, 6
-	move r0, r19
-	move r1, r19
-	move r2, r19
-	move r3, r19
-	call r23, syscall
-	lw r0, r22, -68
-	lw r1, r22, -80
-	lsl_add r21, r0, r1, 2
-	lw r14, r21, 0
-.LBB33_72:                              //   Parent Loop BB33_6 Depth=1
-                                        //     Parent Loop BB33_21 Depth=2
-                                        //       Parent Loop BB33_43 Depth=3
-                                        //         Parent Loop BB33_45 Depth=4
-                                        //           Parent Loop BB33_52 Depth=5
-                                        // =>          This Inner Loop Header: Depth=6
-	lsl_add r0, r20, r19, 2
-	lw r1, r0, 0
-	lsl_add r0, r15, r19, 2
+	lw r20, r22, -48
+	jump .LBB33_47
+.LBB33_59:                              //   in Loop: Header=BB33_47 Depth=5
+	move r1, 6
+	move r0, r14
+	call r23, print_debug
+	lw r0, r22, -80
 	lw r0, r0, 0
-	call r23, __mulsi3
-	add r14, r0, r14
-	sw r21, 0, r14
-	add r19, r19, 1
-	jneq r19, 256, .LBB33_72
-// %bb.73:                              //   in Loop: Header=BB33_52 Depth=5
-	move r14, r17
-	add r14, r14, 1024
-	lw r17, r22, -88
-	add r17, r17, 256
-	add r16, r16, 1024
-	move r21, r18
+	sw r15, 1020, r0
+.LBB33_60:                              //   in Loop: Header=BB33_47 Depth=5
+	lw r0, r22, -68
+	move r1, r15
+	move r2, r16
+	lw r3, r22, -76
+	call r23, gemv
+	add r21, r21, 1024
+	add r19, r19, 256
+	add r20, r20, 1024
 	lw r0, r22, -72
-	jlts r17, r0, .LBB33_52
-	jump .LBB33_74
-.LBB33_46:                              //   in Loop: Header=BB33_45 Depth=4
-	lw r16, r22, -48
-	lw r17, r22, -44
-.LBB33_74:                              //   in Loop: Header=BB33_45 Depth=4
+	jges r19, r0, .LBB33_61
+.LBB33_47:                              //   Parent Loop BB33_3 Depth=1
+                                        //     Parent Loop BB33_18 Depth=2
+                                        //       Parent Loop BB33_37 Depth=3
+                                        //         Parent Loop BB33_39 Depth=4
+                                        // =>        This Loop Header: Depth=5
+                                        //             Child Loop BB33_55 Depth 6
 	move r1, 5
-	move r0, r21
+	move r0, r14
 	call r23, print_debug
-	jeq r20, 0, .LBB33_77
-// %bb.75:                              //   in Loop: Header=BB33_45 Depth=4
-	and r0, r14, 4, nz, .LBB33_78
-// %bb.76:                              //   in Loop: Header=BB33_45 Depth=4
-	xor r0, r14, -2147483648
-	ldma r20, r0, 127
-.LBB33_77:                              //   in Loop: Header=BB33_45 Depth=4
+	and r18, r21, 4
+	jeq r15, 0, .LBB33_50
+// %bb.48:                              //   in Loop: Header=BB33_47 Depth=5
+	jneq r18, 0, .LBB33_50
+// %bb.49:                              //   in Loop: Header=BB33_47 Depth=5
+	xor r0, r21, -2147483648
+	ldma r15, r0, 127
+.LBB33_50:                              //   in Loop: Header=BB33_47 Depth=5
 	move r1, 6
-	move r0, r21
+	move r0, r14
 	call r23, print_debug
-	lw r0, r22, -76
-	jneq r0, 0, .LBB33_80
-	jump .LBB33_88
-.LBB33_78:                              //   in Loop: Header=BB33_45 Depth=4
+	move r1, 5
+	move r0, r14
+	call r23, print_debug
+	jeq r16, 0, .LBB33_53
+// %bb.51:                              //   in Loop: Header=BB33_47 Depth=5
+	and r0, r20, 4, nz, .LBB33_53
+// %bb.52:                              //   in Loop: Header=BB33_47 Depth=5
+	xor r0, r20, -2147483648
+	ldma r16, r0, 127
+.LBB33_53:                              //   in Loop: Header=BB33_47 Depth=5
 	move r1, 6
-	move r0, r21
+	move r0, r14
 	call r23, print_debug
-	call r23, fault_notif
-	lw r0, r22, -76
-	jeq r0, 0, .LBB33_88
-.LBB33_80:                              //   in Loop: Header=BB33_45 Depth=4
+	jeq r17, 0, .LBB33_60
+// %bb.54:                              //   in Loop: Header=BB33_47 Depth=5
 	move r0, 1
-.LBB33_81:                              //   Parent Loop BB33_6 Depth=1
-                                        //     Parent Loop BB33_21 Depth=2
-                                        //       Parent Loop BB33_43 Depth=3
-                                        //         Parent Loop BB33_45 Depth=4
-                                        // =>        This Inner Loop Header: Depth=5
-	lsl_add r1, r20, r0, 2
+.LBB33_55:                              //   Parent Loop BB33_3 Depth=1
+                                        //     Parent Loop BB33_18 Depth=2
+                                        //       Parent Loop BB33_37 Depth=3
+                                        //         Parent Loop BB33_39 Depth=4
+                                        //           Parent Loop BB33_47 Depth=5
+                                        // =>          This Inner Loop Header: Depth=6
+	lsl_add r1, r15, r0, 2
 	lw r2, r1, 0
 	sw r1, -4, r2
 	add r0, r0, 1
-	jneq r0, 256, .LBB33_81
-// %bb.82:                              //   in Loop: Header=BB33_45 Depth=4
+	jneq r0, 256, .LBB33_55
+// %bb.56:                              //   in Loop: Header=BB33_47 Depth=5
 	move r1, 5
-	move r0, r21
+	move r0, r14
 	call r23, print_debug
-	lw r0, r22, -84
-	jeq r0, 0, .LBB33_85
-// %bb.83:                              //   in Loop: Header=BB33_45 Depth=4
-	and r0, r14, 4, nz, .LBB33_86
-// %bb.84:                              //   in Loop: Header=BB33_45 Depth=4
-	add r0, r14, -2147482624
-	lw r1, r22, -84
-	ldma r1, r0, 0
-.LBB33_85:                              //   in Loop: Header=BB33_45 Depth=4
-	move r1, 6
-	move r0, r21
-	call r23, print_debug
-	jump .LBB33_87
-.LBB33_86:                              //   in Loop: Header=BB33_45 Depth=4
-	move r1, 6
-	move r0, r21
-	call r23, print_debug
-	call r23, fault_notif
-.LBB33_87:                              //   in Loop: Header=BB33_45 Depth=4
-	lw r0, r22, -84
-	lw r0, r0, 0
-	sw r20, 1020, r0
-.LBB33_88:                              //   in Loop: Header=BB33_45 Depth=4
-	move r1, 5
-	move r0, r21
-	call r23, print_debug
-	jeq r15, 0, .LBB33_91
-// %bb.89:                              //   in Loop: Header=BB33_45 Depth=4
-	and r0, r16, 4, nz, .LBB33_92
-// %bb.90:                              //   in Loop: Header=BB33_45 Depth=4
-	xor r0, r16, -2147483648
-	ldma r15, r0, 127
-.LBB33_91:                              //   in Loop: Header=BB33_45 Depth=4
-	move r18, r14
-	move r1, 6
-	move r0, r21
-	call r23, print_debug
-	jump .LBB33_93
-.LBB33_92:                              //   in Loop: Header=BB33_45 Depth=4
-	move r18, r14
-	move r1, 6
-	move r0, r21
-	call r23, print_debug
-	call r23, fault_notif
-.LBB33_93:                              //   in Loop: Header=BB33_45 Depth=4
-	lw r0, r22, -52
-	sub r16, r0, r17
-	jlts r16, 1, .LBB33_97
-// %bb.94:                              //   in Loop: Header=BB33_45 Depth=4
-	lw r0, r22, -68
+	lw r0, r22, -80
+	jeq r0, 0, .LBB33_59
+// %bb.57:                              //   in Loop: Header=BB33_47 Depth=5
+	jneq r18, 0, .LBB33_59
+// %bb.58:                              //   in Loop: Header=BB33_47 Depth=5
+	add r0, r21, -2147482624
 	lw r1, r22, -80
-	lsl_add r17, r0, r1, 2
-	lw r19, r17, 0
-	move r0, 0
-.LBB33_95:                              //   Parent Loop BB33_6 Depth=1
-                                        //     Parent Loop BB33_21 Depth=2
-                                        //       Parent Loop BB33_43 Depth=3
-                                        //         Parent Loop BB33_45 Depth=4
+	ldma r1, r0, 0
+	jump .LBB33_59
+.LBB33_40:                              //   in Loop: Header=BB33_39 Depth=4
+	lw r20, r22, -48
+	lw r19, r22, -44
+.LBB33_61:                              //   in Loop: Header=BB33_39 Depth=4
+	move r1, 5
+	move r0, r14
+	call r23, print_debug
+	and r18, r21, 4
+	jeq r15, 0, .LBB33_64
+// %bb.62:                              //   in Loop: Header=BB33_39 Depth=4
+	jneq r18, 0, .LBB33_64
+// %bb.63:                              //   in Loop: Header=BB33_39 Depth=4
+	xor r0, r21, -2147483648
+	ldma r15, r0, 127
+.LBB33_64:                              //   in Loop: Header=BB33_39 Depth=4
+	move r1, 6
+	move r0, r14
+	call r23, print_debug
+	jeq r17, 0, .LBB33_72
+// %bb.65:                              //   in Loop: Header=BB33_39 Depth=4
+	move r0, 1
+.LBB33_66:                              //   Parent Loop BB33_3 Depth=1
+                                        //     Parent Loop BB33_18 Depth=2
+                                        //       Parent Loop BB33_37 Depth=3
+                                        //         Parent Loop BB33_39 Depth=4
                                         // =>        This Inner Loop Header: Depth=5
-	move r14, r0
-	lsl_add r0, r20, r14, 2
+	lsl_add r1, r15, r0, 2
+	lw r2, r1, 0
+	sw r1, -4, r2
+	add r0, r0, 1
+	jneq r0, 256, .LBB33_66
+// %bb.67:                              //   in Loop: Header=BB33_39 Depth=4
+	move r1, 5
+	move r0, r14
+	call r23, print_debug
+	lw r0, r22, -80
+	jeq r0, 0, .LBB33_70
+// %bb.68:                              //   in Loop: Header=BB33_39 Depth=4
+	jneq r18, 0, .LBB33_71
+// %bb.69:                              //   in Loop: Header=BB33_39 Depth=4
+	add r0, r21, -2147482624
+	lw r1, r22, -80
+	ldma r1, r0, 0
+.LBB33_70:                              //   in Loop: Header=BB33_39 Depth=4
+	move r1, 6
+	move r0, r14
+	call r23, print_debug
+	jump .LBB33_72
+.LBB33_71:                              //   in Loop: Header=BB33_39 Depth=4
+	move r1, 6
+	move r0, r14
+	call r23, print_debug
+	lw r0, r22, -80
+	lw r0, r0, 0
+	sw r15, 1020, r0
+.LBB33_72:                              //   in Loop: Header=BB33_39 Depth=4
+	move r1, 5
+	move r0, r14
+	call r23, print_debug
+	jeq r16, 0, .LBB33_75
+// %bb.73:                              //   in Loop: Header=BB33_39 Depth=4
+	and r0, r20, 4, nz, .LBB33_75
+// %bb.74:                              //   in Loop: Header=BB33_39 Depth=4
+	xor r0, r20, -2147483648
+	ldma r16, r0, 127
+.LBB33_75:                              //   in Loop: Header=BB33_39 Depth=4
+	move r1, 6
+	move r0, r14
+	call r23, print_debug
+	lw r0, r22, -52
+	sub r17, r0, r19
+	jlts r17, 1, .LBB33_79
+// %bb.76:                              //   in Loop: Header=BB33_39 Depth=4
+	lw r0, r22, -68
+	lw r1, r22, -76
+	lsl_add r18, r0, r1, 2
+	lw r19, r18, 0
+	move r0, 0
+.LBB33_77:                              //   Parent Loop BB33_3 Depth=1
+                                        //     Parent Loop BB33_18 Depth=2
+                                        //       Parent Loop BB33_37 Depth=3
+                                        //         Parent Loop BB33_39 Depth=4
+                                        // =>        This Inner Loop Header: Depth=5
+	move r20, r0
+	lsl_add r0, r15, r20, 2
 	lw r1, r0, 0
-	lsl_add r0, r15, r14, 2
+	lsl_add r0, r16, r20, 2
 	lw r0, r0, 0
 	call r23, __mulsi3
 	add r19, r19, r0
-	add r0, r14, 1
-	sw r17, 0, r19
-	jges r0, r16, .LBB33_97
-// %bb.96:                              //   in Loop: Header=BB33_95 Depth=5
-	jltu r14, 255, .LBB33_95
-	jump .LBB33_97
-.LBB33_47:                              //   in Loop: Header=BB33_43 Depth=3
+	add r0, r20, 1
+	sw r18, 0, r19
+	jges r0, r17, .LBB33_79
+// %bb.78:                              //   in Loop: Header=BB33_77 Depth=5
+	jltu r20, 255, .LBB33_77
+	jump .LBB33_79
+.LBB33_41:                              //   in Loop: Header=BB33_37 Depth=3
 	move r1, 5
-	move r0, r21
+	move r0, r14
 	call r23, print_debug
 	lw r0, r22, -68
-	jeq r0, 0, .LBB33_50
-// %bb.48:                              //   in Loop: Header=BB33_43 Depth=3
-	lw r1, r22, -40
-	and r0, r1, 4, z, .LBB33_49
-// %bb.98:                              //   in Loop: Header=BB33_43 Depth=3
-	move r1, 6
-	move r0, r21
-	call r23, print_debug
-	call r23, fault_notif
-	jump .LBB33_99
-.LBB33_31:                              //   in Loop: Header=BB33_6 Depth=1
-	move r0, should_break
-	sb r0, 0, 1
-	move r17, my_barrier
+	lw r19, r22, -40
+	jeq r0, 0, .LBB33_44
+// %bb.42:                              //   in Loop: Header=BB33_37 Depth=3
+	and r0, r19, 4, nz, .LBB33_44
+// %bb.43:                              //   in Loop: Header=BB33_37 Depth=3
+	xor r0, r19, -2147483648
+	lw r1, r22, -68
+	sdma r1, r0, 0
+	jump .LBB33_44
+.LBB33_27:                              //   in Loop: Header=BB33_3 Depth=1
+	sb r17, 0, 1
+	move r18, my_barrier
 	move r1, 0
 	move r4, 15
-	move r0, r17
+	move r0, r18
 	move r2, r1
 	move r3, r1
 	call r23, syscall
-	lw r0, r17, 4
+	lw r0, r18, 4
 	add r0, r0, 1
-	sw r17, 4, r0
-	lw r1, r17, 8
-	jneq r0, r1, .LBB33_33
-// %bb.32:                              //   in Loop: Header=BB33_6 Depth=1
+	sw r18, 4, r0
+	lw r1, r18, 8
+	jneq r0, r1, .LBB33_29
+// %bb.28:                              //   in Loop: Header=BB33_3 Depth=1
 	move r1, 0
 	move r4, 18
-	move r0, r17
+	move r0, r18
 	move r2, r1
 	move r3, r1
 	call r23, syscall
-	sw r17, 4, 0
-	jump .LBB33_34
-.LBB33_33:                              //   in Loop: Header=BB33_6 Depth=1
+	sw r18, 4, 0
+	jump .LBB33_30
+.LBB33_29:                              //   in Loop: Header=BB33_3 Depth=1
 	move r0, my_barrier
 	move r2, 0
 	move r4, 17
 	move r1, r0
 	move r3, r2
 	call r23, syscall
-.LBB33_34:                              //   in Loop: Header=BB33_6 Depth=1
+.LBB33_30:                              //   in Loop: Header=BB33_3 Depth=1
 	move r0, my_barrier
-	move r17, 0
+	move r18, 0
 	move r4, 16
-	move r1, r17
-	move r2, r17
-	move r3, r17
+	move r1, r18
+	move r2, r18
+	move r3, r18
 	call r23, syscall
 	move r1, 3
-	move r0, r17
+	move r0, r18
 	call r23, print_debug
-.LBB33_35:                              //   in Loop: Header=BB33_6 Depth=1
+.LBB33_31:                              //   in Loop: Header=BB33_3 Depth=1
 	move r1, 4
-	move r0, r21
+	move r0, r14
 	call r23, print_debug
-	move r17, my_barrier
+	move r18, my_barrier
 	move r1, 0
 	move r4, 15
-	move r0, r17
+	move r0, r18
 	move r2, r1
 	move r3, r1
 	call r23, syscall
-	lw r0, r17, 4
+	lw r0, r18, 4
 	add r0, r0, 1
-	sw r17, 4, r0
-	lw r1, r17, 8
-	jneq r0, r1, .LBB33_101
-// %bb.36:                              //   in Loop: Header=BB33_6 Depth=1
+	sw r18, 4, r0
+	lw r1, r18, 8
+	jneq r0, r1, .LBB33_80
+// %bb.32:                              //   in Loop: Header=BB33_3 Depth=1
 	move r1, 0
 	move r4, 18
-	move r0, r17
+	move r0, r18
 	move r2, r1
 	move r3, r1
 	call r23, syscall
-	sw r17, 4, 0
-	jump .LBB33_102
-.LBB33_101:                             //   in Loop: Header=BB33_6 Depth=1
+	sw r18, 4, 0
+	jump .LBB33_81
+.LBB33_80:                              //   in Loop: Header=BB33_3 Depth=1
 	move r0, my_barrier
 	move r2, 0
 	move r4, 17
 	move r1, r0
 	move r3, r2
 	call r23, syscall
-.LBB33_102:                             //   in Loop: Header=BB33_6 Depth=1
+.LBB33_81:                              //   in Loop: Header=BB33_3 Depth=1
 	move r0, my_barrier
 	move r1, 0
 	move r4, 16
 	move r2, r1
 	move r3, r1
 	call r23, syscall
-	jneq r21, 0, .LBB33_6
-// %bb.103:                             //   in Loop: Header=BB33_6 Depth=1
-	sb r22, -92, 1
+	jneq r14, 0, .LBB33_3
+// %bb.82:                              //   in Loop: Header=BB33_3 Depth=1
+	sb r22, -84, 1
 	lw r0, zero, sd_host
-	add r1, r22, -92
+	add r1, r22, -84
 	move r2, 1
-	move r3, 0
+	move r18, 0
 	move r4, 12
+	move r3, r18
 	call r23, syscall
-	jeq r0, 0, .LBB33_105
-// %bb.104:                             //   in Loop: Header=BB33_6 Depth=1
-	call r23, fault_notif
-.LBB33_105:                             //   in Loop: Header=BB33_6 Depth=1
 	lw r0, zero, sd_host
 	move r1, DPU_INPUT_ARGUMENTS
 	move r2, 16
-	move r3, 0
 	move r4, 11
+	move r3, r18
 	call r23, syscall
-	jeq r0, 0, .LBB33_6
-// %bb.106:                             //   in Loop: Header=BB33_6 Depth=1
-	call r23, fault_notif
-	jump .LBB33_6
+	jump .LBB33_3
 .Lfunc_end33:
 	.size	main1, .Lfunc_end33-main1
 	.section	.stack_sizes,"o",@progbits,.text.main1
 	.long	.Lfunc_begin33
-	.ascii	"\210\001"
+	.ascii	"\200\001"
 	.section	.text.main1,"ax",@progbits
+                                        // -- End function
+	.section	.text.gemv,"ax",@progbits
+	.type	gemv,@function                  // -- Begin function gemv
+gemv:                                   // @gemv
+.Lfunc_begin34:
+// %bb.0:
+	sd r22, 24, d22
+	add r22, r22, 32
+	sd r22, -16, d14
+	sd r22, -24, d16
+	sd r22, -32, d18
+	move r17, r3
+	move r14, r2
+	move r15, r1
+	move r18, r0
+	move r16, 0
+	move r4, 6
+	move r0, r16
+	move r1, r16
+	move r2, r16
+	move r3, r16
+	call r23, syscall
+	lsl_add r17, r18, r17, 2
+	lw r18, r17, 0
+.LBB34_1:                               // =>This Inner Loop Header: Depth=1
+	lsl_add r0, r15, r16, 2
+	lw r1, r0, 0
+	lsl_add r0, r14, r16, 2
+	lw r0, r0, 0
+	call r23, __mulsi3
+	add r18, r18, r0
+	sw r17, 0, r18
+	add r16, r16, 1
+	jneq r16, 256, .LBB34_1
+// %bb.2:
+	ld d18, r22, -32
+	ld d16, r22, -24
+	ld d14, r22, -16
+	ld d22, r22, -8
+	jump r23
+.Lfunc_end34:
+	.size	gemv, .Lfunc_end34-gemv
+	.section	.stack_sizes,"o",@progbits,.text.gemv
+	.long	.Lfunc_begin34
+	.byte	32
+	.section	.text.gemv,"ax",@progbits
                                         // -- End function
 	.type	should_break,@object            // @should_break
 	.section	.bss.should_break,"aw",@nobits

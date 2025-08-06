@@ -1018,7 +1018,7 @@ main1:                                  // @main1
 	move r2, r0
 	move r3, r0
 	call r23, syscall
-	move r14, r0, nz, .LBB32_2
+	move r18, r0, nz, .LBB32_2
 // %bb.1:
 	lw r0, zero, sd_host
 	add r15, r22, -32
@@ -1069,84 +1069,82 @@ main1:                                  // @main1
 	call r23, syscall
 .LBB32_5:
 	move r0, b
-	move r16, 0
+	move r17, 0
 	move r4, 16
-	sw r22, -12, r0
-	move r1, r16
-	move r2, r16
-	move r3, r16
+	sw r22, -16, r0
+	move r1, r17
+	move r2, r17
+	move r3, r17
 	call r23, syscall
 	move r1, 3
-	move r0, r14
+	move r0, r18
 	call r23, print_debug
-	lw r17, zero, DPU_INPUT_ARGUMENTS
-	sw r22, -24, r14
-	lsl r18, r14, 11
+	lw r14, zero, DPU_INPUT_ARGUMENTS
+	lsl r19, r18, 11
 	move r0, 2048
 	move r4, 2
-	move r1, r16
-	move r2, r16
-	move r3, r16
+	move r1, r17
+	move r2, r17
+	move r3, r17
 	call r23, syscall
+	move r1, r14
 	move.s d20, 0
-	jleu r17, r18, .LBB32_18
+	sw r22, -24, r18
+	sw r22, -20, r1
+	jleu r1, r19, .LBB32_16
 // %bb.6:
-	add r0, r0, -2048
-	sw r22, -20, r0
-	add r15, r18, 2048
-	lw r0, r22, -24
-	lsl_sub r14, r16, r0, 11
+	add r16, r0, -2048
+	add r15, r19, 2048
+	lsl_sub r17, r17, r18, 11
 	move.s d20, 0
 	jump .LBB32_7
-.LBB32_31:                              //   in Loop: Header=BB32_7 Depth=1
-	move.s d0, 0
-.LBB32_34:                              //   in Loop: Header=BB32_7 Depth=1
+.LBB32_30:                              //   in Loop: Header=BB32_7 Depth=1
+	move r1, 6
+	lw r18, r22, -24
+	move r0, r18
+	call r23, print_debug
+	lsr r1, r14, 3
+	move r0, r16
+	call r23, reduction
 	add r21, r1, r21
 	addc r20, r0, r20
-	add r18, r18, 32768
+	add r19, r19, 32768
 	add r15, r15, 32768
-	add r14, r14, -32768
-	jleu r17, r18, .LBB32_18
+	add r17, r17, -32768
+	lw r1, r22, -20
+	jleu r1, r19, .LBB32_16
 .LBB32_7:                               // =>This Loop Header: Depth=1
-                                        //     Child Loop BB32_25 Depth 2
-                                        //     Child Loop BB32_33 Depth 2
-	move r0, r17
-	jltu r17, r15, .LBB32_9
+                                        //     Child Loop BB32_26 Depth 2
+	move r18, r1
+	jltu r1, r15, .LBB32_9
 // %bb.8:                               //   in Loop: Header=BB32_7 Depth=1
-	move r0, r15
+	move r18, r15
 .LBB32_9:                               //   in Loop: Header=BB32_7 Depth=1
-	sw r22, -16, r0
-	move r16, r17
-	jltu r17, r15, .LBB32_11
+	add r0, r19, 2048
+	move r14, 2048
+	jltu r0, r1, .LBB32_11
 // %bb.10:                              //   in Loop: Header=BB32_7 Depth=1
-	move r16, r15
+	sub r14, r1, r19
 .LBB32_11:                              //   in Loop: Header=BB32_7 Depth=1
-	add r0, r18, 2048
-	move r19, 2048
-	jltu r0, r17, .LBB32_13
-// %bb.12:                              //   in Loop: Header=BB32_7 Depth=1
-	sub r19, r17, r18
-.LBB32_13:                              //   in Loop: Header=BB32_7 Depth=1
 	move r1, 5
 	lw r0, r22, -24
 	call r23, print_debug
-	lw r0, r22, -20
-	jeq r0, 0, .LBB32_30
-// %bb.14:                              //   in Loop: Header=BB32_7 Depth=1
 	move r0, 65536
-	jgtu r19, r0, .LBB32_29
-// %bb.15:                              //   in Loop: Header=BB32_7 Depth=1
-	and r0, r19, 7, nz, .LBB32_29
-// %bb.16:                              //   in Loop: Header=BB32_7 Depth=1
-	xor r0, r18, -2147483632
-	lsr r1, r19, 11, z, .LBB32_17
-// %bb.24:                              //   in Loop: Header=BB32_7 Depth=1
-	add r1, r16, r14
+	jgtu r14, r0, .LBB32_30
+// %bb.12:                              //   in Loop: Header=BB32_7 Depth=1
+	jeq r16, 0, .LBB32_30
+// %bb.13:                              //   in Loop: Header=BB32_7 Depth=1
+	and r0, r14, 7, nz, .LBB32_30
+// %bb.14:                              //   in Loop: Header=BB32_7 Depth=1
+	xor r0, r19, -2147483632
+	lsr r1, r14, 11, z, .LBB32_15
+// %bb.25:                              //   in Loop: Header=BB32_7 Depth=1
+	add r1, r18, r17
 	lsr r1, r1, 11
 	neg r3, r1
 	move r1, r0
-	lw r2, r22, -20
-.LBB32_25:                              //   Parent Loop BB32_7 Depth=1
+	move r2, r16
+.LBB32_26:                              //   Parent Loop BB32_7 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	ldma r2, r1, 255
 	add r4, r3, 1
@@ -1154,82 +1152,43 @@ main1:                                  // @main1
 	add r2, r2, 2048
 	add r1, r1, 2048
 	move r3, r4
-	jneq r5, 1, .LBB32_25
-// %bb.26:                              //   in Loop: Header=BB32_7 Depth=1
-	and r1, r19, -2048
-	and r2, r19, 2047
-	jneq r2, 0, .LBB32_28
+	jneq r5, 1, .LBB32_26
+// %bb.27:                              //   in Loop: Header=BB32_7 Depth=1
+	and r1, r14, -2048
+	and r2, r14, 2047
+	jneq r2, 0, .LBB32_29
 	jump .LBB32_30
-.LBB32_29:                              //   in Loop: Header=BB32_7 Depth=1
-	move r0, .L.str
-	move r16, 0
-	move r4, 8
-	move r1, r16
-	move r2, r16
-	move r3, r16
-	call r23, syscall
-	move r0, -1
-	move r4, 7
-	move r1, r16
-	move r2, r16
-	move r3, r16
-	call r23, syscall
-	jump .LBB32_30
-.LBB32_17:                              //   in Loop: Header=BB32_7 Depth=1
+.LBB32_15:                              //   in Loop: Header=BB32_7 Depth=1
 	move r1, 0
-	and r2, r19, 2047
+	and r2, r14, 2047
 	jeq r2, 0, .LBB32_30
-.LBB32_28:                              //   in Loop: Header=BB32_7 Depth=1
+.LBB32_29:                              //   in Loop: Header=BB32_7 Depth=1
 	add r0, r0, r1
-	lw r3, r22, -20
-	add r1, r3, r1
+	add r1, r16, r1
 	move r3, -1
 	lsr_add r2, r3, r2, 3
 	lsl_add r1, r1, r2, 24
 	ldma r1, r0, 0
-.LBB32_30:                              //   in Loop: Header=BB32_7 Depth=1
-	move r1, 6
-	lw r0, r22, -24
-	call r23, print_debug
-	lsr r0, r19, 3, z, .LBB32_31
-// %bb.32:                              //   in Loop: Header=BB32_7 Depth=1
-	lw r0, r22, -16
-	add r0, r0, r14
-	lsr r0, r0, 3
-	neg r3, r0
-	move.s d0, 0
-	lw r2, r22, -20
-.LBB32_33:                              //   Parent Loop BB32_7 Depth=1
-                                        // =>  This Inner Loop Header: Depth=2
-	ld d4, r2, 0
-	add r1, r5, r1
-	addc r0, r4, r0
-	add r4, r3, 1
-	sub r5, r4, r3, ltu
-	add r2, r2, 8
-	move r3, r4
-	jneq r5, 1, .LBB32_33
-	jump .LBB32_34
-.LBB32_18:
-	lw r14, r22, -24
-	lsl r0, r14, 3
+	jump .LBB32_30
+.LBB32_16:
+	lsl r0, r18, 3
 	sd r0, message, d20
 	move r1, 1
-	move r0, r14
+	move r0, r18
 	call r23, print_debug
 	move r1, 0
 	move r4, 15
-	lw r15, r22, -12
-	move r0, r15
+	lw r14, r22, -16
+	move r0, r14
 	move r2, r1
 	move r3, r1
 	call r23, syscall
-	lw r0, r15, 4
+	lw r0, r14, 4
 	add r0, r0, 1
-	sw r15, 4, r0
-	lw r1, r15, 8
-	jneq r0, r1, .LBB32_20
-// %bb.19:
+	sw r14, 4, r0
+	lw r1, r14, 8
+	jneq r0, r1, .LBB32_18
+// %bb.17:
 	move r15, b
 	move r1, 0
 	move r4, 18
@@ -1238,15 +1197,15 @@ main1:                                  // @main1
 	move r3, r1
 	call r23, syscall
 	sw r15, 4, 0
-	jump .LBB32_21
-.LBB32_20:
+	jump .LBB32_19
+.LBB32_18:
 	move r0, b
 	move r2, 0
 	move r4, 17
 	move r1, r0
 	move r3, r2
 	call r23, syscall
-.LBB32_21:
+.LBB32_19:
 	move r15, b
 	move r1, 0
 	move r4, 16
@@ -1255,10 +1214,10 @@ main1:                                  // @main1
 	move r3, r1
 	call r23, syscall
 	move r1, 2
-	move r0, r14
+	move r0, r18
 	call r23, print_debug
-	jneq r14, 0, .LBB32_37
-// %bb.22:
+	jneq r18, 0, .LBB32_23
+// %bb.20:
 	ld d0, zero, message
 	move r2, message
 	ld d4, r2, 8
@@ -1307,33 +1266,19 @@ main1:                                  // @main1
 	add r1, r1, r3
 	addc r0, r0, r2
 	sd zero, message, d0
-	lsl r0, r14, 3
+	lsl r0, r18, 3
 	ld d0, r0, message
 	move r14, DPU_RESULTS
 	sd r14, 8, d0
 	move r0, 0
 	move r1, 5
 	call r23, print_debug
-	and r0, r17, 7, z, .LBB32_23
-// %bb.35:
-	move r0, .L.str.1
-	move r16, 0
-	move r4, 8
-	move r1, r16
-	move r2, r16
-	move r3, r16
-	call r23, syscall
-	move r0, -1
-	move r4, 7
-	move r1, r16
-	move r2, r16
-	move r3, r16
-	call r23, syscall
-	jump .LBB32_36
-.LBB32_23:
-	add r0, r17, -2147483632
+	lw r1, r22, -20
+	and r0, r1, 7, nz, .LBB32_22
+// %bb.21:
+	add r0, r1, -2147483632
 	sdma r14, r0, 31
-.LBB32_36:
+.LBB32_22:
 	move r16, 0
 	move r1, 6
 	move r0, r16
@@ -1355,10 +1300,10 @@ main1:                                  // @main1
 	move r2, r18
 	move r3, r16
 	call r23, syscall
-	lw r14, r22, -24
-.LBB32_37:
+	lw r18, r22, -24
+.LBB32_23:
 	move r1, 4
-	move r0, r14
+	move r0, r18
 	call r23, print_debug
 	move r1, 0
 	move r4, 15
@@ -1370,8 +1315,8 @@ main1:                                  // @main1
 	add r0, r0, 1
 	sw r15, 4, r0
 	lw r1, r15, 8
-	jneq r0, r1, .LBB32_39
-// %bb.38:
+	jneq r0, r1, .LBB32_31
+// %bb.24:
 	move r14, b
 	move r1, 0
 	move r4, 18
@@ -1380,15 +1325,15 @@ main1:                                  // @main1
 	move r3, r1
 	call r23, syscall
 	sw r14, 4, 0
-	jump .LBB32_40
-.LBB32_39:
+	jump .LBB32_32
+.LBB32_31:
 	move r0, b
 	move r2, 0
 	move r4, 17
 	move r1, r0
 	move r3, r2
 	call r23, syscall
-.LBB32_40:
+.LBB32_32:
 	move r0, b
 	move r1, 0
 	move r4, 16
@@ -1408,11 +1353,35 @@ main1:                                  // @main1
 	.byte	64
 	.section	.text.main1,"ax",@progbits
                                         // -- End function
+	.section	.text.reduction,"ax",@progbits
+	.type	reduction,@function             // -- Begin function reduction
+reduction:                              // @reduction
+.Lfunc_begin33:
+// %bb.0:
+	move r2, r1
+	move r3, r0
+	move.s d0, 0
+	jeq r2, 0, .LBB33_2
+.LBB33_1:                               // =>This Inner Loop Header: Depth=1
+	ld d4, r3, 0
+	add r1, r5, r1
+	addc r0, r4, r0
+	add r3, r3, 8
+	add r2, r2, -1, nz, .LBB33_1
+.LBB33_2:
+	jump r23
+.Lfunc_end33:
+	.size	reduction, .Lfunc_end33-reduction
+	.section	.stack_sizes,"o",@progbits,.text.reduction
+	.long	.Lfunc_begin33
+	.byte	0
+	.section	.text.reduction,"ax",@progbits
+                                        // -- End function
 	.section	.text.main,"ax",@progbits
 	.globl	main                            // -- Begin function main
 	.type	main,@function
 main:                                   // @main
-.Lfunc_begin33:
+.Lfunc_begin34:
 // %bb.0:
 	sd r22, 16, d22
 	add r22, r22, 24
@@ -1628,10 +1597,10 @@ main:                                   // @main
 	ld d14, r22, -16
 	ld d22, r22, -8
 	jump r23
-.Lfunc_end33:
-	.size	main, .Lfunc_end33-main
+.Lfunc_end34:
+	.size	main, .Lfunc_end34-main
 	.section	.stack_sizes,"o",@progbits,.text.main
-	.long	.Lfunc_begin33
+	.long	.Lfunc_begin34
 	.byte	24
 	.section	.text.main,"ax",@progbits
                                         // -- End function
@@ -1667,12 +1636,6 @@ DPU_RESULTS:
 	.zero	256
 	.size	DPU_RESULTS, 256
 
-	.type	.L.str,@object                  // @.str
-	.section	.rodata.str1.1,"aMS",@progbits,1
-.L.str:
-	.asciz	"umram_read(cache_A, l_size_bytes, (mram_base_addr_A + byte_index))"
-	.size	.L.str, 67
-
 	.type	message,@object                 // @message
 	.section	.bss.message,"aw",@nobits
 	.globl	message
@@ -1680,12 +1643,6 @@ DPU_RESULTS:
 message:
 	.zero	128
 	.size	message, 128
-
-	.type	.L.str.1,@object                // @.str.1
-	.section	.rodata.str1.1,"aMS",@progbits,1
-.L.str.1:
-	.asciz	"umram_write(DPU_RESULTS, sizeof(DPU_RESULTS), input_size_dpu_bytes + sizeof(dpu_arguments_t))"
-	.size	.L.str.1, 94
 
 	.addrsig
 	.addrsig_sym main1

@@ -53,18 +53,10 @@ void main1()
   {
     char ok = 0;
     r = socket_write(sd_host, &ok, 1);
-    if (r != 0)
-    {
-
-      fault_notif();
-    }
+    
     // print_debug(tasklet_id, 4);
     r = socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
-    if (r != 0)
-    {
-
-      fault_notif();
-    }
+    
   }
 
   while (1)
@@ -130,11 +122,7 @@ void main1()
           r = umram_read(cache_input, (BL_IN + 2) * sizeof(int32_t),
                          addr_input);
           print_debug(tasklet_id, 6);
-          if (r != 0)
-          {
-
-            fault_notif();
-          }
+          
           addr_input += ((BL + 2) * sizeof(int32_t));
           for (int i = 1; i < BL_IN + 1; i++)
           {
@@ -145,11 +133,7 @@ void main1()
             r = umram_read(cache_input + cache_input_offset,
                            (2) * sizeof(int32_t), addr_input);
             print_debug(tasklet_id, 6);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+            
             cache_input_offset += (BL_IN + 2);
             addr_input += ((BL + 2) * sizeof(int32_t));
           }
@@ -167,11 +151,7 @@ void main1()
             r = umram_read(cache_ref + cache_input_offset,
                            (BL_IN) * sizeof(int32_t), addr_ref);
             print_debug(tasklet_id, 6);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+            
             cache_input_offset += BL_IN;
             addr_ref += (BL * sizeof(int32_t));
           }
@@ -204,11 +184,7 @@ void main1()
             r = umram_write((cache_input + cache_input_offset),
                             (BL_IN + 2) * sizeof(int32_t), addr_input);
             print_debug(tasklet_id, 6);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+           
             cache_input_offset += (BL_IN + 2);
             addr_input += ((BL + 2) * sizeof(int32_t));
           }
@@ -256,11 +232,7 @@ void main1()
           r = umram_read(cache_input, (BL_IN + 2) * sizeof(int32_t),
                          addr_input);
           print_debug(tasklet_id, 6);
-          if (r != 0)
-          {
-
-            fault_notif();
-          }
+         
           addr_input += ((BL + 2) * sizeof(int32_t));
           for (int i = 1; i < BL_IN + 1; i++)
           {
@@ -271,11 +243,7 @@ void main1()
             r = umram_read(cache_input + cache_input_offset,
                            (2) * sizeof(int32_t), addr_input);
             print_debug(tasklet_id, 6);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+            
             cache_input_offset += (BL_IN + 2);
             addr_input += ((BL + 2) * sizeof(int32_t));
           }
@@ -293,11 +261,7 @@ void main1()
             r = umram_read(cache_ref + cache_input_offset,
                            (BL_IN) * sizeof(int32_t), addr_ref);
             print_debug(tasklet_id, 6);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+            
             cache_input_offset += BL_IN;
             addr_ref += (BL * sizeof(int32_t));
           }
@@ -330,11 +294,7 @@ void main1()
             r = umram_write(cache_input + cache_input_offset,
                             (BL_IN + 2) * sizeof(int32_t), addr_input);
             print_debug(tasklet_id, 6);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+            
             cache_input_offset += (BL_IN + 2);
             addr_input += ((BL + 2) * sizeof(int32_t));
           }
@@ -354,18 +314,10 @@ void main1()
     {
       char ok = 0;
       r = socket_write(sd_host, &ok, 1);
-      if (r != 0)
-      {
-
-        fault_notif();
-      }
+      
 
       r = socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
-      if (r != 0)
-      {
-
-        fault_notif();
-      }
+      
     }
   }
   return;

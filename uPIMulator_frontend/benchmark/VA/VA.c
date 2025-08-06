@@ -19,7 +19,7 @@ struct barrier b;
 int sd_host;
 
 // vector_addition: Computes the vector addition of a cached block
-static void vector_addition(T *bufferB, T *bufferA, unsigned int l_size)
+static void __attribute__((noinline)) vector_addition(T *bufferB, T *bufferA, unsigned int l_size)
 {
 
   for (unsigned int i = 0; i < l_size; i++)
@@ -83,10 +83,10 @@ void main1()
       // print_debug(1,l_size_bytes);
       //  Load cache with current MRAM inode
       print_debug(tasklet_id, 5);
-      CHK(umram_read(cache_A, l_size_bytes, mram_base_addr_A + byte_index));
+      umram_read(cache_A, l_size_bytes, mram_base_addr_A + byte_index);
       print_debug(tasklet_id, 6);
       print_debug(tasklet_id, 5);
-      CHK(umram_read(cache_B, l_size_bytes, mram_base_addr_B + byte_index));
+      umram_read(cache_B, l_size_bytes, mram_base_addr_B + byte_index);
       print_debug(tasklet_id, 6);
 
       // Computer vector addition
@@ -95,7 +95,7 @@ void main1()
 
       // Write cache to current MRAM inode
       print_debug(tasklet_id, 5);
-      CHK(umram_write(cache_B, l_size_bytes, mram_base_addr_B + byte_index));
+      umram_write(cache_B, l_size_bytes, mram_base_addr_B + byte_index);
       print_debug(tasklet_id, 6);
       //-1747751478 0 2090218572 456997246
     }
@@ -117,7 +117,6 @@ void main1()
 int main(void)
 {
   print_debug(7, 0); // end of switch context rc,ra
-  // fault_notif();
   sd_host = socket_open(0);
   init_barrier(&b, NR_FTHREAD);
   for (int i = 0; i < NR_FTHREAD - 1; i++)

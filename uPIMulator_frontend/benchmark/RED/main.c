@@ -23,7 +23,7 @@ int sd_host;
 T message[NR_FTHREAD];
 
 // Reduction in each tasklet
-static T reduction(T *input, unsigned int l_size)
+static T __attribute__((noinline)) reduction(T *input, unsigned int l_size)
 {
   T output = 0;
   for (unsigned int j = 0; j < l_size; j++)
@@ -90,7 +90,7 @@ void main1()
     // Load cache with current MRAM block
      print_debug(fthread_id, 5);
 
-    CHK(umram_read(cache_A, l_size_bytes, (mram_base_addr_A + byte_index)));
+    umram_read(cache_A, l_size_bytes, (mram_base_addr_A + byte_index));
     print_debug(fthread_id, 6);
 
 
@@ -148,25 +148,18 @@ void main1()
   wait_barrier(&b);
   print_debug(fthread_id, 2);
 
-  if (fthread_id == 0)
+  if (fthread_id == 0){
 #pragma unroll
     for (unsigned int each_tasklet = 1; each_tasklet < NR_FTHREAD;
          each_tasklet++)
     {
       message[0] += message[each_tasklet];
     }
-
-  if (fthread_id == 0)
-  {
     result->t_count = message[fthread_id];
-  }
-
-  if (fthread_id == 0)
-  {
     print_debug(fthread_id, 5);
-    CHK(umram_write(DPU_RESULTS, sizeof(DPU_RESULTS),
+    umram_write(DPU_RESULTS, sizeof(DPU_RESULTS),
                     input_size_dpu_bytes +
-                        sizeof(dpu_arguments_t))); // comment tranformer la var
+                        sizeof(dpu_arguments_t)); // comment tranformer la var
                                                    // input_size_dpu_8bytes
     print_debug(fthread_id, 6);
 
@@ -175,6 +168,8 @@ void main1()
     socket_write(sd_host, &ok, 1);
     socket_read(sd_host, &ok, 1);
   }
+
+  
   print_debug(fthread_id, 4);
   wait_barrier(&b);
 }

@@ -53,16 +53,16 @@ def run_upimulator_task(application, data_prep, output_file="t.txt"):
 def main():
     # 定义所有任务配置
     tasks = [
-            {"name": "TS", "data_prep": 2048},
-            #{"name": "BS", "data_prep": 4096},
-            #{"name": "VA", "data_prep": 131072},
-            # {"name": "HST-S", "data_prep": 65536},
-            #{"name": "GEMV", "data_prep": 256},
-            # {"name": "RED", "data_prep": 131072},
-            # {"name": "SEL", "data_prep": 8192}, 
-            # {"name": "MLP", "data_prep": 256}, 
-            # {"name": "NW", "data_prep": 128},
-            # {"name": "BFS", "data_prep": 0}, #with100*5
+            # {"name": "TS", "data_prep": 2048},
+            # {"name": "BS", "data_prep": 4096},
+            {"name": "VA", "data_prep": 131072},
+            {"name": "HST-S", "data_prep": 65536},
+            {"name": "GEMV", "data_prep": 256},
+            {"name": "RED", "data_prep": 131072},
+            {"name": "SEL", "data_prep": 8192}, 
+            {"name": "MLP", "data_prep": 256}, 
+            {"name": "NW", "data_prep": 128},
+            {"name": "BFS", "data_prep": 0}, #with100*5
        
        
         

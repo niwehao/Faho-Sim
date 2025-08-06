@@ -53,10 +53,7 @@ void main_prog()
     r = umram_read(params_w,
                    ROUND_UP_TO_MULTIPLE_OF_8(sizeof(struct DPUParams)),
                    params_m);
-    if (r != 0)
-    {
-      fault_notif();
-    }
+   
   }
 
   while (1)
@@ -278,10 +275,7 @@ void main_prog()
       r = umram_read(params_w,
                      ROUND_UP_TO_MULTIPLE_OF_8(sizeof(struct DPUParams)),
                      params_m);
-      if (r != 0)
-      {
-        fault_notif();
-      }
+      
     }
   }
   return;

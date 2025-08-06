@@ -137,6 +137,8 @@ void main1()
         print_debug(fthread_id, 5);
 
         umram_read(cache_A, BLOCK_SIZE, mram_temp_addr_A);
+        print_debug(fthread_id, 6);
+        print_debug(fthread_id, 5);
         umram_read(cache_B, BLOCK_SIZE, mram_temp_addr_B);
         print_debug(fthread_id, 6);
 

@@ -1407,6 +1407,12 @@ main1:                                  // @main1
 	$move , r3, r1
 	$call , r23, syscall
 .LBB30_15:                              //   in Loop: Header=BB30_9 Depth=2
+	$move , r1, 6
+	$move , r0, r14
+	$call , r23, print_debug
+	$move , r1, 5
+	$move , r0, r14
+	$call , r23, print_debug
 	$lw , r0, r22,  - 32
 	$add , r19, r0, r20
 	$move , r3, 0

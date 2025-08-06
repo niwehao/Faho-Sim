@@ -28,7 +28,7 @@ void FRFCFSScheduler::service_dma_command(dpu::DMACommand *dma_command) {
                  end_address) -
         address;
 
-    reorder_buffer_.push_back({dma_command, address, size});
+    reorder_buffer_.push_back({dma_command, address, size});//更大的block_size会产生比较大的reorder_buffer_次数
 
     address += size;
   }

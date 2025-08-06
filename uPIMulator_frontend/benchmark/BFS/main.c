@@ -3,7 +3,7 @@
  *
  */
 #include "stdsync.h"
-#include "stdsys.h"
+#include "../stdsys.h"
 #include "support/common.h"
 #include "dpu-utils.h"
 

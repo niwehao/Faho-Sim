@@ -11,7 +11,7 @@
 #include <stdio.h>
 
 #include "stdsync.h"
-#include "stdsys.h"
+#include "../stdsys.h"
 #include "support/common.h"
 
 dpu_arguments_t DPU_INPUT_ARGUMENTS; //!

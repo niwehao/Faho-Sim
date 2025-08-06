@@ -13,7 +13,7 @@
       exit_proc(ret);   \
   } while (0)
 
-dpu_arguments_t DPU_INPUT_ARGUMENTS;
+__buffer_aligned dpu_arguments_t DPU_INPUT_ARGUMENTS;
 
 struct barrier b;
 int sd_host;
@@ -84,6 +84,8 @@ void main1()
       //  Load cache with current MRAM inode
       print_debug(tasklet_id, 5);
       CHK(umram_read(cache_A, l_size_bytes, mram_base_addr_A + byte_index));
+      print_debug(tasklet_id, 6);
+      print_debug(tasklet_id, 5);
       CHK(umram_read(cache_B, l_size_bytes, mram_base_addr_B + byte_index));
       print_debug(tasklet_id, 6);
 

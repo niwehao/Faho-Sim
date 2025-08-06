@@ -1,0 +1,770 @@
+/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/atomic.bin
+DMA to atomic completed...
+/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/iram.bin
+num of instructions: 3345
+DMA to IRAM completed...
+/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/wram.bin
+DMA to WRAM completed...
+init completed...
+launch completed...
+********time:4592*******
+text section size is 6b00
+alloc inode:3
+alloc inode:4
+alloc inode:5
+flag set:0
+break point 2 happen in cycle:5383
+break point 3 happen in cycle:6521
+break point 4 happen in cycle:6642
+break point 5 happen in cycle:25254
+break point 6 happen in cycle:34395
+break point 7 happen in cycle:34829
+alloc inode:6
+********time:378454*******
+ReadSocket event for pid: 1 at time: 0
+********time:378455*******
+alloc inode:7
+flag set:32
+fthread 0 start cal at 522478
+fthread 0 meet barrier526663
+fthread 1 start cal at 612033
+fthread 1 meet barrier614783
+fthread 2 start cal at 620370
+fthread 2 meet barrier623120
+fthread 3 start cal at 660213
+fthread 3 meet barrier662963
+fthread 4 start cal at 665974
+fthread 4 meet barrier668724
+fthread 5 start cal at 671321
+fthread 5 meet barrier674071
+fthread 6 start cal at 712034
+fthread 6 meet barrier714784
+fthread 7 start cal at 718812
+fthread 7 meet barrier721562
+fthread 8 start cal at 724511
+fthread 8 meet barrier727261
+fthread 9 start cal at 766231
+fthread 9 meet barrier768981
+fthread 10 start cal at 774032
+fthread 10 meet barrier776782
+fthread 11 start cal at 785187
+fthread 11 meet barrier787937
+fthread 12 start cal at 822917
+fthread 12 meet barrier825667
+fthread 13 start cal at 831641
+fthread 13 meet barrier834391
+fthread 14 start cal at 861926
+fthread 14 meet barrier864676
+fthread 15 start cal at 871352
+fthread 15 meet barrier874124
+fthread 15 leave barrier1028139
+fthread 15 start dma 1028348
+fthread 15 end dma 1029092
+fthread 0 leave barrier1032534
+fthread 0 start dma 1032743
+fthread 0 end dma 1033488
+fthread 1 leave barrier1035044
+fthread 1 start dma 1035253
+fthread 1 end dma 1035990
+fthread 2 leave barrier1037939
+fthread 2 start dma 1038148
+fthread 2 end dma 1038885
+fthread 3 leave barrier1041225
+fthread 3 start dma 1041435
+fthread 3 end dma 1042171
+fthread 15 meet barrier1043282
+fthread 4 leave barrier1044922
+fthread 4 start dma 1045136
+fthread 4 end dma 1045875
+fthread 0 meet barrier1047766
+fthread 1 meet barrier1050303
+fthread 5 leave barrier1050702
+fthread 5 start dma 1050921
+fthread 5 end dma 1051671
+fthread 2 meet barrier1053335
+fthread 6 leave barrier1055724
+fthread 6 start dma 1056069
+fthread 6 end dma 1056863
+fthread 3 meet barrier1058291
+fthread 4 meet barrier1064290
+fthread 5 meet barrier1072461
+fthread 6 meet barrier1077629
+fthread 7 leave barrier1095538
+fthread 7 start dma 1095752
+fthread 7 end dma 1096488
+fthread 0 leave barrier1097579
+fthread 0 meet barrier1097647
+fthread 7 meet barrier1111319
+fthread 8 leave barrier1115435
+fthread 8 start dma 1115656
+fthread 8 end dma 1116394
+fthread 9 leave barrier1128495
+fthread 9 start dma 1128742
+fthread 9 end dma 1129499
+fthread 8 meet barrier1132120
+fthread 9 meet barrier1146187
+fthread 10 leave barrier1151225
+fthread 10 start dma 1151482
+fthread 10 end dma 1152239
+fthread 10 meet barrier1171761
+fthread 11 leave barrier1186946
+fthread 11 start dma 1187222
+fthread 11 end dma 1187989
+fthread 1 leave barrier1196241
+fthread 1 meet barrier1196328
+fthread 11 meet barrier1206993
+fthread 12 leave barrier1216309
+fthread 12 start dma 1216604
+fthread 12 end dma 1217373
+fthread 12 meet barrier1237920
+fthread 13 leave barrier1244981
+fthread 13 start dma 1245295
+fthread 13 end dma 1246073
+fthread 13 meet barrier1267916
+fthread 14 leave barrier1277699
+fthread 14 start dma 1278025
+fthread 14 end dma 1278813
+fthread 14 meet barrier1300588
+fthread 2 leave barrier1309183
+fthread 2 meet barrier1309281
+fthread 3 leave barrier1414745
+fthread 3 meet barrier1414843
+fthread 4 leave barrier1517032
+fthread 4 meet barrier1517130
+fthread 5 leave barrier1609701
+fthread 5 meet barrier1609799
+fthread 6 leave barrier1677197
+fthread 6 meet barrier1677295
+fthread 7 leave barrier1756915
+fthread 7 meet barrier1757013
+fthread 8 leave barrier1833385
+fthread 8 meet barrier1833483
+fthread 9 leave barrier1881550
+fthread 9 meet barrier1881648
+fthread 10 leave barrier1932812
+fthread 10 meet barrier1932910
+fthread 11 leave barrier1974497
+fthread 11 meet barrier1974595
+fthread 12 leave barrier2016065
+fthread 12 meet barrier2016163
+fthread 13 leave barrier2048091
+fthread 13 meet barrier2048191
+fthread 14 leave barrier2088022
+fthread 14 meet barrier2088125
+fthread 15 leave barrier2097403
+fthread 15 meet barrier2097506
+fthread 15 leave barrier2177074
+fthread 15 start dma 2177179
+fthread 15 end dma 2178049
+fthread 15 meet barrier2178184
+fthread 1 leave barrier2182794
+fthread 1 start dma 2182899
+fthread 1 end dma 2183769
+fthread 1 meet barrier2183904
+fthread 2 leave barrier2188514
+fthread 2 start dma 2188619
+fthread 2 end dma 2189470
+fthread 2 meet barrier2189607
+fthread 3 leave barrier2194240
+fthread 3 start dma 2194345
+fthread 3 end dma 2195215
+fthread 3 meet barrier2195350
+fthread 4 leave barrier2199960
+fthread 4 start dma 2200065
+fthread 4 end dma 2200916
+fthread 4 meet barrier2201053
+fthread 5 leave barrier2205686
+fthread 5 start dma 2205791
+fthread 5 end dma 2206661
+fthread 5 meet barrier2206796
+fthread 6 leave barrier2211406
+fthread 6 start dma 2211511
+fthread 6 end dma 2212362
+fthread 6 meet barrier2212499
+fthread 7 leave barrier2217132
+fthread 7 start dma 2217237
+fthread 7 end dma 2218107
+fthread 7 meet barrier2218242
+fthread 8 leave barrier2222852
+fthread 8 start dma 2222957
+fthread 8 end dma 2223808
+fthread 8 meet barrier2223945
+fthread 9 leave barrier2228578
+fthread 9 start dma 2228683
+fthread 9 end dma 2229553
+fthread 9 meet barrier2229688
+fthread 10 leave barrier2234298
+fthread 10 start dma 2234403
+fthread 10 end dma 2235254
+fthread 10 meet barrier2235391
+fthread 11 leave barrier2240024
+fthread 11 start dma 2240129
+fthread 11 end dma 2240999
+fthread 11 meet barrier2241134
+fthread 12 leave barrier2245744
+fthread 12 start dma 2245849
+fthread 12 end dma 2246700
+fthread 12 meet barrier2246837
+fthread 13 leave barrier2251470
+fthread 13 start dma 2251575
+fthread 13 end dma 2252445
+fthread 13 meet barrier2252580
+fthread 14 leave barrier2257190
+fthread 14 start dma 2257295
+fthread 14 end dma 2258140
+fthread 14 meet barrier2258276
+fthread 0 leave barrier2262909
+fthread 0 start dma 2263017
+fthread 0 end dma 2263870
+fthread 0 meet barrier2264005
+fthread 0 leave barrier2356537
+fthread 0 start dma 2356712
+fthread 0 end dma 2357533
+fthread 15 leave barrier2362361
+fthread 15 start dma 2362687
+fthread 15 end dma 2363510
+fthread 1 leave barrier2368179
+fthread 1 start dma 2368362
+fthread 1 end dma 2369194
+fthread 2 leave barrier2373985
+fthread 2 start dma 2374177
+fthread 2 end dma 2374989
+fthread 3 leave barrier2379776
+fthread 3 start dma 2379966
+fthread 3 end dma 2380796
+fthread 0 meet barrier2381204
+fthread 4 leave barrier2385402
+fthread 4 start dma 2385593
+fthread 4 end dma 2386429
+fthread 15 meet barrier2387626
+fthread 5 leave barrier2391112
+fthread 5 start dma 2391293
+fthread 5 end dma 2392100
+fthread 1 meet barrier2393347
+fthread 6 leave barrier2398539
+fthread 6 start dma 2398732
+fthread 2 meet barrier2399284
+fthread 6 end dma 2399553
+fthread 0 leave barrier2403624
+fthread 0 meet barrier2403737
+fthread 3 meet barrier2404955
+fthread 4 meet barrier2410296
+fthread 7 leave barrier2411637
+fthread 7 start dma 2411821
+fthread 7 end dma 2412645
+fthread 5 meet barrier2415808
+fthread 6 meet barrier2422518
+fthread 8 leave barrier2427895
+fthread 8 start dma 2428075
+fthread 8 end dma 2428883
+fthread 7 meet barrier2435091
+fthread 9 leave barrier2449100
+fthread 9 start dma 2449281
+fthread 9 end dma 2450091
+fthread 8 meet barrier2451010
+fthread 1 leave barrier2453746
+fthread 1 meet barrier2453846
+fthread 10 leave barrier2465193
+fthread 10 start dma 2465373
+fthread 10 end dma 2466184
+fthread 9 meet barrier2472141
+fthread 10 meet barrier2488042
+fthread 11 leave barrier2491110
+fthread 11 start dma 2491285
+fthread 11 end dma 2492084
+fthread 12 leave barrier2507113
+fthread 12 start dma 2507290
+fthread 12 end dma 2508082
+fthread 11 meet barrier2514152
+fthread 12 meet barrier2530048
+fthread 13 leave barrier2535055
+fthread 13 start dma 2535231
+fthread 13 end dma 2536032
+fthread 2 leave barrier2539126
+fthread 2 meet barrier2539229
+fthread 14 leave barrier2557700
+fthread 13 meet barrier2557797
+fthread 14 start dma 2557864
+fthread 14 end dma 2558653
+fthread 14 meet barrier2580380
+fthread 3 leave barrier2620796
+fthread 3 meet barrier2620894
+fthread 4 leave barrier2719876
+fthread 4 meet barrier2719974
+fthread 5 leave barrier2815694
+fthread 5 meet barrier2815792
+fthread 6 leave barrier2873676
+fthread 6 meet barrier2873774
+fthread 7 leave barrier2944241
+fthread 7 meet barrier2944339
+fthread 8 leave barrier2995688
+fthread 8 meet barrier2995786
+fthread 9 leave barrier3053337
+fthread 9 meet barrier3053435
+fthread 10 leave barrier3095119
+fthread 10 meet barrier3095217
+fthread 11 leave barrier3152159
+fthread 11 meet barrier3152257
+fthread 12 leave barrier3211431
+fthread 12 meet barrier3211529
+fthread 13 leave barrier3252125
+fthread 13 meet barrier3252225
+fthread 14 leave barrier3280822
+fthread 14 meet barrier3280925
+fthread 15 leave barrier3290211
+fthread 15 meet barrier3290320
+fthread 15 leave barrier3335703
+fthread 15 start dma 3335808
+fthread 15 end dma 3336678
+fthread 15 meet barrier3336813
+fthread 1 leave barrier3341423
+fthread 1 start dma 3341528
+fthread 1 end dma 3342398
+fthread 1 meet barrier3342533
+fthread 2 leave barrier3347143
+fthread 2 start dma 3347248
+fthread 2 end dma 3348099
+fthread 2 meet barrier3348236
+fthread 3 leave barrier3352869
+fthread 3 start dma 3352974
+fthread 3 end dma 3353844
+fthread 3 meet barrier3353979
+fthread 4 leave barrier3358589
+fthread 4 start dma 3358694
+fthread 4 end dma 3359545
+fthread 4 meet barrier3359682
+fthread 5 leave barrier3364315
+fthread 5 start dma 3364420
+fthread 5 end dma 3365290
+fthread 5 meet barrier3365425
+fthread 6 leave barrier3370035
+fthread 6 start dma 3370140
+fthread 6 end dma 3370991
+fthread 6 meet barrier3371128
+fthread 7 leave barrier3375761
+fthread 7 start dma 3375866
+fthread 7 end dma 3376736
+fthread 7 meet barrier3376871
+fthread 8 leave barrier3381481
+fthread 8 start dma 3381586
+fthread 8 end dma 3382437
+fthread 8 meet barrier3382574
+fthread 9 leave barrier3387207
+fthread 9 start dma 3387312
+fthread 9 end dma 3388182
+fthread 9 meet barrier3388317
+fthread 10 leave barrier3392927
+fthread 10 start dma 3393032
+fthread 10 end dma 3393883
+fthread 10 meet barrier3394020
+fthread 11 leave barrier3398653
+fthread 11 start dma 3398758
+fthread 11 end dma 3399628
+fthread 11 meet barrier3399763
+fthread 12 leave barrier3404373
+fthread 12 start dma 3404478
+fthread 12 end dma 3405329
+fthread 12 meet barrier3405466
+fthread 13 leave barrier3410099
+fthread 13 start dma 3410204
+fthread 13 end dma 3411074
+fthread 13 meet barrier3411209
+fthread 14 leave barrier3415819
+fthread 14 start dma 3415924
+fthread 14 end dma 3416769
+fthread 14 meet barrier3416905
+fthread 0 leave barrier3421538
+fthread 0 start dma 3421646
+fthread 0 end dma 3422499
+fthread 0 meet barrier3422634
+fthread 0 leave barrier3515166
+fthread 0 start dma 3515341
+fthread 0 end dma 3516162
+fthread 15 leave barrier3520990
+fthread 15 start dma 3521316
+fthread 15 end dma 3522139
+fthread 1 leave barrier3526808
+fthread 1 start dma 3526991
+fthread 1 end dma 3527823
+fthread 2 leave barrier3532614
+fthread 2 start dma 3532806
+fthread 2 end dma 3533618
+fthread 3 leave barrier3538405
+fthread 3 start dma 3538595
+fthread 3 end dma 3539425
+fthread 0 meet barrier3539833
+fthread 4 leave barrier3544031
+fthread 4 start dma 3544222
+fthread 4 end dma 3545058
+fthread 15 meet barrier3546255
+fthread 5 leave barrier3549741
+fthread 5 start dma 3549922
+fthread 5 end dma 3550729
+fthread 1 meet barrier3551976
+fthread 6 leave barrier3557168
+fthread 6 start dma 3557361
+fthread 2 meet barrier3557913
+fthread 6 end dma 3558182
+fthread 0 leave barrier3562253
+fthread 0 meet barrier3562366
+fthread 3 meet barrier3563584
+fthread 4 meet barrier3568925
+fthread 7 leave barrier3570266
+fthread 7 start dma 3570450
+fthread 7 end dma 3571274
+fthread 5 meet barrier3574437
+fthread 6 meet barrier3581147
+fthread 8 leave barrier3586524
+fthread 8 start dma 3586704
+fthread 8 end dma 3587512
+fthread 7 meet barrier3593720
+fthread 9 leave barrier3607729
+fthread 9 start dma 3607910
+fthread 9 end dma 3608720
+fthread 8 meet barrier3609639
+fthread 1 leave barrier3612375
+fthread 1 meet barrier3612475
+fthread 10 leave barrier3623822
+fthread 10 start dma 3624002
+fthread 10 end dma 3624813
+fthread 9 meet barrier3630770
+fthread 10 meet barrier3646671
+fthread 11 leave barrier3649739
+fthread 11 start dma 3649914
+fthread 11 end dma 3650713
+fthread 12 leave barrier3665742
+fthread 12 start dma 3665919
+fthread 12 end dma 3666711
+fthread 11 meet barrier3672781
+fthread 12 meet barrier3688677
+fthread 13 leave barrier3693684
+fthread 13 start dma 3693860
+fthread 13 end dma 3694661
+fthread 2 leave barrier3697755
+fthread 2 meet barrier3697858
+fthread 14 leave barrier3716329
+fthread 13 meet barrier3716426
+fthread 14 start dma 3716493
+fthread 14 end dma 3717282
+fthread 14 meet barrier3739009
+fthread 3 leave barrier3779425
+fthread 3 meet barrier3779523
+fthread 4 leave barrier3878505
+fthread 4 meet barrier3878603
+fthread 5 leave barrier3974323
+fthread 5 meet barrier3974421
+fthread 6 leave barrier4032305
+fthread 6 meet barrier4032403
+fthread 7 leave barrier4102870
+fthread 7 meet barrier4102968
+fthread 8 leave barrier4154317
+fthread 8 meet barrier4154415
+fthread 9 leave barrier4211966
+fthread 9 meet barrier4212064
+fthread 10 leave barrier4253748
+fthread 10 meet barrier4253846
+fthread 11 leave barrier4310788
+fthread 11 meet barrier4310886
+fthread 12 leave barrier4370060
+fthread 12 meet barrier4370158
+fthread 13 leave barrier4410754
+fthread 13 meet barrier4410854
+fthread 14 leave barrier4439451
+fthread 14 meet barrier4439554
+fthread 15 leave barrier4448840
+fthread 15 meet barrier4448949
+fthread 15 leave barrier4494332
+fthread 15 start dma 4494437
+fthread 15 end dma 4495307
+fthread 15 meet barrier4495442
+fthread 1 leave barrier4500052
+fthread 1 start dma 4500157
+fthread 1 end dma 4501027
+fthread 1 meet barrier4501162
+fthread 2 leave barrier4505772
+fthread 2 start dma 4505877
+fthread 2 end dma 4506728
+fthread 2 meet barrier4506865
+fthread 3 leave barrier4511498
+fthread 3 start dma 4511603
+fthread 3 end dma 4512473
+fthread 3 meet barrier4512608
+fthread 4 leave barrier4517218
+fthread 4 start dma 4517323
+fthread 4 end dma 4518174
+fthread 4 meet barrier4518311
+fthread 5 leave barrier4522944
+fthread 5 start dma 4523049
+fthread 5 end dma 4523919
+fthread 5 meet barrier4524054
+fthread 6 leave barrier4528664
+fthread 6 start dma 4528769
+fthread 6 end dma 4529620
+fthread 6 meet barrier4529757
+fthread 7 leave barrier4534390
+fthread 7 start dma 4534495
+fthread 7 end dma 4535365
+fthread 7 meet barrier4535500
+fthread 8 leave barrier4540110
+fthread 8 start dma 4540215
+fthread 8 end dma 4541066
+fthread 8 meet barrier4541203
+fthread 9 leave barrier4545836
+fthread 9 start dma 4545941
+fthread 9 end dma 4546811
+fthread 9 meet barrier4546946
+fthread 10 leave barrier4551556
+fthread 10 start dma 4551661
+fthread 10 end dma 4552512
+fthread 10 meet barrier4552649
+fthread 11 leave barrier4557282
+fthread 11 start dma 4557387
+fthread 11 end dma 4558257
+fthread 11 meet barrier4558392
+fthread 12 leave barrier4563002
+fthread 12 start dma 4563107
+fthread 12 end dma 4563958
+fthread 12 meet barrier4564095
+fthread 13 leave barrier4568728
+fthread 13 start dma 4568833
+fthread 13 end dma 4569703
+fthread 13 meet barrier4569838
+fthread 14 leave barrier4574448
+fthread 14 start dma 4574553
+fthread 14 end dma 4575398
+fthread 14 meet barrier4575534
+fthread 0 leave barrier4580167
+fthread 0 start dma 4580275
+fthread 0 end dma 4581128
+fthread 0 meet barrier4581263
+fthread 0 leave barrier4673795
+fthread 0 start dma 4673970
+fthread 0 end dma 4674791
+fthread 15 leave barrier4679619
+fthread 15 start dma 4679945
+fthread 15 end dma 4680768
+fthread 1 leave barrier4685437
+fthread 1 start dma 4685620
+fthread 1 end dma 4686452
+fthread 2 leave barrier4691243
+fthread 2 start dma 4691435
+fthread 2 end dma 4692247
+fthread 3 leave barrier4697034
+fthread 3 start dma 4697224
+fthread 3 end dma 4698054
+fthread 0 meet barrier4698462
+fthread 4 leave barrier4702660
+fthread 4 start dma 4702851
+fthread 4 end dma 4703687
+fthread 15 meet barrier4704884
+fthread 5 leave barrier4708370
+fthread 5 start dma 4708551
+fthread 5 end dma 4709358
+fthread 1 meet barrier4710605
+fthread 6 leave barrier4715797
+fthread 6 start dma 4715990
+fthread 2 meet barrier4716542
+fthread 6 end dma 4716811
+fthread 0 leave barrier4720882
+fthread 0 meet barrier4720995
+fthread 3 meet barrier4722213
+fthread 4 meet barrier4727554
+fthread 7 leave barrier4728895
+fthread 7 start dma 4729079
+fthread 7 end dma 4729903
+fthread 5 meet barrier4733066
+fthread 6 meet barrier4739776
+fthread 8 leave barrier4745153
+fthread 8 start dma 4745333
+fthread 8 end dma 4746141
+fthread 7 meet barrier4752349
+fthread 9 leave barrier4766358
+fthread 9 start dma 4766539
+fthread 9 end dma 4767349
+fthread 8 meet barrier4768268
+fthread 1 leave barrier4771004
+fthread 1 meet barrier4771104
+fthread 10 leave barrier4782451
+fthread 10 start dma 4782631
+fthread 10 end dma 4783442
+fthread 9 meet barrier4789399
+fthread 10 meet barrier4805300
+fthread 11 leave barrier4808368
+fthread 11 start dma 4808543
+fthread 11 end dma 4809342
+fthread 12 leave barrier4824371
+fthread 12 start dma 4824548
+fthread 12 end dma 4825340
+fthread 11 meet barrier4831410
+fthread 12 meet barrier4847306
+fthread 13 leave barrier4852313
+fthread 13 start dma 4852489
+fthread 13 end dma 4853290
+fthread 2 leave barrier4856384
+fthread 2 meet barrier4856487
+fthread 14 leave barrier4874958
+fthread 13 meet barrier4875055
+fthread 14 start dma 4875122
+fthread 14 end dma 4875911
+fthread 14 meet barrier4897638
+fthread 3 leave barrier4938054
+fthread 3 meet barrier4938152
+fthread 4 leave barrier5037134
+fthread 4 meet barrier5037232
+fthread 5 leave barrier5132952
+fthread 5 meet barrier5133050
+fthread 6 leave barrier5190934
+fthread 6 meet barrier5191032
+fthread 7 leave barrier5261499
+fthread 7 meet barrier5261597
+fthread 8 leave barrier5312946
+fthread 8 meet barrier5313044
+fthread 9 leave barrier5370595
+fthread 9 meet barrier5370693
+fthread 10 leave barrier5412377
+fthread 10 meet barrier5412475
+fthread 11 leave barrier5469417
+fthread 11 meet barrier5469515
+fthread 12 leave barrier5528689
+fthread 12 meet barrier5528787
+fthread 13 leave barrier5569383
+fthread 13 meet barrier5569483
+fthread 14 leave barrier5598080
+fthread 14 meet barrier5598183
+fthread 15 leave barrier5607469
+fthread 15 meet barrier5607578
+fthread 15 leave barrier5652961
+fthread 15 start dma 5653066
+fthread 15 end dma 5653936
+fthread 15 meet barrier5654071
+fthread 1 leave barrier5658681
+fthread 1 start dma 5658786
+fthread 1 end dma 5659656
+fthread 1 meet barrier5659791
+fthread 2 leave barrier5664401
+fthread 2 start dma 5664506
+fthread 2 end dma 5665357
+fthread 2 meet barrier5665494
+fthread 3 leave barrier5670127
+fthread 3 start dma 5670232
+fthread 3 end dma 5671102
+fthread 3 meet barrier5671237
+fthread 4 leave barrier5675847
+fthread 4 start dma 5675952
+fthread 4 end dma 5676803
+fthread 4 meet barrier5676940
+fthread 5 leave barrier5681573
+fthread 5 start dma 5681678
+fthread 5 end dma 5682548
+fthread 5 meet barrier5682683
+fthread 6 leave barrier5687293
+fthread 6 start dma 5687398
+fthread 6 end dma 5688249
+fthread 6 meet barrier5688386
+fthread 7 leave barrier5693019
+fthread 7 start dma 5693124
+fthread 7 end dma 5693994
+fthread 7 meet barrier5694129
+fthread 8 leave barrier5698739
+fthread 8 start dma 5698844
+fthread 8 end dma 5699695
+fthread 8 meet barrier5699832
+fthread 9 leave barrier5704465
+fthread 9 start dma 5704570
+fthread 9 end dma 5705440
+fthread 9 meet barrier5705575
+fthread 10 leave barrier5710185
+fthread 10 start dma 5710290
+fthread 10 end dma 5711141
+fthread 10 meet barrier5711278
+fthread 11 leave barrier5715911
+fthread 11 start dma 5716016
+fthread 11 end dma 5716886
+fthread 11 meet barrier5717021
+fthread 12 leave barrier5721631
+fthread 12 start dma 5721736
+fthread 12 end dma 5722587
+fthread 12 meet barrier5722724
+fthread 13 leave barrier5727357
+fthread 13 start dma 5727462
+fthread 13 end dma 5728332
+fthread 13 meet barrier5728467
+fthread 14 leave barrier5733077
+fthread 14 start dma 5733182
+fthread 14 end dma 5734027
+fthread 14 meet barrier5734163
+fthread 0 leave barrier5738796
+fthread 0 start dma 5738904
+fthread 0 end dma 5739757
+fthread 0 meet barrier5739892
+fthread 0 leave barrier5832424
+fthread 0 meet barrier5832599
+fthread 15 leave barrier5838316
+fthread 15 meet barrier5838638
+fthread 1 leave barrier5847392
+fthread 1 meet barrier5847558
+fthread 2 leave barrier5866276
+fthread 2 meet barrier5866430
+fthread 3 leave barrier5879383
+fthread 3 meet barrier5879529
+fthread 4 leave barrier5895304
+fthread 4 meet barrier5895440
+fthread 5 leave barrier5909737
+fthread 5 meet barrier5909863
+fthread 6 leave barrier5922736
+fthread 6 meet barrier5922852
+fthread 7 leave barrier5934715
+fthread 7 meet barrier5934828
+fthread 8 leave barrier5946229
+fthread 8 meet barrier5946340
+fthread 9 leave barrier5957310
+fthread 9 meet barrier5957420
+fthread 10 leave barrier5968063
+fthread 10 meet barrier5968173
+fthread 11 leave barrier5978501
+fthread 11 meet barrier5978611
+fthread 12 leave barrier5988638
+fthread 12 meet barrier5988748
+fthread 13 leave barrier5998474
+fthread 13 meet barrier5998584
+fthread 14 leave barrier6008001
+fthread 14 meet barrier6008111
+fthread 14 leave barrier6154456
+fthread 14 end cal at 6154533
+fthread 0 leave barrier6163079
+fthread 0 start dma 6163156
+fthread 0 end dma 6163371
+fthread 0 end cal at 6163448
+fthread 1 leave barrier6168460
+fthread 1 end cal at 6168537
+fthread 2 leave barrier6176939
+fthread 2 end cal at 6177016
+fthread 3 leave barrier6205123
+fthread 3 end cal at 6205200
+fthread 4 leave barrier6210742
+fthread 4 end cal at 6210819
+fthread 5 leave barrier6239387
+fthread 5 end cal at 6239464
+fthread 6 leave barrier6245689
+fthread 6 end cal at 6245766
+fthread 7 leave barrier6274700
+fthread 7 end cal at 6274777
+fthread 8 leave barrier6281683
+fthread 8 end cal at 6281760
+fthread 9 leave barrier6310944
+fthread 9 end cal at 6311021
+fthread 10 leave barrier6318610
+fthread 10 end cal at 6318687
+fthread 11 leave barrier6348369
+fthread 11 end cal at 6348446
+fthread 12 leave barrier6356716
+fthread 12 end cal at 6356793
+fthread 13 leave barrier6386857
+fthread 13 end cal at 6386934
+fthread 15 leave barrier6416160
+fthread 15 end cal at 6416237
+********time:6433681*******
+ReadSocket event for pid: 1 at time: 0
+********time:6433682*******
+alloc inode:8
+sucess

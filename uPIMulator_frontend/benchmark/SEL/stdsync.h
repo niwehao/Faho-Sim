@@ -1,4 +1,4 @@
-#include "stdsys.h"
+#include "../stdsys.h"
 
 struct barrier {
   struct lock __lock; 

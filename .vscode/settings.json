@@ -70,7 +70,10 @@
         "common.h": "c",
         "stdsys.h": "c",
         "stdsync.h": "c",
-        "dpu-utils.h": "c"
+        "dpu-utils.h": "c",
+        "custom_barrier.h": "c",
+        "inode.h": "c",
+        "syscall.h": "c"
     },
     "cmake.sourceDirectory": "/home/krakos/niwe/Faho_Sim/uPIMulator_backend"
 }

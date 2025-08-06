@@ -9,7 +9,7 @@
 
 #define roundup(n, m) ((n / m) * m + m)
 int sd_host;
-dpu_arguments_t DPU_INPUT_ARGUMENTS;
+__buffer_aligned dpu_arguments_t DPU_INPUT_ARGUMENTS;
 
 // GEMV
 static void gemv(T *bufferC, T *bufferA, T *bufferB, int pos)
@@ -137,6 +137,8 @@ void main1()
         print_debug(fthread_id, 5);
 
         umram_read(cache_A, BLOCK_SIZE, mram_temp_addr_A);
+        print_debug(fthread_id, 6);
+        print_debug(fthread_id, 5);
         umram_read(cache_B, BLOCK_SIZE, mram_temp_addr_B);
         print_debug(fthread_id, 6);
 

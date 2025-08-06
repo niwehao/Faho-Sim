@@ -189,7 +189,6 @@ void main1()
       print_debug(tasklet_id, 6);
       if (r != 0)
       {
-
         fault_notif();
       }
 

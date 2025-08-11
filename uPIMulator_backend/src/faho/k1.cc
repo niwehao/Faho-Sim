@@ -195,14 +195,24 @@ namespace upmem_sim::simulator::faho::k1
                 for (int i = 0; i < dpumanager->check_result->nb_data; i++)
                 {
                     host_->check(dpumanager->check_result->rolepids[i]);
+                    finish_thread();
+                    break;
                     dpumanager->check_result->rolepids[i] = 0;
                 }
                 dpumanager->check_result->nb_data = 0;
                 dpumanager->dpu_flag->check = 0;
             }
-            
 
             // 获取事件,并且写入远端dpu中
+        }
+    }
+    void K1::finish_thread()
+    {
+        for (auto &dpu_manager : dpu_managers_)
+        {
+            for(auto &thread : dpu_manager->dpu->scheduler()->threads()){
+                thread->set_state(dpu::Thread::ZOMBIE);
+            }
         }
     }
     struct def::socket_connection *K1::find_free_socket_connection_or_alloc()

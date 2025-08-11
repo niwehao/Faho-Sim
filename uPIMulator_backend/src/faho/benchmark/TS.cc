@@ -194,7 +194,6 @@ namespace upmem_sim::simulator::faho::def
     if (status)
     {
       std::cout << "sucess" << std::endl;
-      exit(0);
       return;
     }
     else

@@ -84,7 +84,7 @@ namespace upmem_sim::simulator::faho::def
         if (state > 0)
         {
             std::cout << "sucess" << std::endl;
-             exit(0);
+            
         }
         else{
             assert(0);

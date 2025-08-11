@@ -74,7 +74,7 @@ namespace upmem_sim::simulator::faho::def
             }
         }
         std::cout << "sucess" << std::endl;
-        exit(0);
+    
         return;
     }
     void VA::benchmark_init(std::string bindir,int data_prep)

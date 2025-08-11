@@ -162,7 +162,7 @@ namespace upmem_sim::simulator::faho::def
         {
             std::cout << "sucess" << std::endl;
             free(C_dpu);
-            exit(0);
+          
             return;
         }
         else

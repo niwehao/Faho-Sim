@@ -47,6 +47,7 @@ namespace upmem_sim::simulator::faho::k1
         struct def::socket_connection *find_free_socket_connection_or_alloc();
         int check_dpu_stop();
         void api_retrieve();
+        void finish_thread();
     private:
         std::string bindir_;
         int cycle_ = 0;

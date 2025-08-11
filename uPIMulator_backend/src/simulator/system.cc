@@ -52,7 +52,7 @@ void System::cycle() {
 
   if (is_zombie()) {
     // cpu_->check(execuion_);//程序的执行次数
-    // execuion_ += 1;
+    execuion_ += 1;
 
     // if (not is_finished()) {
     //   if(benchmark == "TRNS"){
@@ -61,7 +61,6 @@ void System::cycle() {
     //   cpu_->sched(execuion_);
     //   cpu_->launch();
     // }
-    assert(0);
   }
 }
 

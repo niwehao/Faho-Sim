@@ -140,10 +140,6 @@ void main1()
                         (message_partial_count + p_count) * sizeof(T));
     print_debug(fthread_id, 6);
 
-    if (r != 0)
-    {
-      fault_notif();
-    }
 
     // wait_barrier(&b);
     print_debug(fthread_id, 1);

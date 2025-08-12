@@ -1121,7 +1121,7 @@ check_time_process:                     // @check_time_process
 	add r1, r2, r1
 	lw r1, r1, 20
 	sub r0, r0, r1
-	move r1, 50000
+	move r1, 2000
 	sub r0, r0, r1, gtu
 	jump r23
 .Lfunc_end11:
@@ -1196,7 +1196,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	move r0, r14
 	move r17, cp
 	jump .LBB12_9
-.LBB12_36:                              //   in Loop: Header=BB12_9 Depth=1
+.LBB12_39:                              //   in Loop: Header=BB12_9 Depth=1
 	lw r0, r15, 4
 	// inline asm
 .Ltmp51:
@@ -1205,14 +1205,14 @@ scheduler_jobs:                         // @scheduler_jobs
 	// inline asm
 	stop false, 0x0
 	// inline asm
-.LBB12_37:                              //   in Loop: Header=BB12_9 Depth=1
+.LBB12_40:                              //   in Loop: Header=BB12_9 Depth=1
 	move r0, all_end_or_waiting
 	sb r0, 0, 1
 	move r0, r14
 .LBB12_9:                               // =>This Loop Header: Depth=1
                                         //     Child Loop BB12_12 Depth 2
                                         //     Child Loop BB12_23 Depth 2
-                                        //     Child Loop BB12_32 Depth 2
+                                        //     Child Loop BB12_35 Depth 2
 	lw r1, zero, mutex_jobs
 	// inline asm
 .Ltmp52:
@@ -1261,7 +1261,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	add r1, r2, r1
 	lw r1, r1, 20
 	sub r0, r0, r1
-	move r1, 50000
+	move r1, 2000
 	sub r1, r0, r1, gtu
 .LBB12_16:                              //   in Loop: Header=BB12_12 Depth=2
 	lw r0, zero, cur_process_index
@@ -1287,7 +1287,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	lw r1, r1, 20
 	lw r2, zero, mutex_jobs
 	sub r15, r0, r1
-	move r16, 50000
+	move r16, 2000
 	// inline asm
 .Ltmp53:
 	release r2, 0, nz, .Ltmp53+1
@@ -1296,7 +1296,7 @@ scheduler_jobs:                         // @scheduler_jobs
 // %bb.19:                              //   in Loop: Header=BB12_9 Depth=1
 	lbs r0, zero, all_end_or_waiting
 	and r0, r0, 255
-	jeq r0, 0, .LBB12_37
+	jeq r0, 0, .LBB12_40
 .LBB12_20:                              //   in Loop: Header=BB12_9 Depth=1
 	lw r0, r17, 4
 	// inline asm
@@ -1344,8 +1344,8 @@ scheduler_jobs:                         // @scheduler_jobs
 	jneq r1, 0, .LBB12_9
 // %bb.28:                              //   in Loop: Header=BB12_9 Depth=1
 	call r23, me_new
-	jneq r0, 0, .LBB12_29
-	jump .LBB12_38
+	jneq r0, 0, .LBB12_32
+	jump .LBB12_29
 .LBB12_26:                              //   in Loop: Header=BB12_9 Depth=1
 	move r0, cp
 	sb r0, 1, 0
@@ -1355,8 +1355,8 @@ scheduler_jobs:                         // @scheduler_jobs
 	release r0, 0, nz, .Ltmp57+1
 	// inline asm
 	call r23, me_new
-	jeq r0, 0, .LBB12_38
-.LBB12_29:                              //   in Loop: Header=BB12_9 Depth=1
+	jeq r0, 0, .LBB12_29
+.LBB12_32:                              //   in Loop: Header=BB12_9 Depth=1
 	move r15, cp
 	lw r0, r15, 4
 	// inline asm
@@ -1369,28 +1369,28 @@ scheduler_jobs:                         // @scheduler_jobs
 	sb r15, 1, r1
 	lbu r3, zero, cp
 	and r2, r1, 255
-	jneq r2, r3, .LBB12_36
-// %bb.30:                              //   in Loop: Header=BB12_9 Depth=1
+	jneq r2, r3, .LBB12_39
+// %bb.33:                              //   in Loop: Header=BB12_9 Depth=1
 	sb r15, 2, 0
-	jeq r2, 0, .LBB12_35
-// %bb.31:                              //   in Loop: Header=BB12_9 Depth=1
+	jeq r2, 0, .LBB12_38
+// %bb.34:                              //   in Loop: Header=BB12_9 Depth=1
 	and r0, r0, 255
-	move r2, 0, true, .LBB12_32
-.LBB12_34:                              //   in Loop: Header=BB12_32 Depth=2
+	move r2, 0, true, .LBB12_35
+.LBB12_37:                              //   in Loop: Header=BB12_35 Depth=2
 	add r2, r2, 1
 	and r3, r1, 255
-	jgeu r2, r3, .LBB12_35
-.LBB12_32:                              //   Parent Loop BB12_9 Depth=1
+	jgeu r2, r3, .LBB12_38
+.LBB12_35:                              //   Parent Loop BB12_9 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
-	jeq r0, r2, .LBB12_34
-// %bb.33:                              //   in Loop: Header=BB12_32 Depth=2
+	jeq r0, r2, .LBB12_37
+// %bb.36:                              //   in Loop: Header=BB12_35 Depth=2
 	// inline asm
 .Ltmp59:
 	resume r2, 0, nz, .Ltmp59+0
 	// inline asm
 	lbs r1, zero, cp
-	jump .LBB12_34
-.LBB12_35:                              //   in Loop: Header=BB12_9 Depth=1
+	jump .LBB12_37
+.LBB12_38:                              //   in Loop: Header=BB12_9 Depth=1
 	move r0, cp
 	sb r0, 1, 0
 	lw r0, r0, 4
@@ -1398,8 +1398,25 @@ scheduler_jobs:                         // @scheduler_jobs
 .Ltmp60:
 	release r0, 0, nz, .Ltmp60+1
 	// inline asm
-	jump .LBB12_37
-.LBB12_38:
+	jump .LBB12_40
+.LBB12_29:
+	// inline asm
+	time r0
+
+	// inline asm
+	lw r1, zero, cur_process_index
+	lsl r2, r1, 4
+	lsl_add r1, r2, r1, 6
+	move r2, processs
+	add r1, r2, r1
+	lw r1, r1, 20
+	sub r0, r0, r1
+	move r1, 2001
+	jlts r0, r1, .LBB12_31
+// %bb.30:
+	move r1, 7
+	call r23, print_debug
+.LBB12_31:
 	lbu r0, zero, all_end_or_waiting
 	ld d16, r22, -24
 	ld d14, r22, -16
@@ -3294,18 +3311,22 @@ syscall:                                // @syscall
 	call r23, me_new
 	lbu r20, r0, cur_jobs
 	// inline asm
-	time r1
+	time r0
 
 	// inline asm
+	lw r1, zero, cur_process_index
+	lsl r2, r1, 4
+	lsl_add r1, r2, r1, 6
+	move r2, processs
+	add r1, r2, r1
+	lw r1, r1, 20
+	sub r0, r0, r1
+	move r1, 2001
+	jltu r0, r1, .LBB31_3
+// %bb.2:
 	lsl r0, r20, 2
 	lsl_add r0, r0, r20, 4
 	move r19, jobs
-	add r2, r19, r0
-	lw r2, r2, 12
-	sub r1, r1, r2
-	move r2, 2501
-	jltu r1, r2, .LBB31_3
-// %bb.2:
 	move r1, 3
 	sb r0, jobs, r1
 	call r23, me_new
@@ -4439,31 +4460,40 @@ scheduler:                              // @scheduler
 	sd r22, -56, d18
 	sd r22, -64, d20
 	move r16, 0
-	move r14, 1
-	sw r22, -16, r14
+	move r0, 1
+	sw r22, -16, r0
 	move r18, r16
 	move r17, r16, true, .LBB41_1
-.LBB41_34:                              //   in Loop: Header=BB41_1 Depth=1
-	move r14, 0
-	move r17, r14
+.LBB41_31:                              //   in Loop: Header=BB41_1 Depth=1
+	move r0, 0
+	move r17, r0
 .LBB41_1:                               // =>This Loop Header: Depth=1
                                         //     Child Loop BB41_2 Depth 2
-                                        //     Child Loop BB41_14 Depth 2
-                                        //     Child Loop BB41_22 Depth 2
-	lsl r0, r17, 4
-	lsl_add r0, r0, r17, 11
-	lsl_sub r0, r0, r17, 6
+                                        //     Child Loop BB41_11 Depth 2
+                                        //     Child Loop BB41_19 Depth 2
+	lsl r1, r17, 4
+	lsl_add r1, r1, r17, 11
+	lsl_sub r1, r1, r17, 6
 	add r17, r17, 1
-	add r19, r0, 651280
+	add r19, r1, 651280
 .LBB41_2:                               //   Parent Loop BB41_1 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
-	// inline asm
-	time r0
-
-	// inline asm
-	move r1, 5000001
-	jltu r0, r1, .LBB41_5
+	lsl r1, r17, 4
+	lsl_add r1, r1, r17, 6
+	move r2, processs
+	add r1, r2, r1
+	lw r1, r1, -72
+	jeq r1, 1, .LBB41_5
 // %bb.3:                               //   in Loop: Header=BB41_2 Depth=2
+	jeq r1, 3, .LBB41_4
+// %bb.27:                              //   in Loop: Header=BB41_2 Depth=2
+	add r19, r19, 2000
+	add r17, r17, 1
+	jneq r17, 11, .LBB41_2
+// %bb.28:                              //   in Loop: Header=BB41_1 Depth=1
+	and r0, r0, 1
+	jnz r0, .LBB41_31
+// %bb.29:                              //   in Loop: Header=BB41_1 Depth=1
 	call r23, stop_me
 	move r0, 15
 	move r1, 3
@@ -4497,87 +4527,34 @@ scheduler:                              // @scheduler
 .Ltmp171:
 	release r0, 0, nz, .Ltmp171+1
 	// inline asm
-	and r0, r3, 32, z, .LBB41_5
-// %bb.4:                               //   in Loop: Header=BB41_2 Depth=2
+	and r0, r3, 32, z, .LBB41_31
+// %bb.30:                              //   in Loop: Header=BB41_1 Depth=1
 	call r23, wakeup_sleepy_socket
-.LBB41_5:                               //   in Loop: Header=BB41_2 Depth=2
-	lsl r0, r17, 4
-	lsl_add r0, r0, r17, 6
-	move r1, processs
-	add r0, r1, r0
-	lw r0, r0, -72
-	jeq r0, 1, .LBB41_8
-// %bb.6:                               //   in Loop: Header=BB41_2 Depth=2
-	jeq r0, 3, .LBB41_7
-// %bb.30:                              //   in Loop: Header=BB41_2 Depth=2
-	add r19, r19, 2000
-	add r17, r17, 1
-	jneq r17, 11, .LBB41_2
-// %bb.31:                              //   in Loop: Header=BB41_1 Depth=1
-	and r0, r14, 1
-	jnz r0, .LBB41_34
-// %bb.32:                              //   in Loop: Header=BB41_1 Depth=1
-	call r23, stop_me
-	move r0, 15
-	move r1, 3
-	// inline asm
-	time_cfg r0, r1
-
-	// inline asm
-	lw r0, zero, mutex_flag
-	// inline asm
-.Ltmp172:
-	acquire r0, 0, nz, .Ltmp172
-	// inline asm
-	move r0, 651264
-	add r1, r22, -32
-	ldma r1, r0, 1
-	lw r2, zero, mutex_flag
-	// inline asm
-.Ltmp173:
-	release r2, 0, nz, .Ltmp173+1
-	// inline asm
-	lw r2, zero, mutex_flag
-	lw r3, r22, -24
-	// inline asm
-.Ltmp174:
-	acquire r2, 0, nz, .Ltmp174
-	// inline asm
-	sw r22, -24, 0
-	sdma r1, r0, 1
-	lw r0, zero, mutex_flag
-	// inline asm
-.Ltmp175:
-	release r0, 0, nz, .Ltmp175+1
-	// inline asm
-	and r0, r3, 32, z, .LBB41_34
-// %bb.33:                              //   in Loop: Header=BB41_1 Depth=1
-	call r23, wakeup_sleepy_socket
-	jump .LBB41_34
-.LBB41_7:                               //   in Loop: Header=BB41_1 Depth=1
+	jump .LBB41_31
+.LBB41_4:                               //   in Loop: Header=BB41_1 Depth=1
 	move r20, 1
 	call r23, me_new
-	jeq r0, 0, .LBB41_10
-	jump .LBB41_35
-.LBB41_8:                               //   in Loop: Header=BB41_1 Depth=1
+	jeq r0, 0, .LBB41_7
+	jump .LBB41_32
+.LBB41_5:                               //   in Loop: Header=BB41_1 Depth=1
 	move r20, 0
 	call r23, me_new
-	jneq r0, 0, .LBB41_35
-.LBB41_10:                              //   in Loop: Header=BB41_1 Depth=1
+	jneq r0, 0, .LBB41_32
+.LBB41_7:                               //   in Loop: Header=BB41_1 Depth=1
 	lsl r0, r17, 4
 	lsl_add r1, r0, r17, 6
 	move r0, processs
 	add r21, r0, r1
 	lw r15, r21, -76
 	add r14, r17, -1
-	jeq r16, r15, .LBB41_20
-// %bb.11:                              //   in Loop: Header=BB41_1 Depth=1
+	jeq r16, r15, .LBB41_17
+// %bb.8:                               //   in Loop: Header=BB41_1 Depth=1
 	lsl r1, r18, 4
 	lsl_add r18, r1, r18, 6
 	add r0, r0, r18
 	lw r0, r0, 4
-	jneq r0, r16, .LBB41_19
-// %bb.12:                              //   in Loop: Header=BB41_1 Depth=1
+	jneq r0, r16, .LBB41_16
+// %bb.9:                               //   in Loop: Header=BB41_1 Depth=1
 	move r16, 0
 	move r0, r16
 	move r1, r16
@@ -4588,54 +4565,54 @@ scheduler:                              // @scheduler
 	lw r1, r0, 32
 	move r0, 651264
 	lsl_add r0, r0, r2, 16
-	lsr r2, r1, 11, z, .LBB41_16
-// %bb.13:                              //   in Loop: Header=BB41_1 Depth=1
+	lsr r2, r1, 11, z, .LBB41_13
+// %bb.10:                              //   in Loop: Header=BB41_1 Depth=1
 	move r3, 512
 	move r4, r0
-.LBB41_14:                              //   Parent Loop BB41_1 Depth=1
+.LBB41_11:                              //   Parent Loop BB41_1 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	sdma r3, r4, 255
 	add r4, r4, 2048
 	add r3, r3, 2048
-	add r2, r2, -1, nz, .LBB41_14
-// %bb.15:                              //   in Loop: Header=BB41_1 Depth=1
+	add r2, r2, -1, nz, .LBB41_11
+// %bb.12:                              //   in Loop: Header=BB41_1 Depth=1
 	and r16, r1, -2048
-.LBB41_16:                              //   in Loop: Header=BB41_1 Depth=1
+.LBB41_13:                              //   in Loop: Header=BB41_1 Depth=1
 	and r1, r1, 2047
-	jeq r1, 0, .LBB41_18
-// %bb.17:                              //   in Loop: Header=BB41_1 Depth=1
+	jeq r1, 0, .LBB41_15
+// %bb.14:                              //   in Loop: Header=BB41_1 Depth=1
 	add r2, r16, 512
 	add r0, r0, r16
 	move r3, -1
 	lsr_add r1, r3, r1, 3
 	lsl_add r1, r2, r1, 24
 	sdma r1, r0, 0
-.LBB41_18:                              //   in Loop: Header=BB41_1 Depth=1
+.LBB41_15:                              //   in Loop: Header=BB41_1 Depth=1
 	move r0, 1
 	move r1, 0
 	call r23, print_debug
-.LBB41_19:                              //   in Loop: Header=BB41_1 Depth=1
+.LBB41_16:                              //   in Loop: Header=BB41_1 Depth=1
 	move r0, r14
 	call r23, load_prg_memory
 	move r18, r14
 	move r16, r15
-.LBB41_20:                              //   in Loop: Header=BB41_1 Depth=1
+.LBB41_17:                              //   in Loop: Header=BB41_1 Depth=1
 	move r0, jobs
 	ldma r0, r19, 249
 	sw r21, -72, 2
 	sw zero, cur_process_index, r14
-	jnz r20, .LBB41_24
-// %bb.21:                              //   in Loop: Header=BB41_1 Depth=1
+	jnz r20, .LBB41_21
+// %bb.18:                              //   in Loop: Header=BB41_1 Depth=1
 	move r1, 100
-.LBB41_22:                              //   Parent Loop BB41_1 Depth=1
+.LBB41_19:                              //   Parent Loop BB41_1 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	lsl r0, r1, 2
 	lsl_add r2, r0, r1, 4
 	move r0, jobs
 	sub r2, r0, r2
 	sb r2, 2000, 0
-	add r1, r1, -1, nz, .LBB41_22
-// %bb.23:                              //   in Loop: Header=BB41_1 Depth=1
+	add r1, r1, -1, nz, .LBB41_19
+// %bb.20:                              //   in Loop: Header=BB41_1 Depth=1
 	lsl r1, r17, 4
 	lsl_add r1, r1, r17, 6
 	move r2, processs
@@ -4649,7 +4626,7 @@ scheduler:                              // @scheduler
 	lw r1, r1, -68
 	sw r2, 24, r1
 	sh r0, 0, 1
-.LBB41_24:                              //   in Loop: Header=BB41_1 Depth=1
+.LBB41_21:                              //   in Loop: Header=BB41_1 Depth=1
 	// inline asm
 	time r0
 
@@ -4661,31 +4638,31 @@ scheduler:                              // @scheduler
 	sw r14, -60, r0
 	call r23, scheduler_jobs
 	lw r1, r14, -72
-	jeq r0, 0, .LBB41_27
-// %bb.25:                              //   in Loop: Header=BB41_1 Depth=1
-	jeq r1, 4, .LBB41_29
-// %bb.26:                              //   in Loop: Header=BB41_1 Depth=1
+	jeq r0, 0, .LBB41_24
+// %bb.22:                              //   in Loop: Header=BB41_1 Depth=1
+	jeq r1, 4, .LBB41_26
+// %bb.23:                              //   in Loop: Header=BB41_1 Depth=1
 	lsl r0, r17, 4
 	lsl_add r0, r0, r17, 6
 	move r1, processs
 	add r0, r1, r0
 	sw r0, -72, 5
-	jump .LBB41_29
-.LBB41_27:                              //   in Loop: Header=BB41_1 Depth=1
-	jneq r1, 2, .LBB41_29
-// %bb.28:                              //   in Loop: Header=BB41_1 Depth=1
+	jump .LBB41_26
+.LBB41_24:                              //   in Loop: Header=BB41_1 Depth=1
+	jneq r1, 2, .LBB41_26
+// %bb.25:                              //   in Loop: Header=BB41_1 Depth=1
 	lsl r0, r17, 4
 	lsl_add r0, r0, r17, 6
 	move r1, processs
 	add r0, r1, r0
 	sw r0, -72, 3
-.LBB41_29:                              //   in Loop: Header=BB41_1 Depth=1
+.LBB41_26:                              //   in Loop: Header=BB41_1 Depth=1
 	move r0, jobs
 	sdma r0, r19, 249
-	lw r14, r22, -16
+	lw r0, r22, -16
 	jneq r17, 10, .LBB41_1
-	jump .LBB41_34
-.LBB41_35:
+	jump .LBB41_31
+.LBB41_32:
 	fault 4
 .Lfunc_end41:
 	.size	scheduler, .Lfunc_end41-scheduler

@@ -117,6 +117,12 @@ void main1()
 int main(void)
 {
   print_debug(7, 0); // end of switch context rc,ra
+  print_debug(20, 5);
+  empty_call();
+  print_debug(20, 6);
+  print_debug(20, 5);
+  empty_syscall();
+  print_debug(20, 6);
   sd_host = socket_open(0);
   init_barrier(&b, NR_FTHREAD);
   for (int i = 0; i < NR_FTHREAD - 1; i++)

@@ -46,9 +46,7 @@
 #define MRAM_OFFSET 636 * 1024
 
 #define QUANTOM_STOP_DPU 5000000
-#define PROCESS_QUANTOM QUANTOM_STOP_DPU / 100
-#define QUANTOM_JOB PROCESS_QUANTOM / 20
-
+#define PROCESS_QUANTOM QUANTOM_STOP_DPU / (100*25)
 // Kernel flag for K1-K2 communication. [Ki] means setup by Ki
 #define NEW_PROCESS 1 // a new process was added [K1]
 #define PROCESS_END 2 // a a process in end [K2]

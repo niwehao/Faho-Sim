@@ -38,7 +38,7 @@ class PerformanceCounter {
                 counter_word->set_bit_slice(4,36,value_t);
                 //std::cout<<"after:"<<counter_word->bit_slice(abi::word::UNSIGNED,4,36)<<std::endl;
             }
-             real_time_debug=value+real_time_debug;
+            real_time_debug=value+real_time_debug;
         }
        
     }
@@ -60,7 +60,7 @@ class PerformanceCounter {
     int get_value()
     {
         int value_t=counter_word->bit_slice(abi::word::UNSIGNED,4,36);
-        return 0;//不考虑抢占与中断
+        return value_t;//不考虑抢占与中断
     }
     int get_true_value()
     {

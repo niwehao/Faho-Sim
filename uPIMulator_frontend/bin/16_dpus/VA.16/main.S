@@ -1,391 +1,4 @@
 	$text,
-	$file,	"crt0.c"
-	$section,	%text, __bootstrap,"ax",@progbits
-	$globl,	__bootstrap                     //  -  -  Begin function __bootstrap
-	$type,	__bootstrap,@function
-__bootstrap:                            // @__bootstrap
-crt0..Lfunc_begin0:
-// %bb.0:
-	// inline asm
-	$jnz , id, crt0.__sys_start_thread
-
-	$sd , zero, __stdout_buffer_state, 0
-	$move , r23, __atomic_end_addr
-crt0.__sys_atomic_bit_clear:
-	$jeq , r23, __atomic_used_addr, crt0.__sys_start_thread
-crt0..Ltmp0:
-	$release , r23, 0, nz, crt0..Ltmp0 + 1
-	$add , r23, r23,  - 1, true, crt0.__sys_atomic_bit_clear
-crt0.__sys_start_thread:
-crt0..Ltmp1:
-	$jeq , id, NR_TASKLETS - 1, crt0..Ltmp1 + 2
-	$boot , id, 1
-	$ld , d22, id8, __sys_thread_stack_table_ptr
-	$call , r23, main
-	$globl,	__sys_end
-__sys_end:
-
-	$stop , true, __sys_end
-	// inline asm
-crt0..Lfunc_end0:
-	$size,	__bootstrap, crt0..Lfunc_end0 - __bootstrap
-	$section,	%stack_sizes,"o",@progbits,%text, __bootstrap
-	$long,	crt0..Lfunc_begin0
-	$byte,	0
-	$section,	%text, __bootstrap,"ax",@progbits
-                                        //  -  -  End function
-	$type,	__sys_null_pointer,@object      // @__sys_null_pointer
-	$section,	%data, __sys_zero,"aw",@progbits
-	$globl,	__sys_null_pointer
-	$p2align,	3
-__sys_null_pointer:
-	$quad,	0                               // 0x0
-	$size,	__sys_null_pointer, 8
-
-	$type,	__sys_thread_stack_table_ptr,@object // @__sys_thread_stack_table_ptr
-	$section,	%data, __sys_keep,"aw",@progbits
-	$globl,	__sys_thread_stack_table_ptr
-	$p2align,	3
-__sys_thread_stack_table_ptr:
-	$long,	STACK_SIZE_TASKLET_0
-	$long,	__sys_stack_thread_0
-	$long,	STACK_SIZE_TASKLET_1
-	$long,	__sys_stack_thread_1
-	$long,	STACK_SIZE_TASKLET_2
-	$long,	__sys_stack_thread_2
-	$long,	STACK_SIZE_TASKLET_3
-	$long,	__sys_stack_thread_3
-	$long,	STACK_SIZE_TASKLET_4
-	$long,	__sys_stack_thread_4
-	$long,	STACK_SIZE_TASKLET_5
-	$long,	__sys_stack_thread_5
-	$long,	STACK_SIZE_TASKLET_6
-	$long,	__sys_stack_thread_6
-	$long,	STACK_SIZE_TASKLET_7
-	$long,	__sys_stack_thread_7
-	$long,	STACK_SIZE_TASKLET_8
-	$long,	__sys_stack_thread_8
-	$long,	STACK_SIZE_TASKLET_9
-	$long,	__sys_stack_thread_9
-	$long,	STACK_SIZE_TASKLET_10
-	$long,	__sys_stack_thread_10
-	$long,	STACK_SIZE_TASKLET_11
-	$long,	__sys_stack_thread_11
-	$long,	STACK_SIZE_TASKLET_12
-	$long,	__sys_stack_thread_12
-	$long,	STACK_SIZE_TASKLET_13
-	$long,	__sys_stack_thread_13
-	$long,	STACK_SIZE_TASKLET_14
-	$long,	__sys_stack_thread_14
-	$long,	STACK_SIZE_TASKLET_15
-	$long,	__sys_stack_thread_15
-	$long,	STACK_SIZE_TASKLET_16
-	$long,	__sys_stack_thread_16
-	$long,	STACK_SIZE_TASKLET_17
-	$long,	__sys_stack_thread_17
-	$long,	STACK_SIZE_TASKLET_18
-	$long,	__sys_stack_thread_18
-	$long,	STACK_SIZE_TASKLET_19
-	$long,	__sys_stack_thread_19
-	$long,	STACK_SIZE_TASKLET_20
-	$long,	__sys_stack_thread_20
-	$long,	STACK_SIZE_TASKLET_21
-	$long,	__sys_stack_thread_21
-	$long,	STACK_SIZE_TASKLET_22
-	$long,	__sys_stack_thread_22
-	$long,	STACK_SIZE_TASKLET_23
-	$long,	__sys_stack_thread_23
-	$size,	__sys_thread_stack_table_ptr, 192
-
-	$type,	__sys_used_mram_end,@object     // @__sys_used_mram_end
-	$section,	%mram, noinit,"aw",@progbits
-	$globl,	__sys_used_mram_end
-	$p2align,	3
-__sys_used_mram_end:
-	$size,	__sys_used_mram_end, 0
-
-	$type,	thread_profiling,@object        // @thread_profiling
-	$section,	%data, immediate_memory.thread_profiling,"aw",@progbits
-	$globl,	thread_profiling
-	$p2align,	2
-thread_profiling:
-	$zero,	96
-	$size,	thread_profiling, 96
-
-	$type,	perfcounter_end_value,@object   // @perfcounter_end_value
-	$section,	%bss, perfcounter_end_value,"aw",@nobits
-	$globl,	perfcounter_end_value
-	$p2align,	2
-perfcounter_end_value:
-	$long,	0                               // 0x0
-	$size,	perfcounter_end_value, 4
-
-	$type,	CLOCKS_PER_SEC,@object          // @CLOCKS_PER_SEC
-	$section,	%dpu_host,"a",@progbits
-	$globl,	CLOCKS_PER_SEC
-	$p2align,	3
-CLOCKS_PER_SEC:
-	$long,	0                               // 0x0
-	$size,	CLOCKS_PER_SEC, 4
-
-	$type,	error_storage,@object           // @error_storage
-	$globl,	error_storage
-	$p2align,	3
-error_storage:
-	$long,	0                               // 0x0
-	$size,	error_storage, 4
-
-	$addrsig,
-	$addrsig_sym, __bootstrap
-	$addrsig_sym, __sys_null_pointer
-	$addrsig_sym, STACK_SIZE_TASKLET_0
-	$addrsig_sym, __sys_stack_thread_0
-	$addrsig_sym, STACK_SIZE_TASKLET_1
-	$addrsig_sym, __sys_stack_thread_1
-	$addrsig_sym, STACK_SIZE_TASKLET_2
-	$addrsig_sym, __sys_stack_thread_2
-	$addrsig_sym, STACK_SIZE_TASKLET_3
-	$addrsig_sym, __sys_stack_thread_3
-	$addrsig_sym, STACK_SIZE_TASKLET_4
-	$addrsig_sym, __sys_stack_thread_4
-	$addrsig_sym, STACK_SIZE_TASKLET_5
-	$addrsig_sym, __sys_stack_thread_5
-	$addrsig_sym, STACK_SIZE_TASKLET_6
-	$addrsig_sym, __sys_stack_thread_6
-	$addrsig_sym, STACK_SIZE_TASKLET_7
-	$addrsig_sym, __sys_stack_thread_7
-	$addrsig_sym, STACK_SIZE_TASKLET_8
-	$addrsig_sym, __sys_stack_thread_8
-	$addrsig_sym, STACK_SIZE_TASKLET_9
-	$addrsig_sym, __sys_stack_thread_9
-	$addrsig_sym, STACK_SIZE_TASKLET_10
-	$addrsig_sym, __sys_stack_thread_10
-	$addrsig_sym, STACK_SIZE_TASKLET_11
-	$addrsig_sym, __sys_stack_thread_11
-	$addrsig_sym, STACK_SIZE_TASKLET_12
-	$addrsig_sym, __sys_stack_thread_12
-	$addrsig_sym, STACK_SIZE_TASKLET_13
-	$addrsig_sym, __sys_stack_thread_13
-	$addrsig_sym, STACK_SIZE_TASKLET_14
-	$addrsig_sym, __sys_stack_thread_14
-	$addrsig_sym, STACK_SIZE_TASKLET_15
-	$addrsig_sym, __sys_stack_thread_15
-	$addrsig_sym, STACK_SIZE_TASKLET_16
-	$addrsig_sym, __sys_stack_thread_16
-	$addrsig_sym, STACK_SIZE_TASKLET_17
-	$addrsig_sym, __sys_stack_thread_17
-	$addrsig_sym, STACK_SIZE_TASKLET_18
-	$addrsig_sym, __sys_stack_thread_18
-	$addrsig_sym, STACK_SIZE_TASKLET_19
-	$addrsig_sym, __sys_stack_thread_19
-	$addrsig_sym, STACK_SIZE_TASKLET_20
-	$addrsig_sym, __sys_stack_thread_20
-	$addrsig_sym, STACK_SIZE_TASKLET_21
-	$addrsig_sym, __sys_stack_thread_21
-	$addrsig_sym, STACK_SIZE_TASKLET_22
-	$addrsig_sym, __sys_stack_thread_22
-	$addrsig_sym, STACK_SIZE_TASKLET_23
-	$addrsig_sym, __sys_stack_thread_23
-	$addrsig_sym, __sys_thread_stack_table_ptr
-	$addrsig_sym, __sys_used_mram_end
-	$addrsig_sym, thread_profiling
-	$addrsig_sym, CLOCKS_PER_SEC
-	$addrsig_sym, error_storage
-	$text,
-	$file,	"memset.c"
-	$section,	%text, __memset_wram_4align,"ax",@progbits
-	$globl,	__memset_wram_4align            //  -  -  Begin function __memset_wram_4align
-	$type,	__memset_wram_4align,@function
-__memset_wram_4align:                   // @__memset_wram_4align
-memset..Lfunc_begin0:
-// %bb.0:
-	$lsr , r2, r2, 2, z, memset..LBB0_3
-// %bb.1:
-	$and , r3, r1, 255
-	$lsl_add , r1, r3, r1, 24
-	$lsl_add , r1, r1, r3, 8
-	$lsl_add , r1, r1, r3, 16
-	$move , r3, r0
-memset..LBB0_2:                                // =>This Inner Loop Header: Depth=1
-	$sw , r3, 0, r1
-	$add , r3, r3, 4
-	$add , r2, r2,  - 1, nz, memset..LBB0_2
-memset..LBB0_3:
-	$jump , r23
-memset..Lfunc_end0:
-	$size,	__memset_wram_4align, memset..Lfunc_end0 - __memset_wram_4align
-	$section,	%stack_sizes,"o",@progbits,%text, __memset_wram_4align
-	$long,	memset..Lfunc_begin0
-	$byte,	0
-	$section,	%text, __memset_wram_4align,"ax",@progbits
-                                        //  -  -  End function
-	$section,	%text, memset,"ax",@progbits
-	$globl,	memset                          //  -  -  Begin function memset
-	$type,	memset,@function
-memset:                                 // @memset
-memset..Lfunc_begin1:
-// %bb.0:
-	$and , r3, r0, 3, z, memset..LBB1_1
-// %bb.2:
-	$sub , r4, 4, r3
-	$move , r3, r2
-	$jgtu , r4, r2, memset..LBB1_4
-// %bb.3:
-	$move , r3, r4
-memset..LBB1_4:
-	$jeq , r3, 0, memset..LBB1_7
-// %bb.5:
-	$move , r4, r0
-	$move , r5, r3
-memset..LBB1_6:                                // =>This Inner Loop Header: Depth=1
-	$sb , r4, 0, r1
-	$add , r4, r4, 1
-	$add , r5, r5,  - 1, nz, memset..LBB1_6
-memset..LBB1_7:
-	$sub , r2, r2, r3
-	$add , r3, r0, r3
-	$jgeu , r2, 4, memset..LBB1_9
-memset..LBB1_12:
-	$jeq , r2, 0, memset..LBB1_14
-memset..LBB1_13:                               // =>This Inner Loop Header: Depth=1
-	$sb , r3, 0, r1
-	$add , r3, r3, 1
-	$add , r2, r2,  - 1, nz, memset..LBB1_13
-memset..LBB1_14:
-	$jump , r23
-memset..LBB1_1:
-	$move , r3, r0
-	$jltu , r2, 4, memset..LBB1_12
-memset..LBB1_9:
-	$and , r4, r2,  - 4
-	$and , r5, r1, 255
-	$lsl_add , r6, r5, r1, 24
-	$lsl_add , r6, r6, r5, 8
-	$lsl_add , r5, r6, r5, 16
-	$lsr , r6, r2, 2
-	$move , r7, r3
-memset..LBB1_10:                               // =>This Inner Loop Header: Depth=1
-	$sw , r7, 0, r5
-	$add , r7, r7, 4
-	$add , r6, r6,  - 1, nz, memset..LBB1_10
-// %bb.11:
-	$and , r2, r2, 3
-	$add , r3, r3, r4
-	$jneq , r2, 0, memset..LBB1_13
-	$jump , memset..LBB1_14
-memset..Lfunc_end1:
-	$size,	memset, memset..Lfunc_end1 - memset
-	$section,	%stack_sizes,"o",@progbits,%text, memset
-	$long,	memset..Lfunc_begin1
-	$byte,	0
-	$section,	%text, memset,"ax",@progbits
-                                        //  -  -  End function
-	$section,	%text, __memset_mram_8align,"ax",@progbits
-	$globl,	__memset_mram_8align            //  -  -  Begin function __memset_mram_8align
-	$type,	__memset_mram_8align,@function
-__memset_mram_8align:                   // @__memset_mram_8align
-memset..Lfunc_begin2:
-// %bb.0:
-	$and , r3, r1, 255
-	$lsl_add , r1, r3, r1, 24
-	$lsl_add , r1, r1, r3, 8
-	$lsl_add , r1, r1, r3, 16
-	$sw , r22, 0, r1
-	$sw , r22, 4, r1
-	$jeq , r2, 0, memset..LBB2_3
-// %bb.1:
-	$move , r1, 0
-memset..LBB2_2:                                // =>This Inner Loop Header: Depth=1
-	$add , r3, r0, r1
-	$add , r4, r22, 0
-	$add , r1, r1, 8
-	$sdma , r4, r3, 0
-	$jltu , r1, r2, memset..LBB2_2
-memset..LBB2_3:
-	$jump , r23
-memset..Lfunc_end2:
-	$size,	__memset_mram_8align, memset..Lfunc_end2 - __memset_mram_8align
-	$section,	%stack_sizes,"o",@progbits,%text, __memset_mram_8align
-	$long,	memset..Lfunc_begin2
-	$byte,	8
-	$section,	%text, __memset_mram_8align,"ax",@progbits
-                                        //  -  -  End function
-	$section,	%text, __memset_mram,"ax",@progbits
-	$globl,	__memset_mram                   //  -  -  Begin function __memset_mram
-	$type,	__memset_mram,@function
-__memset_mram:                          // @__memset_mram
-memset..Lfunc_begin3:
-// %bb.0:
-	$and , r3, r0,  - 8
-	$and , r6, r0, 7, z, memset..LBB3_7
-// %bb.1:
-	$sub , r5, 8, r6
-	$move , r4, r2
-	$jgtu , r5, r2, memset..LBB3_3
-// %bb.2:
-	$move , r4, r5
-memset..LBB3_3:
-	$add , r5, r22, 8
-	$ldma , r5, r3, 0
-	$jeq , r4, 0, memset..LBB3_6
-// %bb.4:
-	$or , r6, r5, r6
-	$move , r7, r4
-memset..LBB3_5:                                // =>This Inner Loop Header: Depth=1
-	$sb , r6, 0, r1
-	$add , r6, r6, 1
-	$add , r7, r7,  - 1, nz, memset..LBB3_5
-memset..LBB3_6:
-	$sdma , r5, r3, 0
-	$sub , r2, r2, r4
-	$add , r3, r3, 8
-memset..LBB3_7:
-	$jltu , r2, 8, memset..LBB3_12
-// %bb.8:
-	$and , r4, r1, 255
-	$lsl_add , r5, r4, r1, 24
-	$lsl_add , r5, r5, r4, 8
-	$lsl_add , r4, r5, r4, 16
-	$sw , r22, 0, r4
-	$sw , r22, 4, r4
-	$and , r4, r2,  - 8, z, memset..LBB3_11
-// %bb.9:
-	$move , r5, 0
-memset..LBB3_10:                               // =>This Inner Loop Header: Depth=1
-	$add , r6, r3, r5
-	$add , r7, r22, 0
-	$add , r5, r5, 8
-	$sdma , r7, r6, 0
-	$jltu , r5, r4, memset..LBB3_10
-memset..LBB3_11:
-	$and , r2, r2, 7
-	$add , r3, r3, r4
-memset..LBB3_12:
-	$jeq , r2, 0, memset..LBB3_16
-// %bb.13:
-	$add , r4, r22, 8
-	$ldma , r4, r3, 0
-memset..LBB3_14:                               // =>This Inner Loop Header: Depth=1
-	$sb , r4, 0, r1
-	$add , r4, r4, 1
-	$add , r2, r2,  - 1, nz, memset..LBB3_14
-// %bb.15:
-	$add , r1, r22, 8
-	$sdma , r1, r3, 0
-memset..LBB3_16:
-	$jump , r23
-memset..Lfunc_end3:
-	$size,	__memset_mram, memset..Lfunc_end3 - __memset_mram
-	$section,	%stack_sizes,"o",@progbits,%text, __memset_mram
-	$long,	memset..Lfunc_begin3
-	$byte,	16
-	$section,	%text, __memset_mram,"ax",@progbits
-                                        //  -  -  End function
-	$addrsig,
-	$addrsig_sym, __memset_wram_4align
-	$addrsig_sym, __memset_mram_8align
-	$addrsig_sym, __memset_mram
-	$text,
 	$file,	"VA.c"
 $section,	%text, syscall,"ax",@progbits
 	$globl,	syscall                         //  -  -  Begin function syscall
@@ -879,11 +492,49 @@ get_appid:                              // @get_appid
 	$byte,	8
 	$section,	%text, get_appid,"ax",@progbits
                                         //  -  -  End function
+	$section,	%text, empty_syscall,"ax",@progbits
+	$globl,	empty_syscall                   //  -  -  Begin function empty_syscall
+	$type,	empty_syscall,@function
+empty_syscall:                          // @empty_syscall
+.Lfunc_begin21:
+// %bb.0:
+	$sd , r22, 0, d22
+	$add , r22, r22, 8
+	$move , r0, 0
+	$move , r1, r0
+	$move , r2, r0
+	$move , r3, r0
+	$move , r4, r0
+	$call , r23, syscall
+	$ld , d22, r22,  - 8
+	$jump , r23
+.Lfunc_end21:
+	$size,	empty_syscall, .Lfunc_end21 - empty_syscall
+	$section,	%stack_sizes,"o",@progbits,%text, empty_syscall
+	$long,	.Lfunc_begin21
+	$byte,	8
+	$section,	%text, empty_syscall,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%text, empty_call,"ax",@progbits
+	$globl,	empty_call                      //  -  -  Begin function empty_call
+	$type,	empty_call,@function
+empty_call:                             // @empty_call
+.Lfunc_begin22:
+// %bb.0:
+	$move , r0, 0
+	$jump , r23
+.Lfunc_end22:
+	$size,	empty_call, .Lfunc_end22 - empty_call
+	$section,	%stack_sizes,"o",@progbits,%text, empty_call
+	$long,	.Lfunc_begin22
+	$byte,	0
+	$section,	%text, empty_call,"ax",@progbits
+                                        //  -  -  End function
 	$section,	%text, umram_read,"ax",@progbits
 	$globl,	umram_read                      //  -  -  Begin function umram_read
 	$type,	umram_read,@function
 umram_read:                             // @umram_read
-.Lfunc_begin21:
+.Lfunc_begin23:
 // %bb.0:
 	$sd , r22, 0, d22
 	$add , r22, r22, 8
@@ -892,10 +543,10 @@ umram_read:                             // @umram_read
 	$call , r23, syscall
 	$ld , d22, r22,  - 8
 	$jump , r23
-.Lfunc_end21:
-	$size,	umram_read, .Lfunc_end21 - umram_read
+.Lfunc_end23:
+	$size,	umram_read, .Lfunc_end23 - umram_read
 	$section,	%stack_sizes,"o",@progbits,%text, umram_read
-	$long,	.Lfunc_begin21
+	$long,	.Lfunc_begin23
 	$byte,	8
 	$section,	%text, umram_read,"ax",@progbits
                                         //  -  -  End function
@@ -903,7 +554,7 @@ umram_read:                             // @umram_read
 	$globl,	umram_write                     //  -  -  Begin function umram_write
 	$type,	umram_write,@function
 umram_write:                            // @umram_write
-.Lfunc_begin22:
+.Lfunc_begin24:
 // %bb.0:
 	$sd , r22, 0, d22
 	$add , r22, r22, 8
@@ -912,10 +563,10 @@ umram_write:                            // @umram_write
 	$call , r23, syscall
 	$ld , d22, r22,  - 8
 	$jump , r23
-.Lfunc_end22:
-	$size,	umram_write, .Lfunc_end22 - umram_write
+.Lfunc_end24:
+	$size,	umram_write, .Lfunc_end24 - umram_write
 	$section,	%stack_sizes,"o",@progbits,%text, umram_write
-	$long,	.Lfunc_begin22
+	$long,	.Lfunc_begin24
 	$byte,	8
 	$section,	%text, umram_write,"ax",@progbits
                                         //  -  -  End function
@@ -923,7 +574,7 @@ umram_write:                            // @umram_write
 	$globl,	init_barrier                    //  -  -  Begin function init_barrier
 	$type,	init_barrier,@function
 init_barrier:                           // @init_barrier
-.Lfunc_begin23:
+.Lfunc_begin25:
 // %bb.0:
 	$sd , r22, 8, d22
 	$add , r22, r22, 16
@@ -941,10 +592,10 @@ init_barrier:                           // @init_barrier
 	$ld , d14, r22,  - 16
 	$ld , d22, r22,  - 8
 	$jump , r23
-.Lfunc_end23:
-	$size,	init_barrier, .Lfunc_end23 - init_barrier
+.Lfunc_end25:
+	$size,	init_barrier, .Lfunc_end25 - init_barrier
 	$section,	%stack_sizes,"o",@progbits,%text, init_barrier
-	$long,	.Lfunc_begin23
+	$long,	.Lfunc_begin25
 	$byte,	16
 	$section,	%text, init_barrier,"ax",@progbits
                                         //  -  -  End function
@@ -952,7 +603,7 @@ init_barrier:                           // @init_barrier
 	$globl,	wait_barrier                    //  -  -  Begin function wait_barrier
 	$type,	wait_barrier,@function
 wait_barrier:                           // @wait_barrier
-.Lfunc_begin24:
+.Lfunc_begin26:
 // %bb.0:
 	$sd , r22, 8, d22
 	$add , r22, r22, 16
@@ -967,7 +618,7 @@ wait_barrier:                           // @wait_barrier
 	$add , r0, r0, 1
 	$sw , r14, 4, r0
 	$lw , r1, r14, 8
-	$jneq , r0, r1, .LBB24_2
+	$jneq , r0, r1, .LBB26_2
 // %bb.1:
 	$move , r1, 0
 	$move , r4, 18
@@ -976,132 +627,15 @@ wait_barrier:                           // @wait_barrier
 	$move , r3, r1
 	$call , r23, syscall
 	$sw , r14, 4, 0
-	$jump , .LBB24_3
-.LBB24_2:
+	$jump , .LBB26_3
+.LBB26_2:
 	$move , r2, 0
 	$move , r4, 17
 	$move , r0, r14
 	$move , r1, r14
 	$move , r3, r2
 	$call , r23, syscall
-.LBB24_3:
-	$move , r1, 0
-	$move , r4, 16
-	$move , r0, r14
-	$move , r2, r1
-	$move , r3, r1
-	$call , r23, syscall
-	$ld , d14, r22,  - 16
-	$ld , d22, r22,  - 8
-	$jump , r23
-.Lfunc_end24:
-	$size,	wait_barrier, .Lfunc_end24 - wait_barrier
-	$section,	%stack_sizes,"o",@progbits,%text, wait_barrier
-	$long,	.Lfunc_begin24
-	$byte,	16
-	$section,	%text, wait_barrier,"ax",@progbits
-                                        //  -  -  End function
-	$section,	%text, wait,"ax",@progbits
-	$globl,	wait                            //  -  -  Begin function wait
-	$type,	wait,@function
-wait:                                   // @wait
-.Lfunc_begin25:
-// %bb.0:
-	$jump , r23
-.Lfunc_end25:
-	$size,	wait, .Lfunc_end25 - wait
-	$section,	%stack_sizes,"o",@progbits,%text, wait
-	$long,	.Lfunc_begin25
-	$byte,	0
-	$section,	%text, wait,"ax",@progbits
-                                        //  -  -  End function
-	$section,	%text, active_wait_barrier,"ax",@progbits
-	$globl,	active_wait_barrier             //  -  -  Begin function active_wait_barrier
-	$type,	active_wait_barrier,@function
-active_wait_barrier:                    // @active_wait_barrier
-.Lfunc_begin26:
-// %bb.0:
-	$sd , r22, 8, d22
-	$add , r22, r22, 16
-	$sd , r22,  - 16, d14
-	$move , r14, r0
-	$lw , r0, r14, 12
-	$jeq , r0, 0, .LBB26_5
-// %bb.1:
-	$move , r0, 100, true, .LBB26_2
-.LBB26_4:                               //   in Loop: Header=BB26_2 Depth=1
-	$lw , r1, r14, 12
-	$jeq , r1, 0, .LBB26_5
-.LBB26_2:                               // =>This Inner Loop Header: Depth=1
-	$add , r0, r0,  - 1, nz, .LBB26_4
-// %bb.3:                               //   in Loop: Header=BB26_2 Depth=1
-	$move , r0, 0
-	$move , r4, 1
-	$move , r1, r0
-	$move , r2, r0
-	$move , r3, r0
-	$call , r23, syscall
-	$move , r0, 100, true, .LBB26_4
-.LBB26_5:                               // =>This Inner Loop Header: Depth=1
-	$move , r1, 0
-	$move , r4, 24
-	$move , r0, r14
-	$move , r2, r1
-	$move , r3, r1
-	$call , r23, syscall
-	$jneq , r0, 0, .LBB26_5
-// %bb.6:
-	$lw , r0, r14, 4
-	$add , r0, r0, 1
-	$sw , r14, 4, r0
-	$lw , r1, r14, 8
-	$jneq , r0, r1, .LBB26_8
-// %bb.7:
-	$sw , r14, 4, 0
-	$jump , .LBB26_15
-.LBB26_8:
-	$move , r1, 0
-	$move , r4, 16
-	$move , r0, r14
-	$move , r2, r1
-	$move , r3, r1
-	$call , r23, syscall
-	$lw , r0, r14, 4
-	$jeq , r0, 0, .LBB26_13
-// %bb.9:
-	$move , r1, 100, true, .LBB26_10
-.LBB26_12:                              //   in Loop: Header=BB26_10 Depth=1
-	$jeq , r0, 0, .LBB26_13
-.LBB26_10:                              // =>This Inner Loop Header: Depth=1
-	$add , r1, r1,  - 1, nz, .LBB26_12
-// %bb.11:                              //   in Loop: Header=BB26_10 Depth=1
-	$move , r0, 0
-	$move , r4, 1
-	$move , r1, r0
-	$move , r2, r0
-	$move , r3, r0
-	$call , r23, syscall
-	$lw , r0, r14, 4
-	$move , r1, 100, true, .LBB26_12
-.LBB26_13:                              // =>This Inner Loop Header: Depth=1
-	$move , r1, 0
-	$move , r4, 24
-	$move , r0, r14
-	$move , r2, r1
-	$move , r3, r1
-	$call , r23, syscall
-	$jneq , r0, 0, .LBB26_13
-// %bb.14:
-	$lw , r0, r14, 8
-.LBB26_15:
-	$lw , r1, r14, 12
-	$add , r1, r1, 1
-	$sw , r14, 12, r1
-	$lw , r1, r14, 12
-	$jneq , r1, r0, .LBB26_17
-// %bb.16:
-	$sw , r14, 12, 0
-.LBB26_17:
+.LBB26_3:
 	$move , r1, 0
 	$move , r4, 16
 	$move , r0, r14
@@ -1112,9 +646,126 @@ active_wait_barrier:                    // @active_wait_barrier
 	$ld , d22, r22,  - 8
 	$jump , r23
 .Lfunc_end26:
-	$size,	active_wait_barrier, .Lfunc_end26 - active_wait_barrier
-	$section,	%stack_sizes,"o",@progbits,%text, active_wait_barrier
+	$size,	wait_barrier, .Lfunc_end26 - wait_barrier
+	$section,	%stack_sizes,"o",@progbits,%text, wait_barrier
 	$long,	.Lfunc_begin26
+	$byte,	16
+	$section,	%text, wait_barrier,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%text, wait,"ax",@progbits
+	$globl,	wait                            //  -  -  Begin function wait
+	$type,	wait,@function
+wait:                                   // @wait
+.Lfunc_begin27:
+// %bb.0:
+	$jump , r23
+.Lfunc_end27:
+	$size,	wait, .Lfunc_end27 - wait
+	$section,	%stack_sizes,"o",@progbits,%text, wait
+	$long,	.Lfunc_begin27
+	$byte,	0
+	$section,	%text, wait,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%text, active_wait_barrier,"ax",@progbits
+	$globl,	active_wait_barrier             //  -  -  Begin function active_wait_barrier
+	$type,	active_wait_barrier,@function
+active_wait_barrier:                    // @active_wait_barrier
+.Lfunc_begin28:
+// %bb.0:
+	$sd , r22, 8, d22
+	$add , r22, r22, 16
+	$sd , r22,  - 16, d14
+	$move , r14, r0
+	$lw , r0, r14, 12
+	$jeq , r0, 0, .LBB28_5
+// %bb.1:
+	$move , r0, 100, true, .LBB28_2
+.LBB28_4:                               //   in Loop: Header=BB28_2 Depth=1
+	$lw , r1, r14, 12
+	$jeq , r1, 0, .LBB28_5
+.LBB28_2:                               // =>This Inner Loop Header: Depth=1
+	$add , r0, r0,  - 1, nz, .LBB28_4
+// %bb.3:                               //   in Loop: Header=BB28_2 Depth=1
+	$move , r0, 0
+	$move , r4, 1
+	$move , r1, r0
+	$move , r2, r0
+	$move , r3, r0
+	$call , r23, syscall
+	$move , r0, 100, true, .LBB28_4
+.LBB28_5:                               // =>This Inner Loop Header: Depth=1
+	$move , r1, 0
+	$move , r4, 24
+	$move , r0, r14
+	$move , r2, r1
+	$move , r3, r1
+	$call , r23, syscall
+	$jneq , r0, 0, .LBB28_5
+// %bb.6:
+	$lw , r0, r14, 4
+	$add , r0, r0, 1
+	$sw , r14, 4, r0
+	$lw , r1, r14, 8
+	$jneq , r0, r1, .LBB28_8
+// %bb.7:
+	$sw , r14, 4, 0
+	$jump , .LBB28_15
+.LBB28_8:
+	$move , r1, 0
+	$move , r4, 16
+	$move , r0, r14
+	$move , r2, r1
+	$move , r3, r1
+	$call , r23, syscall
+	$lw , r0, r14, 4
+	$jeq , r0, 0, .LBB28_13
+// %bb.9:
+	$move , r1, 100, true, .LBB28_10
+.LBB28_12:                              //   in Loop: Header=BB28_10 Depth=1
+	$jeq , r0, 0, .LBB28_13
+.LBB28_10:                              // =>This Inner Loop Header: Depth=1
+	$add , r1, r1,  - 1, nz, .LBB28_12
+// %bb.11:                              //   in Loop: Header=BB28_10 Depth=1
+	$move , r0, 0
+	$move , r4, 1
+	$move , r1, r0
+	$move , r2, r0
+	$move , r3, r0
+	$call , r23, syscall
+	$lw , r0, r14, 4
+	$move , r1, 100, true, .LBB28_12
+.LBB28_13:                              // =>This Inner Loop Header: Depth=1
+	$move , r1, 0
+	$move , r4, 24
+	$move , r0, r14
+	$move , r2, r1
+	$move , r3, r1
+	$call , r23, syscall
+	$jneq , r0, 0, .LBB28_13
+// %bb.14:
+	$lw , r0, r14, 8
+.LBB28_15:
+	$lw , r1, r14, 12
+	$add , r1, r1, 1
+	$sw , r14, 12, r1
+	$lw , r1, r14, 12
+	$jneq , r1, r0, .LBB28_17
+// %bb.16:
+	$sw , r14, 12, 0
+.LBB28_17:
+	$move , r1, 0
+	$move , r4, 16
+	$move , r0, r14
+	$move , r2, r1
+	$move , r3, r1
+	$call , r23, syscall
+	$ld , d14, r22,  - 16
+	$ld , d22, r22,  - 8
+	$jump , r23
+.Lfunc_end28:
+	$size,	active_wait_barrier, .Lfunc_end28 - active_wait_barrier
+	$section,	%stack_sizes,"o",@progbits,%text, active_wait_barrier
+	$long,	.Lfunc_begin28
 	$byte,	16
 	$section,	%text, active_wait_barrier,"ax",@progbits
                                         //  -  -  End function
@@ -1122,7 +773,7 @@ active_wait_barrier:                    // @active_wait_barrier
 	$globl,	init_handshake                  //  -  -  Begin function init_handshake
 	$type,	init_handshake,@function
 init_handshake:                         // @init_handshake
-.Lfunc_begin27:
+.Lfunc_begin29:
 // %bb.0:
 	$sd , r22, 8, d22
 	$add , r22, r22, 16
@@ -1140,10 +791,10 @@ init_handshake:                         // @init_handshake
 	$ld , d14, r22,  - 16
 	$ld , d22, r22,  - 8
 	$jump , r23
-.Lfunc_end27:
-	$size,	init_handshake, .Lfunc_end27 - init_handshake
+.Lfunc_end29:
+	$size,	init_handshake, .Lfunc_end29 - init_handshake
 	$section,	%stack_sizes,"o",@progbits,%text, init_handshake
-	$long,	.Lfunc_begin27
+	$long,	.Lfunc_begin29
 	$byte,	16
 	$section,	%text, init_handshake,"ax",@progbits
                                         //  -  -  End function
@@ -1151,7 +802,7 @@ init_handshake:                         // @init_handshake
 	$globl,	handshake_wait                  //  -  -  Begin function handshake_wait
 	$type,	handshake_wait,@function
 handshake_wait:                         // @handshake_wait
-.Lfunc_begin28:
+.Lfunc_begin30:
 // %bb.0:
 	$sd , r22, 8, d22
 	$add , r22, r22, 16
@@ -1163,17 +814,17 @@ handshake_wait:                         // @handshake_wait
 	$move , r0, r14
 	$move , r2, r1
 	$move , r3, r1
-.LBB28_2:                               // =>This Inner Loop Header: Depth=1
+.LBB30_2:                               // =>This Inner Loop Header: Depth=1
 	$call , r23, syscall
 	$lbu , r0, r15, 0
-	$jneq , r0, 0, .LBB28_3
-// %bb.1:                               //   in Loop: Header=BB28_2 Depth=1
+	$jneq , r0, 0, .LBB30_3
+// %bb.1:                               //   in Loop: Header=BB30_2 Depth=1
 	$move , r2, 0
 	$move , r4, 17
 	$move , r0, r15
 	$move , r1, r14
-	$move , r3, r2, true, .LBB28_2
-.LBB28_3:
+	$move , r3, r2, true, .LBB30_2
+.LBB30_3:
 	$sb , r15, 0, 0
 	$move , r15, 0
 	$move , r4, 16
@@ -1186,10 +837,10 @@ handshake_wait:                         // @handshake_wait
 	$ld , d14, r22,  - 16
 	$ld , d22, r22,  - 8
 	$jump , r23
-.Lfunc_end28:
-	$size,	handshake_wait, .Lfunc_end28 - handshake_wait
+.Lfunc_end30:
+	$size,	handshake_wait, .Lfunc_end30 - handshake_wait
 	$section,	%stack_sizes,"o",@progbits,%text, handshake_wait
-	$long,	.Lfunc_begin28
+	$long,	.Lfunc_begin30
 	$byte,	16
 	$section,	%text, handshake_wait,"ax",@progbits
                                         //  -  -  End function
@@ -1197,7 +848,7 @@ handshake_wait:                         // @handshake_wait
 	$globl,	handshake_notify                //  -  -  Begin function handshake_notify
 	$type,	handshake_notify,@function
 handshake_notify:                       // @handshake_notify
-.Lfunc_begin29:
+.Lfunc_begin31:
 // %bb.0:
 	$sd , r22, 16, d22
 	$add , r22, r22, 24
@@ -1230,10 +881,10 @@ handshake_notify:                       // @handshake_notify
 	$ld , d14, r22,  - 16
 	$ld , d22, r22,  - 8
 	$jump , r23
-.Lfunc_end29:
-	$size,	handshake_notify, .Lfunc_end29 - handshake_notify
+.Lfunc_end31:
+	$size,	handshake_notify, .Lfunc_end31 - handshake_notify
 	$section,	%stack_sizes,"o",@progbits,%text, handshake_notify
-	$long,	.Lfunc_begin29
+	$long,	.Lfunc_begin31
 	$byte,	24
 	$section,	%text, handshake_notify,"ax",@progbits
                                         //  -  -  End function
@@ -1241,7 +892,7 @@ handshake_notify:                       // @handshake_notify
 	$globl,	main1                           //  -  -  Begin function main1
 	$type,	main1,@function
 main1:                                  // @main1
-.Lfunc_begin30:
+.Lfunc_begin32:
 // %bb.0:
 	$sd , r22, 88, d22
 	$add , r22, r22, 96
@@ -1272,7 +923,7 @@ main1:                                  // @main1
 	$move , r2, r18
 	$move , r3, r18
 	$call , r23, syscall
-	$move , r21, r0, nz, .LBB30_4
+	$move , r21, r0, nz, .LBB32_4
 // %bb.1:
 	$move , r14, r21
 	$lw , r0, zero, sd_host
@@ -1296,7 +947,7 @@ main1:                                  // @main1
 	$move , r2, r21
 	$move , r3, r21
 	$call , r23, syscall
-	$jgts , r0,  - 1, .LBB30_3
+	$jgts , r0,  - 1, .LBB32_3
 // %bb.2:
 	$move , r0, 3
 	$move , r1, 0
@@ -1304,9 +955,9 @@ main1:                                  // @main1
 	$move , r2, r1
 	$move , r3, r1
 	$call , r23, syscall
-.LBB30_3:
+.LBB32_3:
 	$move , r21, r14
-.LBB30_4:
+.LBB32_4:
 	$add , r0, r15,  - 1024
 	$sw , r22,  - 56, r0
 	$add , r0, r16,  - 1024
@@ -1317,8 +968,8 @@ main1:                                  // @main1
 	$sw , r22,  - 20, r0
 	$lsl_sub , r0, r18, r21, 10
 	$sw , r22,  - 16, r0
-.LBB30_5:                               // =>This Loop Header: Depth=1
-                                        //     Child Loop BB30_10 Depth 2
+.LBB32_5:                               // =>This Loop Header: Depth=1
+                                        //     Child Loop BB32_10 Depth 2
 	$move , r17, b
 	$move , r1, 0
 	$move , r4, 15
@@ -1330,8 +981,8 @@ main1:                                  // @main1
 	$add , r0, r0, 1
 	$sw , r17, 4, r0
 	$lw , r1, r17, 8
-	$jneq , r0, r1, .LBB30_7
-// %bb.6:                               //   in Loop: Header=BB30_5 Depth=1
+	$jneq , r0, r1, .LBB32_7
+// %bb.6:                               //   in Loop: Header=BB32_5 Depth=1
 	$move , r1, 0
 	$move , r4, 18
 	$move , r0, r17
@@ -1339,15 +990,15 @@ main1:                                  // @main1
 	$move , r3, r1
 	$call , r23, syscall
 	$sw , r17, 4, 0
-	$jump , .LBB30_8
-.LBB30_7:                               //   in Loop: Header=BB30_5 Depth=1
+	$jump , .LBB32_8
+.LBB32_7:                               //   in Loop: Header=BB32_5 Depth=1
 	$move , r0, b
 	$move , r2, 0
 	$move , r4, 17
 	$move , r1, r0
 	$move , r3, r2
 	$call , r23, syscall
-.LBB30_8:                               //   in Loop: Header=BB30_5 Depth=1
+.LBB32_8:                               //   in Loop: Header=BB32_5 Depth=1
 	$move , r0, b
 	$move , r1, 0
 	$move , r4, 16
@@ -1360,8 +1011,8 @@ main1:                                  // @main1
 	$call , r23, print_debug
 	$lw , r1, zero, DPU_INPUT_ARGUMENTS
 	$lw , r0, r22,  - 24
-	$jleu , r1, r0, .LBB30_13
-// %bb.9:                               //   in Loop: Header=BB30_5 Depth=1
+	$jleu , r1, r0, .LBB32_13
+// %bb.9:                               //   in Loop: Header=BB32_5 Depth=1
 	$move , r0, DPU_INPUT_ARGUMENTS
 	$lw , r0, r0, 4
 	$add , r0, r0, 8
@@ -1370,8 +1021,8 @@ main1:                                  // @main1
 	$lw , r16, r22,  - 20
 	$lw , r20, r22,  - 24
 	$sw , r22,  - 40, r1
-	$jump , .LBB30_10
-.LBB30_12:                              //   in Loop: Header=BB30_10 Depth=2
+	$jump , .LBB32_10
+.LBB32_12:                              //   in Loop: Header=BB32_10 Depth=2
 	$add , r18, r0, r14
 	$move , r15, 5
 	$move , r0, r21
@@ -1426,14 +1077,14 @@ main1:                                  // @main1
 	$add , r16, r16, 16384
 	$add , r14, r14,  - 16384
 	$lw , r1, r22,  - 40
-	$jleu , r1, r20, .LBB30_13
-.LBB30_10:                              //   Parent Loop BB30_5 Depth=1
+	$jleu , r1, r20, .LBB32_13
+.LBB32_10:                              //   Parent Loop BB32_5 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
 	$move , r0, r1
-	$jltu , r1, r16, .LBB30_12
-// %bb.11:                              //   in Loop: Header=BB30_10 Depth=2
-	$move , r0, r16, true, .LBB30_12
-.LBB30_13:                              //   in Loop: Header=BB30_5 Depth=1
+	$jltu , r1, r16, .LBB32_12
+// %bb.11:                              //   in Loop: Header=BB32_10 Depth=2
+	$move , r0, r16, true, .LBB32_12
+.LBB32_13:                              //   in Loop: Header=BB32_5 Depth=1
 	$move , r1, 4
 	$move , r0, r21
 	$call , r23, print_debug
@@ -1448,8 +1099,8 @@ main1:                                  // @main1
 	$add , r0, r0, 1
 	$sw , r14, 4, r0
 	$lw , r1, r14, 8
-	$jneq , r0, r1, .LBB30_15
-// %bb.14:                              //   in Loop: Header=BB30_5 Depth=1
+	$jneq , r0, r1, .LBB32_15
+// %bb.14:                              //   in Loop: Header=BB32_5 Depth=1
 	$move , r17, b
 	$move , r1, 0
 	$move , r4, 18
@@ -1458,23 +1109,23 @@ main1:                                  // @main1
 	$move , r3, r1
 	$call , r23, syscall
 	$sw , r17, 4, 0
-	$jump , .LBB30_16
-.LBB30_15:                              //   in Loop: Header=BB30_5 Depth=1
+	$jump , .LBB32_16
+.LBB32_15:                              //   in Loop: Header=BB32_5 Depth=1
 	$move , r0, b
 	$move , r2, 0
 	$move , r4, 17
 	$move , r1, r0
 	$move , r3, r2
 	$call , r23, syscall
-.LBB30_16:                              //   in Loop: Header=BB30_5 Depth=1
+.LBB32_16:                              //   in Loop: Header=BB32_5 Depth=1
 	$move , r0, b
 	$move , r1, 0
 	$move , r4, 16
 	$move , r2, r1
 	$move , r3, r1
 	$call , r23, syscall
-	$jneq , r21, 0, .LBB30_5
-// %bb.17:                              //   in Loop: Header=BB30_5 Depth=1
+	$jneq , r21, 0, .LBB32_5
+// %bb.17:                              //   in Loop: Header=BB32_5 Depth=1
 	$lw , r0, zero, sd_host
 	$add , r15, r22,  - 60
 	$move , r17, 1
@@ -1496,42 +1147,42 @@ main1:                                  // @main1
 	$move , r2, r18
 	$move , r3, r18
 	$call , r23, syscall
-	$jgts , r0,  - 1, .LBB30_5
-// %bb.18:                              //   in Loop: Header=BB30_5 Depth=1
+	$jgts , r0,  - 1, .LBB32_5
+// %bb.18:                              //   in Loop: Header=BB32_5 Depth=1
 	$move , r0, 3
 	$move , r1, 0
 	$move , r4, 7
 	$move , r2, r1
 	$move , r3, r1
 	$call , r23, syscall
-	$jump , .LBB30_5
-.Lfunc_end30:
-	$size,	main1, .Lfunc_end30 - main1
+	$jump , .LBB32_5
+.Lfunc_end32:
+	$size,	main1, .Lfunc_end32 - main1
 	$section,	%stack_sizes,"o",@progbits,%text, main1
-	$long,	.Lfunc_begin30
+	$long,	.Lfunc_begin32
 	$byte,	96
 	$section,	%text, main1,"ax",@progbits
                                         //  -  -  End function
 	$section,	%text, vector_addition,"ax",@progbits
 	$type,	vector_addition,@function       //  -  -  Begin function vector_addition
 vector_addition:                        // @vector_addition
-.Lfunc_begin31:
+.Lfunc_begin33:
 // %bb.0:
-	$jeq , r2, 0, .LBB31_2
-.LBB31_1:                               // =>This Inner Loop Header: Depth=1
+	$jeq , r2, 0, .LBB33_2
+.LBB33_1:                               // =>This Inner Loop Header: Depth=1
 	$lw , r3, r1, 0
 	$lw , r4, r0, 0
 	$add , r3, r4, r3
 	$sw , r0, 0, r3
 	$add , r0, r0, 4
 	$add , r1, r1, 4
-	$add , r2, r2,  - 1, nz, .LBB31_1
-.LBB31_2:
+	$add , r2, r2,  - 1, nz, .LBB33_1
+.LBB33_2:
 	$jump , r23
-.Lfunc_end31:
-	$size,	vector_addition, .Lfunc_end31 - vector_addition
+.Lfunc_end33:
+	$size,	vector_addition, .Lfunc_end33 - vector_addition
 	$section,	%stack_sizes,"o",@progbits,%text, vector_addition
-	$long,	.Lfunc_begin31
+	$long,	.Lfunc_begin33
 	$byte,	0
 	$section,	%text, vector_addition,"ax",@progbits
                                         //  -  -  End function
@@ -1539,7 +1190,7 @@ vector_addition:                        // @vector_addition
 	$globl,	main                            //  -  -  Begin function main
 	$type,	main,@function
 main:                                   // @main
-.Lfunc_begin32:
+.Lfunc_begin34:
 // %bb.0:
 	$sd , r22, 16, d22
 	$add , r22, r22, 24
@@ -1549,6 +1200,27 @@ main:                                   // @main
 	$move , r14, 0
 	$move , r1, r14
 	$call , r23, print_debug
+	$move , r15, 20
+	$move , r16, 5
+	$move , r0, r15
+	$move , r1, r16
+	$call , r23, print_debug
+	$move , r17, 6
+	$move , r0, r15
+	$move , r1, r17
+	$call , r23, print_debug
+	$move , r0, r15
+	$move , r1, r16
+	$call , r23, print_debug
+	$move , r0, r14
+	$move , r1, r14
+	$move , r2, r14
+	$move , r3, r14
+	$move , r4, r14
+	$call , r23, syscall
+	$move , r0, r15
+	$move , r1, r17
+	$call , r23, print_debug
 	$move , r4, 10
 	$move , r0, r14
 	$move , r1, r14
@@ -1556,18 +1228,17 @@ main:                                   // @main
 	$move , r3, r14
 	$call , r23, syscall
 	$sw , zero, sd_host, r0
-	$move , r15, b
+	$move , r16, b
 	$move , r4, 14
-	$move , r0, r15
+	$move , r0, r16
 	$move , r1, r14
 	$move , r2, r14
 	$move , r3, r14
 	$call , r23, syscall
-	$sw , r15, 4, 0
-	$sw , r15, 8, 16
-	$sw , r15, 12, 0
+	$sw , r16, 4, 0
+	$sw , r16, 8, 16
+	$sw , r16, 12, 0
 	$move , r16, main1
-	$move , r15, 20
 	$move , r0, r16
 	$move , r1, r14
 	$move , r2, r14
@@ -1659,10 +1330,10 @@ main:                                   // @main
 	$move , r4, r15
 	$call , r23, syscall
 	$call , r23, main1
-.Lfunc_end32:
-	$size,	main, .Lfunc_end32 - main
+.Lfunc_end34:
+	$size,	main, .Lfunc_end34 - main
 	$section,	%stack_sizes,"o",@progbits,%text, main
-	$long,	.Lfunc_begin32
+	$long,	.Lfunc_begin34
 	$byte,	24
 	$section,	%text, main,"ax",@progbits
                                         //  -  -  End function
@@ -1694,6 +1365,200 @@ b:
 	$addrsig_sym, main1
 	$addrsig_sym, DPU_INPUT_ARGUMENTS
 	$addrsig_sym, b
+	$text,
+	$file,	"memset.c"
+	$section,	%text, __memset_wram_4align,"ax",@progbits
+	$globl,	__memset_wram_4align            //  -  -  Begin function __memset_wram_4align
+	$type,	__memset_wram_4align,@function
+__memset_wram_4align:                   // @__memset_wram_4align
+memset..Lfunc_begin0:
+// %bb.0:
+	$lsr , r2, r2, 2, z, memset..LBB0_3
+// %bb.1:
+	$and , r3, r1, 255
+	$lsl_add , r1, r3, r1, 24
+	$lsl_add , r1, r1, r3, 8
+	$lsl_add , r1, r1, r3, 16
+	$move , r3, r0
+memset..LBB0_2:                                // =>This Inner Loop Header: Depth=1
+	$sw , r3, 0, r1
+	$add , r3, r3, 4
+	$add , r2, r2,  - 1, nz, memset..LBB0_2
+memset..LBB0_3:
+	$jump , r23
+memset..Lfunc_end0:
+	$size,	__memset_wram_4align, memset..Lfunc_end0 - __memset_wram_4align
+	$section,	%stack_sizes,"o",@progbits,%text, __memset_wram_4align
+	$long,	memset..Lfunc_begin0
+	$byte,	0
+	$section,	%text, __memset_wram_4align,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%text, memset,"ax",@progbits
+	$globl,	memset                          //  -  -  Begin function memset
+	$type,	memset,@function
+memset:                                 // @memset
+memset..Lfunc_begin1:
+// %bb.0:
+	$and , r3, r0, 3, z, memset..LBB1_1
+// %bb.2:
+	$sub , r4, 4, r3
+	$move , r3, r2
+	$jgtu , r4, r2, memset..LBB1_4
+// %bb.3:
+	$move , r3, r4
+memset..LBB1_4:
+	$jeq , r3, 0, memset..LBB1_7
+// %bb.5:
+	$move , r4, r0
+	$move , r5, r3
+memset..LBB1_6:                                // =>This Inner Loop Header: Depth=1
+	$sb , r4, 0, r1
+	$add , r4, r4, 1
+	$add , r5, r5,  - 1, nz, memset..LBB1_6
+memset..LBB1_7:
+	$sub , r2, r2, r3
+	$add , r3, r0, r3
+	$jgeu , r2, 4, memset..LBB1_9
+memset..LBB1_12:
+	$jeq , r2, 0, memset..LBB1_14
+memset..LBB1_13:                               // =>This Inner Loop Header: Depth=1
+	$sb , r3, 0, r1
+	$add , r3, r3, 1
+	$add , r2, r2,  - 1, nz, memset..LBB1_13
+memset..LBB1_14:
+	$jump , r23
+memset..LBB1_1:
+	$move , r3, r0
+	$jltu , r2, 4, memset..LBB1_12
+memset..LBB1_9:
+	$and , r4, r2,  - 4
+	$and , r5, r1, 255
+	$lsl_add , r6, r5, r1, 24
+	$lsl_add , r6, r6, r5, 8
+	$lsl_add , r5, r6, r5, 16
+	$lsr , r6, r2, 2
+	$move , r7, r3
+memset..LBB1_10:                               // =>This Inner Loop Header: Depth=1
+	$sw , r7, 0, r5
+	$add , r7, r7, 4
+	$add , r6, r6,  - 1, nz, memset..LBB1_10
+// %bb.11:
+	$and , r2, r2, 3
+	$add , r3, r3, r4
+	$jneq , r2, 0, memset..LBB1_13
+	$jump , memset..LBB1_14
+memset..Lfunc_end1:
+	$size,	memset, memset..Lfunc_end1 - memset
+	$section,	%stack_sizes,"o",@progbits,%text, memset
+	$long,	memset..Lfunc_begin1
+	$byte,	0
+	$section,	%text, memset,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%text, __memset_mram_8align,"ax",@progbits
+	$globl,	__memset_mram_8align            //  -  -  Begin function __memset_mram_8align
+	$type,	__memset_mram_8align,@function
+__memset_mram_8align:                   // @__memset_mram_8align
+memset..Lfunc_begin2:
+// %bb.0:
+	$and , r3, r1, 255
+	$lsl_add , r1, r3, r1, 24
+	$lsl_add , r1, r1, r3, 8
+	$lsl_add , r1, r1, r3, 16
+	$sw , r22, 0, r1
+	$sw , r22, 4, r1
+	$jeq , r2, 0, memset..LBB2_3
+// %bb.1:
+	$move , r1, 0
+memset..LBB2_2:                                // =>This Inner Loop Header: Depth=1
+	$add , r3, r0, r1
+	$add , r4, r22, 0
+	$add , r1, r1, 8
+	$sdma , r4, r3, 0
+	$jltu , r1, r2, memset..LBB2_2
+memset..LBB2_3:
+	$jump , r23
+memset..Lfunc_end2:
+	$size,	__memset_mram_8align, memset..Lfunc_end2 - __memset_mram_8align
+	$section,	%stack_sizes,"o",@progbits,%text, __memset_mram_8align
+	$long,	memset..Lfunc_begin2
+	$byte,	8
+	$section,	%text, __memset_mram_8align,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%text, __memset_mram,"ax",@progbits
+	$globl,	__memset_mram                   //  -  -  Begin function __memset_mram
+	$type,	__memset_mram,@function
+__memset_mram:                          // @__memset_mram
+memset..Lfunc_begin3:
+// %bb.0:
+	$and , r3, r0,  - 8
+	$and , r6, r0, 7, z, memset..LBB3_7
+// %bb.1:
+	$sub , r5, 8, r6
+	$move , r4, r2
+	$jgtu , r5, r2, memset..LBB3_3
+// %bb.2:
+	$move , r4, r5
+memset..LBB3_3:
+	$add , r5, r22, 8
+	$ldma , r5, r3, 0
+	$jeq , r4, 0, memset..LBB3_6
+// %bb.4:
+	$or , r6, r5, r6
+	$move , r7, r4
+memset..LBB3_5:                                // =>This Inner Loop Header: Depth=1
+	$sb , r6, 0, r1
+	$add , r6, r6, 1
+	$add , r7, r7,  - 1, nz, memset..LBB3_5
+memset..LBB3_6:
+	$sdma , r5, r3, 0
+	$sub , r2, r2, r4
+	$add , r3, r3, 8
+memset..LBB3_7:
+	$jltu , r2, 8, memset..LBB3_12
+// %bb.8:
+	$and , r4, r1, 255
+	$lsl_add , r5, r4, r1, 24
+	$lsl_add , r5, r5, r4, 8
+	$lsl_add , r4, r5, r4, 16
+	$sw , r22, 0, r4
+	$sw , r22, 4, r4
+	$and , r4, r2,  - 8, z, memset..LBB3_11
+// %bb.9:
+	$move , r5, 0
+memset..LBB3_10:                               // =>This Inner Loop Header: Depth=1
+	$add , r6, r3, r5
+	$add , r7, r22, 0
+	$add , r5, r5, 8
+	$sdma , r7, r6, 0
+	$jltu , r5, r4, memset..LBB3_10
+memset..LBB3_11:
+	$and , r2, r2, 7
+	$add , r3, r3, r4
+memset..LBB3_12:
+	$jeq , r2, 0, memset..LBB3_16
+// %bb.13:
+	$add , r4, r22, 8
+	$ldma , r4, r3, 0
+memset..LBB3_14:                               // =>This Inner Loop Header: Depth=1
+	$sb , r4, 0, r1
+	$add , r4, r4, 1
+	$add , r2, r2,  - 1, nz, memset..LBB3_14
+// %bb.15:
+	$add , r1, r22, 8
+	$sdma , r1, r3, 0
+memset..LBB3_16:
+	$jump , r23
+memset..Lfunc_end3:
+	$size,	__memset_mram, memset..Lfunc_end3 - __memset_mram
+	$section,	%stack_sizes,"o",@progbits,%text, __memset_mram
+	$long,	memset..Lfunc_begin3
+	$byte,	16
+	$section,	%text, __memset_mram,"ax",@progbits
+                                        //  -  -  End function
+	$addrsig,
+	$addrsig_sym, __memset_wram_4align
+	$addrsig_sym, __memset_mram_8align
+	$addrsig_sym, __memset_mram
 	$text,
 	$file,	"stdio.c"
 	$section,	%text, printf,"ax",@progbits
@@ -2270,3 +2135,196 @@ stdio.__stdout_cache_buffer:
 	$addrsig_sym, __stdout_buffer_state
 	$addrsig_sym, __atomic_bit___stdout_buffer_lock
 	$addrsig_sym, stdio.__stdout_cache_buffer
+	$text,
+	$file,	"crt0.c"
+	$section,	%text, __bootstrap,"ax",@progbits
+	$globl,	__bootstrap                     //  -  -  Begin function __bootstrap
+	$type,	__bootstrap,@function
+__bootstrap:                            // @__bootstrap
+crt0..Lfunc_begin0:
+// %bb.0:
+	// inline asm
+	$jnz , id, crt0.__sys_start_thread
+
+	$sd , zero, __stdout_buffer_state, 0
+	$move , r23, __atomic_end_addr
+crt0.__sys_atomic_bit_clear:
+	$jeq , r23, __atomic_used_addr, crt0.__sys_start_thread
+crt0..Ltmp0:
+	$release , r23, 0, nz, crt0..Ltmp0 + 1
+	$add , r23, r23,  - 1, true, crt0.__sys_atomic_bit_clear
+crt0.__sys_start_thread:
+crt0..Ltmp1:
+	$jeq , id, NR_TASKLETS - 1, crt0..Ltmp1 + 2
+	$boot , id, 1
+	$ld , d22, id8, __sys_thread_stack_table_ptr
+	$call , r23, main
+	$globl,	__sys_end
+__sys_end:
+
+	$stop , true, __sys_end
+	// inline asm
+crt0..Lfunc_end0:
+	$size,	__bootstrap, crt0..Lfunc_end0 - __bootstrap
+	$section,	%stack_sizes,"o",@progbits,%text, __bootstrap
+	$long,	crt0..Lfunc_begin0
+	$byte,	0
+	$section,	%text, __bootstrap,"ax",@progbits
+                                        //  -  -  End function
+	$type,	__sys_null_pointer,@object      // @__sys_null_pointer
+	$section,	%data, __sys_zero,"aw",@progbits
+	$globl,	__sys_null_pointer
+	$p2align,	3
+__sys_null_pointer:
+	$quad,	0                               // 0x0
+	$size,	__sys_null_pointer, 8
+
+	$type,	__sys_thread_stack_table_ptr,@object // @__sys_thread_stack_table_ptr
+	$section,	%data, __sys_keep,"aw",@progbits
+	$globl,	__sys_thread_stack_table_ptr
+	$p2align,	3
+__sys_thread_stack_table_ptr:
+	$long,	STACK_SIZE_TASKLET_0
+	$long,	__sys_stack_thread_0
+	$long,	STACK_SIZE_TASKLET_1
+	$long,	__sys_stack_thread_1
+	$long,	STACK_SIZE_TASKLET_2
+	$long,	__sys_stack_thread_2
+	$long,	STACK_SIZE_TASKLET_3
+	$long,	__sys_stack_thread_3
+	$long,	STACK_SIZE_TASKLET_4
+	$long,	__sys_stack_thread_4
+	$long,	STACK_SIZE_TASKLET_5
+	$long,	__sys_stack_thread_5
+	$long,	STACK_SIZE_TASKLET_6
+	$long,	__sys_stack_thread_6
+	$long,	STACK_SIZE_TASKLET_7
+	$long,	__sys_stack_thread_7
+	$long,	STACK_SIZE_TASKLET_8
+	$long,	__sys_stack_thread_8
+	$long,	STACK_SIZE_TASKLET_9
+	$long,	__sys_stack_thread_9
+	$long,	STACK_SIZE_TASKLET_10
+	$long,	__sys_stack_thread_10
+	$long,	STACK_SIZE_TASKLET_11
+	$long,	__sys_stack_thread_11
+	$long,	STACK_SIZE_TASKLET_12
+	$long,	__sys_stack_thread_12
+	$long,	STACK_SIZE_TASKLET_13
+	$long,	__sys_stack_thread_13
+	$long,	STACK_SIZE_TASKLET_14
+	$long,	__sys_stack_thread_14
+	$long,	STACK_SIZE_TASKLET_15
+	$long,	__sys_stack_thread_15
+	$long,	STACK_SIZE_TASKLET_16
+	$long,	__sys_stack_thread_16
+	$long,	STACK_SIZE_TASKLET_17
+	$long,	__sys_stack_thread_17
+	$long,	STACK_SIZE_TASKLET_18
+	$long,	__sys_stack_thread_18
+	$long,	STACK_SIZE_TASKLET_19
+	$long,	__sys_stack_thread_19
+	$long,	STACK_SIZE_TASKLET_20
+	$long,	__sys_stack_thread_20
+	$long,	STACK_SIZE_TASKLET_21
+	$long,	__sys_stack_thread_21
+	$long,	STACK_SIZE_TASKLET_22
+	$long,	__sys_stack_thread_22
+	$long,	STACK_SIZE_TASKLET_23
+	$long,	__sys_stack_thread_23
+	$size,	__sys_thread_stack_table_ptr, 192
+
+	$type,	__sys_used_mram_end,@object     // @__sys_used_mram_end
+	$section,	%mram, noinit,"aw",@progbits
+	$globl,	__sys_used_mram_end
+	$p2align,	3
+__sys_used_mram_end:
+	$size,	__sys_used_mram_end, 0
+
+	$type,	thread_profiling,@object        // @thread_profiling
+	$section,	%data, immediate_memory.thread_profiling,"aw",@progbits
+	$globl,	thread_profiling
+	$p2align,	2
+thread_profiling:
+	$zero,	96
+	$size,	thread_profiling, 96
+
+	$type,	perfcounter_end_value,@object   // @perfcounter_end_value
+	$section,	%bss, perfcounter_end_value,"aw",@nobits
+	$globl,	perfcounter_end_value
+	$p2align,	2
+perfcounter_end_value:
+	$long,	0                               // 0x0
+	$size,	perfcounter_end_value, 4
+
+	$type,	CLOCKS_PER_SEC,@object          // @CLOCKS_PER_SEC
+	$section,	%dpu_host,"a",@progbits
+	$globl,	CLOCKS_PER_SEC
+	$p2align,	3
+CLOCKS_PER_SEC:
+	$long,	0                               // 0x0
+	$size,	CLOCKS_PER_SEC, 4
+
+	$type,	error_storage,@object           // @error_storage
+	$globl,	error_storage
+	$p2align,	3
+error_storage:
+	$long,	0                               // 0x0
+	$size,	error_storage, 4
+
+	$addrsig,
+	$addrsig_sym, __bootstrap
+	$addrsig_sym, __sys_null_pointer
+	$addrsig_sym, STACK_SIZE_TASKLET_0
+	$addrsig_sym, __sys_stack_thread_0
+	$addrsig_sym, STACK_SIZE_TASKLET_1
+	$addrsig_sym, __sys_stack_thread_1
+	$addrsig_sym, STACK_SIZE_TASKLET_2
+	$addrsig_sym, __sys_stack_thread_2
+	$addrsig_sym, STACK_SIZE_TASKLET_3
+	$addrsig_sym, __sys_stack_thread_3
+	$addrsig_sym, STACK_SIZE_TASKLET_4
+	$addrsig_sym, __sys_stack_thread_4
+	$addrsig_sym, STACK_SIZE_TASKLET_5
+	$addrsig_sym, __sys_stack_thread_5
+	$addrsig_sym, STACK_SIZE_TASKLET_6
+	$addrsig_sym, __sys_stack_thread_6
+	$addrsig_sym, STACK_SIZE_TASKLET_7
+	$addrsig_sym, __sys_stack_thread_7
+	$addrsig_sym, STACK_SIZE_TASKLET_8
+	$addrsig_sym, __sys_stack_thread_8
+	$addrsig_sym, STACK_SIZE_TASKLET_9
+	$addrsig_sym, __sys_stack_thread_9
+	$addrsig_sym, STACK_SIZE_TASKLET_10
+	$addrsig_sym, __sys_stack_thread_10
+	$addrsig_sym, STACK_SIZE_TASKLET_11
+	$addrsig_sym, __sys_stack_thread_11
+	$addrsig_sym, STACK_SIZE_TASKLET_12
+	$addrsig_sym, __sys_stack_thread_12
+	$addrsig_sym, STACK_SIZE_TASKLET_13
+	$addrsig_sym, __sys_stack_thread_13
+	$addrsig_sym, STACK_SIZE_TASKLET_14
+	$addrsig_sym, __sys_stack_thread_14
+	$addrsig_sym, STACK_SIZE_TASKLET_15
+	$addrsig_sym, __sys_stack_thread_15
+	$addrsig_sym, STACK_SIZE_TASKLET_16
+	$addrsig_sym, __sys_stack_thread_16
+	$addrsig_sym, STACK_SIZE_TASKLET_17
+	$addrsig_sym, __sys_stack_thread_17
+	$addrsig_sym, STACK_SIZE_TASKLET_18
+	$addrsig_sym, __sys_stack_thread_18
+	$addrsig_sym, STACK_SIZE_TASKLET_19
+	$addrsig_sym, __sys_stack_thread_19
+	$addrsig_sym, STACK_SIZE_TASKLET_20
+	$addrsig_sym, __sys_stack_thread_20
+	$addrsig_sym, STACK_SIZE_TASKLET_21
+	$addrsig_sym, __sys_stack_thread_21
+	$addrsig_sym, STACK_SIZE_TASKLET_22
+	$addrsig_sym, __sys_stack_thread_22
+	$addrsig_sym, STACK_SIZE_TASKLET_23
+	$addrsig_sym, __sys_stack_thread_23
+	$addrsig_sym, __sys_thread_stack_table_ptr
+	$addrsig_sym, __sys_used_mram_end
+	$addrsig_sym, thread_profiling
+	$addrsig_sym, CLOCKS_PER_SEC
+	$addrsig_sym, error_storage

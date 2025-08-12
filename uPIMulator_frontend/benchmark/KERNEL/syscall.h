@@ -50,7 +50,7 @@ int syscall(unsigned int arg1, unsigned int arg2, unsigned int arg3,
   //__builtin_time_r(time);
    __asm__ volatile("\ttime %[time]\n" : [time] "=r"(time));
 
-  if (time - jobs[jobidx].time > QUANTOM_JOB) {
+  if (time - processs[cur_process_index].timer > PROCESS_QUANTOM) {
     jobs[jobidx].state = PAUSED;
     swap_scheduler();
     //__asm__ volatile("\tmove r19, id\n");

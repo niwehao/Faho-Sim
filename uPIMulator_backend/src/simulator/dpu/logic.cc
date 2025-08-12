@@ -5656,10 +5656,15 @@ namespace upmem_sim::simulator::dpu
             std::cout << "fthread " << rc << " end dma " << performance_counter_->get_true_value() << std::endl;
           }
         }
+        else if (sign == 7 )
+        {
+          std::cout << "preempt finish with " << rc<< std::endl;
+        }
         else
         {
           std::cout << "debug" << sign << " for " << rc << std::endl;
         }
+        
       }
 
       instruction->thread()->reg_file()->clear_conditions();

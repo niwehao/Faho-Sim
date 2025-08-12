@@ -218,8 +218,12 @@ uint8_t check_time_process()
   unsigned int time = 0;
   //__builtin_time_r(time);
   __asm__ volatile("\ttime %[time]\n" : [time] "=r"(time));
-  if (time - processs[cur_process_index].timer > PROCESS_QUANTOM)
+  if (time - processs[cur_process_index].timer > PROCESS_QUANTOM){
+
     return 1;
+
+  }
+    
   return 0;
 }
 
@@ -265,9 +269,17 @@ int scheduler_jobs(void)
       if (sp_wait(&cp) != 0)
         continue;
       //__asm__ volatile("\tmove r15, id\n");//r15记录的me可能会发生变化
-      if (me_new() == 0)
+      if (me_new() == 0){
+        unsigned int time = 0;
+        //__builtin_time_r(time);
+        __asm__ volatile("\ttime %[time]\n" : [time] "=r"(time));
+        int interval=time - processs[cur_process_index].timer ;
+        if (interval> PROCESS_QUANTOM){
+          print_debug(interval,7);
+        }
         return all_end_or_waiting; // return the all_end_or_waiting if it is
                                    // 1 mark the process at waiting
+      }
       // barrier_wait(&barrier_jobs);
       sp_wait(&cp); // wait before restart the loop
       // wait the me()==0 to return back to this function

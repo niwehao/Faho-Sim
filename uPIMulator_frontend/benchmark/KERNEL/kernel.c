@@ -387,7 +387,7 @@ int scheduler(void) {
                         // (avoid to load unload at each time)
   for (;;) {
     for (; idx < MAX_PRG; idx++) {
-      check_timer_stop(); // uncomment
+      //check_timer_stop(); // uncomment
       char ready;
       if (processs[idx].state == READY) {
         ready = 1;

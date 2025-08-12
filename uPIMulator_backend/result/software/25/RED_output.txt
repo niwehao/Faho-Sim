@@ -1,0 +1,1460 @@
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/atomic.bin
+DMA to atomic completed...
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/iram.bin
+num of instructions: 3476
+DMA to IRAM completed...
+/home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/wram.bin
+DMA to WRAM completed...
+init completed...
+launch completed...
+********time:3663*******
+text section size is 5310
+flag set:0
+break point 2 happen in cycle:4378
+break point 3 happen in cycle:5545
+break point 4 happen in cycle:5666
+break point 5 happen in cycle:20143
+break point 6 happen in cycle:29251
+break point 7 happen in cycle:29685
+preempt finish with 2313
+preempt finish with 2534
+preempt finish with 2957
+preempt finish with 2857
+preempt finish with 3624
+preempt finish with 4157
+preempt finish with 4633
+preempt finish with 4551
+preempt finish with 4075
+preempt finish with 4138
+preempt finish with 4166
+preempt finish with 4193
+preempt finish with 4221
+preempt finish with 4227
+preempt finish with 4021
+********time:999994*******
+ReadSocket event for pid: 1 at time: 0
+********time:999995*******
+flag set:32
+preempt finish with 3846
+fthread 0 start cal at 1174875
+preempt finish with 4904
+fthread 0 start dma 1184527
+fthread 0 end dma 1187875
+fthread 0 start dma 1210212
+fthread 0 end dma 1213577
+fthread 0 start dma 1235058
+fthread 0 end dma 1239872
+fthread 1 start cal at 1242901
+fthread 0 start dma 1254999
+preempt finish with 4637
+fthread 1 start dma 1263912
+fthread 0 end dma 1264584
+fthread 1 end dma 1267347
+fthread 0 start dma 1284950
+fthread 1 start dma 1287049
+fthread 0 end dma 1287857
+fthread 1 end dma 1289873
+fthread 0 start dma 1303265
+fthread 1 start dma 1305113
+fthread 0 end dma 1309969
+fthread 1 end dma 1311232
+fthread 2 start cal at 1313384
+fthread 0 start dma 1324335
+fthread 1 start dma 1325602
+preempt finish with 4140
+fthread 0 end dma 1335134
+fthread 2 start dma 1335679
+fthread 1 end dma 1336464
+fthread 2 end dma 1339163
+fthread 0 start dma 1356767
+fthread 1 start dma 1357874
+fthread 0 end dma 1359728
+fthread 2 start dma 1359787
+fthread 1 end dma 1361021
+fthread 2 end dma 1362631
+fthread 0 start dma 1375726
+fthread 1 start dma 1376875
+fthread 2 start dma 1378326
+fthread 0 end dma 1379910
+fthread 1 end dma 1381176
+fthread 3 start cal at 1383799
+fthread 0 start dma 1394306
+fthread 1 start dma 1395561
+preempt finish with 4099
+fthread 0 end dma 1405110
+fthread 1 end dma 1406374
+fthread 3 start dma 1407126
+fthread 2 end dma 1407682
+fthread 3 end dma 1410694
+fthread 0 start dma 1427212
+fthread 1 start dma 1428442
+fthread 2 start dma 1429512
+fthread 0 end dma 1430291
+fthread 1 end dma 1431555
+fthread 3 start dma 1431630
+fthread 2 end dma 1432864
+fthread 3 end dma 1434537
+fthread 0 start dma 1446980
+fthread 1 start dma 1448122
+fthread 2 start dma 1449241
+fthread 3 start dma 1450685
+fthread 0 end dma 1452526
+fthread 4 start cal at 1453311
+fthread 1 end dma 1453790
+fthread 0 start dma 1466892
+fthread 1 start dma 1468156
+preempt finish with 4349
+fthread 0 end dma 1479052
+fthread 1 end dma 1480325
+fthread 2 end dma 1481601
+fthread 3 end dma 1482900
+fthread 4 start dma 1483034
+fthread 4 end dma 1486647
+fthread 0 start dma 1502217
+fthread 1 start dma 1503480
+fthread 2 start dma 1504601
+fthread 0 end dma 1505366
+fthread 3 start dma 1505614
+fthread 1 end dma 1506623
+fthread 2 end dma 1507882
+fthread 4 start dma 1508276
+fthread 3 end dma 1509171
+fthread 4 end dma 1514972
+fthread 0 start dma 1523224
+fthread 1 start dma 1524390
+fthread 2 start dma 1525577
+fthread 3 start dma 1526642
+fthread 5 start cal at 1528130
+fthread 0 end dma 1528131
+fthread 4 start dma 1531240
+fthread 0 start dma 1542498
+preempt finish with 4375
+fthread 0 end dma 1553394
+fthread 1 end dma 1554667
+fthread 2 end dma 1555943
+fthread 3 end dma 1557243
+fthread 4 end dma 1558892
+fthread 5 start dma 1559803
+fthread 5 end dma 1563458
+fthread 0 start dma 1577376
+fthread 1 start dma 1578781
+fthread 2 start dma 1579990
+fthread 0 end dma 1580712
+fthread 3 start dma 1581061
+fthread 1 end dma 1581979
+fthread 4 start dma 1582389
+fthread 2 end dma 1583235
+fthread 3 end dma 1584511
+fthread 5 start dma 1585911
+fthread 4 end dma 1588333
+fthread 5 end dma 1590202
+fthread 0 start dma 1599883
+fthread 1 start dma 1601074
+fthread 2 start dma 1602196
+fthread 3 start dma 1603169
+fthread 6 start cal at 1604168
+fthread 4 start dma 1606025
+fthread 5 start dma 1607445
+preempt finish with 3702
+fthread 0 end dma 1616984
+fthread 1 end dma 1618257
+fthread 2 end dma 1619533
+fthread 3 end dma 1620833
+fthread 4 end dma 1622486
+fthread 5 end dma 1624926
+fthread 6 start dma 1626258
+fthread 6 end dma 1630001
+fthread 0 start dma 1641705
+fthread 1 start dma 1643133
+fthread 2 start dma 1644411
+fthread 0 end dma 1645106
+fthread 3 start dma 1645580
+fthread 1 end dma 1646403
+fthread 4 start dma 1646998
+fthread 2 end dma 1647675
+fthread 5 start dma 1649094
+fthread 3 end dma 1650543
+fthread 4 end dma 1652290
+fthread 6 start dma 1653159
+fthread 5 end dma 1654371
+fthread 6 end dma 1661780
+fthread 7 start cal at 1662736
+fthread 0 start dma 1664670
+fthread 1 start dma 1665612
+fthread 2 start dma 1666559
+fthread 3 start dma 1668517
+fthread 4 start dma 1669740
+fthread 5 start dma 1671163
+fthread 6 start dma 1676654
+preempt finish with 4138
+fthread 0 end dma 1687550
+fthread 1 end dma 1688823
+fthread 2 end dma 1690099
+fthread 3 end dma 1691399
+fthread 4 end dma 1693052
+fthread 5 end dma 1695492
+fthread 6 end dma 1698355
+fthread 7 start dma 1700186
+fthread 7 end dma 1704015
+fthread 0 start dma 1712967
+fthread 1 start dma 1714554
+fthread 2 start dma 1715938
+fthread 0 end dma 1716592
+fthread 3 start dma 1717173
+fthread 1 end dma 1718019
+fthread 4 start dma 1718775
+fthread 5 start dma 1721028
+fthread 6 start dma 1723379
+fthread 2 end dma 1725098
+fthread 3 end dma 1726539
+fthread 7 start dma 1727609
+fthread 4 end dma 1728273
+fthread 5 end dma 1730174
+fthread 8 start cal at 1731883
+fthread 0 start dma 1735297
+fthread 1 start dma 1736215
+fthread 2 start dma 1740972
+fthread 3 start dma 1741985
+fthread 4 start dma 1743185
+fthread 5 start dma 1744831
+preempt finish with 3988
+fthread 0 end dma 1755727
+fthread 1 end dma 1757000
+fthread 2 end dma 1758276
+fthread 3 end dma 1759576
+fthread 4 end dma 1761229
+fthread 5 end dma 1763669
+fthread 6 end dma 1766532
+fthread 7 end dma 1769909
+fthread 8 start dma 1772233
+fthread 8 end dma 1776131
+fthread 0 start dma 1781549
+fthread 1 start dma 1783199
+fthread 2 start dma 1784648
+fthread 0 end dma 1785296
+fthread 3 start dma 1785992
+fthread 1 end dma 1786805
+fthread 4 start dma 1787752
+fthread 5 start dma 1790114
+fthread 2 end dma 1792405
+fthread 6 start dma 1792611
+fthread 3 end dma 1793981
+fthread 7 start dma 1795452
+fthread 4 end dma 1795889
+fthread 5 end dma 1797971
+fthread 8 start dma 1799502
+fthread 9 start cal at 1800038
+fthread 0 start dma 1804706
+fthread 1 start dma 1805607
+fthread 2 start dma 1809032
+fthread 3 start dma 1810046
+fthread 4 start dma 1811258
+fthread 5 start dma 1812877
+preempt finish with 3980
+fthread 0 end dma 1823773
+fthread 1 end dma 1825046
+fthread 2 end dma 1826322
+fthread 3 end dma 1827622
+fthread 4 end dma 1829275
+fthread 5 end dma 1831715
+fthread 6 end dma 1834578
+fthread 7 end dma 1837955
+fthread 8 end dma 1841820
+fthread 9 start dma 1844634
+fthread 9 end dma 1848570
+fthread 0 start dma 1849575
+fthread 1 start dma 1851330
+fthread 2 start dma 1852901
+fthread 0 end dma 1853511
+fthread 3 start dma 1854362
+fthread 1 end dma 1855097
+fthread 4 start dma 1856193
+fthread 5 start dma 1858716
+fthread 2 end dma 1859206
+fthread 3 end dma 1860995
+fthread 6 start dma 1861591
+fthread 4 end dma 1863187
+fthread 7 start dma 1864674
+fthread 5 end dma 1865538
+fthread 8 start dma 1867389
+fthread 10 start cal at 1867916
+fthread 9 start dma 1871402
+fthread 0 start dma 1874044
+fthread 1 start dma 1874933
+fthread 2 start dma 1877220
+fthread 3 start dma 1878235
+fthread 4 start dma 1879459
+fthread 5 start dma 1881045
+preempt finish with 3988
+fthread 0 end dma 1891941
+fthread 1 end dma 1893214
+fthread 2 end dma 1894490
+fthread 3 end dma 1895790
+fthread 4 end dma 1897443
+fthread 5 end dma 1899883
+fthread 6 end dma 1902746
+fthread 7 end dma 1906123
+fthread 8 end dma 1909988
+fthread 9 end dma 1914340
+fthread 10 start dma 1917645
+fthread 0 start dma 1917738
+fthread 1 start dma 1919508
+fthread 2 start dma 1921010
+fthread 10 end dma 1921585
+fthread 3 start dma 1922441
+fthread 0 end dma 1922832
+fthread 1 end dma 1924143
+fthread 4 start dma 1924339
+fthread 5 start dma 1927090
+fthread 6 start dma 1930128
+fthread 2 end dma 1930909
+fthread 3 end dma 1932774
+fthread 7 start dma 1933460
+fthread 4 end dma 1934878
+fthread 8 start dma 1936338
+fthread 11 start cal at 1937971
+fthread 9 start dma 1939280
+fthread 10 start dma 1943152
+fthread 0 start dma 1943855
+fthread 1 start dma 1944552
+fthread 2 start dma 1948103
+fthread 3 start dma 1949117
+fthread 4 start dma 1950471
+preempt finish with 4067
+fthread 0 end dma 1961367
+fthread 1 end dma 1962640
+fthread 2 end dma 1963916
+fthread 3 end dma 1965216
+fthread 4 end dma 1966869
+fthread 5 end dma 1969309
+fthread 6 end dma 1972172
+fthread 7 end dma 1975549
+fthread 8 end dma 1979414
+fthread 9 end dma 1983766
+fthread 0 start dma 1987139
+fthread 10 end dma 1988639
+fthread 1 start dma 1988844
+fthread 2 start dma 1990444
+fthread 0 end dma 1991033
+fthread 3 start dma 1991952
+fthread 11 start dma 1992177
+fthread 1 end dma 1992718
+fthread 4 start dma 1993901
+fthread 5 start dma 1996613
+fthread 11 end dma 1998854
+fthread 6 start dma 1999567
+fthread 2 end dma 2000356
+fthread 3 end dma 2002228
+fthread 7 start dma 2002926
+fthread 4 end dma 2004361
+fthread 8 start dma 2005777
+fthread 9 start dma 2008493
+fthread 10 start dma 2011267
+fthread 0 start dma 2012593
+fthread 1 start dma 2013499
+fthread 11 start dma 2016760
+fthread 2 start dma 2017565
+fthread 3 start dma 2018578
+fthread 4 start dma 2019937
+preempt finish with 4069
+fthread 0 end dma 2030833
+fthread 1 end dma 2032106
+fthread 2 end dma 2033382
+fthread 3 end dma 2034682
+fthread 4 end dma 2036335
+fthread 5 end dma 2038775
+fthread 6 end dma 2041638
+fthread 7 end dma 2045015
+fthread 8 end dma 2048880
+fthread 9 end dma 2053232
+fthread 0 start dma 2056605
+fthread 10 end dma 2058105
+fthread 1 start dma 2058310
+fthread 2 start dma 2059910
+fthread 0 end dma 2060504
+fthread 3 start dma 2061422
+fthread 1 end dma 2062135
+fthread 4 start dma 2063294
+fthread 11 end dma 2063431
+fthread 5 start dma 2066033
+fthread 6 start dma 2069097
+fthread 2 end dma 2070253
+fthread 3 end dma 2072130
+fthread 7 start dma 2072480
+fthread 4 end dma 2074236
+fthread 8 start dma 2075358
+fthread 9 start dma 2078061
+fthread 10 start dma 2080793
+fthread 0 start dma 2082132
+fthread 1 start dma 2083033
+fthread 11 start dma 2083710
+fthread 2 start dma 2087302
+fthread 3 start dma 2088316
+fthread 4 start dma 2089670
+preempt finish with 4086
+fthread 0 end dma 2100566
+fthread 1 end dma 2101839
+fthread 2 end dma 2103115
+fthread 3 end dma 2104415
+fthread 4 end dma 2106068
+fthread 5 end dma 2108508
+fthread 6 end dma 2111371
+fthread 7 end dma 2114748
+fthread 8 end dma 2118613
+fthread 9 end dma 2122965
+fthread 0 meet barrier2126299
+fthread 10 end dma 2127823
+fthread 1 start dma 2128022
+fthread 2 start dma 2129703
+fthread 3 start dma 2131172
+fthread 1 end dma 2131906
+fthread 4 start dma 2132996
+fthread 11 end dma 2133223
+fthread 5 start dma 2135742
+fthread 6 start dma 2138734
+fthread 2 end dma 2139888
+fthread 3 end dma 2141733
+fthread 7 start dma 2142068
+fthread 4 end dma 2143840
+fthread 12 start cal at 2144573
+fthread 8 start dma 2145099
+fthread 9 start dma 2147696
+fthread 10 start dma 2150293
+fthread 1 start dma 2152470
+fthread 11 start dma 2153166
+fthread 2 start dma 2156721
+fthread 3 start dma 2157735
+fthread 4 start dma 2159079
+preempt finish with 4066
+fthread 1 end dma 2170894
+fthread 2 end dma 2172175
+fthread 3 end dma 2173615
+fthread 4 end dma 2175565
+fthread 5 end dma 2177925
+fthread 6 end dma 2180713
+fthread 7 end dma 2184015
+fthread 8 end dma 2187839
+fthread 9 end dma 2192138
+fthread 1 start dma 2196525
+fthread 10 end dma 2196936
+fthread 2 start dma 2198224
+fthread 3 start dma 2199940
+fthread 1 end dma 2200452
+fthread 11 end dma 2202076
+fthread 4 start dma 2202229
+fthread 2 end dma 2203618
+fthread 5 start dma 2204960
+fthread 3 end dma 2205587
+fthread 4 end dma 2208003
+fthread 6 start dma 2208121
+fthread 5 end dma 2210776
+fthread 7 start dma 2211699
+fthread 8 start dma 2215126
+fthread 9 start dma 2217867
+fthread 10 start dma 2220630
+fthread 1 start dma 2222540
+fthread 11 start dma 2223411
+fthread 2 start dma 2224213
+fthread 3 start dma 2225217
+fthread 4 start dma 2226461
+fthread 5 start dma 2227903
+preempt finish with 4029
+fthread 1 end dma 2239093
+fthread 2 end dma 2240374
+fthread 3 end dma 2241814
+fthread 4 end dma 2243764
+fthread 5 end dma 2246124
+fthread 6 end dma 2248912
+fthread 7 end dma 2252214
+fthread 8 end dma 2256038
+fthread 9 end dma 2260337
+fthread 1 meet barrier2264681
+fthread 10 end dma 2265139
+fthread 2 start dma 2266416
+fthread 3 start dma 2268191
+fthread 11 end dma 2270289
+fthread 4 start dma 2270393
+fthread 2 end dma 2271779
+fthread 5 start dma 2273006
+fthread 3 end dma 2273698
+fthread 4 end dma 2275993
+fthread 6 start dma 2276068
+fthread 5 end dma 2278676
+fthread 7 start dma 2279584
+fthread 6 end dma 2281666
+fthread 8 start dma 2282674
+fthread 9 start dma 2285448
+fthread 10 start dma 2288169
+fthread 11 start dma 2290938
+fthread 2 start dma 2291750
+fthread 3 start dma 2292784
+fthread 4 start dma 2294007
+fthread 5 start dma 2295428
+fthread 6 start dma 2297190
+preempt finish with 4058
+fthread 2 end dma 2308703
+fthread 3 end dma 2310206
+fthread 4 end dma 2312082
+fthread 5 end dma 2314337
+fthread 6 end dma 2317002
+fthread 7 end dma 2320115
+fthread 8 end dma 2323712
+fthread 9 end dma 2327783
+fthread 10 end dma 2332391
+fthread 2 start dma 2333541
+fthread 3 start dma 2335474
+fthread 2 end dma 2337398
+fthread 4 start dma 2337586
+fthread 11 end dma 2338673
+fthread 3 end dma 2339992
+fthread 5 start dma 2340183
+fthread 12 start dma 2341217
+fthread 6 start dma 2343338
+fthread 4 end dma 2345171
+fthread 7 start dma 2346734
+fthread 5 end dma 2347850
+fthread 8 start dma 2350654
+fthread 6 end dma 2351015
+fthread 7 end dma 2354600
+fthread 9 start dma 2355054
+fthread 8 end dma 2358420
+fthread 10 start dma 2359052
+fthread 2 start dma 2362281
+fthread 11 start dma 2363109
+fthread 3 start dma 2363903
+fthread 4 start dma 2366636
+fthread 5 start dma 2368057
+fthread 6 start dma 2369698
+fthread 7 start dma 2371537
+fthread 8 start dma 2373750
+preempt finish with 4513
+fthread 2 end dma 2385263
+fthread 3 end dma 2386766
+fthread 4 end dma 2388642
+fthread 5 end dma 2390897
+fthread 6 end dma 2393562
+fthread 7 end dma 2396675
+fthread 8 end dma 2400272
+fthread 9 end dma 2404343
+fthread 10 end dma 2408951
+fthread 2 start dma 2410101
+fthread 3 start dma 2412034
+fthread 2 end dma 2413958
+fthread 4 start dma 2414146
+fthread 11 end dma 2415233
+fthread 3 end dma 2416553
+fthread 5 start dma 2416751
+fthread 12 end dma 2419336
+fthread 6 start dma 2419816
+fthread 4 end dma 2421657
+fthread 7 start dma 2423266
+fthread 5 end dma 2424371
+fthread 8 start dma 2427195
+fthread 6 end dma 2427527
+fthread 7 end dma 2431105
+fthread 9 start dma 2431530
+fthread 8 end dma 2434896
+fthread 10 start dma 2435570
+fthread 2 meet barrier2439068
+fthread 11 start dma 2439995
+fthread 3 start dma 2440830
+fthread 12 start dma 2442406
+fthread 4 start dma 2443663
+fthread 5 start dma 2445087
+fthread 6 start dma 2446728
+fthread 7 start dma 2448589
+fthread 8 start dma 2450780
+preempt finish with 4542
+fthread 3 end dma 2463829
+fthread 4 end dma 2465651
+fthread 5 end dma 2467855
+fthread 6 end dma 2470442
+fthread 7 end dma 2473416
+fthread 8 end dma 2476931
+fthread 9 end dma 2480942
+fthread 10 end dma 2485486
+fthread 3 start dma 2488592
+fthread 11 end dma 2490579
+fthread 4 start dma 2490778
+fthread 3 end dma 2492371
+fthread 5 start dma 2493496
+fthread 12 end dma 2496025
+fthread 6 start dma 2496580
+fthread 4 end dma 2498324
+fthread 7 start dma 2499951
+fthread 5 end dma 2501028
+fthread 8 start dma 2503805
+fthread 6 end dma 2504161
+fthread 7 end dma 2507711
+fthread 9 start dma 2508086
+fthread 8 end dma 2511480
+fthread 10 start dma 2512157
+fthread 11 start dma 2515321
+fthread 3 meet barrier2516421
+fthread 12 start dma 2518491
+fthread 4 start dma 2519736
+fthread 5 start dma 2521174
+fthread 6 start dma 2522815
+fthread 7 start dma 2524675
+fthread 8 start dma 2526843
+preempt finish with 4482
+fthread 4 end dma 2540519
+fthread 5 end dma 2542658
+fthread 6 end dma 2545205
+fthread 7 end dma 2548160
+fthread 8 end dma 2551573
+fthread 9 end dma 2555524
+fthread 10 end dma 2559893
+fthread 11 end dma 2564774
+fthread 4 start dma 2565040
+fthread 5 start dma 2567660
+fthread 4 end dma 2568798
+fthread 12 end dma 2570126
+fthread 6 start dma 2570609
+fthread 5 end dma 2572719
+fthread 7 start dma 2573933
+fthread 6 end dma 2575725
+fthread 8 start dma 2577692
+fthread 7 end dma 2579176
+fthread 9 start dma 2581901
+fthread 8 end dma 2583030
+fthread 10 start dma 2586522
+fthread 9 end dma 2587323
+fthread 11 start dma 2591371
+fthread 10 end dma 2591857
+fthread 4 meet barrier2594227
+fthread 12 start dma 2595098
+fthread 5 start dma 2596672
+fthread 6 start dma 2598311
+fthread 7 start dma 2600162
+fthread 8 start dma 2602221
+fthread 9 start dma 2604488
+fthread 10 start dma 2607046
+preempt finish with 4741
+fthread 5 end dma 2621339
+fthread 6 end dma 2623780
+fthread 7 end dma 2626642
+fthread 8 end dma 2629947
+fthread 9 end dma 2633690
+fthread 10 end dma 2637921
+fthread 11 end dma 2642609
+fthread 5 start dma 2645467
+fthread 12 end dma 2647790
+fthread 6 start dma 2648236
+fthread 5 end dma 2649081
+fthread 7 start dma 2651537
+fthread 8 start dma 2655217
+fthread 6 end dma 2656304
+fthread 9 start dma 2659227
+fthread 7 end dma 2659619
+fthread 8 end dma 2663334
+fthread 10 start dma 2663717
+fthread 9 end dma 2667489
+fthread 11 start dma 2668570
+fthread 10 end dma 2671992
+fthread 12 start dma 2673822
+fthread 5 start dma 2675173
+fthread 11 end dma 2676721
+fthread 6 start dma 2679918
+fthread 7 start dma 2681783
+fthread 8 start dma 2683831
+fthread 9 start dma 2686100
+fthread 10 start dma 2688590
+fthread 11 start dma 2691397
+preempt finish with 5000
+fthread 5 end dma 2703862
+fthread 6 end dma 2706303
+fthread 7 end dma 2709165
+fthread 8 end dma 2712470
+fthread 9 end dma 2716213
+fthread 10 end dma 2720444
+fthread 11 end dma 2725132
+fthread 5 start dma 2727990
+fthread 12 end dma 2730313
+fthread 6 start dma 2730759
+fthread 5 end dma 2731604
+fthread 7 start dma 2734044
+fthread 8 start dma 2737711
+fthread 6 end dma 2738798
+fthread 9 start dma 2741721
+fthread 7 end dma 2742113
+fthread 8 end dma 2745828
+fthread 10 start dma 2746211
+fthread 9 end dma 2749983
+fthread 11 start dma 2751064
+fthread 10 end dma 2754486
+fthread 12 start dma 2756315
+fthread 5 start dma 2757668
+fthread 11 end dma 2759350
+fthread 6 start dma 2764334
+fthread 12 end dma 2764357
+fthread 13 start cal at 2765925
+fthread 7 start dma 2766499
+fthread 8 start dma 2768602
+fthread 9 start dma 2770876
+fthread 10 start dma 2773365
+fthread 11 start dma 2776051
+fthread 12 start dma 2779110
+preempt finish with 5210
+fthread 5 end dma 2792498
+fthread 6 end dma 2794939
+fthread 7 end dma 2797801
+fthread 8 end dma 2801106
+fthread 9 end dma 2804849
+fthread 10 end dma 2809080
+fthread 11 end dma 2813768
+fthread 5 start dma 2816626
+fthread 12 end dma 2818949
+fthread 6 start dma 2819395
+fthread 5 end dma 2820240
+fthread 7 start dma 2822687
+fthread 13 start dma 2822936
+fthread 8 start dma 2826385
+fthread 6 end dma 2827472
+fthread 9 start dma 2830395
+fthread 7 end dma 2830787
+fthread 8 end dma 2834502
+fthread 10 start dma 2834885
+fthread 9 end dma 2838657
+fthread 11 start dma 2839738
+fthread 10 end dma 2843160
+fthread 12 start dma 2844988
+fthread 5 meet barrier2846314
+fthread 11 end dma 2847966
+fthread 6 start dma 2851476
+fthread 7 start dma 2853340
+fthread 8 start dma 2855387
+fthread 9 start dma 2857656
+fthread 10 start dma 2860146
+fthread 11 start dma 2862876
+preempt finish with 4963
+fthread 6 end dma 2879014
+fthread 7 end dma 2881788
+fthread 8 end dma 2884978
+fthread 9 end dma 2888591
+fthread 10 end dma 2892660
+fthread 11 end dma 2897231
+fthread 12 end dma 2902314
+fthread 6 start dma 2902850
+fthread 7 start dma 2906179
+fthread 13 end dma 2907899
+fthread 8 start dma 2909775
+fthread 6 end dma 2910812
+fthread 9 start dma 2913769
+fthread 7 end dma 2914098
+fthread 8 end dma 2917819
+fthread 10 start dma 2918198
+fthread 9 end dma 2921989
+fthread 11 start dma 2923100
+fthread 10 end dma 2926498
+fthread 12 start dma 2928320
+fthread 11 end dma 2931316
+fthread 13 start dma 2933320
+fthread 6 start dma 2935124
+fthread 7 start dma 2937001
+fthread 8 start dma 2939075
+fthread 9 start dma 2941347
+fthread 10 start dma 2943824
+fthread 11 start dma 2946509
+preempt finish with 4955
+fthread 6 end dma 2960824
+fthread 7 end dma 2963598
+fthread 8 end dma 2966788
+fthread 9 end dma 2970401
+fthread 10 end dma 2974470
+fthread 11 end dma 2979041
+fthread 12 end dma 2984124
+fthread 6 start dma 2984660
+fthread 7 start dma 2987907
+fthread 6 end dma 2988371
+fthread 13 end dma 2989677
+fthread 8 start dma 2991642
+fthread 7 end dma 2993034
+fthread 9 start dma 2995752
+fthread 8 end dma 2996822
+fthread 10 start dma 3000243
+fthread 9 end dma 3000970
+fthread 11 start dma 3005164
+fthread 10 end dma 3005599
+fthread 12 start dma 3010555
+fthread 11 end dma 3010585
+fthread 6 start dma 3014976
+fthread 12 end dma 3016000
+fthread 13 start dma 3016300
+fthread 7 start dma 3019648
+fthread 13 end dma 3021567
+fthread 8 start dma 3022856
+fthread 9 start dma 3025292
+fthread 10 start dma 3027780
+fthread 11 start dma 3030456
+fthread 12 start dma 3033374
+fthread 13 start dma 3036522
+preempt finish with 5353
+fthread 6 end dma 3051147
+fthread 7 end dma 3053921
+fthread 8 end dma 3057111
+fthread 9 end dma 3060724
+fthread 10 end dma 3064793
+fthread 11 end dma 3069364
+fthread 12 end dma 3074447
+fthread 6 start dma 3074983
+fthread 7 start dma 3078230
+fthread 6 end dma 3078694
+fthread 13 end dma 3080000
+fthread 8 start dma 3081965
+fthread 7 end dma 3083357
+fthread 9 start dma 3086075
+fthread 8 end dma 3087145
+fthread 10 start dma 3090566
+fthread 9 end dma 3091293
+fthread 11 start dma 3095487
+fthread 10 end dma 3095922
+fthread 12 start dma 3100878
+fthread 11 end dma 3100908
+fthread 6 meet barrier3105259
+fthread 12 end dma 3106328
+fthread 13 start dma 3106631
+fthread 7 start dma 3109969
+fthread 13 end dma 3111906
+fthread 8 start dma 3113227
+fthread 9 start dma 3115708
+fthread 10 start dma 3118199
+fthread 11 start dma 3120873
+fthread 12 start dma 3123789
+fthread 13 start dma 3126931
+preempt finish with 5379
+fthread 7 end dma 3144618
+fthread 8 end dma 3147703
+fthread 9 end dma 3151278
+fthread 10 end dma 3155289
+fthread 11 end dma 3159755
+fthread 12 end dma 3164744
+fthread 7 start dma 3168611
+fthread 13 end dma 3170266
+fthread 8 start dma 3172164
+fthread 7 end dma 3173527
+fthread 9 start dma 3176150
+fthread 8 end dma 3177146
+fthread 10 start dma 3180522
+fthread 9 end dma 3181229
+fthread 11 start dma 3185336
+fthread 10 end dma 3185716
+fthread 12 start dma 3190563
+fthread 11 end dma 3190571
+fthread 12 end dma 3195808
+fthread 13 start dma 3196123
+fthread 7 start dma 3199465
+fthread 13 end dma 3201374
+fthread 8 start dma 3202981
+fthread 9 start dma 3206077
+fthread 10 start dma 3208572
+fthread 11 start dma 3211257
+fthread 12 start dma 3214162
+fthread 13 start dma 3217315
+preempt finish with 5377
+fthread 7 end dma 3230387
+fthread 8 end dma 3233472
+fthread 9 end dma 3237047
+fthread 10 end dma 3241058
+fthread 11 end dma 3245524
+fthread 12 end dma 3250513
+fthread 7 meet barrier3254337
+fthread 13 end dma 3256013
+fthread 8 start dma 3257910
+fthread 9 start dma 3261923
+fthread 8 end dma 3265493
+fthread 10 start dma 3266128
+fthread 9 end dma 3269377
+fthread 11 start dma 3270708
+fthread 10 end dma 3273610
+fthread 12 start dma 3275620
+fthread 11 end dma 3278202
+fthread 13 start dma 3280968
+fthread 12 end dma 3283207
+fthread 13 end dma 3288545
+fthread 8 meet barrier3290243
+fthread 9 start dma 3294292
+fthread 10 start dma 3298113
+fthread 14 start cal at 3300517
+fthread 11 start dma 3300978
+fthread 12 start dma 3303864
+fthread 13 start dma 3306946
+preempt finish with 5245
+fthread 9 end dma 3321762
+fthread 10 end dma 3325499
+fthread 11 end dma 3329708
+fthread 12 end dma 3334415
+fthread 13 end dma 3339586
+fthread 14 start dma 3343750
+fthread 9 start dma 3345430
+fthread 14 end dma 3347366
+fthread 10 start dma 3349457
+fthread 11 start dma 3353636
+fthread 9 end dma 3354880
+fthread 12 start dma 3358038
+fthread 10 end dma 3358722
+fthread 13 start dma 3362842
+fthread 11 end dma 3362901
+fthread 12 end dma 3367415
+fthread 14 start dma 3370054
+fthread 13 end dma 3372371
+fthread 9 start dma 3377618
+fthread 14 end dma 3377696
+fthread 10 start dma 3381554
+fthread 11 start dma 3385519
+fthread 9 end dma 3386718
+fthread 12 start dma 3389158
+fthread 13 start dma 3392242
+fthread 14 start dma 3395546
+fthread 9 start dma 3401477
+preempt finish with 5721
+fthread 9 end dma 3417951
+fthread 10 end dma 3421688
+fthread 11 end dma 3425897
+fthread 12 end dma 3430604
+fthread 13 end dma 3435775
+fthread 14 end dma 3441461
+fthread 9 meet barrier3441493
+fthread 10 start dma 3445652
+fthread 11 start dma 3449849
+fthread 12 start dma 3454220
+fthread 10 end dma 3454909
+fthread 13 start dma 3459000
+fthread 11 end dma 3459058
+fthread 12 end dma 3463616
+fthread 14 start dma 3464243
+fthread 13 end dma 3468503
+fthread 14 end dma 3473752
+fthread 10 start dma 3477637
+fthread 11 start dma 3481680
+fthread 10 end dma 3483186
+fthread 12 start dma 3485498
+fthread 13 start dma 3488640
+fthread 14 start dma 3491931
+fthread 10 meet barrier3498016
+preempt finish with 5761
+fthread 11 end dma 3519090
+fthread 12 end dma 3523472
+fthread 13 end dma 3528359
+fthread 14 end dma 3533708
+fthread 11 start dma 3542199
+fthread 12 start dma 3546356
+fthread 11 end dma 3549092
+fthread 13 start dma 3550766
+fthread 12 end dma 3553207
+fthread 14 start dma 3555412
+fthread 13 end dma 3557602
+fthread 14 end dma 3562264
+fthread 11 start dma 3569367
+fthread 12 start dma 3573051
+fthread 11 end dma 3575475
+fthread 13 start dma 3576833
+fthread 12 end dma 3579039
+fthread 14 start dma 3580749
+fthread 11 meet barrier3590856
+fthread 12 start dma 3593741
+preempt finish with 5710
+fthread 12 end dma 3615706
+fthread 13 end dma 3620403
+fthread 14 end dma 3625666
+fthread 12 start dma 3637958
+fthread 13 start dma 3642013
+fthread 12 end dma 3645499
+fthread 14 start dma 3646164
+fthread 13 end dma 3649399
+fthread 14 end dma 3653628
+fthread 12 start dma 3663534
+fthread 13 start dma 3666960
+fthread 12 end dma 3669857
+fthread 14 start dma 3670465
+fthread 13 end dma 3673183
+fthread 12 start dma 3684572
+fthread 13 start dma 3687668
+preempt finish with 5598
+fthread 12 end dma 3705957
+fthread 13 end dma 3710654
+fthread 14 end dma 3715917
+fthread 12 start dma 3728206
+fthread 13 start dma 3732261
+fthread 12 end dma 3735747
+fthread 14 start dma 3736412
+fthread 13 end dma 3739647
+fthread 14 end dma 3743876
+fthread 12 start dma 3753782
+fthread 13 start dma 3757208
+fthread 12 end dma 3760105
+fthread 14 start dma 3760713
+fthread 13 end dma 3763416
+fthread 14 end dma 3767015
+fthread 12 start dma 3775208
+fthread 13 start dma 3778312
+fthread 14 start dma 3781594
+preempt finish with 5598
+fthread 12 end dma 3800191
+fthread 13 end dma 3804888
+fthread 14 end dma 3810151
+fthread 12 start dma 3822440
+fthread 13 start dma 3826495
+fthread 12 end dma 3829981
+fthread 14 start dma 3830646
+fthread 13 end dma 3833881
+fthread 14 end dma 3838110
+fthread 12 start dma 3848016
+fthread 13 start dma 3851442
+fthread 12 end dma 3854339
+fthread 14 start dma 3854947
+fthread 13 end dma 3857650
+fthread 14 end dma 3861224
+fthread 12 meet barrier3869517
+fthread 13 start dma 3872643
+fthread 14 start dma 3875923
+preempt finish with 5624
+fthread 13 end dma 3895134
+fthread 14 end dma 3900157
+fthread 13 start dma 3917212
+fthread 14 start dma 3921474
+fthread 13 end dma 3925377
+fthread 14 end dma 3929448
+fthread 13 start dma 3942433
+fthread 14 start dma 3945815
+fthread 13 end dma 3949076
+fthread 14 end dma 3952455
+fthread 15 start cal at 3956709
+fthread 13 start dma 3963647
+fthread 14 start dma 3966939
+preempt finish with 5331
+fthread 13 end dma 3984838
+fthread 14 end dma 3989861
+fthread 15 start dma 3993934
+fthread 15 end dma 3997408
+fthread 13 start dma 4007181
+fthread 14 start dma 4011560
+fthread 13 end dma 4015568
+fthread 15 start dma 4017515
+fthread 14 end dma 4019744
+fthread 15 end dma 4024884
+fthread 13 start dma 4033778
+fthread 14 start dma 4037450
+fthread 13 end dma 4040799
+fthread 15 start dma 4041697
+fthread 14 end dma 4044341
+fthread 15 end dma 4048128
+fthread 13 start dma 4055785
+fthread 14 start dma 4059097
+fthread 15 start dma 4062607
+preempt finish with 5791
+fthread 13 end dma 4077526
+fthread 14 end dma 4082549
+fthread 15 end dma 4088955
+fthread 13 start dma 4099857
+fthread 13 end dma 4103011
+fthread 14 start dma 4104248
+fthread 14 end dma 4108619
+fthread 15 start dma 4109496
+fthread 15 end dma 4117670
+fthread 13 meet barrier4121221
+fthread 14 start dma 4126061
+fthread 14 end dma 4133025
+fthread 15 start dma 4133799
+fthread 15 end dma 4140947
+fthread 14 start dma 4147720
+fthread 15 start dma 4155360
+preempt finish with 5439
+fthread 14 end dma 4173842
+fthread 15 end dma 4179191
+fthread 14 start dma 4194834
+fthread 14 end dma 4199050
+fthread 15 start dma 4199201
+fthread 15 end dma 4204115
+fthread 14 start dma 4216128
+fthread 14 end dma 4219670
+fthread 15 start dma 4220396
+fthread 15 end dma 4227029
+fthread 14 start dma 4234599
+fthread 15 start dma 4241725
+preempt finish with 5124
+fthread 14 end dma 4255602
+fthread 15 end dma 4261749
+fthread 14 start dma 4276731
+fthread 14 end dma 4279718
+fthread 15 start dma 4281565
+fthread 15 end dma 4285381
+fthread 14 start dma 4296322
+fthread 14 end dma 4300978
+fthread 15 start dma 4301231
+fthread 15 end dma 4305122
+fthread 14 start dma 4315597
+fthread 14 end dma 4318802
+fthread 15 start dma 4319630
+fthread 14 start dma 4333168
+preempt finish with 5527
+fthread 14 end dma 4348395
+fthread 15 end dma 4353744
+fthread 14 start dma 4369387
+fthread 14 end dma 4372365
+fthread 15 start dma 4373583
+fthread 15 end dma 4378597
+fthread 14 meet barrier4388899
+fthread 15 start dma 4394365
+fthread 15 end dma 4400752
+fthread 15 start dma 4415124
+preempt finish with 4765
+fthread 15 end dma 4434967
+fthread 15 start dma 4454152
+fthread 15 end dma 4457811
+fthread 15 start dma 4472989
+fthread 15 end dma 4477007
+fthread 15 start dma 4491398
+preempt finish with 4495
+fthread 15 end dma 4505572
+fthread 15 start dma 4524933
+fthread 15 end dma 4528296
+fthread 15 start dma 4543186
+fthread 15 end dma 4547398
+fthread 15 start dma 4561770
+fthread 15 end dma 4565739
+fthread 15 start dma 4580105
+preempt finish with 5357
+fthread 15 end dma 4595640
+fthread 15 start dma 4615001
+fthread 15 end dma 4618364
+fthread 15 start dma 4633254
+fthread 15 end dma 4637466
+fthread 15 start dma 4651838
+fthread 15 end dma 4655807
+fthread 15 start dma 4670173
+preempt finish with 5357
+fthread 15 end dma 4685708
+fthread 15 start dma 4705069
+fthread 15 end dma 4708432
+fthread 15 start dma 4723322
+fthread 15 end dma 4727534
+fthread 15 start dma 4741906
+fthread 15 end dma 4745875
+fthread 15 start dma 4760241
+preempt finish with 5356
+fthread 15 end dma 4775776
+fthread 15 start dma 4795137
+fthread 15 end dma 4798500
+fthread 15 meet barrier4813368
+preempt finish with 4227
+preempt finish with 4998
+fthread 15 leave barrier4994024
+fthread 15 end cal at 4994101
+preempt finish with 4489
+fthread 0 leave barrier5062095
+fthread 0 start dma 5062755
+preempt finish with 4019
+fthread 0 end dma 5071205
+fthread 0 end cal at 5071312
+fthread 1 leave barrier5127097
+fthread 1 end cal at 5127174
+preempt finish with 3753
+fthread 2 leave barrier5191662
+fthread 2 end cal at 5191739
+preempt finish with 3762
+preempt finish with 3737
+fthread 3 leave barrier5323345
+fthread 3 end cal at 5323422
+preempt finish with 3947
+preempt finish with 3785
+fthread 4 leave barrier5456223
+fthread 4 end cal at 5456300
+preempt finish with 3975
+preempt finish with 3832
+fthread 5 leave barrier5590294
+fthread 5 end cal at 5590371
+preempt finish with 4002
+preempt finish with 3878
+fthread 6 leave barrier5725554
+fthread 6 end cal at 5725631
+preempt finish with 4030
+preempt finish with 3926
+fthread 7 leave barrier5862002
+fthread 7 end cal at 5862079
+preempt finish with 4057
+preempt finish with 3973
+fthread 8 leave barrier5999638
+fthread 8 end cal at 5999715
+preempt finish with 4085
+preempt finish with 4019
+fthread 9 leave barrier6138462
+fthread 9 end cal at 6138539
+preempt finish with 4112
+preempt finish with 4066
+fthread 10 leave barrier6278474
+fthread 10 end cal at 6278551
+preempt finish with 4139
+preempt finish with 4112
+fthread 11 leave barrier6419674
+fthread 11 end cal at 6419751
+preempt finish with 4167
+preempt finish with 4159
+fthread 12 leave barrier6562062
+fthread 12 end cal at 6562139
+preempt finish with 4194
+preempt finish with 4206
+fthread 13 leave barrier6705638
+fthread 13 end cal at 6705715
+preempt finish with 4222
+preempt finish with 4252
+fthread 14 leave barrier6850402
+fthread 14 end cal at 6850479
+preempt finish with 4250
+preempt finish with 4300
+preempt finish with 4232
+preempt finish with 4208
+preempt finish with 4021
+********time:7141591*******
+ReadSocket event for pid: 1 at time: 0
+********time:7141592*******
+sucess
+application: RED
+benchmark: KERNEL
+bindir: /home/krakos/niwe/normal/Faho_Sim/uPIMulator_frontend/bin/16_dpus/
+data_prep: 131072
+logdir: .
+logic_frequency: 350
+memory_frequency: 2400
+memory_scheduling_policy: frfcfs
+num_dpus: 1
+num_pipeline_stages: 14
+num_revolver_scheduling_cycles: 11
+num_tasklets: 16
+rank_read_bandwidth: 1
+rank_write_bandwidth: 3
+t_bl: 8
+t_cl: 32
+t_ras: 78
+t_rcd: 32
+t_rp: 32
+verbose: 0
+wordline_size: 1024
+////CycleRule/0_cycle_rule: 30078
+////CycleRule/10_cycle_rule: 17959
+////CycleRule/11_cycle_rule: 18574
+////CycleRule/12_cycle_rule: 18297
+////CycleRule/13_cycle_rule: 17713
+////CycleRule/14_cycle_rule: 21606
+////CycleRule/15_cycle_rule: 21723
+////CycleRule/1_cycle_rule: 36137
+////CycleRule/2_cycle_rule: 37695
+////CycleRule/3_cycle_rule: 28019
+////CycleRule/4_cycle_rule: 24561
+////CycleRule/5_cycle_rule: 20598
+////CycleRule/6_cycle_rule: 18979
+////CycleRule/7_cycle_rule: 20882
+////CycleRule/8_cycle_rule: 18493
+////CycleRule/9_cycle_rule: 19645
+////CycleRule/cycle_rule: 370959
+////RevolverScheduler/0_revolver_wait: 5277192
+////RevolverScheduler/10_revolver_wait: 3320757
+////RevolverScheduler/11_revolver_wait: 3597132
+////RevolverScheduler/12_revolver_wait: 3777433
+////RevolverScheduler/13_revolver_wait: 4046922
+////RevolverScheduler/14_revolver_wait: 4414531
+////RevolverScheduler/15_revolver_wait: 4701543
+////RevolverScheduler/1_revolver_wait: 4817516
+////RevolverScheduler/2_revolver_wait: 3390618
+////RevolverScheduler/3_revolver_wait: 2435598
+////RevolverScheduler/4_revolver_wait: 2353109
+////RevolverScheduler/5_revolver_wait: 2211770
+////RevolverScheduler/6_revolver_wait: 2332968
+////RevolverScheduler/7_revolver_wait: 2670283
+////RevolverScheduler/8_revolver_wait: 2820444
+////RevolverScheduler/9_revolver_wait: 3135374
+////RevolverScheduler/active_tasklets_0: 140584
+////RevolverScheduler/active_tasklets_1: 406004
+////RevolverScheduler/active_tasklets_10: 316467
+////RevolverScheduler/active_tasklets_11: 315409
+////RevolverScheduler/active_tasklets_12: 360949
+////RevolverScheduler/active_tasklets_13: 398891
+////RevolverScheduler/active_tasklets_14: 444261
+////RevolverScheduler/active_tasklets_15: 941272
+////RevolverScheduler/active_tasklets_16: 1500488
+////RevolverScheduler/active_tasklets_2: 312748
+////RevolverScheduler/active_tasklets_3: 305544
+////RevolverScheduler/active_tasklets_4: 296381
+////RevolverScheduler/active_tasklets_5: 254931
+////RevolverScheduler/active_tasklets_6: 275946
+////RevolverScheduler/active_tasklets_7: 276653
+////RevolverScheduler/active_tasklets_8: 289871
+////RevolverScheduler/active_tasklets_9: 305206
+////RevolverScheduler/breakdown_dma: 186198
+////RevolverScheduler/breakdown_etc: 1436337
+////RevolverScheduler/breakdown_run: 5031314
+////RevolverScheduler/current_active_tasklets: 0
+////RevolverScheduler/revolver_wait: 55303190
+////RevolverScheduler/total_BLOCK: 957359
+////RevolverScheduler/total_EMBRYO: 8465
+////RevolverScheduler/total_RUNNABLE: 73564062
+////RevolverScheduler/total_SLEEP: 39735586
+////RevolverScheduler/total_ZOMBIE: 208
+////Scheduler/num_fcfs: 172348
+////Scheduler/num_fr: 12626
+////Scheduler/row_buffer_hit: 184974
+////Scheduler/row_buffer_miss: 1866
+////row_buffer/0_num_reads: 38050
+////row_buffer/0_num_writes: 26254
+////row_buffer/0_read_bytes: 304400
+////row_buffer/0_write_bytes: 210032
+////row_buffer/10_num_reads: 6144
+////row_buffer/10_read_bytes: 49152
+////row_buffer/11_num_reads: 6400
+////row_buffer/11_read_bytes: 51200
+////row_buffer/12_num_reads: 6400
+////row_buffer/12_read_bytes: 51200
+////row_buffer/13_num_reads: 6144
+////row_buffer/13_read_bytes: 49152
+////row_buffer/14_num_reads: 7936
+////row_buffer/14_read_bytes: 63488
+////row_buffer/15_num_reads: 7936
+////row_buffer/15_read_bytes: 63488
+////row_buffer/1_num_reads: 12613
+////row_buffer/1_num_writes: 99
+////row_buffer/1_read_bytes: 100904
+////row_buffer/1_write_bytes: 792
+////row_buffer/2_num_reads: 14848
+////row_buffer/2_read_bytes: 118784
+////row_buffer/3_num_reads: 10496
+////row_buffer/3_read_bytes: 83968
+////row_buffer/4_num_reads: 8960
+////row_buffer/4_read_bytes: 71680
+////row_buffer/5_num_reads: 7168
+////row_buffer/5_read_bytes: 57344
+////row_buffer/6_num_reads: 6656
+////row_buffer/6_read_bytes: 53248
+////row_buffer/7_num_reads: 7424
+////row_buffer/7_read_bytes: 59392
+////row_buffer/8_num_reads: 6400
+////row_buffer/8_read_bytes: 51200
+////row_buffer/9_num_reads: 6912
+////row_buffer/9_read_bytes: 55296
+////row_buffer/num_activations: 1866
+////row_buffer/num_precharges: 1865
+////row_buffer/num_reads: 160487
+////row_buffer/num_writes: 26353
+////row_buffer/read_bytes: 1283896
+////row_buffer/write_bytes: 210824
+///Logic/0_num_instructions: 480123
+///Logic/10_num_instructions: 302104
+///Logic/11_num_instructions: 327229
+///Logic/12_num_instructions: 343622
+///Logic/13_num_instructions: 368117
+///Logic/14_num_instructions: 401543
+///Logic/15_num_instructions: 427633
+///Logic/1_num_instructions: 438194
+///Logic/2_num_instructions: 308489
+///Logic/3_num_instructions: 221657
+///Logic/4_num_instructions: 214148
+///Logic/5_num_instructions: 201293
+///Logic/6_num_instructions: 212308
+///Logic/7_num_instructions: 242976
+///Logic/8_num_instructions: 256624
+///Logic/9_num_instructions: 285254
+///Logic/active_tasklets_0: 628340
+///Logic/active_tasklets_1: 405996
+///Logic/active_tasklets_10: 291534
+///Logic/active_tasklets_11: 292569
+///Logic/active_tasklets_12: 336414
+///Logic/active_tasklets_13: 374074
+///Logic/active_tasklets_14: 415787
+///Logic/active_tasklets_15: 836312
+///Logic/active_tasklets_16: 1327511
+///Logic/active_tasklets_2: 309678
+///Logic/active_tasklets_3: 300903
+///Logic/active_tasklets_4: 291746
+///Logic/active_tasklets_5: 251690
+///Logic/active_tasklets_6: 266509
+///Logic/active_tasklets_7: 261836
+///Logic/active_tasklets_8: 268444
+///Logic/active_tasklets_9: 282262
+///Logic/backpressuer: 487756
+///Logic/logic_cycle: 7141605
+///Logic/mram_access_size: -1
+///Logic/mram_access_thread: -1
+///Logic/mram_address: -1
+///Logic/num_instructions: 5031314
+///MemoryController/mem_cycle: 48971005
+//DPU#0/0_latency_breakdown_ARITHMETIC: 1302602
+//DPU#0/0_latency_breakdown_SPM_ACCESS: 317870
+//DPU#0/0_latency_breakdown_WAIT_DATA: 307810
+//DPU#0/0_latency_breakdown_WAIT_SCHEDULE: 4337604
+//DPU#0/0_latency_breakdown_WAIT_SYNC: 5097540
+//DPU#0/10_latency_breakdown_ARITHMETIC: 765702
+//DPU#0/10_latency_breakdown_SPM_ACCESS: 197764
+//DPU#0/10_latency_breakdown_WAIT_DATA: 26765
+//DPU#0/10_latency_breakdown_WAIT_SCHEDULE: 3702553
+//DPU#0/10_latency_breakdown_WAIT_SYNC: 3265640
+//DPU#0/11_latency_breakdown_ARITHMETIC: 782208
+//DPU#0/11_latency_breakdown_SPM_ACCESS: 203112
+//DPU#0/11_latency_breakdown_WAIT_DATA: 26440
+//DPU#0/11_latency_breakdown_WAIT_SCHEDULE: 3829508
+//DPU#0/11_latency_breakdown_WAIT_SYNC: 3595536
+//DPU#0/12_latency_breakdown_ARITHMETIC: 765226
+//DPU#0/12_latency_breakdown_SPM_ACCESS: 196490
+//DPU#0/12_latency_breakdown_WAIT_DATA: 26187
+//DPU#0/12_latency_breakdown_WAIT_SCHEDULE: 3927064
+//DPU#0/12_latency_breakdown_WAIT_SYNC: 3848614
+//DPU#0/13_latency_breakdown_ARITHMETIC: 748552
+//DPU#0/13_latency_breakdown_SPM_ACCESS: 192808
+//DPU#0/13_latency_breakdown_WAIT_DATA: 24442
+//DPU#0/13_latency_breakdown_WAIT_SCHEDULE: 4046004
+//DPU#0/13_latency_breakdown_WAIT_SYNC: 4211942
+//DPU#0/14_latency_breakdown_ARITHMETIC: 847742
+//DPU#0/14_latency_breakdown_SPM_ACCESS: 219562
+//DPU#0/14_latency_breakdown_WAIT_DATA: 32254
+//DPU#0/14_latency_breakdown_WAIT_SCHEDULE: 4174083
+//DPU#0/14_latency_breakdown_WAIT_SYNC: 4553864
+//DPU#0/15_latency_breakdown_ARITHMETIC: 854518
+//DPU#0/15_latency_breakdown_SPM_ACCESS: 221872
+//DPU#0/15_latency_breakdown_WAIT_DATA: 34132
+//DPU#0/15_latency_breakdown_WAIT_SCHEDULE: 4232865
+//DPU#0/15_latency_breakdown_WAIT_SYNC: 4910024
+//DPU#0/1_latency_breakdown_ARITHMETIC: 1326598
+//DPU#0/1_latency_breakdown_SPM_ACCESS: 397068
+//DPU#0/1_latency_breakdown_WAIT_DATA: 59232
+//DPU#0/1_latency_breakdown_WAIT_SCHEDULE: 4234471
+//DPU#0/1_latency_breakdown_WAIT_SYNC: 4409986
+//DPU#0/2_latency_breakdown_ARITHMETIC: 1271438
+//DPU#0/2_latency_breakdown_SPM_ACCESS: 353654
+//DPU#0/2_latency_breakdown_WAIT_DATA: 73027
+//DPU#0/2_latency_breakdown_WAIT_SCHEDULE: 3302805
+//DPU#0/2_latency_breakdown_WAIT_SYNC: 2692914
+//DPU#0/3_latency_breakdown_ARITHMETIC: 1016554
+//DPU#0/3_latency_breakdown_SPM_ACCESS: 276598
+//DPU#0/3_latency_breakdown_WAIT_DATA: 54240
+//DPU#0/3_latency_breakdown_WAIT_SCHEDULE: 2704788
+//DPU#0/3_latency_breakdown_WAIT_SYNC: 1809458
+//DPU#0/4_latency_breakdown_ARITHMETIC: 936208
+//DPU#0/4_latency_breakdown_SPM_ACCESS: 251790
+//DPU#0/4_latency_breakdown_WAIT_DATA: 43295
+//DPU#0/4_latency_breakdown_WAIT_SCHEDULE: 2735345
+//DPU#0/4_latency_breakdown_WAIT_SYNC: 1809584
+//DPU#0/5_latency_breakdown_ARITHMETIC: 840112
+//DPU#0/5_latency_breakdown_SPM_ACCESS: 221886
+//DPU#0/5_latency_breakdown_WAIT_DATA: 31248
+//DPU#0/5_latency_breakdown_WAIT_SCHEDULE: 2682502
+//DPU#0/5_latency_breakdown_WAIT_SYNC: 1755712
+//DPU#0/6_latency_breakdown_ARITHMETIC: 784574
+//DPU#0/6_latency_breakdown_SPM_ACCESS: 204862
+//DPU#0/6_latency_breakdown_WAIT_DATA: 28193
+//DPU#0/6_latency_breakdown_WAIT_SCHEDULE: 2858524
+//DPU#0/6_latency_breakdown_WAIT_SYNC: 1982512
+//DPU#0/7_latency_breakdown_ARITHMETIC: 844886
+//DPU#0/7_latency_breakdown_SPM_ACCESS: 220962
+//DPU#0/7_latency_breakdown_WAIT_DATA: 31197
+//DPU#0/7_latency_breakdown_WAIT_SCHEDULE: 3151902
+//DPU#0/7_latency_breakdown_WAIT_SYNC: 2335396
+//DPU#0/8_latency_breakdown_ARITHMETIC: 778974
+//DPU#0/8_latency_breakdown_SPM_ACCESS: 201614
+//DPU#0/8_latency_breakdown_WAIT_DATA: 26466
+//DPU#0/8_latency_breakdown_WAIT_SCHEDULE: 3298678
+//DPU#0/8_latency_breakdown_WAIT_SYNC: 2611784
+//DPU#0/9_latency_breakdown_ARITHMETIC: 810964
+//DPU#0/9_latency_breakdown_SPM_ACCESS: 210476
+//DPU#0/9_latency_breakdown_WAIT_DATA: 28414
+//DPU#0/9_latency_breakdown_WAIT_SCHEDULE: 3581060
+//DPU#0/9_latency_breakdown_WAIT_SYNC: 2971738
+//DPU#0/cycle: 7141605
+/Rank/rank_cycle: 7141605

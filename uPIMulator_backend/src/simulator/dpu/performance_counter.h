@@ -65,7 +65,7 @@ class PerformanceCounter {
     int get_value()
     {
         int value_t=counter_word->bit_slice(abi::word::UNSIGNED,4,36);
-        return value_t;//preempt
+        return value_t;//preempt need to x16
     }
     int get_true_value()
     {

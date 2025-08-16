@@ -5668,7 +5668,6 @@ namespace upmem_sim::simulator::dpu
       }
 
       instruction->thread()->reg_file()->clear_conditions();
-
       instruction->thread()->reg_file()->increment_pc_reg();
       return;
     }

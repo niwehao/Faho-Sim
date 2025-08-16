@@ -1,0 +1,10 @@
+fthread 20 start dma 3495617
+fthread 20 end dma 3495795
+fthread 20 start dma 3495907
+fthread 20 end dma 3496066
+fthread 20 start dma 3496164
+fthread 20 end dma 3496313
+fthread 20 start dma 3496411
+fthread 20 end dma 3496560
+fthread 20 start dma 3496658
+fthread 20 end dma 3496807

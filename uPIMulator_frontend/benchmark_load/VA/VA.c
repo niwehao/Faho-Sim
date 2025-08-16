@@ -60,7 +60,6 @@ void main1()
 int main(void)
 {
   print_debug(7, 0); // end of switch context rc,ra
-  // fault_notif();
   sd_host = socket_open(0);
   init_barrier(&b, NR_FTHREAD);
   for (int i = 0; i < NR_FTHREAD - 1; i++)

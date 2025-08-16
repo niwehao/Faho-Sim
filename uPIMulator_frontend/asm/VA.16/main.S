@@ -1200,27 +1200,6 @@ main:                                   // @main
 	move r14, 0
 	move r1, r14
 	call r23, print_debug
-	move r15, 20
-	move r16, 5
-	move r0, r15
-	move r1, r16
-	call r23, print_debug
-	move r17, 6
-	move r0, r15
-	move r1, r17
-	call r23, print_debug
-	move r0, r15
-	move r1, r16
-	call r23, print_debug
-	move r0, r14
-	move r1, r14
-	move r2, r14
-	move r3, r14
-	move r4, r14
-	call r23, syscall
-	move r0, r15
-	move r1, r17
-	call r23, print_debug
 	move r4, 10
 	move r0, r14
 	move r1, r14
@@ -1228,17 +1207,18 @@ main:                                   // @main
 	move r3, r14
 	call r23, syscall
 	sw zero, sd_host, r0
-	move r16, b
+	move r15, b
 	move r4, 14
-	move r0, r16
+	move r0, r15
 	move r1, r14
 	move r2, r14
 	move r3, r14
 	call r23, syscall
-	sw r16, 4, 0
-	sw r16, 8, 16
-	sw r16, 12, 0
+	sw r15, 4, 0
+	sw r15, 8, 16
+	sw r15, 12, 0
 	move r16, main1
+	move r15, 20
 	move r0, r16
 	move r1, r14
 	move r2, r14

@@ -575,6 +575,52 @@ stdio.__stdout_cache_buffer:
 	$addrsig_sym, __atomic_bit___stdout_buffer_lock
 	$addrsig_sym, stdio.__stdout_cache_buffer
 	$text,
+	$file,	"perfcounter.c"
+	$section,	%text, perfcounter_get,"ax",@progbits
+	$globl,	perfcounter_get                 //  -  -  Begin function perfcounter_get
+	$type,	perfcounter_get,@function
+perfcounter_get:                        // @perfcounter_get
+perfcounter..Lfunc_begin0:
+// %bb.0:
+	// inline asm
+	$time , r0
+	// inline asm
+	$move .u, d2, r0
+	$lslx , r0, r3, 4
+	$lsl_add , r0, r0, r2, 4
+	$lsl , r1, r3, 4
+	$jump , r23
+perfcounter..Lfunc_end0:
+	$size,	perfcounter_get, perfcounter..Lfunc_end0 - perfcounter_get
+	$section,	%stack_sizes,"o",@progbits,%text, perfcounter_get
+	$long,	perfcounter..Lfunc_begin0
+	$byte,	0
+	$section,	%text, perfcounter_get,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%text, perfcounter_config,"ax",@progbits
+	$globl,	perfcounter_config              //  -  -  Begin function perfcounter_config
+	$type,	perfcounter_config,@function
+perfcounter_config:                     // @perfcounter_config
+perfcounter..Lfunc_begin1:
+// %bb.0:
+	$lsl_add , r0, r1, r0, 1
+	// inline asm
+	$time_cfg , r0, r0
+	// inline asm
+	$move .u, d2, r0
+	$lslx , r0, r3, 4
+	$lsl_add , r0, r0, r2, 4
+	$lsl , r1, r3, 4
+	$jump , r23
+perfcounter..Lfunc_end1:
+	$size,	perfcounter_config, perfcounter..Lfunc_end1 - perfcounter_config
+	$section,	%stack_sizes,"o",@progbits,%text, perfcounter_config
+	$long,	perfcounter..Lfunc_begin1
+	$byte,	0
+	$section,	%text, perfcounter_config,"ax",@progbits
+                                        //  -  -  End function
+	$addrsig,
+	$text,
 	$file,	"memset.c"
 	$section,	%text, __memset_wram_4align,"ax",@progbits
 	$globl,	__memset_wram_4align            //  -  -  Begin function __memset_wram_4align
@@ -768,6 +814,199 @@ memset..Lfunc_end3:
 	$addrsig_sym, __memset_wram_4align
 	$addrsig_sym, __memset_mram_8align
 	$addrsig_sym, __memset_mram
+	$text,
+	$file,	"crt0.c"
+	$section,	%text, __bootstrap,"ax",@progbits
+	$globl,	__bootstrap                     //  -  -  Begin function __bootstrap
+	$type,	__bootstrap,@function
+__bootstrap:                            // @__bootstrap
+crt0..Lfunc_begin0:
+// %bb.0:
+	// inline asm
+	$jnz , id, crt0.__sys_start_thread
+
+	$sd , zero, __stdout_buffer_state, 0
+	$move , r23, __atomic_end_addr
+crt0.__sys_atomic_bit_clear:
+	$jeq , r23, __atomic_used_addr, crt0.__sys_start_thread
+crt0..Ltmp0:
+	$release , r23, 0, nz, crt0..Ltmp0 + 1
+	$add , r23, r23,  - 1, true, crt0.__sys_atomic_bit_clear
+crt0.__sys_start_thread:
+crt0..Ltmp1:
+	$jeq , id, NR_TASKLETS - 1, crt0..Ltmp1 + 2
+	$boot , id, 1
+	$ld , d22, id8, __sys_thread_stack_table_ptr
+	$call , r23, main
+	$globl,	__sys_end
+__sys_end:
+
+	$stop , true, __sys_end
+	// inline asm
+crt0..Lfunc_end0:
+	$size,	__bootstrap, crt0..Lfunc_end0 - __bootstrap
+	$section,	%stack_sizes,"o",@progbits,%text, __bootstrap
+	$long,	crt0..Lfunc_begin0
+	$byte,	0
+	$section,	%text, __bootstrap,"ax",@progbits
+                                        //  -  -  End function
+	$type,	__sys_null_pointer,@object      // @__sys_null_pointer
+	$section,	%data, __sys_zero,"aw",@progbits
+	$globl,	__sys_null_pointer
+	$p2align,	3
+__sys_null_pointer:
+	$quad,	0                               // 0x0
+	$size,	__sys_null_pointer, 8
+
+	$type,	__sys_thread_stack_table_ptr,@object // @__sys_thread_stack_table_ptr
+	$section,	%data, __sys_keep,"aw",@progbits
+	$globl,	__sys_thread_stack_table_ptr
+	$p2align,	3
+__sys_thread_stack_table_ptr:
+	$long,	STACK_SIZE_TASKLET_0
+	$long,	__sys_stack_thread_0
+	$long,	STACK_SIZE_TASKLET_1
+	$long,	__sys_stack_thread_1
+	$long,	STACK_SIZE_TASKLET_2
+	$long,	__sys_stack_thread_2
+	$long,	STACK_SIZE_TASKLET_3
+	$long,	__sys_stack_thread_3
+	$long,	STACK_SIZE_TASKLET_4
+	$long,	__sys_stack_thread_4
+	$long,	STACK_SIZE_TASKLET_5
+	$long,	__sys_stack_thread_5
+	$long,	STACK_SIZE_TASKLET_6
+	$long,	__sys_stack_thread_6
+	$long,	STACK_SIZE_TASKLET_7
+	$long,	__sys_stack_thread_7
+	$long,	STACK_SIZE_TASKLET_8
+	$long,	__sys_stack_thread_8
+	$long,	STACK_SIZE_TASKLET_9
+	$long,	__sys_stack_thread_9
+	$long,	STACK_SIZE_TASKLET_10
+	$long,	__sys_stack_thread_10
+	$long,	STACK_SIZE_TASKLET_11
+	$long,	__sys_stack_thread_11
+	$long,	STACK_SIZE_TASKLET_12
+	$long,	__sys_stack_thread_12
+	$long,	STACK_SIZE_TASKLET_13
+	$long,	__sys_stack_thread_13
+	$long,	STACK_SIZE_TASKLET_14
+	$long,	__sys_stack_thread_14
+	$long,	STACK_SIZE_TASKLET_15
+	$long,	__sys_stack_thread_15
+	$long,	STACK_SIZE_TASKLET_16
+	$long,	__sys_stack_thread_16
+	$long,	STACK_SIZE_TASKLET_17
+	$long,	__sys_stack_thread_17
+	$long,	STACK_SIZE_TASKLET_18
+	$long,	__sys_stack_thread_18
+	$long,	STACK_SIZE_TASKLET_19
+	$long,	__sys_stack_thread_19
+	$long,	STACK_SIZE_TASKLET_20
+	$long,	__sys_stack_thread_20
+	$long,	STACK_SIZE_TASKLET_21
+	$long,	__sys_stack_thread_21
+	$long,	STACK_SIZE_TASKLET_22
+	$long,	__sys_stack_thread_22
+	$long,	STACK_SIZE_TASKLET_23
+	$long,	__sys_stack_thread_23
+	$size,	__sys_thread_stack_table_ptr, 192
+
+	$type,	__sys_used_mram_end,@object     // @__sys_used_mram_end
+	$section,	%mram, noinit,"aw",@progbits
+	$globl,	__sys_used_mram_end
+	$p2align,	3
+__sys_used_mram_end:
+	$size,	__sys_used_mram_end, 0
+
+	$type,	thread_profiling,@object        // @thread_profiling
+	$section,	%data, immediate_memory.thread_profiling,"aw",@progbits
+	$globl,	thread_profiling
+	$p2align,	2
+thread_profiling:
+	$zero,	96
+	$size,	thread_profiling, 96
+
+	$type,	perfcounter_end_value,@object   // @perfcounter_end_value
+	$section,	%bss, perfcounter_end_value,"aw",@nobits
+	$globl,	perfcounter_end_value
+	$p2align,	2
+perfcounter_end_value:
+	$long,	0                               // 0x0
+	$size,	perfcounter_end_value, 4
+
+	$type,	CLOCKS_PER_SEC,@object          // @CLOCKS_PER_SEC
+	$section,	%dpu_host,"a",@progbits
+	$globl,	CLOCKS_PER_SEC
+	$p2align,	3
+CLOCKS_PER_SEC:
+	$long,	0                               // 0x0
+	$size,	CLOCKS_PER_SEC, 4
+
+	$type,	error_storage,@object           // @error_storage
+	$globl,	error_storage
+	$p2align,	3
+error_storage:
+	$long,	0                               // 0x0
+	$size,	error_storage, 4
+
+	$addrsig,
+	$addrsig_sym, __bootstrap
+	$addrsig_sym, __sys_null_pointer
+	$addrsig_sym, STACK_SIZE_TASKLET_0
+	$addrsig_sym, __sys_stack_thread_0
+	$addrsig_sym, STACK_SIZE_TASKLET_1
+	$addrsig_sym, __sys_stack_thread_1
+	$addrsig_sym, STACK_SIZE_TASKLET_2
+	$addrsig_sym, __sys_stack_thread_2
+	$addrsig_sym, STACK_SIZE_TASKLET_3
+	$addrsig_sym, __sys_stack_thread_3
+	$addrsig_sym, STACK_SIZE_TASKLET_4
+	$addrsig_sym, __sys_stack_thread_4
+	$addrsig_sym, STACK_SIZE_TASKLET_5
+	$addrsig_sym, __sys_stack_thread_5
+	$addrsig_sym, STACK_SIZE_TASKLET_6
+	$addrsig_sym, __sys_stack_thread_6
+	$addrsig_sym, STACK_SIZE_TASKLET_7
+	$addrsig_sym, __sys_stack_thread_7
+	$addrsig_sym, STACK_SIZE_TASKLET_8
+	$addrsig_sym, __sys_stack_thread_8
+	$addrsig_sym, STACK_SIZE_TASKLET_9
+	$addrsig_sym, __sys_stack_thread_9
+	$addrsig_sym, STACK_SIZE_TASKLET_10
+	$addrsig_sym, __sys_stack_thread_10
+	$addrsig_sym, STACK_SIZE_TASKLET_11
+	$addrsig_sym, __sys_stack_thread_11
+	$addrsig_sym, STACK_SIZE_TASKLET_12
+	$addrsig_sym, __sys_stack_thread_12
+	$addrsig_sym, STACK_SIZE_TASKLET_13
+	$addrsig_sym, __sys_stack_thread_13
+	$addrsig_sym, STACK_SIZE_TASKLET_14
+	$addrsig_sym, __sys_stack_thread_14
+	$addrsig_sym, STACK_SIZE_TASKLET_15
+	$addrsig_sym, __sys_stack_thread_15
+	$addrsig_sym, STACK_SIZE_TASKLET_16
+	$addrsig_sym, __sys_stack_thread_16
+	$addrsig_sym, STACK_SIZE_TASKLET_17
+	$addrsig_sym, __sys_stack_thread_17
+	$addrsig_sym, STACK_SIZE_TASKLET_18
+	$addrsig_sym, __sys_stack_thread_18
+	$addrsig_sym, STACK_SIZE_TASKLET_19
+	$addrsig_sym, __sys_stack_thread_19
+	$addrsig_sym, STACK_SIZE_TASKLET_20
+	$addrsig_sym, __sys_stack_thread_20
+	$addrsig_sym, STACK_SIZE_TASKLET_21
+	$addrsig_sym, __sys_stack_thread_21
+	$addrsig_sym, STACK_SIZE_TASKLET_22
+	$addrsig_sym, __sys_stack_thread_22
+	$addrsig_sym, STACK_SIZE_TASKLET_23
+	$addrsig_sym, __sys_stack_thread_23
+	$addrsig_sym, __sys_thread_stack_table_ptr
+	$addrsig_sym, __sys_used_mram_end
+	$addrsig_sym, thread_profiling
+	$addrsig_sym, CLOCKS_PER_SEC
+	$addrsig_sym, error_storage
 	$text,
 	$file,	"kernel.c"
 $section,	%text, boot_me,"ax",@progbits
@@ -1891,7 +2130,7 @@ check_time_process:                     // @check_time_process
 	$add , r1, r2, r1
 	$lw , r1, r1, 20
 	$sub , r0, r0, r1
-	$move , r1, 2000
+	$move , r1, 10000
 	$sub , r0, r0, r1, gtu
 	$jump , r23
 .Lfunc_end11:
@@ -1907,10 +2146,11 @@ check_time_process:                     // @check_time_process
 scheduler_jobs:                         // @scheduler_jobs
 .Lfunc_begin12:
 // %bb.0:
-	$sd , r22, 16, d22
-	$add , r22, r22, 24
+	$sd , r22, 24, d22
+	$add , r22, r22, 32
 	$sd , r22,  - 16, d14
 	$sd , r22,  - 24, d16
+	$sd , r22,  - 32, d18
 	$move , r14, cp
 	$lw , r0, r14, 4
 	// inline asm
@@ -1962,12 +2202,13 @@ scheduler_jobs:                         // @scheduler_jobs
 	$release , r0, 0, nz, .Ltmp50 + 1
 	// inline asm
 .LBB12_8:
-	$move , r14, 0
-	$move , r0, r14
-	$move , r17, cp
+	$move , r15, 0
+	$move , r0, r15
+	$move , r18, processs
+	$move , r19, 10000
 	$jump , .LBB12_9
 .LBB12_39:                              //   in Loop: Header=BB12_9 Depth=1
-	$lw , r0, r15, 4
+	$lw , r0, r14, 4
 	// inline asm
 .Ltmp51:
 	$release , r0, 0, nz, .Ltmp51 + 1
@@ -1978,7 +2219,7 @@ scheduler_jobs:                         // @scheduler_jobs
 .LBB12_40:                              //   in Loop: Header=BB12_9 Depth=1
 	$move , r0, all_end_or_waiting
 	$sb , r0, 0, 1
-	$move , r0, r14
+	$move , r0, r15
 .LBB12_9:                               // =>This Loop Header: Depth=1
                                         //     Child Loop BB12_12 Depth 2
                                         //     Child Loop BB12_23 Depth 2
@@ -1989,37 +2230,20 @@ scheduler_jobs:                         // @scheduler_jobs
 	$acquire , r1, 0, nz, .Ltmp52
 	// inline asm
 	$lw , r1, zero, cur_process_index
-	$move , r15, processs
+	$move , r16, processs
 	$and , r0, r0, 255
 	$jneq , r0, 0, .LBB12_18
 // %bb.10:                              //   in Loop: Header=BB12_9 Depth=1
 	$lsl , r0, r1, 4
 	$lsl_add , r0, r0, r1, 6
-	$add , r0, r15, r0
+	$add , r0, r16, r0
 	$lbs , r0, r0, 2
 	$and , r0, r0, 255
 	$jeq , r0, 0, .LBB12_18
 // %bb.11:                              //   in Loop: Header=BB12_9 Depth=1
-	$move , r0, 1
-.LBB12_12:                              //   Parent Loop BB12_9 Depth=1
-                                        // =>  This Inner Loop Header: Depth=2
-	$move , r16, r0
-	$lsl , r0, r16, 2
-	$lsl_add , r0, r0, r16, 4
-	$move , r1, jobs
-	$add , r0, r1, r0
-	$lbu , r0, r0,  - 20
-	$move , r1, 0
-	$jeq , r0, 3, .LBB12_15
-// %bb.13:                              //   in Loop: Header=BB12_12 Depth=2
-	$jneq , r0, 1, .LBB12_16
-// %bb.14:                              //   in Loop: Header=BB12_12 Depth=2
-	$move , r1, 1
-.LBB12_15:                              //   in Loop: Header=BB12_12 Depth=2
-	$add , r0, r16,  - 1
-	$call , r23, swap
-	$move , r0, all_end_or_waiting
-	$sb , r0, 0, 0
+	$move , r17, 0
+	$move , r14, r17, true, .LBB12_12
+.LBB12_41:                              //   in Loop: Header=BB12_12 Depth=2
 	// inline asm
 	$time , r0
 
@@ -2031,20 +2255,56 @@ scheduler_jobs:                         // @scheduler_jobs
 	$add , r1, r2, r1
 	$lw , r1, r1, 20
 	$sub , r0, r0, r1
-	$move , r1, 2000
-	$sub , r1, r0, r1, gtu
-.LBB12_16:                              //   in Loop: Header=BB12_12 Depth=2
+	$move , r1, 10001
+	$jgeu , r0, r1, .LBB12_18
+.LBB12_17:                              //   in Loop: Header=BB12_12 Depth=2
 	$lw , r0, zero, cur_process_index
-	$and , r1, r1, 255
-	$jneq , r1, 0, .LBB12_18
-// %bb.17:                              //   in Loop: Header=BB12_12 Depth=2
 	$lsl , r1, r0, 4
 	$lsl_add , r0, r1, r0, 6
 	$move , r1, processs
 	$add , r0, r1, r0
-	$lbu , r1, r0, 2
-	$add , r0, r16, 1
-	$jltu , r16, r1, .LBB12_12
+	$lbu , r0, r0, 2
+	$add , r14, r14, 1
+	$jgeu , r14, r0, .LBB12_18
+.LBB12_12:                              //   Parent Loop BB12_9 Depth=1
+                                        // =>  This Inner Loop Header: Depth=2
+	$lsl , r0, r14, 2
+	$lsl_add , r0, r0, r14, 4
+	$lbu , r0, r0, jobs
+	$move , r1, r17
+	$jeq , r0, 3, .LBB12_15
+// %bb.13:                              //   in Loop: Header=BB12_12 Depth=2
+	$jneq , r0, 1, .LBB12_41
+// %bb.14:                              //   in Loop: Header=BB12_12 Depth=2
+	$move , r1, 1
+.LBB12_15:                              //   in Loop: Header=BB12_12 Depth=2
+	// inline asm
+	$time , r0
+
+	// inline asm
+	$lw , r2, zero, cur_process_index
+	$lsl , r3, r2, 4
+	$lsl_add , r2, r3, r2, 6
+	$add , r2, r18, r2
+	$lw , r2, r2, 20
+	$sub , r0, r0, r2
+	$jgtu , r0, r19, .LBB12_18
+// %bb.16:                              //   in Loop: Header=BB12_12 Depth=2
+	$move , r0, r14
+	$call , r23, swap
+	$move , r0, all_end_or_waiting
+	$sb , r0, 0, 0
+	// inline asm
+	$time , r0
+
+	// inline asm
+	$lw , r1, zero, cur_process_index
+	$lsl , r2, r1, 4
+	$lsl_add , r1, r2, r1, 6
+	$add , r1, r18, r1
+	$lw , r1, r1, 20
+	$sub , r0, r0, r1
+	$jleu , r0, r19, .LBB12_17
 .LBB12_18:                              //   in Loop: Header=BB12_9 Depth=1
 	// inline asm
 	$time , r0
@@ -2053,21 +2313,22 @@ scheduler_jobs:                         // @scheduler_jobs
 	$lw , r1, zero, cur_process_index
 	$lsl , r2, r1, 4
 	$lsl_add , r1, r2, r1, 6
-	$add , r1, r15, r1
+	$add , r1, r16, r1
 	$lw , r1, r1, 20
 	$lw , r2, zero, mutex_jobs
-	$sub , r15, r0, r1
-	$move , r16, 2000
+	$sub , r14, r0, r1
+	$move , r16, 10000
 	// inline asm
 .Ltmp53:
 	$release , r2, 0, nz, .Ltmp53 + 1
 	// inline asm
-	$jgtu , r15, r16, .LBB12_20
+	$jgtu , r14, r16, .LBB12_20
 // %bb.19:                              //   in Loop: Header=BB12_9 Depth=1
 	$lbs , r0, zero, all_end_or_waiting
 	$and , r0, r0, 255
 	$jeq , r0, 0, .LBB12_40
 .LBB12_20:                              //   in Loop: Header=BB12_9 Depth=1
+	$move , r17, cp
 	$lw , r0, r17, 4
 	// inline asm
 .Ltmp54:
@@ -2110,7 +2371,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	$stop , false, 0x0
 	// inline asm
 	$lbu , r1, r17, 2
-	$sub , r0, r15, r16, gtu
+	$sub , r0, r14, r16, gtu
 	$jneq , r1, 0, .LBB12_9
 // %bb.28:                              //   in Loop: Header=BB12_9 Depth=1
 	$call , r23, me_new
@@ -2127,21 +2388,21 @@ scheduler_jobs:                         // @scheduler_jobs
 	$call , r23, me_new
 	$jeq , r0, 0, .LBB12_29
 .LBB12_32:                              //   in Loop: Header=BB12_9 Depth=1
-	$move , r15, cp
-	$lw , r0, r15, 4
+	$move , r14, cp
+	$lw , r0, r14, 4
 	// inline asm
 .Ltmp58:
 	$acquire , r0, 0, nz, .Ltmp58
 	// inline asm
 	$call , r23, me_new
-	$lbs , r1, r15, 1
+	$lbs , r1, r14, 1
 	$add , r1, r1, 1
-	$sb , r15, 1, r1
+	$sb , r14, 1, r1
 	$lbu , r3, zero, cp
 	$and , r2, r1, 255
 	$jneq , r2, r3, .LBB12_39
 // %bb.33:                              //   in Loop: Header=BB12_9 Depth=1
-	$sb , r15, 2, 0
+	$sb , r14, 2, 0
 	$jeq , r2, 0, .LBB12_38
 // %bb.34:                              //   in Loop: Header=BB12_9 Depth=1
 	$and , r0, r0, 255
@@ -2181,13 +2442,14 @@ scheduler_jobs:                         // @scheduler_jobs
 	$add , r1, r2, r1
 	$lw , r1, r1, 20
 	$sub , r0, r0, r1
-	$move , r1, 2001
+	$move , r1, 10001
 	$jlts , r0, r1, .LBB12_31
 // %bb.30:
 	$move , r1, 7
 	$call , r23, print_debug
 .LBB12_31:
 	$lbu , r0, zero, all_end_or_waiting
+	$ld , d18, r22,  - 32
 	$ld , d16, r22,  - 24
 	$ld , d14, r22,  - 16
 	$ld , d22, r22,  - 8
@@ -2196,7 +2458,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	$size,	scheduler_jobs, .Lfunc_end12 - scheduler_jobs
 	$section,	%stack_sizes,"o",@progbits,%text, scheduler_jobs
 	$long,	.Lfunc_begin12
-	$byte,	24
+	$byte,	32
 	$section,	%text, scheduler_jobs,"ax",@progbits
                                         //  -  -  End function
 	$section,	%text, try_lock,"ax",@progbits
@@ -4091,7 +4353,7 @@ syscall:                                // @syscall
 	$add , r1, r2, r1
 	$lw , r1, r1, 20
 	$sub , r0, r0, r1
-	$move , r1, 2001
+	$move , r1, 10001
 	$jltu , r0, r1, .LBB31_3
 // %bb.2:
 	$lsl , r0, r20, 2
@@ -5919,242 +6181,3 @@ __atomic_bit_mutex_mutex_inode:
 	$addrsig_sym, __atomic_bit_mutex_mutex_jobs
 	$addrsig_sym, __atomic_bit_mutex_mutex_sockets
 	$addrsig_sym, __atomic_bit_mutex_mutex_mram
-	$text,
-	$file,	"crt0.c"
-	$section,	%text, __bootstrap,"ax",@progbits
-	$globl,	__bootstrap                     //  -  -  Begin function __bootstrap
-	$type,	__bootstrap,@function
-__bootstrap:                            // @__bootstrap
-crt0..Lfunc_begin0:
-// %bb.0:
-	// inline asm
-	$jnz , id, crt0.__sys_start_thread
-
-	$sd , zero, __stdout_buffer_state, 0
-	$move , r23, __atomic_end_addr
-crt0.__sys_atomic_bit_clear:
-	$jeq , r23, __atomic_used_addr, crt0.__sys_start_thread
-crt0..Ltmp0:
-	$release , r23, 0, nz, crt0..Ltmp0 + 1
-	$add , r23, r23,  - 1, true, crt0.__sys_atomic_bit_clear
-crt0.__sys_start_thread:
-crt0..Ltmp1:
-	$jeq , id, NR_TASKLETS - 1, crt0..Ltmp1 + 2
-	$boot , id, 1
-	$ld , d22, id8, __sys_thread_stack_table_ptr
-	$call , r23, main
-	$globl,	__sys_end
-__sys_end:
-
-	$stop , true, __sys_end
-	// inline asm
-crt0..Lfunc_end0:
-	$size,	__bootstrap, crt0..Lfunc_end0 - __bootstrap
-	$section,	%stack_sizes,"o",@progbits,%text, __bootstrap
-	$long,	crt0..Lfunc_begin0
-	$byte,	0
-	$section,	%text, __bootstrap,"ax",@progbits
-                                        //  -  -  End function
-	$type,	__sys_null_pointer,@object      // @__sys_null_pointer
-	$section,	%data, __sys_zero,"aw",@progbits
-	$globl,	__sys_null_pointer
-	$p2align,	3
-__sys_null_pointer:
-	$quad,	0                               // 0x0
-	$size,	__sys_null_pointer, 8
-
-	$type,	__sys_thread_stack_table_ptr,@object // @__sys_thread_stack_table_ptr
-	$section,	%data, __sys_keep,"aw",@progbits
-	$globl,	__sys_thread_stack_table_ptr
-	$p2align,	3
-__sys_thread_stack_table_ptr:
-	$long,	STACK_SIZE_TASKLET_0
-	$long,	__sys_stack_thread_0
-	$long,	STACK_SIZE_TASKLET_1
-	$long,	__sys_stack_thread_1
-	$long,	STACK_SIZE_TASKLET_2
-	$long,	__sys_stack_thread_2
-	$long,	STACK_SIZE_TASKLET_3
-	$long,	__sys_stack_thread_3
-	$long,	STACK_SIZE_TASKLET_4
-	$long,	__sys_stack_thread_4
-	$long,	STACK_SIZE_TASKLET_5
-	$long,	__sys_stack_thread_5
-	$long,	STACK_SIZE_TASKLET_6
-	$long,	__sys_stack_thread_6
-	$long,	STACK_SIZE_TASKLET_7
-	$long,	__sys_stack_thread_7
-	$long,	STACK_SIZE_TASKLET_8
-	$long,	__sys_stack_thread_8
-	$long,	STACK_SIZE_TASKLET_9
-	$long,	__sys_stack_thread_9
-	$long,	STACK_SIZE_TASKLET_10
-	$long,	__sys_stack_thread_10
-	$long,	STACK_SIZE_TASKLET_11
-	$long,	__sys_stack_thread_11
-	$long,	STACK_SIZE_TASKLET_12
-	$long,	__sys_stack_thread_12
-	$long,	STACK_SIZE_TASKLET_13
-	$long,	__sys_stack_thread_13
-	$long,	STACK_SIZE_TASKLET_14
-	$long,	__sys_stack_thread_14
-	$long,	STACK_SIZE_TASKLET_15
-	$long,	__sys_stack_thread_15
-	$long,	STACK_SIZE_TASKLET_16
-	$long,	__sys_stack_thread_16
-	$long,	STACK_SIZE_TASKLET_17
-	$long,	__sys_stack_thread_17
-	$long,	STACK_SIZE_TASKLET_18
-	$long,	__sys_stack_thread_18
-	$long,	STACK_SIZE_TASKLET_19
-	$long,	__sys_stack_thread_19
-	$long,	STACK_SIZE_TASKLET_20
-	$long,	__sys_stack_thread_20
-	$long,	STACK_SIZE_TASKLET_21
-	$long,	__sys_stack_thread_21
-	$long,	STACK_SIZE_TASKLET_22
-	$long,	__sys_stack_thread_22
-	$long,	STACK_SIZE_TASKLET_23
-	$long,	__sys_stack_thread_23
-	$size,	__sys_thread_stack_table_ptr, 192
-
-	$type,	__sys_used_mram_end,@object     // @__sys_used_mram_end
-	$section,	%mram, noinit,"aw",@progbits
-	$globl,	__sys_used_mram_end
-	$p2align,	3
-__sys_used_mram_end:
-	$size,	__sys_used_mram_end, 0
-
-	$type,	thread_profiling,@object        // @thread_profiling
-	$section,	%data, immediate_memory.thread_profiling,"aw",@progbits
-	$globl,	thread_profiling
-	$p2align,	2
-thread_profiling:
-	$zero,	96
-	$size,	thread_profiling, 96
-
-	$type,	perfcounter_end_value,@object   // @perfcounter_end_value
-	$section,	%bss, perfcounter_end_value,"aw",@nobits
-	$globl,	perfcounter_end_value
-	$p2align,	2
-perfcounter_end_value:
-	$long,	0                               // 0x0
-	$size,	perfcounter_end_value, 4
-
-	$type,	CLOCKS_PER_SEC,@object          // @CLOCKS_PER_SEC
-	$section,	%dpu_host,"a",@progbits
-	$globl,	CLOCKS_PER_SEC
-	$p2align,	3
-CLOCKS_PER_SEC:
-	$long,	0                               // 0x0
-	$size,	CLOCKS_PER_SEC, 4
-
-	$type,	error_storage,@object           // @error_storage
-	$globl,	error_storage
-	$p2align,	3
-error_storage:
-	$long,	0                               // 0x0
-	$size,	error_storage, 4
-
-	$addrsig,
-	$addrsig_sym, __bootstrap
-	$addrsig_sym, __sys_null_pointer
-	$addrsig_sym, STACK_SIZE_TASKLET_0
-	$addrsig_sym, __sys_stack_thread_0
-	$addrsig_sym, STACK_SIZE_TASKLET_1
-	$addrsig_sym, __sys_stack_thread_1
-	$addrsig_sym, STACK_SIZE_TASKLET_2
-	$addrsig_sym, __sys_stack_thread_2
-	$addrsig_sym, STACK_SIZE_TASKLET_3
-	$addrsig_sym, __sys_stack_thread_3
-	$addrsig_sym, STACK_SIZE_TASKLET_4
-	$addrsig_sym, __sys_stack_thread_4
-	$addrsig_sym, STACK_SIZE_TASKLET_5
-	$addrsig_sym, __sys_stack_thread_5
-	$addrsig_sym, STACK_SIZE_TASKLET_6
-	$addrsig_sym, __sys_stack_thread_6
-	$addrsig_sym, STACK_SIZE_TASKLET_7
-	$addrsig_sym, __sys_stack_thread_7
-	$addrsig_sym, STACK_SIZE_TASKLET_8
-	$addrsig_sym, __sys_stack_thread_8
-	$addrsig_sym, STACK_SIZE_TASKLET_9
-	$addrsig_sym, __sys_stack_thread_9
-	$addrsig_sym, STACK_SIZE_TASKLET_10
-	$addrsig_sym, __sys_stack_thread_10
-	$addrsig_sym, STACK_SIZE_TASKLET_11
-	$addrsig_sym, __sys_stack_thread_11
-	$addrsig_sym, STACK_SIZE_TASKLET_12
-	$addrsig_sym, __sys_stack_thread_12
-	$addrsig_sym, STACK_SIZE_TASKLET_13
-	$addrsig_sym, __sys_stack_thread_13
-	$addrsig_sym, STACK_SIZE_TASKLET_14
-	$addrsig_sym, __sys_stack_thread_14
-	$addrsig_sym, STACK_SIZE_TASKLET_15
-	$addrsig_sym, __sys_stack_thread_15
-	$addrsig_sym, STACK_SIZE_TASKLET_16
-	$addrsig_sym, __sys_stack_thread_16
-	$addrsig_sym, STACK_SIZE_TASKLET_17
-	$addrsig_sym, __sys_stack_thread_17
-	$addrsig_sym, STACK_SIZE_TASKLET_18
-	$addrsig_sym, __sys_stack_thread_18
-	$addrsig_sym, STACK_SIZE_TASKLET_19
-	$addrsig_sym, __sys_stack_thread_19
-	$addrsig_sym, STACK_SIZE_TASKLET_20
-	$addrsig_sym, __sys_stack_thread_20
-	$addrsig_sym, STACK_SIZE_TASKLET_21
-	$addrsig_sym, __sys_stack_thread_21
-	$addrsig_sym, STACK_SIZE_TASKLET_22
-	$addrsig_sym, __sys_stack_thread_22
-	$addrsig_sym, STACK_SIZE_TASKLET_23
-	$addrsig_sym, __sys_stack_thread_23
-	$addrsig_sym, __sys_thread_stack_table_ptr
-	$addrsig_sym, __sys_used_mram_end
-	$addrsig_sym, thread_profiling
-	$addrsig_sym, CLOCKS_PER_SEC
-	$addrsig_sym, error_storage
-	$text,
-	$file,	"perfcounter.c"
-	$section,	%text, perfcounter_get,"ax",@progbits
-	$globl,	perfcounter_get                 //  -  -  Begin function perfcounter_get
-	$type,	perfcounter_get,@function
-perfcounter_get:                        // @perfcounter_get
-perfcounter..Lfunc_begin0:
-// %bb.0:
-	// inline asm
-	$time , r0
-	// inline asm
-	$move .u, d2, r0
-	$lslx , r0, r3, 4
-	$lsl_add , r0, r0, r2, 4
-	$lsl , r1, r3, 4
-	$jump , r23
-perfcounter..Lfunc_end0:
-	$size,	perfcounter_get, perfcounter..Lfunc_end0 - perfcounter_get
-	$section,	%stack_sizes,"o",@progbits,%text, perfcounter_get
-	$long,	perfcounter..Lfunc_begin0
-	$byte,	0
-	$section,	%text, perfcounter_get,"ax",@progbits
-                                        //  -  -  End function
-	$section,	%text, perfcounter_config,"ax",@progbits
-	$globl,	perfcounter_config              //  -  -  Begin function perfcounter_config
-	$type,	perfcounter_config,@function
-perfcounter_config:                     // @perfcounter_config
-perfcounter..Lfunc_begin1:
-// %bb.0:
-	$lsl_add , r0, r1, r0, 1
-	// inline asm
-	$time_cfg , r0, r0
-	// inline asm
-	$move .u, d2, r0
-	$lslx , r0, r3, 4
-	$lsl_add , r0, r0, r2, 4
-	$lsl , r1, r3, 4
-	$jump , r23
-perfcounter..Lfunc_end1:
-	$size,	perfcounter_config, perfcounter..Lfunc_end1 - perfcounter_config
-	$section,	%stack_sizes,"o",@progbits,%text, perfcounter_config
-	$long,	perfcounter..Lfunc_begin1
-	$byte,	0
-	$section,	%text, perfcounter_config,"ax",@progbits
-                                        //  -  -  End function
-	$addrsig,

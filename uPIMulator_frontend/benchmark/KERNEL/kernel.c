@@ -313,6 +313,7 @@ void launch_proc(unsigned int prc_idx, uint8_t ready) {
   unsigned int time = 0;
   //__builtin_time_r(time);
    __asm__ volatile("\ttime %[time]\n" : [time] "=r"(time));
+  
   processs[prc_idx].timer = time;
   int all_end_or_waiting = scheduler_jobs();
   if (all_end_or_waiting && processs[prc_idx].state != FINISHED) {

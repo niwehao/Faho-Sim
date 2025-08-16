@@ -250,13 +250,21 @@ int scheduler_jobs(void)
         ready = 1;
       else
       {
+        stop = check_time_process();
+        if(stop)
+        break;
         continue;
       }
+      stop = check_time_process();
+      if(stop)
+        break;
 
       swap(last, ready); // swap结束以后
       all_end_or_waiting =
           0; // the detection of all_end can be more fast but keep it simple
       stop = check_time_process();
+      if(stop)
+        break;
     }
     stop = check_time_process();
     last = 0;

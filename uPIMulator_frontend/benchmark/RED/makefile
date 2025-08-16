@@ -12,7 +12,7 @@ K_C := main.c
 
 COMMON_INCLUDES := support
 COMMON_FLAGS := -w -I${COMMON_INCLUDES}
-DPU_KERNEL_FLAG := -Wall -Wextra -Werror  ${COMMON_FLAGS} -fverbose-asm  -fdata-sections -DNR_FTHREAD=${NR_FTHREAD} -D${TYPE} -DBL=${BL} -D${VERSION} -D${SYNC}  -DPERF=${PERF}
+DPU_KERNEL_FLAG := -Wall -Wextra -Werror  ${COMMON_FLAGS} -fverbose-asm  -fdata-sections -DNR_FTHREAD=${NR_FTHREAD} -D${TYPE} -DBL=${BL} -D${VERSION} -D${SYNC} -D${TYPE} -DPERF=${PERF}
 
 all : ${K_ASM} 
 

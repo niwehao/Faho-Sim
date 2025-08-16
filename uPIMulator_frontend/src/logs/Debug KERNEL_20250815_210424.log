@@ -1,0 +1,28 @@
+执行时间: 2025-08-15 21:04:24.108419
+配置名称: Debug KERNEL
+基准测试: KERNEL
+执行命令: /home/krakos/niwe/miniconda3/envs/pim/bin/python main.py --mode compile_by_toolchain --num_tasklets 16 --benchmark KERNEL --num_dpus 16
+================================================================================
+
+rm -rf dpu_code.S 
+dpu-upmem-dpurte-clang -ffunction-sections -S -g0 -O2 -Wall -Wextra -Werror  -fverbose-asm  -fdata-sections -DNR_TASKLETS=16 -o dpu_code.S kernel.c
+
+执行失败! 返回码: 1
+错误信息: In file included from kernel.c:7:
+./syscall.h:181:17: error: use of undeclared identifier 'jobidx'
+    return jobs[jobidx].jid;
+                ^
+1 error generated.
+make: *** [makefile:16: dpu_code.S] Error 1
+Traceback (most recent call last):
+  File "/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/src/main.py", line 133, in <module>
+    compile_by_toolchain(args.benchmark, args.num_tasklets)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/krakos/niwe/preempt/Faho_Sim_faho/uPIMulator_frontend/src/main.py", line 53, in compile_by_toolchain
+    subprocess.run(cmd, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/krakos/niwe/miniconda3/envs/pim/lib/python3.13/subprocess.py", line 579, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['make', 'NR_TASKLETS=16']' returned non-zero exit status 2.
+

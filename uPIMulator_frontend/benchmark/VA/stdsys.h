@@ -27,6 +27,8 @@ int get_jid(void);
 int exit_proc(int value);
 int debug(char *str);
 int debug_int(int value);
+int empty_call(void);
+int empty_syscall(void);
 
 int socket_read(unsigned int d, void *buf, unsigned int len);
 int socket_write(unsigned int d, void *buf, unsigned int len);
@@ -102,11 +104,14 @@ int get_pid(void) { return syscall(0, 0, 0, 0, 3); }
 int get_role(void) { return syscall(0, 0, 0, 0, 4); }
 
 int get_appid(void) { return syscall(0, 0, 0, 0, 5); }
+int empty_syscall(void) { return syscall(0, 0, 0, 0, 0); }
+int empty_call(void) { return 0; }
 
 int umram_read(void *buf, unsigned int size, unsigned int offset) {
   return syscall((unsigned int)buf, (unsigned int)size, (unsigned int)offset, 0,
                  22);
 }
+
 
 int umram_write(void *buf, unsigned int size, unsigned int offset) {
   return syscall((unsigned int)buf, (unsigned int)size, (unsigned int)offset, 0,

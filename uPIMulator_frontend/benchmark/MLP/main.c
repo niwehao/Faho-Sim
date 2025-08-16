@@ -17,7 +17,7 @@
 dpu_arguments_t DPU_INPUT_ARGUMENTS;
 
 // GEMV
-static void gemv(T *bufferC, T *bufferA, T *bufferB, int pos)
+static void __attribute__((noinline)) gemv(T *bufferC, T *bufferA, T *bufferB, int pos)
 {
   unsigned int tasklet_id = get_jid();
   for (unsigned int i = 0; i < BLOCK_SIZE / sizeof(T); i++)
@@ -68,27 +68,22 @@ void main1()
   T *cache_C = (T *)(sbrk(8) - 8);
   unsigned int tasklet_id = get_jid();
   char new_processing;
-  for (;;)
-  {
-    if (tasklet_id == 0)
+  if (tasklet_id == 0)
     {
       char ok = 1;
       r = socket_write(sd_host, &ok, 1);
-      if (r != 0)
-      {
-
-        fault_notif();
-      }
+      
       r = socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
-      if (r != 0)
-      {
-
-        fault_notif();
-      }
+      
+      
     }
-    print_debug(tasklet_id, 1);
+  for (;;)
+  {
+    
+    
     wait_barrier(&my_barrier); //!
-    print_debug(tasklet_id, 2);
+    print_debug(tasklet_id, 3);
+
 
     int32_t n_size = DPU_INPUT_ARGUMENTS.n_size;
     int32_t n_size_pad = DPU_INPUT_ARGUMENTS.n_size_pad;
@@ -144,39 +139,35 @@ void main1()
       uint32_t mram_temp_addr_B = mram_base_addr_B;
       if (lay)
       {
-        // print_debug(tasklet_id, 1);
-        // wait_barrier(&my_barrier); //!
-        // print_debug(tasklet_id, 2);
+        print_debug(tasklet_id, 4);
+        wait_barrier(&my_barrier); //!
         if (tasklet_id == 0)
         {
           should_break = 0;
           char ok = 1, new_processing;
 
           r = socket_write(sd_host, &ok, 1);
-          if (r != 0)
-          {
-            fault_notif();
-          }
+          
+          
 
           r = socket_read(sd_host, &new_processing,
                           1); // wait to start 2
-          if (r != 0)
-          {
-
-            fault_notif();
-          }
+          
+          
           if (new_processing)
           {
             should_break = 1;
-            print_debug(tasklet_id, 1);
+            //print_debug(tasklet_id, 1);
             wait_barrier(&my_barrier); //!
-            print_debug(tasklet_id, 2);
+            print_debug(tasklet_id, 3);
+            //print_debug(tasklet_id, 2);
             break;
           }
         }
-        print_debug(tasklet_id, 1);
+        //print_debug(tasklet_id, 1);
         wait_barrier(&my_barrier); //!
-        print_debug(tasklet_id, 2);
+        print_debug(tasklet_id, 3);
+        //print_debug(tasklet_id, 2);
         if (should_break)
           break;
       }
@@ -204,19 +195,15 @@ void main1()
             // BLOCK_SIZE);
             //   mram_read((__mram_ptr void const *)(mram_temp_addr_B), cache_B,
             // BLOCK_SIZE);
+            print_debug(tasklet_id, 5);
 
             r = umram_read(cache_A, BLOCK_SIZE, mram_temp_addr_A);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+            print_debug(tasklet_id, 6);
+          
+            print_debug(tasklet_id, 5);
             r = umram_read(cache_B, BLOCK_SIZE, mram_temp_addr_B);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+            print_debug(tasklet_id, 6);
+            
 
             if (offset)
             {
@@ -231,12 +218,10 @@ void main1()
               // mram_read((__mram_ptr void const *)(mram_temp_addr_A +
               // BLOCK_SIZE),
               //   cache_A_aux, 8);
+              print_debug(tasklet_id, 5);
               r = umram_read(cache_A_aux, 8, mram_temp_addr_A + BLOCK_SIZE);
-              if (r != 0)
-              {
-
-                fault_notif();
-              }
+              print_debug(tasklet_id, 6);
+              
 
               cache_A[BLOCK_SIZE / sizeof(T) - 1] = cache_A_aux[0];
             }
@@ -251,13 +236,11 @@ void main1()
 
           // mram_read((__mram_ptr void const *)(mram_temp_addr_A), cache_A,
           //   BLOCK_SIZE);
+          print_debug(tasklet_id, 5);
 
           r = umram_read(cache_A, BLOCK_SIZE, mram_temp_addr_A);
-          if (r != 0)
-          {
-
-            fault_notif();
-          }
+          print_debug(tasklet_id, 6);
+          
 
           if (offset)
           {
@@ -270,24 +253,21 @@ void main1()
             //   mram_read((__mram_ptr void const *)(mram_temp_addr_A +
             //   BLOCK_SIZE),
             // cache_A_aux, 8);
+            print_debug(tasklet_id, 5);
             r = umram_read(cache_A_aux, 8, mram_temp_addr_A + BLOCK_SIZE);
+            print_debug(tasklet_id, 6);
             if (r != 0)
-            {
-
-              fault_notif();
-            }
+            
 
             cache_A[BLOCK_SIZE / sizeof(T) - 1] = cache_A_aux[0];
           }
 
           // mram_read((__mram_ptr void const *)(mram_temp_addr_B), cache_B,
           //   BLOCK_SIZE);
+          print_debug(tasklet_id, 5);
           r = (umram_read(cache_B, BLOCK_SIZE, mram_temp_addr_B));
-          if (r != 0)
-          {
-
-            fault_notif();
-          }
+          print_debug(tasklet_id, 6);
+         
 
           for (j = 0; j < (int)(n_size - n); j++)
           {
@@ -331,20 +311,25 @@ void main1()
         //    print_debug(cache_C[0],3);
         //   print_debug(mram_base_addr_C,4);//max_rows * n_size_pad * sizeof(T) +n_size_pad * sizeof(T)
         // }
+        print_debug(tasklet_id, 5);
         r = (umram_write(cache_C, 8, mram_base_addr_C));
-        if (r != 0)
-        {
-
-          fault_notif();
-        }
+        print_debug(tasklet_id, 6);
+       
 
         // Update memory address
         mram_base_addr_C += 2 * sizeof(T);
       }
     }
-    print_debug(tasklet_id, 1);
+    print_debug(tasklet_id, 4);
     wait_barrier(&my_barrier); //!
-    print_debug(tasklet_id, 2);
+    if (tasklet_id == 0)
+    {
+      char ok = 1;
+      r = socket_write(sd_host, &ok, 1);
+      
+      r = socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
+      
+    }
   }
   return;
 }

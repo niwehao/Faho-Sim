@@ -318,6 +318,10 @@ int scheduler_jobs(void)
 
       // stop = check_time_process();
     }
+
+    if(preempt == 0){
+      preempt = kernel_preempt_check();
+    }
     // stop = check_time_process();
     last = 0;
     mutex_unlock(mutex_jobs);
@@ -330,14 +334,21 @@ int scheduler_jobs(void)
       }
       r26_cfg(0,PROCESS_QUANTOM);
       //print_debug(me_new(),3);
-      if(ifpreempt==1){
+      if(ifpreempt>0){
         all_end_or_waiting=0;
         ifpreempt=0;
       }
       //__asm__ volatile("\tmove r15, id\n");//r15记录的me可能会发生变化
-      if (me_new() == 0 )
+      if (me_new() == 0 ){
+         unsigned int time = 0;
+        __asm__ volatile("\ttime %[time]\n" : [time] "=r"(time));
+        int interval=time - processs[cur_process_index].timer ;
+        if (interval> PROCESS_QUANTOM){
+          print_debug(interval,7);
+        }
         return all_end_or_waiting; // return the all_end_or_waiting if it is
                                    // 1 mark the process at waiting
+      }
       // barrier_wait(&barrier_jobs);
       sp_wait(&cp); // wait before restart the loop
       // wait the me()==0 to return back to this function

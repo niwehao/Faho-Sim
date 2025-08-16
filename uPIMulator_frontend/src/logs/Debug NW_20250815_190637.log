@@ -1,0 +1,11 @@
+执行时间: 2025-08-15 19:06:37.147858
+配置名称: Debug NW
+基准测试: NW
+执行命令: /home/krakos/niwe/miniconda3/envs/pim/bin/python main.py --mode compile_by_toolchain --num_tasklets 16 --benchmark NW --num_dpus 16
+================================================================================
+
+rm -rf dpu_code.S 
+dpu-upmem-dpurte-clang  -ffunction-sections -S -g0 -O2 -Wall -Wextra -Werror  -w -Isupport -fverbose-asm  -fdata-sections -DNR_FTHREAD=16 -DINT32  -DBL=64 -DBL_IN=16  -o dpu_code.S main.c
+compile success
+bootstrap address:393216
+__sys_stack_thread_0 address:3384

@@ -46,31 +46,23 @@ void main1()
                   ((BL_IN + 1) * (BL_IN + 2) * sizeof(int32_t)));
   int32_t *cache_ref = (int32_t *)(sbrk(BL_IN * BL_IN * sizeof(int32_t)) -
                                    (BL_IN * BL_IN * sizeof(int32_t)));
+  int r;
+
+  // Barrier
+  if (tasklet_id == 0)
+  {
+    char ok = 0;
+    r = socket_write(sd_host, &ok, 1);
+    
+    // print_debug(tasklet_id, 4);
+    r = socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
+    
+  }
 
   while (1)
   {
-    int r;
-
-    // Barrier
-    if (tasklet_id == 0)
-    {
-      char ok = 0;
-      r = socket_write(sd_host, &ok, 1);
-      if (r != 0)
-      {
-
-        fault_notif();
-      }
-      r = socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
-      if (r != 0)
-      {
-
-        fault_notif();
-      }
-    }
-    print_debug(tasklet_id, 1);
     wait_barrier(&my_barrier); //!
-    print_debug(tasklet_id, 2);
+    print_debug(tasklet_id, 3);
 
     uint32_t nblocks = DPU_INPUT_ARGUMENTS.nblocks;
     uint32_t active_blocks = DPU_INPUT_ARGUMENTS.active_blocks;
@@ -126,26 +118,22 @@ void main1()
           cache_input_offset = (BL_IN + 2);
           // mram_read((__mram_ptr void const *)addr_input, (void *)cache_input,
           //           (BL_IN + 2) * sizeof(int32_t)); //!
+          print_debug(tasklet_id, 5);
           r = umram_read(cache_input, (BL_IN + 2) * sizeof(int32_t),
                          addr_input);
-          if (r != 0)
-          {
-
-            fault_notif();
-          }
+          print_debug(tasklet_id, 6);
+          
           addr_input += ((BL + 2) * sizeof(int32_t));
           for (int i = 1; i < BL_IN + 1; i++)
           {
             //   mram_read((__mram_ptr void const *)addr_input,
             //             (void *)(cache_input + cache_input_offset),
             //             (2) * sizeof(int32_t)); //!
+            print_debug(tasklet_id, 5);
             r = umram_read(cache_input + cache_input_offset,
                            (2) * sizeof(int32_t), addr_input);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+            print_debug(tasklet_id, 6);
+            
             cache_input_offset += (BL_IN + 2);
             addr_input += ((BL + 2) * sizeof(int32_t));
           }
@@ -159,13 +147,11 @@ void main1()
             //   mram_read((__mram_ptr void const *)addr_ref,
             //             (void *)(cache_ref + cache_input_offset),
             //             (BL_IN) * sizeof(int32_t)); //!
+            print_debug(tasklet_id, 5);
             r = umram_read(cache_ref + cache_input_offset,
                            (BL_IN) * sizeof(int32_t), addr_ref);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+            print_debug(tasklet_id, 6);
+            
             cache_input_offset += BL_IN;
             addr_ref += (BL * sizeof(int32_t));
           }
@@ -194,13 +180,11 @@ void main1()
             //   mram_write((cache_input + cache_input_offset),
             //              (__mram_ptr void *)addr_input,
             //              (BL_IN + 2) * sizeof(int32_t)); //!
+            print_debug(tasklet_id, 5);
             r = umram_write((cache_input + cache_input_offset),
                             (BL_IN + 2) * sizeof(int32_t), addr_input);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+            print_debug(tasklet_id, 6);
+           
             cache_input_offset += (BL_IN + 2);
             addr_input += ((BL + 2) * sizeof(int32_t));
           }
@@ -244,26 +228,22 @@ void main1()
           cache_input_offset = (BL_IN + 2);
           // mram_read((__mram_ptr void const *)addr_input, (void *)cache_input,
           //           (BL_IN + 2) * sizeof(int32_t)); //!
+          print_debug(tasklet_id, 5);
           r = umram_read(cache_input, (BL_IN + 2) * sizeof(int32_t),
                          addr_input);
-          if (r != 0)
-          {
-
-            fault_notif();
-          }
+          print_debug(tasklet_id, 6);
+         
           addr_input += ((BL + 2) * sizeof(int32_t));
           for (int i = 1; i < BL_IN + 1; i++)
           {
             //   mram_read((__mram_ptr void const *)addr_input,
             //             (void *)(cache_input + cache_input_offset),
             //             (2) * sizeof(int32_t)); //!
+            print_debug(tasklet_id, 5);
             r = umram_read(cache_input + cache_input_offset,
                            (2) * sizeof(int32_t), addr_input);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+            print_debug(tasklet_id, 6);
+            
             cache_input_offset += (BL_IN + 2);
             addr_input += ((BL + 2) * sizeof(int32_t));
           }
@@ -277,13 +257,11 @@ void main1()
             //   mram_read((__mram_ptr void const *)addr_ref,
             //             (void *)(cache_ref + cache_input_offset),
             //             (BL_IN) * sizeof(int32_t)); //!
+            print_debug(tasklet_id, 5);
             r = umram_read(cache_ref + cache_input_offset,
                            (BL_IN) * sizeof(int32_t), addr_ref);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+            print_debug(tasklet_id, 6);
+            
             cache_input_offset += BL_IN;
             addr_ref += (BL * sizeof(int32_t));
           }
@@ -312,13 +290,11 @@ void main1()
             //   mram_write(cache_input + cache_input_offset,
             //              (__mram_ptr void *)addr_input,
             //              (BL_IN + 2) * sizeof(int32_t)); //!
+            print_debug(tasklet_id, 5);
             r = umram_write(cache_input + cache_input_offset,
                             (BL_IN + 2) * sizeof(int32_t), addr_input);
-            if (r != 0)
-            {
-
-              fault_notif();
-            }
+            print_debug(tasklet_id, 6);
+            
             cache_input_offset += (BL_IN + 2);
             addr_input += ((BL + 2) * sizeof(int32_t));
           }
@@ -332,6 +308,16 @@ void main1()
 
       mram_base_addr_input_itemsets += ((BL + 1) * (BL + 2) * sizeof(int32_t));
       mram_base_addr_ref += (BL * BL * sizeof(int32_t));
+    }
+    print_debug(tasklet_id, 4);
+    if (tasklet_id == 0)
+    {
+      char ok = 0;
+      r = socket_write(sd_host, &ok, 1);
+      
+
+      r = socket_read(sd_host, &DPU_INPUT_ARGUMENTS, sizeof(dpu_arguments_t));
+      
     }
   }
   return;

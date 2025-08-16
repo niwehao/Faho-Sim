@@ -24,7 +24,7 @@ uint32_t message[NR_FTHREAD];
 uint32_t message_partial_count;
 
 // SEL in each tasklet
-static unsigned int select(T *output, T *input)
+static unsigned int __attribute__((noinline)) select(T *output, T *input)
 {
   unsigned int pos = 0;
   // #pragma unroll
@@ -43,7 +43,7 @@ static unsigned int select(T *output, T *input)
 struct handshake handshakes[NR_FTHREAD];
 
 // Handshake with adjacent tasklets
-static unsigned int handshake_sync(unsigned int l_count,
+static unsigned int __attribute__((noinline)) handshake_sync(unsigned int l_count,
                                    unsigned int fthread_id)
 {
   unsigned int p_count;
@@ -77,12 +77,14 @@ void main1()
     char ok;
     socket_write(sd_host, &ok, 1);
     socket_read(sd_host, &ok, 1);
-    if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0)
-      fault_notif();
+    umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0);
+      
+    
   }
-  print_debug(fthread_id, 1);
+
   wait_barrier(&b);
-  print_debug(fthread_id, 2);
+  print_debug(fthread_id, 3);
+
 
   dpu_results_t *result = &DPU_RESULTS[fthread_id];
 
@@ -97,7 +99,6 @@ void main1()
   // Initialize a local cache to store the MRAM block
   T *cache_A = (T *)(sbrk(BLOCK_SIZE) - BLOCK_SIZE);
   T *cache_B = (T *)(sbrk(BLOCK_SIZE) - BLOCK_SIZE);
-  fthread_id = get_jid();
 
   // Initialize shared variable
   if (fthread_id == NR_FTHREAD - 1)
@@ -112,14 +113,12 @@ void main1()
        byte_index < input_size_dpu_bytes;
        byte_index += BLOCK_SIZE * NR_FTHREAD)
   {
+    print_debug(fthread_id, 5);
 
     // Load cache with current MRAM block
     r = umram_read(cache_A, BLOCK_SIZE, mram_base_addr_A + byte_index);
-    if (r != 0)
-    {
-      fault_notif();
-    }
-
+    print_debug(fthread_id, 6);
+    
     // SELECT in each tasklet
     uint32_t l_count = select(cache_B, cache_A); // In-place or out-of-place?
 
@@ -135,14 +134,13 @@ void main1()
     print_debug(fthread_id, 2);
 
     // Write cache to current MRAM block
+    print_debug(fthread_id, 5);
     r = umram_write(cache_B, l_count * sizeof(T),
                     mram_base_addr_B +
                         (message_partial_count + p_count) * sizeof(T));
+    print_debug(fthread_id, 6);
 
-    if (r != 0)
-    {
-      fault_notif();
-    }
+
 
     // wait_barrier(&b);
     print_debug(fthread_id, 1);
@@ -164,17 +162,19 @@ void main1()
 
   if (fthread_id == 0)
   {
+    print_debug(fthread_id, 5);
     r = umram_write(DPU_RESULTS, sizeof(dpu_results_t) * NR_FTHREAD,
                     sizeof(dpu_arguments_t) + DPU_INPUT_ARGUMENTS.size);
+    print_debug(fthread_id, 6);
 
-    if (r != 0)
-    {
-      fault_notif();
-    }
+   
+    print_debug(fthread_id, 4);
     char ok;
     socket_write(sd_host, &ok, 1);
     socket_read(sd_host, &ok, 1);
+    
   }
+  print_debug(fthread_id, 4);
   wait_barrier(&b);
 }
 

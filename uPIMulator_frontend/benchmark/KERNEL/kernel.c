@@ -37,6 +37,7 @@ mutex_id_t mutex_inode __attribute__((section(".data"))) = 0;
 
 
 struct custom_barriere cp __attribute__((section(".data"))) = {};
+struct custom_barriere cp_2 __attribute__((section(".data"))) = {};
 __host struct process processs[MAX_PRG]
     __attribute__((section(".dpu_host"))) // process info
     = {};
@@ -454,6 +455,10 @@ int main(void) {
     cp.nb = NR_TASKLETS;
     cp.pending = 0;
     cp.ret_val = 0;
+    cp_2.mutex = &__atomic_bit_mutex_sp;
+    cp_2.nb = NR_TASKLETS;
+    cp_2.pending = 0;
+    cp_2.ret_val = 0;
 
     mutex_flag = &__atomic_bit_mutex_mutex_flag;
     mutex_l = &__atomic_bit_mutex_mutex_l;

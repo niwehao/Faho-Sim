@@ -7,7 +7,7 @@
 #define BLOCK_SIZE_LOG2 BL
 #define BLOCK_SIZE (1 << BLOCK_SIZE_LOG2)
 #else
-#define BLOCK_SIZE_LOG2 9
+#define BLOCK_SIZE_LOG2 8
 #define BLOCK_SIZE (1 << BLOCK_SIZE_LOG2)
 #endif
 

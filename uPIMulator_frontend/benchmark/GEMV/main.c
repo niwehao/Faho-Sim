@@ -9,10 +9,10 @@
 
 #define roundup(n, m) ((n / m) * m + m)
 int sd_host;
-dpu_arguments_t DPU_INPUT_ARGUMENTS;
+__buffer_aligned dpu_arguments_t DPU_INPUT_ARGUMENTS;
 
 // GEMV
-static void gemv(T *bufferC, T *bufferA, T *bufferB, int pos)
+static void __attribute__((noinline)) gemv(T *bufferC, T *bufferA, T *bufferB, int pos)
 {
   for (unsigned int i = 0; i < BLOCK_SIZE / sizeof(T); i++)
   {
@@ -36,10 +36,12 @@ void main1()
     socket_read(sd_host, &ok, 1);
     if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0)
       exit_proc(3);
+   
   }
-  print_debug(fthread_id, 1); // rc,ra
+  //print_debug(fthread_id, 1); // rc,ra
   wait_barrier(&b);
-  print_debug(fthread_id, 2);
+  print_debug(fthread_id,3);
+  
 
   int32_t n_size = DPU_INPUT_ARGUMENTS.n_size;
   int32_t n_size_pad = DPU_INPUT_ARGUMENTS.n_size_pad;
@@ -132,9 +134,13 @@ void main1()
       for (n = 0; n < (int32_t)(n_size - (BLOCK_SIZE / sizeof(T)));
            n += (BLOCK_SIZE / sizeof(T)))
       {
+        print_debug(fthread_id, 5);
 
         umram_read(cache_A, BLOCK_SIZE, mram_temp_addr_A);
+        print_debug(fthread_id, 6);
+        print_debug(fthread_id, 5);
         umram_read(cache_B, BLOCK_SIZE, mram_temp_addr_B);
+        print_debug(fthread_id, 6);
 
         if (offset)
         {
@@ -144,8 +150,10 @@ void main1()
           {
             cache_A[off] = cache_A[off + 1];
           }
+          print_debug(fthread_id, 5);
 
           umram_read(cache_A_aux, 8, mram_temp_addr_A + BLOCK_SIZE);
+          print_debug(fthread_id, 6);
 
           cache_A[BLOCK_SIZE / sizeof(T) - 1] = cache_A_aux[0];
         }
@@ -158,8 +166,10 @@ void main1()
         mram_temp_addr_B += BLOCK_SIZE;
       }
       int ret;
+      print_debug(fthread_id, 5);
       if ((ret = umram_read(cache_A, BLOCK_SIZE, mram_temp_addr_A)) < 0)
         exit_proc(ret);
+      print_debug(fthread_id, 6);
 
       if (offset)
       {
@@ -169,14 +179,18 @@ void main1()
 
           cache_A[off] = cache_A[off + 1];
         }
+        print_debug(fthread_id, 5);
 
         if (umram_read(cache_A_aux, 8, mram_temp_addr_A + BLOCK_SIZE) < 0)
           exit_proc(-2);
+        print_debug(fthread_id, 6);
 
         cache_A[BLOCK_SIZE / sizeof(T) - 1] = cache_A_aux[0];
       }
+      print_debug(fthread_id, 5);
 
       umram_read(cache_B, BLOCK_SIZE, mram_temp_addr_B);
+      print_debug(fthread_id, 6);
 
       for (j = 0; j < (int)(n_size - n); j++)
       {
@@ -210,22 +224,24 @@ void main1()
         offset = 0;
       }
     }
+    print_debug(fthread_id, 5);
 
     // Write cache to current MRAM block
     umram_write(cache_C, 8, mram_base_addr_C);
+    print_debug(fthread_id, 6);
 
     // Update memory address
     mram_base_addr_C += 8;
   }
-  print_debug(fthread_id, 1); // rc,ra
+  print_debug(fthread_id,4);
   wait_barrier(&b);
-  print_debug(fthread_id, 2);
   if (fthread_id == 0)
   {
     char ok;
     socket_write(sd_host, &ok, 1);
     socket_read(sd_host, &ok, 1);
   }
+  
   wait_barrier(&b);
 }
 

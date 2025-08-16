@@ -15,7 +15,7 @@ uint32_t *message[NR_FTHREAD];
 uint32_t *histo_dpu;
 
 // Histogram in each tasklet
-static void histogram(uint32_t *histo, uint32_t bins, T *input,
+static void __attribute__((noinline)) histogram(uint32_t *histo, uint32_t bins, T *input,
                       unsigned int l_size)
 {
   for (unsigned int j = 0; j < l_size; j++)
@@ -38,9 +38,8 @@ void main1()
     if (umram_read(&DPU_INPUT_ARGUMENTS, sizeof(DPU_INPUT_ARGUMENTS), 0) < 0)
       exit_proc(3);
   }
-  print_debug(tasklet_id, 1);
   wait_barrier(&b); //!
-  print_debug(tasklet_id, 2);
+  print_debug(tasklet_id, 3);
 
   unsigned int fthread_id = get_jid();
 
@@ -78,9 +77,10 @@ void main1()
     uint32_t l_size_bytes = (byte_index + BLOCK_SIZE >= input_size_dpu_bytes)
                                 ? (input_size_dpu_bytes - byte_index)
                                 : BLOCK_SIZE;
-
+    print_debug(fthread_id, 5);
     // Load cache with current MRAM block
     umram_read(cache_A, l_size_bytes, (mram_base_addr_A + byte_index));
+    print_debug(fthread_id, 6);
 
     // Histogram in each tasklet
     histogram(histo, bins, cache_A, l_size_bytes >> DIV);
@@ -113,21 +113,32 @@ void main1()
   if (fthread_id == 0)
   {
     if (bins * sizeof(uint32_t) <= 2048)
+    {
+
+      print_debug(fthread_id, 5);
       umram_write(histo_dpu, bins * sizeof(uint32_t), mram_base_addr_histo);
+      print_debug(fthread_id, 6);
+    }
     else
+    {
       for (unsigned int offset = 0; offset < ((bins * sizeof(uint32_t)) >> 11);
            offset++)
       {
+        print_debug(fthread_id, 5);
         umram_write(histo_dpu + (offset << 9), 2048,
                     mram_base_addr_histo + (offset << 11));
+        print_debug(fthread_id, 6);
       }
+    }
     char ok;
+    print_debug(fthread_id, 4);
     socket_write(sd_host, &ok, 1);
     socket_read(sd_host, &ok, 1);
   }
-  print_debug(tasklet_id, 1);
+  print_debug(fthread_id, 4);
+  // print_debug(tasklet_id, 1);
   wait_barrier(&b); //!
-  print_debug(tasklet_id, 2);
+  // print_debug(tasklet_id, 2);
 }
 
 int main(void)

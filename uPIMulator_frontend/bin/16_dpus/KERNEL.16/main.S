@@ -575,6 +575,439 @@ stdio.__stdout_cache_buffer:
 	$addrsig_sym, __atomic_bit___stdout_buffer_lock
 	$addrsig_sym, stdio.__stdout_cache_buffer
 	$text,
+	$file,	"perfcounter.c"
+	$section,	%text, perfcounter_get,"ax",@progbits
+	$globl,	perfcounter_get                 //  -  -  Begin function perfcounter_get
+	$type,	perfcounter_get,@function
+perfcounter_get:                        // @perfcounter_get
+perfcounter..Lfunc_begin0:
+// %bb.0:
+	// inline asm
+	$time , r0
+	// inline asm
+	$move .u, d2, r0
+	$lslx , r0, r3, 4
+	$lsl_add , r0, r0, r2, 4
+	$lsl , r1, r3, 4
+	$jump , r23
+perfcounter..Lfunc_end0:
+	$size,	perfcounter_get, perfcounter..Lfunc_end0 - perfcounter_get
+	$section,	%stack_sizes,"o",@progbits,%text, perfcounter_get
+	$long,	perfcounter..Lfunc_begin0
+	$byte,	0
+	$section,	%text, perfcounter_get,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%text, perfcounter_config,"ax",@progbits
+	$globl,	perfcounter_config              //  -  -  Begin function perfcounter_config
+	$type,	perfcounter_config,@function
+perfcounter_config:                     // @perfcounter_config
+perfcounter..Lfunc_begin1:
+// %bb.0:
+	$lsl_add , r0, r1, r0, 1
+	// inline asm
+	$time_cfg , r0, r0
+	// inline asm
+	$move .u, d2, r0
+	$lslx , r0, r3, 4
+	$lsl_add , r0, r0, r2, 4
+	$lsl , r1, r3, 4
+	$jump , r23
+perfcounter..Lfunc_end1:
+	$size,	perfcounter_config, perfcounter..Lfunc_end1 - perfcounter_config
+	$section,	%stack_sizes,"o",@progbits,%text, perfcounter_config
+	$long,	perfcounter..Lfunc_begin1
+	$byte,	0
+	$section,	%text, perfcounter_config,"ax",@progbits
+                                        //  -  -  End function
+	$addrsig,
+	$text,
+	$file,	"memset.c"
+	$section,	%text, __memset_wram_4align,"ax",@progbits
+	$globl,	__memset_wram_4align            //  -  -  Begin function __memset_wram_4align
+	$type,	__memset_wram_4align,@function
+__memset_wram_4align:                   // @__memset_wram_4align
+memset..Lfunc_begin0:
+// %bb.0:
+	$lsr , r2, r2, 2, z, memset..LBB0_3
+// %bb.1:
+	$and , r3, r1, 255
+	$lsl_add , r1, r3, r1, 24
+	$lsl_add , r1, r1, r3, 8
+	$lsl_add , r1, r1, r3, 16
+	$move , r3, r0
+memset..LBB0_2:                                // =>This Inner Loop Header: Depth=1
+	$sw , r3, 0, r1
+	$add , r3, r3, 4
+	$add , r2, r2,  - 1, nz, memset..LBB0_2
+memset..LBB0_3:
+	$jump , r23
+memset..Lfunc_end0:
+	$size,	__memset_wram_4align, memset..Lfunc_end0 - __memset_wram_4align
+	$section,	%stack_sizes,"o",@progbits,%text, __memset_wram_4align
+	$long,	memset..Lfunc_begin0
+	$byte,	0
+	$section,	%text, __memset_wram_4align,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%text, memset,"ax",@progbits
+	$globl,	memset                          //  -  -  Begin function memset
+	$type,	memset,@function
+memset:                                 // @memset
+memset..Lfunc_begin1:
+// %bb.0:
+	$and , r3, r0, 3, z, memset..LBB1_1
+// %bb.2:
+	$sub , r4, 4, r3
+	$move , r3, r2
+	$jgtu , r4, r2, memset..LBB1_4
+// %bb.3:
+	$move , r3, r4
+memset..LBB1_4:
+	$jeq , r3, 0, memset..LBB1_7
+// %bb.5:
+	$move , r4, r0
+	$move , r5, r3
+memset..LBB1_6:                                // =>This Inner Loop Header: Depth=1
+	$sb , r4, 0, r1
+	$add , r4, r4, 1
+	$add , r5, r5,  - 1, nz, memset..LBB1_6
+memset..LBB1_7:
+	$sub , r2, r2, r3
+	$add , r3, r0, r3
+	$jgeu , r2, 4, memset..LBB1_9
+memset..LBB1_12:
+	$jeq , r2, 0, memset..LBB1_14
+memset..LBB1_13:                               // =>This Inner Loop Header: Depth=1
+	$sb , r3, 0, r1
+	$add , r3, r3, 1
+	$add , r2, r2,  - 1, nz, memset..LBB1_13
+memset..LBB1_14:
+	$jump , r23
+memset..LBB1_1:
+	$move , r3, r0
+	$jltu , r2, 4, memset..LBB1_12
+memset..LBB1_9:
+	$and , r4, r2,  - 4
+	$and , r5, r1, 255
+	$lsl_add , r6, r5, r1, 24
+	$lsl_add , r6, r6, r5, 8
+	$lsl_add , r5, r6, r5, 16
+	$lsr , r6, r2, 2
+	$move , r7, r3
+memset..LBB1_10:                               // =>This Inner Loop Header: Depth=1
+	$sw , r7, 0, r5
+	$add , r7, r7, 4
+	$add , r6, r6,  - 1, nz, memset..LBB1_10
+// %bb.11:
+	$and , r2, r2, 3
+	$add , r3, r3, r4
+	$jneq , r2, 0, memset..LBB1_13
+	$jump , memset..LBB1_14
+memset..Lfunc_end1:
+	$size,	memset, memset..Lfunc_end1 - memset
+	$section,	%stack_sizes,"o",@progbits,%text, memset
+	$long,	memset..Lfunc_begin1
+	$byte,	0
+	$section,	%text, memset,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%text, __memset_mram_8align,"ax",@progbits
+	$globl,	__memset_mram_8align            //  -  -  Begin function __memset_mram_8align
+	$type,	__memset_mram_8align,@function
+__memset_mram_8align:                   // @__memset_mram_8align
+memset..Lfunc_begin2:
+// %bb.0:
+	$and , r3, r1, 255
+	$lsl_add , r1, r3, r1, 24
+	$lsl_add , r1, r1, r3, 8
+	$lsl_add , r1, r1, r3, 16
+	$sw , r22, 0, r1
+	$sw , r22, 4, r1
+	$jeq , r2, 0, memset..LBB2_3
+// %bb.1:
+	$move , r1, 0
+memset..LBB2_2:                                // =>This Inner Loop Header: Depth=1
+	$add , r3, r0, r1
+	$add , r4, r22, 0
+	$add , r1, r1, 8
+	$sdma , r4, r3, 0
+	$jltu , r1, r2, memset..LBB2_2
+memset..LBB2_3:
+	$jump , r23
+memset..Lfunc_end2:
+	$size,	__memset_mram_8align, memset..Lfunc_end2 - __memset_mram_8align
+	$section,	%stack_sizes,"o",@progbits,%text, __memset_mram_8align
+	$long,	memset..Lfunc_begin2
+	$byte,	8
+	$section,	%text, __memset_mram_8align,"ax",@progbits
+                                        //  -  -  End function
+	$section,	%text, __memset_mram,"ax",@progbits
+	$globl,	__memset_mram                   //  -  -  Begin function __memset_mram
+	$type,	__memset_mram,@function
+__memset_mram:                          // @__memset_mram
+memset..Lfunc_begin3:
+// %bb.0:
+	$and , r3, r0,  - 8
+	$and , r6, r0, 7, z, memset..LBB3_7
+// %bb.1:
+	$sub , r5, 8, r6
+	$move , r4, r2
+	$jgtu , r5, r2, memset..LBB3_3
+// %bb.2:
+	$move , r4, r5
+memset..LBB3_3:
+	$add , r5, r22, 8
+	$ldma , r5, r3, 0
+	$jeq , r4, 0, memset..LBB3_6
+// %bb.4:
+	$or , r6, r5, r6
+	$move , r7, r4
+memset..LBB3_5:                                // =>This Inner Loop Header: Depth=1
+	$sb , r6, 0, r1
+	$add , r6, r6, 1
+	$add , r7, r7,  - 1, nz, memset..LBB3_5
+memset..LBB3_6:
+	$sdma , r5, r3, 0
+	$sub , r2, r2, r4
+	$add , r3, r3, 8
+memset..LBB3_7:
+	$jltu , r2, 8, memset..LBB3_12
+// %bb.8:
+	$and , r4, r1, 255
+	$lsl_add , r5, r4, r1, 24
+	$lsl_add , r5, r5, r4, 8
+	$lsl_add , r4, r5, r4, 16
+	$sw , r22, 0, r4
+	$sw , r22, 4, r4
+	$and , r4, r2,  - 8, z, memset..LBB3_11
+// %bb.9:
+	$move , r5, 0
+memset..LBB3_10:                               // =>This Inner Loop Header: Depth=1
+	$add , r6, r3, r5
+	$add , r7, r22, 0
+	$add , r5, r5, 8
+	$sdma , r7, r6, 0
+	$jltu , r5, r4, memset..LBB3_10
+memset..LBB3_11:
+	$and , r2, r2, 7
+	$add , r3, r3, r4
+memset..LBB3_12:
+	$jeq , r2, 0, memset..LBB3_16
+// %bb.13:
+	$add , r4, r22, 8
+	$ldma , r4, r3, 0
+memset..LBB3_14:                               // =>This Inner Loop Header: Depth=1
+	$sb , r4, 0, r1
+	$add , r4, r4, 1
+	$add , r2, r2,  - 1, nz, memset..LBB3_14
+// %bb.15:
+	$add , r1, r22, 8
+	$sdma , r1, r3, 0
+memset..LBB3_16:
+	$jump , r23
+memset..Lfunc_end3:
+	$size,	__memset_mram, memset..Lfunc_end3 - __memset_mram
+	$section,	%stack_sizes,"o",@progbits,%text, __memset_mram
+	$long,	memset..Lfunc_begin3
+	$byte,	16
+	$section,	%text, __memset_mram,"ax",@progbits
+                                        //  -  -  End function
+	$addrsig,
+	$addrsig_sym, __memset_wram_4align
+	$addrsig_sym, __memset_mram_8align
+	$addrsig_sym, __memset_mram
+	$text,
+	$file,	"crt0.c"
+	$section,	%text, __bootstrap,"ax",@progbits
+	$globl,	__bootstrap                     //  -  -  Begin function __bootstrap
+	$type,	__bootstrap,@function
+__bootstrap:                            // @__bootstrap
+crt0..Lfunc_begin0:
+// %bb.0:
+	// inline asm
+	$jnz , id, crt0.__sys_start_thread
+
+	$sd , zero, __stdout_buffer_state, 0
+	$move , r23, __atomic_end_addr
+crt0.__sys_atomic_bit_clear:
+	$jeq , r23, __atomic_used_addr, crt0.__sys_start_thread
+crt0..Ltmp0:
+	$release , r23, 0, nz, crt0..Ltmp0 + 1
+	$add , r23, r23,  - 1, true, crt0.__sys_atomic_bit_clear
+crt0.__sys_start_thread:
+crt0..Ltmp1:
+	$jeq , id, NR_TASKLETS - 1, crt0..Ltmp1 + 2
+	$boot , id, 1
+	$ld , d22, id8, __sys_thread_stack_table_ptr
+	$call , r23, main
+	$globl,	__sys_end
+__sys_end:
+
+	$stop , true, __sys_end
+	// inline asm
+crt0..Lfunc_end0:
+	$size,	__bootstrap, crt0..Lfunc_end0 - __bootstrap
+	$section,	%stack_sizes,"o",@progbits,%text, __bootstrap
+	$long,	crt0..Lfunc_begin0
+	$byte,	0
+	$section,	%text, __bootstrap,"ax",@progbits
+                                        //  -  -  End function
+	$type,	__sys_null_pointer,@object      // @__sys_null_pointer
+	$section,	%data, __sys_zero,"aw",@progbits
+	$globl,	__sys_null_pointer
+	$p2align,	3
+__sys_null_pointer:
+	$quad,	0                               // 0x0
+	$size,	__sys_null_pointer, 8
+
+	$type,	__sys_thread_stack_table_ptr,@object // @__sys_thread_stack_table_ptr
+	$section,	%data, __sys_keep,"aw",@progbits
+	$globl,	__sys_thread_stack_table_ptr
+	$p2align,	3
+__sys_thread_stack_table_ptr:
+	$long,	STACK_SIZE_TASKLET_0
+	$long,	__sys_stack_thread_0
+	$long,	STACK_SIZE_TASKLET_1
+	$long,	__sys_stack_thread_1
+	$long,	STACK_SIZE_TASKLET_2
+	$long,	__sys_stack_thread_2
+	$long,	STACK_SIZE_TASKLET_3
+	$long,	__sys_stack_thread_3
+	$long,	STACK_SIZE_TASKLET_4
+	$long,	__sys_stack_thread_4
+	$long,	STACK_SIZE_TASKLET_5
+	$long,	__sys_stack_thread_5
+	$long,	STACK_SIZE_TASKLET_6
+	$long,	__sys_stack_thread_6
+	$long,	STACK_SIZE_TASKLET_7
+	$long,	__sys_stack_thread_7
+	$long,	STACK_SIZE_TASKLET_8
+	$long,	__sys_stack_thread_8
+	$long,	STACK_SIZE_TASKLET_9
+	$long,	__sys_stack_thread_9
+	$long,	STACK_SIZE_TASKLET_10
+	$long,	__sys_stack_thread_10
+	$long,	STACK_SIZE_TASKLET_11
+	$long,	__sys_stack_thread_11
+	$long,	STACK_SIZE_TASKLET_12
+	$long,	__sys_stack_thread_12
+	$long,	STACK_SIZE_TASKLET_13
+	$long,	__sys_stack_thread_13
+	$long,	STACK_SIZE_TASKLET_14
+	$long,	__sys_stack_thread_14
+	$long,	STACK_SIZE_TASKLET_15
+	$long,	__sys_stack_thread_15
+	$long,	STACK_SIZE_TASKLET_16
+	$long,	__sys_stack_thread_16
+	$long,	STACK_SIZE_TASKLET_17
+	$long,	__sys_stack_thread_17
+	$long,	STACK_SIZE_TASKLET_18
+	$long,	__sys_stack_thread_18
+	$long,	STACK_SIZE_TASKLET_19
+	$long,	__sys_stack_thread_19
+	$long,	STACK_SIZE_TASKLET_20
+	$long,	__sys_stack_thread_20
+	$long,	STACK_SIZE_TASKLET_21
+	$long,	__sys_stack_thread_21
+	$long,	STACK_SIZE_TASKLET_22
+	$long,	__sys_stack_thread_22
+	$long,	STACK_SIZE_TASKLET_23
+	$long,	__sys_stack_thread_23
+	$size,	__sys_thread_stack_table_ptr, 192
+
+	$type,	__sys_used_mram_end,@object     // @__sys_used_mram_end
+	$section,	%mram, noinit,"aw",@progbits
+	$globl,	__sys_used_mram_end
+	$p2align,	3
+__sys_used_mram_end:
+	$size,	__sys_used_mram_end, 0
+
+	$type,	thread_profiling,@object        // @thread_profiling
+	$section,	%data, immediate_memory.thread_profiling,"aw",@progbits
+	$globl,	thread_profiling
+	$p2align,	2
+thread_profiling:
+	$zero,	96
+	$size,	thread_profiling, 96
+
+	$type,	perfcounter_end_value,@object   // @perfcounter_end_value
+	$section,	%bss, perfcounter_end_value,"aw",@nobits
+	$globl,	perfcounter_end_value
+	$p2align,	2
+perfcounter_end_value:
+	$long,	0                               // 0x0
+	$size,	perfcounter_end_value, 4
+
+	$type,	CLOCKS_PER_SEC,@object          // @CLOCKS_PER_SEC
+	$section,	%dpu_host,"a",@progbits
+	$globl,	CLOCKS_PER_SEC
+	$p2align,	3
+CLOCKS_PER_SEC:
+	$long,	0                               // 0x0
+	$size,	CLOCKS_PER_SEC, 4
+
+	$type,	error_storage,@object           // @error_storage
+	$globl,	error_storage
+	$p2align,	3
+error_storage:
+	$long,	0                               // 0x0
+	$size,	error_storage, 4
+
+	$addrsig,
+	$addrsig_sym, __bootstrap
+	$addrsig_sym, __sys_null_pointer
+	$addrsig_sym, STACK_SIZE_TASKLET_0
+	$addrsig_sym, __sys_stack_thread_0
+	$addrsig_sym, STACK_SIZE_TASKLET_1
+	$addrsig_sym, __sys_stack_thread_1
+	$addrsig_sym, STACK_SIZE_TASKLET_2
+	$addrsig_sym, __sys_stack_thread_2
+	$addrsig_sym, STACK_SIZE_TASKLET_3
+	$addrsig_sym, __sys_stack_thread_3
+	$addrsig_sym, STACK_SIZE_TASKLET_4
+	$addrsig_sym, __sys_stack_thread_4
+	$addrsig_sym, STACK_SIZE_TASKLET_5
+	$addrsig_sym, __sys_stack_thread_5
+	$addrsig_sym, STACK_SIZE_TASKLET_6
+	$addrsig_sym, __sys_stack_thread_6
+	$addrsig_sym, STACK_SIZE_TASKLET_7
+	$addrsig_sym, __sys_stack_thread_7
+	$addrsig_sym, STACK_SIZE_TASKLET_8
+	$addrsig_sym, __sys_stack_thread_8
+	$addrsig_sym, STACK_SIZE_TASKLET_9
+	$addrsig_sym, __sys_stack_thread_9
+	$addrsig_sym, STACK_SIZE_TASKLET_10
+	$addrsig_sym, __sys_stack_thread_10
+	$addrsig_sym, STACK_SIZE_TASKLET_11
+	$addrsig_sym, __sys_stack_thread_11
+	$addrsig_sym, STACK_SIZE_TASKLET_12
+	$addrsig_sym, __sys_stack_thread_12
+	$addrsig_sym, STACK_SIZE_TASKLET_13
+	$addrsig_sym, __sys_stack_thread_13
+	$addrsig_sym, STACK_SIZE_TASKLET_14
+	$addrsig_sym, __sys_stack_thread_14
+	$addrsig_sym, STACK_SIZE_TASKLET_15
+	$addrsig_sym, __sys_stack_thread_15
+	$addrsig_sym, STACK_SIZE_TASKLET_16
+	$addrsig_sym, __sys_stack_thread_16
+	$addrsig_sym, STACK_SIZE_TASKLET_17
+	$addrsig_sym, __sys_stack_thread_17
+	$addrsig_sym, STACK_SIZE_TASKLET_18
+	$addrsig_sym, __sys_stack_thread_18
+	$addrsig_sym, STACK_SIZE_TASKLET_19
+	$addrsig_sym, __sys_stack_thread_19
+	$addrsig_sym, STACK_SIZE_TASKLET_20
+	$addrsig_sym, __sys_stack_thread_20
+	$addrsig_sym, STACK_SIZE_TASKLET_21
+	$addrsig_sym, __sys_stack_thread_21
+	$addrsig_sym, STACK_SIZE_TASKLET_22
+	$addrsig_sym, __sys_stack_thread_22
+	$addrsig_sym, STACK_SIZE_TASKLET_23
+	$addrsig_sym, __sys_stack_thread_23
+	$addrsig_sym, __sys_thread_stack_table_ptr
+	$addrsig_sym, __sys_used_mram_end
+	$addrsig_sym, thread_profiling
+	$addrsig_sym, CLOCKS_PER_SEC
+	$addrsig_sym, error_storage
+	$text,
 	$file,	"kernel.c"
 $section,	%text, boot_me,"ax",@progbits
 	$globl,	boot_me                //  -  -  Begin function boot_me
@@ -1758,7 +2191,7 @@ check_time_process:                     // @check_time_process
 	$add , r1, r2, r1
 	$lw , r1, r1, 20
 	$sub , r0, r0, r1
-	$move , r1, 5000
+	$move , r1, 10000
 	$sub , r0, r0, r1, gtu
 	$jump , r23
 .Lfunc_end11:
@@ -1784,7 +2217,7 @@ kernel_preempt_check:                   // @kernel_preempt_check
 	$and , r1, r1, 4, z, .LBB12_4
 // %bb.3:
 	$move , r0, 0
-	$move , r1, 5000
+	$move , r1, 10000
 	$call , r23, r26_cfg
 	$move , r0, 3
 .LBB12_4:
@@ -1792,7 +2225,7 @@ kernel_preempt_check:                   // @kernel_preempt_check
 	$jump , r23
 .LBB12_1:
 	$move , r0, 0
-	$move , r1, 5000
+	$move , r1, 10000
 	$call , r23, r26_cfg
 	$move , r0, ifpreempt
 	$sw , r0, 0, 1
@@ -1868,7 +2301,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	// inline asm
 .LBB13_8:
 	$move , r0, 2
-	$move , r1, 5000
+	$move , r1, 10000
 	$call , r23, r26_cfg
 	$move , r15, 0, true, .LBB13_12
 .LBB13_9:                               //   in Loop: Header=BB13_12 Depth=1
@@ -1882,7 +2315,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	// inline asm
 .LBB13_10:                              //   in Loop: Header=BB13_12 Depth=1
 	$move , r0, 2
-	$move , r1, 5000
+	$move , r1, 10000
 	$call , r23, r26_cfg
 .LBB13_11:                              //   in Loop: Header=BB13_12 Depth=1
 	$move , r0, all_end_or_waiting
@@ -1890,8 +2323,8 @@ scheduler_jobs:                         // @scheduler_jobs
 .LBB13_12:                              // =>This Loop Header: Depth=1
                                         //     Child Loop BB13_13 Depth 2
                                         //       Child Loop BB13_16 Depth 3
-                                        //     Child Loop BB13_38 Depth 2
-                                        //     Child Loop BB13_48 Depth 2
+                                        //     Child Loop BB13_43 Depth 2
+                                        //     Child Loop BB13_53 Depth 2
 	$move , r17, r15
 .LBB13_13:                              //   Parent Loop BB13_12 Depth=1
                                         // =>  This Loop Header: Depth=2
@@ -1903,7 +2336,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	// inline asm
 	$lw , r0, zero, cur_process_index
 	$and , r1, r17, 255
-	$jneq , r1, 0, .LBB13_32
+	$jneq , r1, 0, .LBB13_29
 // %bb.14:                              //   in Loop: Header=BB13_13 Depth=2
 	$lsl , r1, r0, 4
 	$lsl_add , r0, r1, r0, 6
@@ -1911,12 +2344,12 @@ scheduler_jobs:                         // @scheduler_jobs
 	$add , r0, r1, r0
 	$lbs , r0, r0, 2
 	$and , r0, r0, 255
-	$jeq , r0, 0, .LBB13_32
+	$jeq , r0, 0, .LBB13_29
 // %bb.15:                              //   in Loop: Header=BB13_13 Depth=2
 	$move , r0, 1, true, .LBB13_16
 .LBB13_23:                              //   in Loop: Header=BB13_16 Depth=3
 	$move , r14, 0
-	$move , r1, 5000
+	$move , r1, 10000
 	$move , r0, r14
 	$call , r23, r26_cfg
 	$move , r0, ifpreempt
@@ -1924,7 +2357,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	$call , r23, fault_notif
 	$move , r17, 1
 	$lw , r0, zero, cur_process_index
-	$jeq , r14, 0, .LBB13_32
+	$jeq , r14, 0, .LBB13_29
 .LBB13_28:                              //   in Loop: Header=BB13_16 Depth=3
 	$lsl , r1, r0, 4
 	$lsl_add , r0, r1, r0, 6
@@ -1932,7 +2365,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	$add , r0, r1, r0
 	$lbu , r1, r0, 2
 	$add , r0, r16, 1
-	$jgeu , r16, r1, .LBB13_32
+	$jgeu , r16, r1, .LBB13_29
 .LBB13_16:                              //   Parent Loop BB13_12 Depth=1
                                         //     Parent Loop BB13_13 Depth=2
                                         // =>    This Inner Loop Header: Depth=3
@@ -1955,7 +2388,7 @@ scheduler_jobs:                         // @scheduler_jobs
 // %bb.21:                              //   in Loop: Header=BB13_16 Depth=3
 	$and , r0, r0, 4
 	$jeq , r0, 0, .LBB13_25
-	$jump , .LBB13_29
+	$jump , .LBB13_33
 .LBB13_22:                              //   in Loop: Header=BB13_16 Depth=3
 	$call , r23, r26_read
 	$and , r1, r0, 1
@@ -1963,7 +2396,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	$jump , .LBB13_23
 .LBB13_24:                              //   in Loop: Header=BB13_16 Depth=3
 	$move , r0, 0
-	$move , r1, 5000
+	$move , r1, 10000
 	$call , r23, r26_cfg
 	$move , r0, ifpreempt
 	$sw , r0, 0, 1
@@ -1975,34 +2408,54 @@ scheduler_jobs:                         // @scheduler_jobs
 	$move , r0, all_end_or_waiting
 	$sb , r0, 0, 0
 	$call , r23, r26_read
-	$and , r1, r0, 1, nz, .LBB13_30
+	$and , r1, r0, 1, nz, .LBB13_35
 .LBB13_26:                              //   in Loop: Header=BB13_16 Depth=3
-	$and , r0, r0, 4, nz, .LBB13_29
+	$and , r0, r0, 4, nz, .LBB13_33
 // %bb.27:                              //   in Loop: Header=BB13_16 Depth=3
 	$move , r17, 0
 	$move , r14, 1
 	$lw , r0, zero, cur_process_index
 	$jneq , r14, 0, .LBB13_28
-	$jump , .LBB13_32
 .LBB13_29:                              //   in Loop: Header=BB13_13 Depth=2
+	$and , r0, r17, 255
+	$jneq , r0, 0, .LBB13_37
+// %bb.30:                              //   in Loop: Header=BB13_13 Depth=2
+	$call , r23, r26_read
+	$and , r1, r0, 1, nz, .LBB13_34
+// %bb.31:                              //   in Loop: Header=BB13_13 Depth=2
+	$move , r17, 0
+	$and , r0, r0, 4, z, .LBB13_37
+// %bb.32:                              //   in Loop: Header=BB13_13 Depth=2
 	$move , r0, 0
-	$move , r1, 5000
+	$move , r1, 10000
 	$call , r23, r26_cfg
-	$jump , .LBB13_31
-.LBB13_30:                              //   in Loop: Header=BB13_13 Depth=2
+	$move , r17, 3, true, .LBB13_37
+.LBB13_33:                              //   in Loop: Header=BB13_13 Depth=2
+	$move , r0, 0
+	$move , r1, 10000
+	$call , r23, r26_cfg
+	$jump , .LBB13_36
+.LBB13_34:                              //   in Loop: Header=BB13_13 Depth=2
+	$move , r0, 0
+	$move , r1, 10000
+	$call , r23, r26_cfg
+	$move , r0, ifpreempt
+	$sw , r0, 0, 1
+	$jump , .LBB13_36
+.LBB13_35:                              //   in Loop: Header=BB13_13 Depth=2
 	$lsl , r0, r16, 2
 	$lsl_add , r0, r0, r16, 4
 	$move , r1, jobs
 	$add , r14, r1, r0
 	$move , r0, 0
-	$move , r1, 5000
+	$move , r1, 10000
 	$call , r23, r26_cfg
 	$move , r0, ifpreempt
 	$sw , r0, 0, 1
 	$sb , r14,  - 20, 3
-.LBB13_31:                              //   in Loop: Header=BB13_13 Depth=2
+.LBB13_36:                              //   in Loop: Header=BB13_13 Depth=2
 	$move , r17, 1
-.LBB13_32:                              //   in Loop: Header=BB13_13 Depth=2
+.LBB13_37:                              //   in Loop: Header=BB13_13 Depth=2
 	$lw , r0, zero, mutex_jobs
 	// inline asm
 .Ltmp53:
@@ -2011,7 +2464,7 @@ scheduler_jobs:                         // @scheduler_jobs
 	$lbu , r0, zero, all_end_or_waiting
 	$and , r1, r17, 255
 	$or , r0, r0, r1, z, .LBB13_11
-// %bb.33:                              //   in Loop: Header=BB13_13 Depth=2
+// %bb.38:                              //   in Loop: Header=BB13_13 Depth=2
 	$move , r14, cp
 	$lw , r0, r14, 4
 	// inline asm
@@ -2024,8 +2477,8 @@ scheduler_jobs:                         // @scheduler_jobs
 	$sb , r14, 1, r1
 	$lbu , r3, zero, cp
 	$and , r2, r1, 255
-	$jeq , r2, r3, .LBB13_35
-// %bb.34:                              //   in Loop: Header=BB13_13 Depth=2
+	$jeq , r2, r3, .LBB13_40
+// %bb.39:                              //   in Loop: Header=BB13_13 Depth=2
 	$lw , r0, r14, 4
 	// inline asm
 .Ltmp55:
@@ -2036,28 +2489,28 @@ scheduler_jobs:                         // @scheduler_jobs
 	// inline asm
 	$lbu , r0, r14, 2
 	$jneq , r0, 0, .LBB13_13
-	$jump , .LBB13_41
-.LBB13_35:                              //   in Loop: Header=BB13_12 Depth=1
+	$jump , .LBB13_46
+.LBB13_40:                              //   in Loop: Header=BB13_12 Depth=1
 	$sb , r14, 2, 0
-	$jeq , r2, 0, .LBB13_40
-// %bb.36:                              //   in Loop: Header=BB13_12 Depth=1
+	$jeq , r2, 0, .LBB13_45
+// %bb.41:                              //   in Loop: Header=BB13_12 Depth=1
 	$and , r0, r0, 255
-	$move , r2, 0, true, .LBB13_38
-.LBB13_37:                              //   in Loop: Header=BB13_38 Depth=2
+	$move , r2, 0, true, .LBB13_43
+.LBB13_42:                              //   in Loop: Header=BB13_43 Depth=2
 	$add , r2, r2, 1
 	$and , r3, r1, 255
-	$jgeu , r2, r3, .LBB13_40
-.LBB13_38:                              //   Parent Loop BB13_12 Depth=1
+	$jgeu , r2, r3, .LBB13_45
+.LBB13_43:                              //   Parent Loop BB13_12 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
-	$jeq , r0, r2, .LBB13_37
-// %bb.39:                              //   in Loop: Header=BB13_38 Depth=2
+	$jeq , r0, r2, .LBB13_42
+// %bb.44:                              //   in Loop: Header=BB13_43 Depth=2
 	// inline asm
 .Ltmp56:
 	$resume , r2, 0, nz, .Ltmp56 + 0
 	// inline asm
 	$lbs , r1, zero, cp
-	$jump , .LBB13_37
-.LBB13_40:                              //   in Loop: Header=BB13_12 Depth=1
+	$jump , .LBB13_42
+.LBB13_45:                              //   in Loop: Header=BB13_12 Depth=1
 	$move , r0, cp
 	$sb , r0, 1, 0
 	$lw , r0, r0, 4
@@ -2065,21 +2518,21 @@ scheduler_jobs:                         // @scheduler_jobs
 .Ltmp57:
 	$release , r0, 0, nz, .Ltmp57 + 1
 	// inline asm
-.LBB13_41:                              //   in Loop: Header=BB13_12 Depth=1
+.LBB13_46:                              //   in Loop: Header=BB13_12 Depth=1
 	$move , r0, 0
-	$move , r1, 5000
+	$move , r1, 10000
 	$call , r23, r26_cfg
 	$lw , r0, zero, ifpreempt
-	$jneq , r0, 1, .LBB13_43
-// %bb.42:                              //   in Loop: Header=BB13_12 Depth=1
+	$jeq , r0, 0, .LBB13_48
+// %bb.47:                              //   in Loop: Header=BB13_12 Depth=1
 	$move , r0, all_end_or_waiting
 	$sb , r0, 0, 0
 	$move , r0, ifpreempt
 	$sw , r0, 0, 0
-.LBB13_43:                              //   in Loop: Header=BB13_12 Depth=1
+.LBB13_48:                              //   in Loop: Header=BB13_12 Depth=1
 	$call , r23, me_new
-	$jeq , r0, 0, .LBB13_51
-// %bb.44:                              //   in Loop: Header=BB13_12 Depth=1
+	$jeq , r0, 0, .LBB13_56
+// %bb.49:                              //   in Loop: Header=BB13_12 Depth=1
 	$move , r14, cp
 	$lw , r0, r14, 4
 	// inline asm
@@ -2093,27 +2546,27 @@ scheduler_jobs:                         // @scheduler_jobs
 	$lbu , r3, zero, cp
 	$and , r2, r1, 255
 	$jneq , r2, r3, .LBB13_9
-// %bb.45:                              //   in Loop: Header=BB13_12 Depth=1
+// %bb.50:                              //   in Loop: Header=BB13_12 Depth=1
 	$sb , r14, 2, 0
-	$jeq , r2, 0, .LBB13_50
-// %bb.46:                              //   in Loop: Header=BB13_12 Depth=1
+	$jeq , r2, 0, .LBB13_55
+// %bb.51:                              //   in Loop: Header=BB13_12 Depth=1
 	$and , r0, r0, 255
-	$move , r2, 0, true, .LBB13_48
-.LBB13_47:                              //   in Loop: Header=BB13_48 Depth=2
+	$move , r2, 0, true, .LBB13_53
+.LBB13_52:                              //   in Loop: Header=BB13_53 Depth=2
 	$add , r2, r2, 1
 	$and , r3, r1, 255
-	$jgeu , r2, r3, .LBB13_50
-.LBB13_48:                              //   Parent Loop BB13_12 Depth=1
+	$jgeu , r2, r3, .LBB13_55
+.LBB13_53:                              //   Parent Loop BB13_12 Depth=1
                                         // =>  This Inner Loop Header: Depth=2
-	$jeq , r0, r2, .LBB13_47
-// %bb.49:                              //   in Loop: Header=BB13_48 Depth=2
+	$jeq , r0, r2, .LBB13_52
+// %bb.54:                              //   in Loop: Header=BB13_53 Depth=2
 	// inline asm
 .Ltmp59:
 	$resume , r2, 0, nz, .Ltmp59 + 0
 	// inline asm
 	$lbs , r1, zero, cp
-	$jump , .LBB13_47
-.LBB13_50:                              //   in Loop: Header=BB13_12 Depth=1
+	$jump , .LBB13_52
+.LBB13_55:                              //   in Loop: Header=BB13_12 Depth=1
 	$move , r0, cp
 	$sb , r0, 1, 0
 	$lw , r0, r0, 4
@@ -2122,7 +2575,24 @@ scheduler_jobs:                         // @scheduler_jobs
 	$release , r0, 0, nz, .Ltmp60 + 1
 	// inline asm
 	$jump , .LBB13_10
-.LBB13_51:
+.LBB13_56:
+	// inline asm
+	$time , r0
+
+	// inline asm
+	$lw , r1, zero, cur_process_index
+	$lsl , r2, r1, 4
+	$lsl_add , r1, r2, r1, 6
+	$move , r2, processs
+	$add , r1, r2, r1
+	$lw , r1, r1, 20
+	$sub , r0, r0, r1
+	$move , r1, 10001
+	$jlts , r0, r1, .LBB13_58
+// %bb.57:
+	$move , r1, 7
+	$call , r23, print_debug
+.LBB13_58:
 	$lbu , r0, zero, all_end_or_waiting
 	$ld , d16, r22,  - 24
 	$ld , d14, r22,  - 16
@@ -5381,6 +5851,10 @@ main:                                   // @main
 	$sw , r1, 4, r0
 	$sh , r1, 0, 16
 	$sb , r1, 2, 0
+	$move , r1, cp_2
+	$sw , r1, 4, r0
+	$sh , r1, 0, 16
+	$sb , r1, 2, 0
 	$move , r0, __atomic_bit_mutex_mutex_flag
 	$sw , zero, mutex_flag, r0
 	$move , r0, __atomic_bit_mutex_mutex_l
@@ -5734,6 +6208,13 @@ mutex_sbrk:
 	$long,	0
 	$size,	mutex_sbrk, 4
 
+	$type,	cp_2,@object                    // @cp_2
+	$globl,	cp_2
+	$p2align,	2
+cp_2:
+	$zero,	8
+	$size,	cp_2, 8
+
 	$type,	saved_fc_stop,@object           // @saved_fc_stop
 	$globl,	saved_fc_stop
 	$p2align,	2
@@ -5852,436 +6333,3 @@ __atomic_bit_mutex_mutex_inode:
 	$addrsig_sym, __atomic_bit_mutex_mutex_jobs
 	$addrsig_sym, __atomic_bit_mutex_mutex_sockets
 	$addrsig_sym, __atomic_bit_mutex_mutex_mram
-	$text,
-	$file,	"memset.c"
-	$section,	%text, __memset_wram_4align,"ax",@progbits
-	$globl,	__memset_wram_4align            //  -  -  Begin function __memset_wram_4align
-	$type,	__memset_wram_4align,@function
-__memset_wram_4align:                   // @__memset_wram_4align
-memset..Lfunc_begin0:
-// %bb.0:
-	$lsr , r2, r2, 2, z, memset..LBB0_3
-// %bb.1:
-	$and , r3, r1, 255
-	$lsl_add , r1, r3, r1, 24
-	$lsl_add , r1, r1, r3, 8
-	$lsl_add , r1, r1, r3, 16
-	$move , r3, r0
-memset..LBB0_2:                                // =>This Inner Loop Header: Depth=1
-	$sw , r3, 0, r1
-	$add , r3, r3, 4
-	$add , r2, r2,  - 1, nz, memset..LBB0_2
-memset..LBB0_3:
-	$jump , r23
-memset..Lfunc_end0:
-	$size,	__memset_wram_4align, memset..Lfunc_end0 - __memset_wram_4align
-	$section,	%stack_sizes,"o",@progbits,%text, __memset_wram_4align
-	$long,	memset..Lfunc_begin0
-	$byte,	0
-	$section,	%text, __memset_wram_4align,"ax",@progbits
-                                        //  -  -  End function
-	$section,	%text, memset,"ax",@progbits
-	$globl,	memset                          //  -  -  Begin function memset
-	$type,	memset,@function
-memset:                                 // @memset
-memset..Lfunc_begin1:
-// %bb.0:
-	$and , r3, r0, 3, z, memset..LBB1_1
-// %bb.2:
-	$sub , r4, 4, r3
-	$move , r3, r2
-	$jgtu , r4, r2, memset..LBB1_4
-// %bb.3:
-	$move , r3, r4
-memset..LBB1_4:
-	$jeq , r3, 0, memset..LBB1_7
-// %bb.5:
-	$move , r4, r0
-	$move , r5, r3
-memset..LBB1_6:                                // =>This Inner Loop Header: Depth=1
-	$sb , r4, 0, r1
-	$add , r4, r4, 1
-	$add , r5, r5,  - 1, nz, memset..LBB1_6
-memset..LBB1_7:
-	$sub , r2, r2, r3
-	$add , r3, r0, r3
-	$jgeu , r2, 4, memset..LBB1_9
-memset..LBB1_12:
-	$jeq , r2, 0, memset..LBB1_14
-memset..LBB1_13:                               // =>This Inner Loop Header: Depth=1
-	$sb , r3, 0, r1
-	$add , r3, r3, 1
-	$add , r2, r2,  - 1, nz, memset..LBB1_13
-memset..LBB1_14:
-	$jump , r23
-memset..LBB1_1:
-	$move , r3, r0
-	$jltu , r2, 4, memset..LBB1_12
-memset..LBB1_9:
-	$and , r4, r2,  - 4
-	$and , r5, r1, 255
-	$lsl_add , r6, r5, r1, 24
-	$lsl_add , r6, r6, r5, 8
-	$lsl_add , r5, r6, r5, 16
-	$lsr , r6, r2, 2
-	$move , r7, r3
-memset..LBB1_10:                               // =>This Inner Loop Header: Depth=1
-	$sw , r7, 0, r5
-	$add , r7, r7, 4
-	$add , r6, r6,  - 1, nz, memset..LBB1_10
-// %bb.11:
-	$and , r2, r2, 3
-	$add , r3, r3, r4
-	$jneq , r2, 0, memset..LBB1_13
-	$jump , memset..LBB1_14
-memset..Lfunc_end1:
-	$size,	memset, memset..Lfunc_end1 - memset
-	$section,	%stack_sizes,"o",@progbits,%text, memset
-	$long,	memset..Lfunc_begin1
-	$byte,	0
-	$section,	%text, memset,"ax",@progbits
-                                        //  -  -  End function
-	$section,	%text, __memset_mram_8align,"ax",@progbits
-	$globl,	__memset_mram_8align            //  -  -  Begin function __memset_mram_8align
-	$type,	__memset_mram_8align,@function
-__memset_mram_8align:                   // @__memset_mram_8align
-memset..Lfunc_begin2:
-// %bb.0:
-	$and , r3, r1, 255
-	$lsl_add , r1, r3, r1, 24
-	$lsl_add , r1, r1, r3, 8
-	$lsl_add , r1, r1, r3, 16
-	$sw , r22, 0, r1
-	$sw , r22, 4, r1
-	$jeq , r2, 0, memset..LBB2_3
-// %bb.1:
-	$move , r1, 0
-memset..LBB2_2:                                // =>This Inner Loop Header: Depth=1
-	$add , r3, r0, r1
-	$add , r4, r22, 0
-	$add , r1, r1, 8
-	$sdma , r4, r3, 0
-	$jltu , r1, r2, memset..LBB2_2
-memset..LBB2_3:
-	$jump , r23
-memset..Lfunc_end2:
-	$size,	__memset_mram_8align, memset..Lfunc_end2 - __memset_mram_8align
-	$section,	%stack_sizes,"o",@progbits,%text, __memset_mram_8align
-	$long,	memset..Lfunc_begin2
-	$byte,	8
-	$section,	%text, __memset_mram_8align,"ax",@progbits
-                                        //  -  -  End function
-	$section,	%text, __memset_mram,"ax",@progbits
-	$globl,	__memset_mram                   //  -  -  Begin function __memset_mram
-	$type,	__memset_mram,@function
-__memset_mram:                          // @__memset_mram
-memset..Lfunc_begin3:
-// %bb.0:
-	$and , r3, r0,  - 8
-	$and , r6, r0, 7, z, memset..LBB3_7
-// %bb.1:
-	$sub , r5, 8, r6
-	$move , r4, r2
-	$jgtu , r5, r2, memset..LBB3_3
-// %bb.2:
-	$move , r4, r5
-memset..LBB3_3:
-	$add , r5, r22, 8
-	$ldma , r5, r3, 0
-	$jeq , r4, 0, memset..LBB3_6
-// %bb.4:
-	$or , r6, r5, r6
-	$move , r7, r4
-memset..LBB3_5:                                // =>This Inner Loop Header: Depth=1
-	$sb , r6, 0, r1
-	$add , r6, r6, 1
-	$add , r7, r7,  - 1, nz, memset..LBB3_5
-memset..LBB3_6:
-	$sdma , r5, r3, 0
-	$sub , r2, r2, r4
-	$add , r3, r3, 8
-memset..LBB3_7:
-	$jltu , r2, 8, memset..LBB3_12
-// %bb.8:
-	$and , r4, r1, 255
-	$lsl_add , r5, r4, r1, 24
-	$lsl_add , r5, r5, r4, 8
-	$lsl_add , r4, r5, r4, 16
-	$sw , r22, 0, r4
-	$sw , r22, 4, r4
-	$and , r4, r2,  - 8, z, memset..LBB3_11
-// %bb.9:
-	$move , r5, 0
-memset..LBB3_10:                               // =>This Inner Loop Header: Depth=1
-	$add , r6, r3, r5
-	$add , r7, r22, 0
-	$add , r5, r5, 8
-	$sdma , r7, r6, 0
-	$jltu , r5, r4, memset..LBB3_10
-memset..LBB3_11:
-	$and , r2, r2, 7
-	$add , r3, r3, r4
-memset..LBB3_12:
-	$jeq , r2, 0, memset..LBB3_16
-// %bb.13:
-	$add , r4, r22, 8
-	$ldma , r4, r3, 0
-memset..LBB3_14:                               // =>This Inner Loop Header: Depth=1
-	$sb , r4, 0, r1
-	$add , r4, r4, 1
-	$add , r2, r2,  - 1, nz, memset..LBB3_14
-// %bb.15:
-	$add , r1, r22, 8
-	$sdma , r1, r3, 0
-memset..LBB3_16:
-	$jump , r23
-memset..Lfunc_end3:
-	$size,	__memset_mram, memset..Lfunc_end3 - __memset_mram
-	$section,	%stack_sizes,"o",@progbits,%text, __memset_mram
-	$long,	memset..Lfunc_begin3
-	$byte,	16
-	$section,	%text, __memset_mram,"ax",@progbits
-                                        //  -  -  End function
-	$addrsig,
-	$addrsig_sym, __memset_wram_4align
-	$addrsig_sym, __memset_mram_8align
-	$addrsig_sym, __memset_mram
-	$text,
-	$file,	"crt0.c"
-	$section,	%text, __bootstrap,"ax",@progbits
-	$globl,	__bootstrap                     //  -  -  Begin function __bootstrap
-	$type,	__bootstrap,@function
-__bootstrap:                            // @__bootstrap
-crt0..Lfunc_begin0:
-// %bb.0:
-	// inline asm
-	$jnz , id, crt0.__sys_start_thread
-
-	$sd , zero, __stdout_buffer_state, 0
-	$move , r23, __atomic_end_addr
-crt0.__sys_atomic_bit_clear:
-	$jeq , r23, __atomic_used_addr, crt0.__sys_start_thread
-crt0..Ltmp0:
-	$release , r23, 0, nz, crt0..Ltmp0 + 1
-	$add , r23, r23,  - 1, true, crt0.__sys_atomic_bit_clear
-crt0.__sys_start_thread:
-crt0..Ltmp1:
-	$jeq , id, NR_TASKLETS - 1, crt0..Ltmp1 + 2
-	$boot , id, 1
-	$ld , d22, id8, __sys_thread_stack_table_ptr
-	$call , r23, main
-	$globl,	__sys_end
-__sys_end:
-
-	$stop , true, __sys_end
-	// inline asm
-crt0..Lfunc_end0:
-	$size,	__bootstrap, crt0..Lfunc_end0 - __bootstrap
-	$section,	%stack_sizes,"o",@progbits,%text, __bootstrap
-	$long,	crt0..Lfunc_begin0
-	$byte,	0
-	$section,	%text, __bootstrap,"ax",@progbits
-                                        //  -  -  End function
-	$type,	__sys_null_pointer,@object      // @__sys_null_pointer
-	$section,	%data, __sys_zero,"aw",@progbits
-	$globl,	__sys_null_pointer
-	$p2align,	3
-__sys_null_pointer:
-	$quad,	0                               // 0x0
-	$size,	__sys_null_pointer, 8
-
-	$type,	__sys_thread_stack_table_ptr,@object // @__sys_thread_stack_table_ptr
-	$section,	%data, __sys_keep,"aw",@progbits
-	$globl,	__sys_thread_stack_table_ptr
-	$p2align,	3
-__sys_thread_stack_table_ptr:
-	$long,	STACK_SIZE_TASKLET_0
-	$long,	__sys_stack_thread_0
-	$long,	STACK_SIZE_TASKLET_1
-	$long,	__sys_stack_thread_1
-	$long,	STACK_SIZE_TASKLET_2
-	$long,	__sys_stack_thread_2
-	$long,	STACK_SIZE_TASKLET_3
-	$long,	__sys_stack_thread_3
-	$long,	STACK_SIZE_TASKLET_4
-	$long,	__sys_stack_thread_4
-	$long,	STACK_SIZE_TASKLET_5
-	$long,	__sys_stack_thread_5
-	$long,	STACK_SIZE_TASKLET_6
-	$long,	__sys_stack_thread_6
-	$long,	STACK_SIZE_TASKLET_7
-	$long,	__sys_stack_thread_7
-	$long,	STACK_SIZE_TASKLET_8
-	$long,	__sys_stack_thread_8
-	$long,	STACK_SIZE_TASKLET_9
-	$long,	__sys_stack_thread_9
-	$long,	STACK_SIZE_TASKLET_10
-	$long,	__sys_stack_thread_10
-	$long,	STACK_SIZE_TASKLET_11
-	$long,	__sys_stack_thread_11
-	$long,	STACK_SIZE_TASKLET_12
-	$long,	__sys_stack_thread_12
-	$long,	STACK_SIZE_TASKLET_13
-	$long,	__sys_stack_thread_13
-	$long,	STACK_SIZE_TASKLET_14
-	$long,	__sys_stack_thread_14
-	$long,	STACK_SIZE_TASKLET_15
-	$long,	__sys_stack_thread_15
-	$long,	STACK_SIZE_TASKLET_16
-	$long,	__sys_stack_thread_16
-	$long,	STACK_SIZE_TASKLET_17
-	$long,	__sys_stack_thread_17
-	$long,	STACK_SIZE_TASKLET_18
-	$long,	__sys_stack_thread_18
-	$long,	STACK_SIZE_TASKLET_19
-	$long,	__sys_stack_thread_19
-	$long,	STACK_SIZE_TASKLET_20
-	$long,	__sys_stack_thread_20
-	$long,	STACK_SIZE_TASKLET_21
-	$long,	__sys_stack_thread_21
-	$long,	STACK_SIZE_TASKLET_22
-	$long,	__sys_stack_thread_22
-	$long,	STACK_SIZE_TASKLET_23
-	$long,	__sys_stack_thread_23
-	$size,	__sys_thread_stack_table_ptr, 192
-
-	$type,	__sys_used_mram_end,@object     // @__sys_used_mram_end
-	$section,	%mram, noinit,"aw",@progbits
-	$globl,	__sys_used_mram_end
-	$p2align,	3
-__sys_used_mram_end:
-	$size,	__sys_used_mram_end, 0
-
-	$type,	thread_profiling,@object        // @thread_profiling
-	$section,	%data, immediate_memory.thread_profiling,"aw",@progbits
-	$globl,	thread_profiling
-	$p2align,	2
-thread_profiling:
-	$zero,	96
-	$size,	thread_profiling, 96
-
-	$type,	perfcounter_end_value,@object   // @perfcounter_end_value
-	$section,	%bss, perfcounter_end_value,"aw",@nobits
-	$globl,	perfcounter_end_value
-	$p2align,	2
-perfcounter_end_value:
-	$long,	0                               // 0x0
-	$size,	perfcounter_end_value, 4
-
-	$type,	CLOCKS_PER_SEC,@object          // @CLOCKS_PER_SEC
-	$section,	%dpu_host,"a",@progbits
-	$globl,	CLOCKS_PER_SEC
-	$p2align,	3
-CLOCKS_PER_SEC:
-	$long,	0                               // 0x0
-	$size,	CLOCKS_PER_SEC, 4
-
-	$type,	error_storage,@object           // @error_storage
-	$globl,	error_storage
-	$p2align,	3
-error_storage:
-	$long,	0                               // 0x0
-	$size,	error_storage, 4
-
-	$addrsig,
-	$addrsig_sym, __bootstrap
-	$addrsig_sym, __sys_null_pointer
-	$addrsig_sym, STACK_SIZE_TASKLET_0
-	$addrsig_sym, __sys_stack_thread_0
-	$addrsig_sym, STACK_SIZE_TASKLET_1
-	$addrsig_sym, __sys_stack_thread_1
-	$addrsig_sym, STACK_SIZE_TASKLET_2
-	$addrsig_sym, __sys_stack_thread_2
-	$addrsig_sym, STACK_SIZE_TASKLET_3
-	$addrsig_sym, __sys_stack_thread_3
-	$addrsig_sym, STACK_SIZE_TASKLET_4
-	$addrsig_sym, __sys_stack_thread_4
-	$addrsig_sym, STACK_SIZE_TASKLET_5
-	$addrsig_sym, __sys_stack_thread_5
-	$addrsig_sym, STACK_SIZE_TASKLET_6
-	$addrsig_sym, __sys_stack_thread_6
-	$addrsig_sym, STACK_SIZE_TASKLET_7
-	$addrsig_sym, __sys_stack_thread_7
-	$addrsig_sym, STACK_SIZE_TASKLET_8
-	$addrsig_sym, __sys_stack_thread_8
-	$addrsig_sym, STACK_SIZE_TASKLET_9
-	$addrsig_sym, __sys_stack_thread_9
-	$addrsig_sym, STACK_SIZE_TASKLET_10
-	$addrsig_sym, __sys_stack_thread_10
-	$addrsig_sym, STACK_SIZE_TASKLET_11
-	$addrsig_sym, __sys_stack_thread_11
-	$addrsig_sym, STACK_SIZE_TASKLET_12
-	$addrsig_sym, __sys_stack_thread_12
-	$addrsig_sym, STACK_SIZE_TASKLET_13
-	$addrsig_sym, __sys_stack_thread_13
-	$addrsig_sym, STACK_SIZE_TASKLET_14
-	$addrsig_sym, __sys_stack_thread_14
-	$addrsig_sym, STACK_SIZE_TASKLET_15
-	$addrsig_sym, __sys_stack_thread_15
-	$addrsig_sym, STACK_SIZE_TASKLET_16
-	$addrsig_sym, __sys_stack_thread_16
-	$addrsig_sym, STACK_SIZE_TASKLET_17
-	$addrsig_sym, __sys_stack_thread_17
-	$addrsig_sym, STACK_SIZE_TASKLET_18
-	$addrsig_sym, __sys_stack_thread_18
-	$addrsig_sym, STACK_SIZE_TASKLET_19
-	$addrsig_sym, __sys_stack_thread_19
-	$addrsig_sym, STACK_SIZE_TASKLET_20
-	$addrsig_sym, __sys_stack_thread_20
-	$addrsig_sym, STACK_SIZE_TASKLET_21
-	$addrsig_sym, __sys_stack_thread_21
-	$addrsig_sym, STACK_SIZE_TASKLET_22
-	$addrsig_sym, __sys_stack_thread_22
-	$addrsig_sym, STACK_SIZE_TASKLET_23
-	$addrsig_sym, __sys_stack_thread_23
-	$addrsig_sym, __sys_thread_stack_table_ptr
-	$addrsig_sym, __sys_used_mram_end
-	$addrsig_sym, thread_profiling
-	$addrsig_sym, CLOCKS_PER_SEC
-	$addrsig_sym, error_storage
-	$text,
-	$file,	"perfcounter.c"
-	$section,	%text, perfcounter_get,"ax",@progbits
-	$globl,	perfcounter_get                 //  -  -  Begin function perfcounter_get
-	$type,	perfcounter_get,@function
-perfcounter_get:                        // @perfcounter_get
-perfcounter..Lfunc_begin0:
-// %bb.0:
-	// inline asm
-	$time , r0
-	// inline asm
-	$move .u, d2, r0
-	$lslx , r0, r3, 4
-	$lsl_add , r0, r0, r2, 4
-	$lsl , r1, r3, 4
-	$jump , r23
-perfcounter..Lfunc_end0:
-	$size,	perfcounter_get, perfcounter..Lfunc_end0 - perfcounter_get
-	$section,	%stack_sizes,"o",@progbits,%text, perfcounter_get
-	$long,	perfcounter..Lfunc_begin0
-	$byte,	0
-	$section,	%text, perfcounter_get,"ax",@progbits
-                                        //  -  -  End function
-	$section,	%text, perfcounter_config,"ax",@progbits
-	$globl,	perfcounter_config              //  -  -  Begin function perfcounter_config
-	$type,	perfcounter_config,@function
-perfcounter_config:                     // @perfcounter_config
-perfcounter..Lfunc_begin1:
-// %bb.0:
-	$lsl_add , r0, r1, r0, 1
-	// inline asm
-	$time_cfg , r0, r0
-	// inline asm
-	$move .u, d2, r0
-	$lslx , r0, r3, 4
-	$lsl_add , r0, r0, r2, 4
-	$lsl , r1, r3, 4
-	$jump , r23
-perfcounter..Lfunc_end1:
-	$size,	perfcounter_config, perfcounter..Lfunc_end1 - perfcounter_config
-	$section,	%stack_sizes,"o",@progbits,%text, perfcounter_config
-	$long,	perfcounter..Lfunc_begin1
-	$byte,	0
-	$section,	%text, perfcounter_config,"ax",@progbits
-                                        //  -  -  End function
-	$addrsig,

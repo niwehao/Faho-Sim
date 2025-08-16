@@ -117,7 +117,7 @@ namespace upmem_sim::simulator::dpu
         {                                   // check if in user state
           if (ifpreempt == 0)
           {
-            std::cout << "preempt start"<< std::endl;
+            //std::cout << "preempt start"<< std::endl;
             ifpreempt = 1;
             preempt_fin = threads_.size();
             preempt_start = performance_counter_->get_true_value();
@@ -162,7 +162,7 @@ namespace upmem_sim::simulator::dpu
           if (preempt_fin == 0)
           {
             ifpreempt = 0;
-            std::cout << "preempt finish with " << performance_counter_->get_true_value() - preempt_start << std::endl;
+            std::cout << "preempt finish with real" << performance_counter_->get_true_value() - preempt_start << std::endl;
             preempt_start = 0;
           }
         }

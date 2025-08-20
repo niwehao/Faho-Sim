@@ -1,0 +1,35 @@
+/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/atomic.bin
+DMA to atomic completed...
+/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/iram.bin
+num of instructions: 3345
+DMA to IRAM completed...
+/home/krakos/niwe/Faho_Sim/uPIMulator_frontend/bin/16_dpus//KERNEL.16/wram.bin
+DMA to WRAM completed...
+init completed...
+launch completed...
+********time:4592*******
+text section size is 5bb0
+alloc inode:3
+alloc inode:4
+alloc inode:5
+flag set:0
+break point 2 happen in cycle:5383
+break point 3 happen in cycle:6314
+break point 4 happen in cycle:6435
+break point 5 happen in cycle:22390
+break point 6 happen in cycle:31531
+break point 7 happen in cycle:32032
+fthread 20 start dma 32162
+alloc inode:6
+fthread 20 end dma 32375
+fthread 20 start dma 32476
+fthread 20 end dma 32658
+fthread 20 start dma 32864
+fthread 20 end dma 33030
+fthread 20 start dma 33129
+fthread 20 end dma 33284
+fthread 20 start dma 33378
+fthread 20 end dma 33528
+fthread 20 start dma 33616
+fthread 20 end dma 33760
+fthread 20 start dma 33852

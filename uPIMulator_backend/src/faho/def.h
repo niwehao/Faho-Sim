@@ -4,7 +4,6 @@
 #include "util/config_loader.h"  // util::ConfigLoader
 #include "encoder/byte_stream.h" // ByteStream
 #include "simulator/dpu/dpu.h"
-// 定义一个可控制的输出宏
 
 #define MAX_PRG 10
 #define BUFFER_BIT_MAP 400
@@ -28,12 +27,12 @@
 #define __dma_aligned __aligned(8)
 #include <fcntl.h>
 #include <unistd.h>
-#include <unistd.h>    // 用于read, close
-#include <sys/types.h> // 用于基本系统类型
+#include <unistd.h>
+#include <sys/types.h>
 #include <fstream>    // std::ifstream, std::ofstream, std::fstream
 #include <iostream>   // std::cin, std::cout, std::cerr
 #include <sstream>  
-#include <sys/stat.h>  // 用于文件状态
+#include <sys/stat.h>
 #include "faho/inode.h"
 #include "faho/socket.h"
 #include "faho/benchmark/host.h"
@@ -95,7 +94,7 @@ namespace upmem_sim::simulator::faho::def
     int kind;
     int offset;
     std::string path;
-    void* pointer;//TODO修改read_inode逻辑
+    void* pointer;
     encoder::ByteStream *buf;
     int size;
   };
@@ -109,7 +108,7 @@ namespace upmem_sim::simulator::faho::def
     unsigned int prc_ix;
     encoder::ByteStream *buf;
     int offset;
-    void* pointer; // 用于read_inode
+    void* pointer;
   };
   class WriteInode
   {
@@ -142,7 +141,7 @@ namespace upmem_sim::simulator::faho::def
   {
   public:
     unsigned int nb_data = 0;
-    int rolepids[MAX_PRG] = {0}; // 记录每个进程的pid
+    int rolepids[MAX_PRG] = {0};
   };
   class DpuFlag
   {
@@ -166,20 +165,20 @@ namespace upmem_sim::simulator::faho::def
 
     struct def::kernel_info ki;
     uint32_t dpu_id;
-    u_int16_t inode_table[MAX_PRG][4][2]={0};//用于初始填充
+    u_int16_t inode_table[MAX_PRG][4][2]={0};
     u_int8_t process_table[MAX_PRG] = {0};
     std::vector<struct process_host *> processes;
     std::vector<struct ProcessEvent *> unload_processes;
     std::vector<struct ProcessEvent *> load_processes;
     std::vector<struct ProcessEvent *> unlaunch_processes;
-    std::vector<struct ProcessEvent *> launch_processes; // 启动和结束
+    std::vector<struct ProcessEvent *> launch_processes;
     //__dma_aligned struct def::job jobs[JOB_PER_PROCESS];
     WriteSocket *write_socket;
     CheckResult *check_result;
     WriteInode *write_inode;
     ReadInode *read_inode;
     int num_process = 0;
-    int inode_num = 2; // 留下一个节点去储存process
+    int inode_num = 2;
   };
   struct socket_descriptor
   {
@@ -218,7 +217,7 @@ namespace upmem_sim::simulator::faho::def
   public:
     process_host *process;
     Event *event;
-    int index; // 进程在dpu_manager中的索引
+    int index;
     ProcessEvent(process_host *process, Event *event, int index);
   };
 

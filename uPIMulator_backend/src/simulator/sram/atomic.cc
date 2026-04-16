@@ -8,11 +8,11 @@ Atomic::Atomic() {
 
   size_ = util::ConfigLoader::atomic_size();
 
-  locks_.resize(size_);//初始化锁
+  locks_.resize(size_);
   for (int i = 0; i < size_; i++) {
     locks_[i] = new Lock();
   }
-}//atomic是怎么使用的?
+}
 
 Atomic::~Atomic() {
   delete address_;

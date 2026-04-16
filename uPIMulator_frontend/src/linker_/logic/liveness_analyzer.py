@@ -20,7 +20,7 @@ class LivenessAnalyzer(assemblyListener):
 
     def exitSet_directive(self, ctx: assemblyParser.Set_directiveContext) -> None:
         self._binary.liveness().add_def(str(ctx.Identifier(i=0)))
-        self._binary.liveness().add_use(str(ctx.Identifier(i=1)))#加入标签
+        self._binary.liveness().add_use(str(ctx.Identifier(i=1)))
 
     def exitSize_directive(self, ctx: assemblyParser.Size_directiveContext) -> None:
         self._binary.liveness().add_use(str(ctx.Identifier()))

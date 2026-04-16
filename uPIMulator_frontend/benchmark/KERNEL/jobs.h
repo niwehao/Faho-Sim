@@ -111,7 +111,7 @@ int create_job(unsigned int arg1)
       begin_stack = jobs[i].beginstack;
       break;
     }
-  } // 没有可以回收的
+  }
   // }
   if (!begin_stack)
   { // need to alloc a new stack
@@ -123,7 +123,7 @@ int create_job(unsigned int arg1)
       return begin_stack;
     }
 
-    begin_stack -= SIZE_STACK; // 为什么要减去???
+    begin_stack -= SIZE_STACK;
   }
   struct process *p = &processs[cur_process_index];
 
@@ -259,7 +259,7 @@ int scheduler_jobs(void)
       if(stop)
         break;
 
-      swap(last, ready); // swap结束以后
+      swap(last, ready);
       all_end_or_waiting =
           0; // the detection of all_end can be more fast but keep it simple
       stop = check_time_process();
@@ -276,7 +276,6 @@ int scheduler_jobs(void)
 
       if (sp_wait(&cp) != 0)
         continue;
-      //__asm__ volatile("\tmove r15, id\n");//r15记录的me可能会发生变化
       if (me_new() == 0){
         unsigned int time = 0;
         //__builtin_time_r(time);

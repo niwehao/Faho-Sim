@@ -12,10 +12,10 @@ class IRAM {
   explicit IRAM();
   ~IRAM();
 
-  Address address() { return address_->address(); }//基地址
-  Address size() { return size_; }//大小
+  Address address() { return address_->address(); }
+  Address size() { return size_; }
 
-  abi::instruction::Instruction *read(Address address);//指令解码
+  abi::instruction::Instruction *read(Address address);
   void write(Address address, encoder::ByteStream *byte_stream);
   void cycle() = delete;
 
@@ -23,8 +23,8 @@ class IRAM {
   static int num_instruction_words() {
     return static_cast<int>(util::ConfigLoader::iram_size() /
                             abi::word::InstructionWord().size());
-  }//计算可以储存多少条指令
-  int index(Address address);//计算地址对应的索引
+  }
+  int index(Address address);
 
  private:
   abi::word::InstructionAddressWord *address_;

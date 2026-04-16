@@ -66,20 +66,19 @@ namespace upmem_sim::simulator::faho::def
         {
             if (end_flag == 1)
             {
-                exit(0); // 退出程序
+                exit(0);
             }
-            end_flag = 1; // 设置结束标志
+            end_flag = 1;
             return nullptr;
-            // 退出代码
         }
         def::Event *event_ = get_event(time_);
         if (event_ == nullptr)
         {
-            return nullptr; // 没有事件
+            return nullptr;
         }
         else
         {
-            return event_; // 返回事件
+            return event_;
         }
     }
     void GEMV::check(int pid)
@@ -250,7 +249,7 @@ namespace upmem_sim::simulator::faho::def
         {
             int role_id = i + first_role_id;
             event = init_ReadSocket(role_id);
-            events_.push_back(event); // DPU已经启动
+            events_.push_back(event);
         }
         for (int i = 0; i < nr_of_dpus; i++)
         {
@@ -258,7 +257,7 @@ namespace upmem_sim::simulator::faho::def
             event = init_InodeRead(role_id, 1000,
                                    C_dpu + i * max_rows_per_dpu,
                                    offset_real, max_rows_per_dpu * sizeof(T));
-            events_.push_back(event); // DPU已经启动
+            events_.push_back(event);
         }
         event = init_Check(1);
         events_.push_back(event);

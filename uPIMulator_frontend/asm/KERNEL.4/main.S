@@ -34,7 +34,7 @@ swap_context: //Save the current flow context inside the stack (and store stack 
 	ld d16, r22, 8
 	ld d18, r22, 16
 	ld d20, r22, 24
-	ld d22, r22, 32 //恢复到之前的位置
+	ld d22, r22, 32
 	jump r23
 .section	.text.first_swap_context,"ax",@progbits
 	.globl	first_swap_context               // -- Begin function 	.globl	first_swap_context           

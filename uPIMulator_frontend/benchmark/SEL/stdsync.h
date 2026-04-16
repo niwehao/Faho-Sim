@@ -43,7 +43,7 @@ void wait_barrier(struct barrier *barrier) {
   barrier->__nb_waiting += 1;
   //print_debug(barrier->__nb_waiting,3);
   
-  if (barrier->__nb_waiting == barrier->__nb_expected) {//也许可以改成>=
+  if (barrier->__nb_waiting == barrier->__nb_expected) {
     wakeup(barrier);
     barrier->__nb_waiting = 0;
   } else {

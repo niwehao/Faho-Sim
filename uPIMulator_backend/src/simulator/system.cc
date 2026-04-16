@@ -4,9 +4,9 @@ namespace upmem_sim::simulator {
 
 System::System(util::ArgumentParser *argument_parser)
     : cpu_(new cpu::CPU(argument_parser)),
-      rank_(new rank::Rank(argument_parser)),//DIMM的rank
+      rank_(new rank::Rank(argument_parser)),
       execuion_(0), 
-      stat_factory_(new util::StatFactory("System")) {//统计数据
+      stat_factory_(new util::StatFactory("System")) {
 
   benchmark = argument_parser->get_string_parameter("benchmark");
 
@@ -37,21 +37,20 @@ util::StatFactory *System::stat_factory() {
 }
 
 void System::init() {
-  cpu_->init();//初始化各种ram(模拟系统占用
+  cpu_->init();
   //cpu_->sched(execuion_);//
   cpu_->launch();
 }
 
 void System::cycle() {
 
-  faho_k1_->cycle(); //处理faho的事件
+  faho_k1_->cycle();
 
   cpu_->cycle();
   rank_->cycle();
   
 
   if (is_zombie()) {
-    // cpu_->check(execuion_);//程序的执行次数
     execuion_ += 1;
 
     // if (not is_finished()) {

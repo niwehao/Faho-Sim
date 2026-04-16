@@ -19,7 +19,7 @@
                 "panel": "shared"
             },
             "problemMatcher": [],
-            "detail": "配置CMake项目"
+            "detail": "Configure the CMake project"
         },
         {
             "label": "Build uPIMulator",
@@ -42,7 +42,7 @@
             "problemMatcher": [
                 "$gcc"
             ],
-            "detail": "构建uPIMulator项目"
+            "detail": "Build the uPIMulator project"
         },
         {
             "label": "Clean Build",
@@ -59,7 +59,7 @@
                 "focus": false,
                 "panel": "shared"
             },
-            "detail": "清理构建目录"
+            "detail": "Remove the build directory"
         },
         {
             "label": "Rebuild uPIMulator",
@@ -69,7 +69,7 @@
                 "Build uPIMulator"
             ],
             "group": "build",
-            "detail": "清理后重新构建"
+            "detail": "Clean and rebuild"
         },
         {
             "type": "cppbuild",

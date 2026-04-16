@@ -87,7 +87,7 @@ namespace upmem_sim::simulator::reg
         bool user_flag=(value< util::ConfigLoader::wram_offset() + util::ConfigLoader::wram_kernel_offset());
         bool kernel_flag=(value >= sp_reg_->thread_id * 512 + 136123 && value < sp_reg_->thread_id * 512 + 136123 + 512);//136123 is sys_use_end_0 of kernel
         //std::cout << "write gp_reg 22 value: " << value << std::endl;  
-        assert(user_flag || kernel_flag); // 22号寄存器只能是用户态或系统态的栈地址   
+        assert(user_flag || kernel_flag);
 
       }
       // if (gp_reg->index() == 23)
@@ -102,7 +102,7 @@ namespace upmem_sim::simulator::reg
       timetable *timetable_p = nullptr;
       int found = 0;
       if (value < util::ConfigLoader::iram_offset() + util::ConfigLoader::iram_kernel_offset())
-      { // 用户态debug
+      {
         state = 1;
         std::cout << "Thread id: " << sp_reg_->thread_id << "  ";
         for (auto &timetable_n : time_table_helloworld)
@@ -138,12 +138,11 @@ namespace upmem_sim::simulator::reg
         }
         if (!found)
         {
-          // 找到timetable_最后一项
           std::cout << "  *** jmp to user: " << timetable_p->name << "+" << (value - timetable_p->time) / 12 << std::endl;
         }
       }
       else
-      { // 系统态debug
+      {
        
         state = 0;
         std::cout << "Thread id: " << sp_reg_->thread_id << "  ";
@@ -179,7 +178,6 @@ namespace upmem_sim::simulator::reg
       }
       if (!found)
       {
-        // 找到timetable_最后一项
         std::cout << "  *** jmp to kernel: " << timetable_p->name << "+" << (value - timetable_p->time) / 12 << std::endl;
       }
     }
@@ -224,14 +222,14 @@ namespace upmem_sim::simulator::reg
     void cycle() = delete;
 
   private:
-    std::vector<GPReg *> gp_regs_; // 普通寄存器 24个
-    SPReg *sp_reg_;                // 特殊寄存器
+    std::vector<GPReg *> gp_regs_;
+    SPReg *sp_reg_;
     PCReg *pc_reg_;
-    std::vector<timetable *> time_table_; // 时间表
+    std::vector<timetable *> time_table_;
     std::vector<timetable *> time_table_helloworld;
-    ConditionReg *condition_reg_; // 条件位
+    ConditionReg *condition_reg_;
     FlagReg *flag_reg_;           // zero & carry
-    ExceptionReg *exception_reg_; // 处理异常
+    ExceptionReg *exception_reg_;
     int state = 0;
   };
 

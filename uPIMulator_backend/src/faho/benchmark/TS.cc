@@ -85,7 +85,6 @@ static void streamp(DTYPE *tSeries, DTYPE *AMean, DTYPE *ASigma,
     {
       dotprod += tSeries[j + subseq] * query[j];
     }
-    // //打印 ASigma
     // std::cout << "ASigma[" << subseq << "] = " << ASigma[subseq] << std::endl;
 
     distance =
@@ -153,20 +152,19 @@ namespace upmem_sim::simulator::faho::def
     {
       if (end_flag == 1)
       {
-        exit(0); // 退出程序
+        exit(0);
       }
-      end_flag = 1; // 设置结束标志
+      end_flag = 1;
       return nullptr;
-      // 退出代码
     }
     def::Event *event_ = get_event(time_);
     if (event_ == nullptr)
     {
-      return nullptr; // 没有事件
+      return nullptr;
     }
     else
     {
-      return event_; // 返回事件
+      return event_;
     }
   }
   void TS::check(int pid)
@@ -259,7 +257,7 @@ namespace upmem_sim::simulator::faho::def
     events_.push_back(event);
     for (uint32_t i = 0; i < nr_of_dpus; i++)
     {
-      event = init_ReadSocket(first_role_id + i); // dpu已经启动
+      event = init_ReadSocket(first_role_id + i);
       events_.push_back(event);
     }
 
@@ -327,12 +325,12 @@ namespace upmem_sim::simulator::faho::def
     {
       char ok;
       event = init_WriteSockets(first_role_id + i, 1000, 1,
-                                transfer_buf_bytes(&ok, 1)); // 告诉dpu_code写入已经完成
+                                transfer_buf_bytes(&ok, 1));
       events_.push_back(event);
     }
     for (uint32_t i = 0; i < nr_of_dpus; i++)
     {
-      event = init_ReadSocket(first_role_id + i); // dpu已经启动
+      event = init_ReadSocket(first_role_id + i);
       events_.push_back(event);
     }
 

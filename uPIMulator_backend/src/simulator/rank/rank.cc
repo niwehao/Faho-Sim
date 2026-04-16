@@ -1,27 +1,22 @@
 #include "simulator/rank/rank.h"
-// rank是DIMM中的一组DPU
 
 namespace upmem_sim::simulator::rank
 {
 
   Rank::Rank(util::ArgumentParser *argument_parser)
       : read_bandwidth_(
-            argument_parser->get_int_parameter("rank_read_bandwidth")), // 读取带宽
+            argument_parser->get_int_parameter("rank_read_bandwidth")),
         write_bandwidth_(
-            argument_parser->get_int_parameter("rank_write_bandwidth")), // 写入带宽
+            argument_parser->get_int_parameter("rank_write_bandwidth")),
         stat_factory_(new util::StatFactory("Rank"))
   {
     assert(read_bandwidth_ > 0);
     assert(write_bandwidth_ > 0);
 
     int num_dpus =
-        static_cast<int>(argument_parser->get_int_parameter("num_dpus")); // dpu数量
-    dpus_.resize(num_dpus);                                               // 调整向量大小
-    communication_qs_.resize(num_dpus);                                   // 调整向量大小
-    /**
-    *模拟DPU和内存之间的通信延迟
-    管理读写请求的时序
-    实现异步通信机制**/
+        static_cast<int>(argument_parser->get_int_parameter("num_dpus"));
+    dpus_.resize(num_dpus);
+    communication_qs_.resize(num_dpus);
     for (DPUID dpu_id = 0; dpu_id < num_dpus; dpu_id++)
     {
       dpus_[dpu_id] = new dpu::DPU(dpu_id, argument_parser);
@@ -89,7 +84,6 @@ namespace upmem_sim::simulator::rank
       }
       else{
         assert(0);
-        // 这里应该是一个错误,因为线程0应该是处于休眠状态的
       }
     }
   }

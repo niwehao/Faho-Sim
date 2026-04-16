@@ -2,7 +2,6 @@
 #define UPMEM_SIM_ABI_ISA_INSTRUCTION_OP_CODE_H_
 
 namespace upmem_sim::abi::instruction {
-  //在此处定义指令操作码,未来需要扩展
 
 enum OpCode {
   ACQUIRE,

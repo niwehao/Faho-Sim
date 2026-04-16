@@ -32,8 +32,8 @@ namespace upmem_sim::simulator::faho::k1
         void spread_to_dpu(def::Event *event);
         void launch_event(def::DpuManager *dpu_manager);
         void load_event(def::DpuManager *dpu_manager);
-        void transfert_socket(def::DpuManager *dpu_manager); //传递新进程
-        void parse_new_socket(def::DpuManager *dpu_manager); //获取新进程
+        void transfert_socket(def::DpuManager *dpu_manager);
+        void parse_new_socket(def::DpuManager *dpu_manager);
         void launch_event_handle_evt(def::Event *event);
         void socket_write_handle_evt(def::Event *event);
         void write_inode_handle_evt(def::Event *event);
@@ -56,14 +56,13 @@ namespace upmem_sim::simulator::faho::k1
         int rank_state=0;
         rank::Rank *rank_;
         def::Host *host_; 
-        std::vector<def::DpuManager *> dpu_managers_;//在inode::read_inode(dpu_managers_[sc_p->dpu_id], sc_p->inode,要求顺序与初始化顺序必须一致
+        std::vector<def::DpuManager *> dpu_managers_;
         int all_num_process=0;
         std::vector<struct def::process_host *> all_processes;
         std::string benchmark_;
-        int num_tasklets_ = 0; // 任务数
+        int num_tasklets_ = 0;
         encoder::ByteStream *syscall;
-        std::vector<def::Event *> events_; // 存储事件  
-        //读取job 状态
+        std::vector<def::Event *> events_;
     };
 
 } // namespace upmem_sim::simulator::faho::k1

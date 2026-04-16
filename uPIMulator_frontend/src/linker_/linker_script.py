@@ -42,7 +42,7 @@ class LinkerScript:
             cur_address = ConfigLoader.iram_offset() + ConfigLoader.iram_kernel_offset()
         else:
             cur_address = ConfigLoader.iram_offset()
-        bootstrap = executable.section(SectionName.TEXT, "__bootstrap")#开始段
+        bootstrap = executable.section(SectionName.TEXT, "__bootstrap")
 
         assert bootstrap is not None
         assert bootstrap.address() is None
@@ -53,7 +53,7 @@ class LinkerScript:
         cur_address += bootstrap.size()
         assert bootstrap.size() % InstructionWord().size() == 0
 
-        text_section = executable.section(SectionName.TEXT, "")#实际执行的代码段
+        text_section = executable.section(SectionName.TEXT, "")
         if text_section is not None:
             assert text_section.address() is None
 
@@ -62,7 +62,7 @@ class LinkerScript:
             cur_address += text_section.size()
 
             assert text_section.size() % InstructionWord().size() == 0
-        text_section = executable.section(SectionName.TEXT, "main")  # 实际执行的代码段
+        text_section = executable.section(SectionName.TEXT, "main")
         if text_section is not None:
             assert text_section.address() is None
 

@@ -21,7 +21,7 @@ class InstructionEncoder:
 
     @staticmethod
     def encode(instruction: Instruction) -> List[Byte]:
-        instruction_word = InstructionWord()#96位,分别根据大小进行设置为0
+        instruction_word = InstructionWord()
         InstructionEncoder._encode_opcode(instruction, instruction_word)
         InstructionEncoder._encode_suffix(instruction, instruction_word)
 

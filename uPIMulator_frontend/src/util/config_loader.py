@@ -73,10 +73,10 @@ class ConfigLoader:
         return 64 * 1024 * 1024
     @staticmethod
     def iram_offset() -> int:
-        return 384 * 1024 #380k 可以到630k
+        return 384 * 1024
     @staticmethod
     def iram_size() -> int:
-        return 252 * 1024 #扩大大小  
+        return 252 * 1024
     @staticmethod
     def wram_offset() -> int:
         return 512 
@@ -85,12 +85,10 @@ class ConfigLoader:
         return 256 * 1024 #23k 
     @staticmethod
     def wram_kernel_offset() -> int:
-        return 128 * 1024 #//230000 230k 大小大概是120k左右 与用户界面的比例是15:2 
-#开始于128k 大小是111k 可以到 240k 差不多等于(256k)
+        return 128 * 1024
     @staticmethod
     def iram_kernel_offset() -> int:
-        return 144 * 1024 #30:18 开始于400k 大小是40k 可以到达400+144+40 到580k 空余50k 对于单个inode最大可以占用64k/16*12=48k
+        return 144 * 1024
     
 
-    #内存分布 512-      -120k  目前位置58k
  

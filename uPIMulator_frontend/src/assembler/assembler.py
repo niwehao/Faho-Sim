@@ -46,7 +46,6 @@ class Assembler:
     def assemble(
         executable: Executable, linker_script: LinkerScript, data_prep_param: List[int], num_dpus: int
     ,benchmark) -> None:
-        #把executable.sections内容存到t.txt
         Assembler._assemble_atomic(executable, num_dpus)
         Assembler._assemble_iram(executable, num_dpus)
         Assembler._assemble_wram(executable, num_dpus)
@@ -100,22 +99,17 @@ class Assembler:
         )
 
         with open(output_file, "w") as f:
-        # 写
         
             for text_section in text_sections:
-                # 写入段信息
                 
                 for label in text_section.labels():
                     try:
-                        # 获取标签信息
                         label_address = label.address() 
                         label_name = label.name()
                         
-                        # 格式化输出：地址(16进制) + 标签名
                         f.write(f"{label_address}    {label_name}\n")
                         
                     except AttributeError as e:
-                        # 处理可能的属性错误
                         print(f"Warning: Could not process label {label}: {e}")
                         continue
                         
@@ -130,7 +124,6 @@ class Assembler:
 
     @staticmethod
     def _assemble_wram(executable: Executable, num_dpus: int) -> None:
-        #把如下的数据存到wram,为什么
         sections = Assembler._sort(
             {
                 *executable.sections(SectionName.DATA),
@@ -151,19 +144,15 @@ class Assembler:
         with open(output_file, "w") as f:
     
             for text_section in sections:
-                # 写入段信息
                 
                 for label in text_section.labels():
                     try:
-                        # 获取标签信息
                         label_address = label.address() 
                         label_name = label.name()
                         
-                        # 格式化输出：地址(16进制) + 标签名
                         f.write(f"{label_address}    {label_name}\n")
                         
                     except AttributeError as e:
-                        # 处理可能的属性错误
                         print(f"Warning: Could not process label {label}: {e}")
                         continue
 
@@ -175,7 +164,7 @@ class Assembler:
 
     @staticmethod
     def _assemble_mram(executable: Executable, num_dpus: int) -> None:
-        sections = Assembler._sort(#mram里的值是否是程序员自己指定
+        sections = Assembler._sort(
             {
                 *executable.sections(SectionName.DEBUG_ABBREV),
                 *executable.sections(SectionName.DEBUG_FRAME),
@@ -234,11 +223,6 @@ class Assembler:
             f"{benchmark}.{num_tasklets}",
             "dpu_transfer_pointer.bin",
         )
-        #记录四个关键内存位置：
-        #系统MRAM结束位置
-        #DPU输入参数位置
-        #DPU结果位置
-        #系统结束位置
         with open(dpu_transfer_pointer_filepath, "w") as file:
             lines = ""
 
@@ -297,7 +281,7 @@ class Assembler:
                         PathCollector.bin_path_in_local(),
                         f"{data_prep.num_dpus()}_dpus",
                         f"{benchmark}.{num_tasklets}",
-                        f"output_dpu_mram_heap_pointer_name.dpu_id{dpu_id}.{execution}.bin",#用于与最后的结果进行比较
+                        f"output_dpu_mram_heap_pointer_name.dpu_id{dpu_id}.{execution}.bin",
                     )
                     output_dpu_mram_heap_pointer_name.dump(output_dpu_mram_heap_pointer_name_filepath)
 

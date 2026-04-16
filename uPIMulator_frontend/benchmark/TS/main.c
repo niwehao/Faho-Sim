@@ -1,7 +1,3 @@
-/*
- * STREAMP implementation of Matrix Profile with multiple tasklets
- *修改了query较小情况下的逻辑
- */
 
 #include "stdsync.h"
 #include "support/common.h"
@@ -117,7 +113,7 @@ static void __attribute__((noinline)) dot_product(DTYPE *vectorA, DTYPE *vectorA
          i += (BLOCK_SIZE / sizeof(DTYPE))) // 128
     {
 
-      int res = myEndElem - i; // 不确定大小
+      int res = myEndElem - i;
       if (res > BLOCK_SIZE / sizeof(DTYPE))
       {
         res = BLOCK_SIZE / sizeof(DTYPE);

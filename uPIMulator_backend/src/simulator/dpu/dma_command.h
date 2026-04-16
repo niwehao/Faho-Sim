@@ -41,7 +41,7 @@ class DMACommand {
 
   bool is_ready() {
     return std::all_of(acks_.begin(), acks_.end(),
-                       [](bool ack) { return ack; });//是否全是ack=true
+                       [](bool ack) { return ack; });
   }
 
  protected:

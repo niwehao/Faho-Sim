@@ -11,7 +11,6 @@
 namespace upmem_sim::simulator::dpu
 
 {
-//后期可以用baseword优化
 class PerformanceCounter {
     public:
     explicit PerformanceCounter()
@@ -60,12 +59,12 @@ class PerformanceCounter {
     int get_value()
     {
         int value_t=counter_word->bit_slice(abi::word::UNSIGNED,4,36);
-        return value_t;//不考虑抢占与中断
+        return value_t;
     }
     int get_true_value()
     {
         
-        return real_time_debug;//不考虑抢占与中断
+        return real_time_debug;
     }
     private:
         abi::word::_BaseWord *counter_word;

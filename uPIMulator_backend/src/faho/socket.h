@@ -26,9 +26,9 @@ namespace upmem_sim::simulator::faho::def
         uint8_t penpal_is_host;
         int32_t penpal_sc_idx, idx; // not a ptr because there are realloc
     };
-    class DpuManager; // 前向声明，避免循环依赖
-    class process_host; // 前向声明，避免循环依赖
-    class Event; // 前向声明，避免循环依赖
+    class DpuManager;
+    class process_host;
+    class Event;
     
  
     void add_write_data_socket(DpuManager *DpuManager, Event *event, process_host *process);

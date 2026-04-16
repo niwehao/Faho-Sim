@@ -6,7 +6,7 @@
 
 namespace upmem_sim::abi::word {
 
-class DataWord : public _BaseWord {//数据字
+class DataWord : public _BaseWord {
  public:
   DataWord() : _BaseWord(util::ConfigLoader::mram_data_width()) {
     assert(util::ConfigLoader::atomic_data_width() ==

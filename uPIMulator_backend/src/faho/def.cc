@@ -83,7 +83,7 @@ namespace upmem_sim::simulator::faho::def
     int addr_stack;
     file >> address_main >> addr_stack;
 
-    p->end_value = address_main; // 这里的end_value是main函数的地址
+    p->end_value = address_main;
     p->prg.off_stack = addr_stack;
     p->begin_stack = p->prg.off_stack+util::ConfigLoader::wram_offset(); // TODO
     // close the file

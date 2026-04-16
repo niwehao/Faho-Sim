@@ -5,14 +5,12 @@ namespace upmem_sim::simulator::faho::def
     uint8_t bit_map[BUFFER_BIT_MAP];
     void read_inode(def::DpuManager *dpu_manager, int inode, void *buf, int size, int offset)
     {
-        // 函数实现
         dpu::DPU *dpu = dpu_manager->dpu;
         dpu_copy_from_mram(dpu, buf, inode * SIZE_BLOCK + offset, size);
         // dpu_copy_from_mram
     }
     void write_inode(def::DpuManager *dpu_manager, int inode, void *buf, int size, int offset)
     {
-        // 函数实现
         dpu::DPU *dpu = dpu_manager->dpu;
         dpu_copy_to_mram(dpu, inode * SIZE_BLOCK + offset, buf, size);
         // dpu_copy_to_mram
@@ -22,15 +20,13 @@ namespace upmem_sim::simulator::faho::def
     {
 
         int inode = alloc_inode(dpu);
-        // 函数实现
         assert(inode >= 2);
         dpu_copy_to_mram_bytes(dpu, inode * SIZE_BLOCK, buf, size);
         // dpu_copy_to_mram
-        return inode; // 返回一个int值
+        return inode;
     }
     int alloc_inode(dpu::DPU *dpu)
     {
-        // 函数实现
         uint8_t bit_map[BUFFER_BIT_MAP];
         dpu_copy_from_mram(dpu, bit_map, BIT_MAP, BUFFER_BIT_MAP);
         for (int i = 0; i < 10; i++)
@@ -47,7 +43,7 @@ namespace upmem_sim::simulator::faho::def
                         {
                             // found a place
                             int inode = (i * BUFFER_BIT_MAP + j) * 8 + k;
-                            if (inode == 0 || inode == 1 || inode == 2) // 忽略系统占用的inode
+                            if (inode == 0 || inode == 1 || inode == 2)
                                 continue;
                             bit_map[j] |= (1 << k);
                             dpu_copy_to_mram(dpu, off, bit_map, BUFFER_BIT_MAP);
@@ -57,12 +53,11 @@ namespace upmem_sim::simulator::faho::def
                 }
             }
         }
-        return -1; // 返回一个int值
+        return -1;
     }
     void add_write_data_inode(faho::def::DpuManager *DpuManager, faho::def::Event *event, faho::def::process_host *process, int prc_ix)
 
     {
-        // 函数实现
         for (unsigned int i = 0; i < DpuManager->write_inode->nb_data; i++)
         {
             if (DpuManager->write_inode->data[i]->pid == 0)

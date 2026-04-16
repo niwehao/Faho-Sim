@@ -1,4 +1,4 @@
-#include "host.h" //问题->无法读到第二个socket
+#include "host.h"
 #define T int32_t
 #define NR_DPUS 1
 typedef struct
@@ -115,22 +115,22 @@ namespace upmem_sim::simulator::faho::def
                 } 
                 else{
 
-                     exit(0); // 退出程序
+                     exit(0);
                 }        
             }
             else{
-                end_flag = 1; // 设置结束标志
+                end_flag = 1;
                 return nullptr;
             }
         }
         def::Event *event_ = get_event(time_);
         if (event_ == nullptr)
         {
-            return nullptr; // 没有事件
+            return nullptr;
         }
         else
         {
-            return event_; // 返回事件
+            return event_;
         }
     }
     void MLP::check(int pid)
@@ -381,7 +381,7 @@ namespace upmem_sim::simulator::faho::def
         {
             event = init_ReadSocket(first_role + i);
 
-            events_.push_back(event); // DPU已经启动
+            events_.push_back(event);
         }
         i = 0;
         // Copy C_dpu

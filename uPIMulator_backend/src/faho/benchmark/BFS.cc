@@ -43,23 +43,23 @@ namespace upmem_sim::simulator::faho::def
                 else
                 {
 
-                    exit(0); // 退出程序
+                    exit(0);
                 }
             }
             else
             {
-                end_flag = 1; // 设置结束标志
+                end_flag = 1;
                 return nullptr;
             }
         }
         def::Event *event_ = get_event(time_);
         if (event_ == nullptr)
         {
-            return nullptr; // 没有事件
+            return nullptr;
         }
         else
         {
-            return event_; // 返回事件
+            return event_;
         }
     }
     void BFS::check(int pid)
@@ -101,7 +101,7 @@ namespace upmem_sim::simulator::faho::def
         }
         def::Event *event;
         cooGraph = readCOOGraph((bindir_ + "loc-gowalla_edges.txt").c_str());
-        event = init_NewProcess(1, 1000, NR_DPUS, "BFS.16"); // 只有new和lanuch指定role_id=1
+        event = init_NewProcess(1, 1000, NR_DPUS, "BFS.16");
         events_.push_back(event);
         event = init_LanuchProcess(1, 1100);
         events_.push_back(event);
@@ -128,7 +128,7 @@ namespace upmem_sim::simulator::faho::def
         {
             int role_id = i + first_role_id;
             event = init_ReadSocket(role_id);
-            events_.push_back(event); // DPU已经启动
+            events_.push_back(event);
         }
         for (uint32_t dpu_idx = 0; dpu_idx < numDPUs; dpu_idx++)
         {
@@ -224,10 +224,10 @@ namespace upmem_sim::simulator::faho::def
                                         transfer_buf_bytes((uint8_t *)&dpuParams[dpuIdx], ROUND_UP_TO_MULTIPLE_OF_8(sizeof(struct DPUParams))));
                 events_.push_back(event);
                 event = init_WriteSockets(dpu_idx + first_role_id, 2000, 1,
-                                          transfer_buf_bytes(&ok, 1)); // 告诉dpu_code写入已经完成
+                                          transfer_buf_bytes(&ok, 1));
                 events_.push_back(event);
 
-                event = init_ReadSocket(dpu_idx + first_role_id); // 告诉主机计算完成
+                event = init_ReadSocket(dpu_idx + first_role_id);
                 events_.push_back(event);
                 if (dpuIdx == 0)
                 {
@@ -253,7 +253,7 @@ namespace upmem_sim::simulator::faho::def
                     // {
                     //     currentFrontier[i] |= nextFrontier[i];
                     // }
-                    assert(0); // 只支持一个DPU
+                    assert(0);
                 }
                 ++dpuIdx;
             }
@@ -283,7 +283,7 @@ namespace upmem_sim::simulator::faho::def
             }
         }
         Event *event;
-        if (!nextFrontierEmpty) // 如果为0
+        if (!nextFrontierEmpty)
         {
 
             ++level;
@@ -314,10 +314,10 @@ namespace upmem_sim::simulator::faho::def
                                                                ROUND_UP_TO_MULTIPLE_OF_8(sizeof(struct DPUParams))));
                     events_.push_back(event);
                     event = init_WriteSockets(dpu_idx + first_role_id, 2000, 1,
-                                              transfer_buf_bytes(&ok, 1)); // 告诉dpu_code写入已经完成
+                                              transfer_buf_bytes(&ok, 1));
                     events_.push_back(event);
 
-                    event = init_ReadSocket(dpu_idx + first_role_id); // 告诉主机计算完成
+                    event = init_ReadSocket(dpu_idx + first_role_id);
                     events_.push_back(event);
                     if (dpuIdx == 0)
                     {
@@ -343,7 +343,7 @@ namespace upmem_sim::simulator::faho::def
                         // {
                         //     currentFrontier[i] |= nextFrontier[i];
                         // }
-                        assert(0); // 只支持一个DPU
+                        assert(0);
                     }
                     ++dpuIdx;
                 }

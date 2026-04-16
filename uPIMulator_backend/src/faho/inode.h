@@ -13,11 +13,10 @@
 
 namespace upmem_sim::simulator::faho::def
 {
-    class DpuManager; // 前向声明，避免循环依赖
-    class process_host; // 前向声明，避免循环依赖
-    class Event; // 前向声明，避免循环依赖
+    class DpuManager;
+    class process_host;
+    class Event;
   
-    // 假设di是某种类型，p是指向某结构的指针
     int write_content_inode(encoder::ByteStream *buf, int size,
                             dpu::DPU *dpu);
     int alloc_inode(dpu::DPU *dpu);

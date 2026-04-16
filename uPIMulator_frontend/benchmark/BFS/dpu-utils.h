@@ -36,7 +36,7 @@ static void store8B(uint64_t val, uint32_t ptr_m, uint32_t idx,
 static uint32_t load4B(uint32_t ptr_m, uint32_t idx, uint64_t *cache_w) {
   // Load 8B
   nbl4++;
-  int sign=idx%2;//如果是偶数就是1
+  int sign=idx%2;
   uint32_t ptr_idx_m = ptr_m + (idx-sign) * sizeof(uint32_t);
   umram_read(cache_w, 8, ptr_idx_m);
   // Extract 4B
@@ -50,7 +50,7 @@ static void store4B(uint32_t val, uint32_t ptr_m, uint32_t idx,
                     uint64_t *cache_w) {
   // Load 8B
   nbs4++;
-  int sign=idx%2;//如果是偶数就是1
+  int sign=idx%2;
   uint32_t ptr_idx_m = ptr_m + (idx-sign) * sizeof(uint32_t);
   // uint32_t offset = ((uint32_t)ptr_idx_m) % 8;
   // uint32_t ptr_block_m = ptr_idx_m - offset;

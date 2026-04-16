@@ -25,51 +25,46 @@ class Linker:
         self.save_state("save_lib.pkl")
     @classmethod
     def load_state(cls, filename):
-        """从文件加载对象状态"""
         with open(filename, 'rb') as f:
             return pickle.load(f)
     def save_state(self, filename):
-        """保存对象状态到文件"""
         with open(filename, 'wb') as f:
             pickle.dump(self, f)
-            print(f"状态已保存到 {filename}")
-    def find_pointer(self,executable: Executable, benchmark: str,num_dpus:int,linker_script: LinkerScript) -> None:#收集指针的值
+            print(f"state saved to {filename}")
+    def find_pointer(self,executable: Executable, benchmark: str,num_dpus:int,linker_script: LinkerScript) -> None:
         sectio_pointer = executable.section(SectionName.TEXT, "main")
         pointer=[0]*2
-        #遍历section中的label
-        for label in sectio_pointer.labels():#相对位置
+        for label in sectio_pointer.labels():
             if label.name() == "main":
                 pointer[0] = label.address()
         addr= linker_script.symbol("__sys_stack_thread_0").address()
-        pointer[1] = addr - ConfigLoader.wram_offset()#直接获得绝对位置
+        pointer[1] = addr - ConfigLoader.wram_offset()
 
         assert pointer[0] != 0
         assert pointer[1] != 0
    
         filepath = os.path.join(PathCollector.bin_path_in_local(), f"{num_dpus}_dpus", *executable.filepath().split(os.path.sep)[-2:-1],"pointer.bin")
-        #把值一行一行写入文件
         with open(filepath, "w") as file:
             file.write(f"{pointer[0]}\n")
             file.write(f"{pointer[1]}\n")
 
 
-    def find_pointer_kernel(self,executable: Executable, benchmark: str,num_dpus:int) -> None:#收集指针的值
+    def find_pointer_kernel(self,executable: Executable, benchmark: str,num_dpus:int) -> None:
         sectio_pointer = executable.section(SectionName.DPU_HOST, "")
         pointer=[0]*5;
-        #遍历section中的label
-        for label in sectio_pointer.labels():#相对位置
+        for label in sectio_pointer.labels():
             if label.name() == "dpu_id":
-                pointer[0] = label.address()-ConfigLoader.wram_offset()#相对位置
+                pointer[0] = label.address()-ConfigLoader.wram_offset()
             elif label.name() == "processs":
                 pointer[1] = label.address()-ConfigLoader.wram_offset()
-                print('process位置:'+str(label.address()))
+                print('process address: ' + str(label.address()))
             elif label.name() == "inode_table":
                 pointer[2] = label.address()-ConfigLoader.wram_offset()
             
         
 
         sectio_pointer = executable.section(SectionName.TEXT, "jmp_mram")
-        for label in sectio_pointer.labels():#相对位置
+        for label in sectio_pointer.labels():
             if label.name() == "jmp_mram":
                 pointer[3] = label.address()-ConfigLoader.iram_kernel_offset()-ConfigLoader.iram_offset()
         sectio_pointer = executable.sections(SectionName.DATA)
@@ -77,14 +72,12 @@ class Linker:
             for label in section.labels():
                 if label.name() == "jobs":
                     pointer[4] = label.address()-ConfigLoader.wram_offset()
-        #assert pointer的值都不为0
         assert pointer[0] != 0
         assert pointer[1] != 0
         assert pointer[2] != 0
         assert pointer[3] != 0
         assert pointer[4] != 0
         filepath = os.path.join(PathCollector.bin_path_in_local(), f"{num_dpus}_dpus", *executable.filepath().split(os.path.sep)[-2:-1],"pointer.bin")
-        #把值一行一行写入文件
         with open(filepath, "w") as file:
             file.write(f"{pointer[0]}\n")
             file.write(f"{pointer[1]}\n")
@@ -104,7 +97,7 @@ class Linker:
 
         self._analyze_liveness(executable)
         self._assign_labels(executable)
-        linker_script.assign_address(executable,benchmark)#分配地址
+        linker_script.assign_address(executable,benchmark)
         if benchmark == "KERNEL":
             self.find_pointer_kernel(executable, benchmark,num_dpus)
         if benchmark != "KERNEL":
@@ -124,22 +117,20 @@ class Linker:
 
     def _resolve_symbols(self, relocatable: Relocatable, linker_script: LinkerScript) -> Set[Relocatable]:
         relocatables: Set[Relocatable] = {relocatable, self._crt0_relocatable()}
-        #把所有没有找到的符号和之前解析的库进行总体的一个链接
 
         unresolved_symbols = self._unresolved_symbols(relocatables, linker_script)
         while unresolved_symbols:
             has_resolved = False
             for unresolved_symbol in unresolved_symbols:
                 for lib in self._libs:
-                    if unresolved_symbol in lib.liveness().defs():#实际上要看全局地址
+                    if unresolved_symbol in lib.liveness().defs():
                         relocatables.add(lib)
-                        #TODO 只获取
                         has_resolved = True
             if(has_resolved==False):
                 a=a+1 #capture
             
 
-            unresolved_symbols = self._unresolved_symbols(relocatables, linker_script)#反复遍历直到没有多余变量
+            unresolved_symbols = self._unresolved_symbols(relocatables, linker_script)
 
         return relocatables
 
@@ -165,7 +156,6 @@ class Linker:
         return unresolved_symbols
 
     def _assign_labels(self, executable: Executable) -> None:
-        # 为标签计算大小
         document = Parser.parse_lines(executable.lines())
         label_assigner = LabelAssigner(executable)
         parse_tree_walker = antlr4.ParseTreeWalker()

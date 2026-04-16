@@ -531,7 +531,6 @@ class Instruction {
   void init_erid(isa::Endian endian, reg::SrcReg *ra, int64_t off,
                  reg::PairReg *db);
   void init_dma_rri(reg::SrcReg *ra, reg::SrcReg *rb, int64_t imm);
-    // 方法1：使用映射表（推荐）
 
 
  private:

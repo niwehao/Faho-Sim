@@ -7,7 +7,7 @@
 
 namespace upmem_sim::simulator::cpu {
 
-void SchedThread::connect_rank(rank::Rank *rank) {//DPU调度线程
+void SchedThread::connect_rank(rank::Rank *rank) {
   assert(rank != nullptr);
   assert(rank_ == nullptr);
 
@@ -15,24 +15,22 @@ void SchedThread::connect_rank(rank::Rank *rank) {//DPU调度线程
 }
 
 void SchedThread::sched(int execution) {
-  //dma_transfer_input_dpu_mram_heap_pointer_name(execution);//通过dma传入的初始数据
-  //dma_transfer_dpu_input_arguments(execution);//传入的参数
 
   std::cout << "sched " << execution << " completed..." << std::endl;
 }
 
-void SchedThread::check(int execution) {//先不去检查结果
+void SchedThread::check(int execution) {
   //dma_transfer_output_dpu_mram_heap_pointer_name(execution);
   //dma_transfer_dpu_results(execution);
 
   std::cout << "check " << execution << " completed..." << std::endl;
 }
 
-void SchedThread::dma_transfer_input_dpu_mram_heap_pointer_name(int execution) {//write mram的初始值
+void SchedThread::dma_transfer_input_dpu_mram_heap_pointer_name(int execution) {
   std::set<rank::RankMessage*> rank_messages;
   for (DPUID dpu_id = 0; dpu_id < num_dpus(); dpu_id++) {
     std::stringstream ss;
-    ss << "input_dpu_mram_heap_pointer_name.dpu_id" << dpu_id << "."//分配堆空间
+    ss << "input_dpu_mram_heap_pointer_name.dpu_id" << dpu_id << "."
        << execution;
 
     std::string bin_filename;
@@ -48,7 +46,7 @@ void SchedThread::dma_transfer_input_dpu_mram_heap_pointer_name(int execution) {
       rank_messages.insert(rank_message);
 
       rank_->dpus()[dpu_id]->dma()->transfer_to_mram(
-          sys_used_mram_end_pointer(), byte_stream);//通过DMA中断来来输入mram的
+          sys_used_mram_end_pointer(), byte_stream);
       rank_->dpus()[dpu_id]->dma()->init_sys_used_mram_end_pointer(sys_used_mram_end_pointer());
 
       delete byte_stream;
@@ -116,7 +114,6 @@ void SchedThread::dma_transfer_output_dpu_mram_heap_pointer_name(
                                                 byte_stream->size());
       rank_->read(rank_message);
       rank_messages.insert(rank_message);
-      //读取mram来比较结果
 
       encoder::ByteStream *mram_byte_stream =
           rank_->dpus()[dpu_id]->dma()->transfer_from_mram(

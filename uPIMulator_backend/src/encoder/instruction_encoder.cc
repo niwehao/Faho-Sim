@@ -4,10 +4,10 @@
 
 namespace upmem_sim::encoder {
 
-abi::instruction::Instruction *InstructionEncoder::decode(//对于字节流进行解码
+abi::instruction::Instruction *InstructionEncoder::decode(
     ByteStream *byte_stream) {
   auto instruction_word = new abi::word::InstructionWord();
-  instruction_word->from_byte_stream(byte_stream);//字节流转为比特流,存到一个新的instruction_word中
+  instruction_word->from_byte_stream(byte_stream);
 
   abi::instruction::OpCode op_code = decode_op_code(instruction_word);
   abi::instruction::Suffix suffix = decode_suffix(instruction_word);
@@ -174,7 +174,7 @@ abi::instruction::Suffix InstructionEncoder::decode_suffix(
       abi::word::UNSIGNED, suffix_begin(), suffix_end()));
 }
 
-abi::reg::GPReg *InstructionEncoder::decode_gp_reg(//指令解码来获得寄存器的索引
+abi::reg::GPReg *InstructionEncoder::decode_gp_reg(
     abi::word::InstructionWord *instruction_word, int begin, int end) {
   auto index = static_cast<RegIndex>(
       instruction_word->bit_slice(abi::word::UNSIGNED, begin, end));
@@ -204,7 +204,7 @@ abi::reg::PairReg *InstructionEncoder::decode_pair_reg(
 int64_t InstructionEncoder::decode_imm(
     abi::word::InstructionWord *instruction_word, int begin, int end,
     abi::word::Representation representation) {
-  return instruction_word->bit_slice(representation, begin, end);//解码立即数,字节流转换为立即数
+  return instruction_word->bit_slice(representation, begin, end);
 }
 
 int64_t InstructionEncoder::decode_off(
@@ -216,7 +216,7 @@ int64_t InstructionEncoder::decode_off(
 abi::isa::Condition InstructionEncoder::decode_condition(
     abi::word::InstructionWord *instruction_word, int begin, int end) {
   return static_cast<abi::isa::Condition>(
-      instruction_word->bit_slice(abi::word::UNSIGNED, begin, end));//解码条件码
+      instruction_word->bit_slice(abi::word::UNSIGNED, begin, end));
 }
 
 int64_t InstructionEncoder::decode_pc(
@@ -329,20 +329,19 @@ abi::instruction::Instruction *InstructionEncoder::decode_rric(
                                            condition);
 }
 
-abi::instruction::Instruction *InstructionEncoder::decode_rrici(//对于rrici指令进行解码,为例子
+abi::instruction::Instruction *InstructionEncoder::decode_rrici(
     abi::instruction::OpCode op_code, abi::instruction::Suffix suffix,
     abi::word::InstructionWord *instruction_word) {
   assert(abi::instruction::Instruction::rrici_op_codes().count(op_code));
   assert(suffix == abi::instruction::RRICI);
-  //解码寄存器
 
   int rc_begin = suffix_end();
   int rc_end = rc_begin + register_width();
-  abi::reg::GPReg *rc = decode_gp_reg(instruction_word, rc_begin, rc_end);//解码通用寄存器(目标)
+  abi::reg::GPReg *rc = decode_gp_reg(instruction_word, rc_begin, rc_end);
 
   int ra_begin = rc_end;
   int ra_end = ra_begin + register_width();
-  abi::reg::SrcReg *ra = decode_src_reg(instruction_word, ra_begin, ra_end);//解码源寄存器
+  abi::reg::SrcReg *ra = decode_src_reg(instruction_word, ra_begin, ra_end);
 
   int imm_begin = ra_end;
   int imm_end;
@@ -355,7 +354,7 @@ abi::instruction::Instruction *InstructionEncoder::decode_rrici(//对于rrici指
   } else if (abi::instruction::Instruction::asr_rrici_op_codes().count(
                  op_code)) {
     imm_end = imm_begin + 5;
-    imm = decode_imm(instruction_word, imm_begin, imm_end, abi::word::UNSIGNED);//解码立即数
+    imm = decode_imm(instruction_word, imm_begin, imm_end, abi::word::UNSIGNED);
   } else {
     throw std::invalid_argument("");
   }
@@ -363,14 +362,14 @@ abi::instruction::Instruction *InstructionEncoder::decode_rrici(//对于rrici指
   int condition_begin = imm_end;
   int condition_end = condition_begin + condition_width();
   abi::isa::Condition condition =
-      decode_condition(instruction_word, condition_begin, condition_end);//解码条件码
+      decode_condition(instruction_word, condition_begin, condition_end);
 
   int pc_begin = condition_end;
   int pc_end = pc_begin + pc_width();
-  int64_t pc = decode_pc(instruction_word, pc_begin, pc_end);//解码pc,本质上就是解码立即数?
+  int64_t pc = decode_pc(instruction_word, pc_begin, pc_end);
 
   return new abi::instruction::Instruction(op_code, suffix, rc, ra, imm,
-                                           condition, pc);//返回解码后的指令,通过重载的构造函数
+                                           condition, pc);
 }
 
 abi::instruction::Instruction *InstructionEncoder::decode_rrif(
@@ -468,7 +467,7 @@ abi::instruction::Instruction *InstructionEncoder::decode_rrrci(
   abi::reg::SrcReg *rb = decode_src_reg(instruction_word, rb_begin, rb_end);
 
   int condition_begin = rb_end;
-  int condition_end = condition_begin + condition_width();//逐渐解析条件码
+  int condition_end = condition_begin + condition_width();
   abi::isa::Condition condition =
       decode_condition(instruction_word, condition_begin, condition_end);
 

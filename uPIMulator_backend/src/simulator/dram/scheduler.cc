@@ -29,17 +29,17 @@ util::StatFactory *Scheduler::stat_factory() {
   return stat_factory;
 }
 
-void Scheduler::push(dpu::DMACommand *dma_command) {//将DMA命令推入输入队列
+void Scheduler::push(dpu::DMACommand *dma_command) {
   assert(dma_command != nullptr);
   input_q_->push(dma_command);
 }
 
-MemoryCommand *Scheduler::pop() {//从准备队列中弹出一个内存命令
+MemoryCommand *Scheduler::pop() {
   assert(can_pop());
   return ready_q_->pop();
 }
 
-void Scheduler::flush() {//才读到的
+void Scheduler::flush() {
   delete row_address_;
   row_address_ = nullptr;
 

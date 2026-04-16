@@ -1,7 +1,3 @@
-/*
- * STREAMP implementation of Matrix Profile with multiple tasklets
- *修改了query较小情况下的逻辑
- */
 
 #include "stdsync.h"
 #include "support/common.h"

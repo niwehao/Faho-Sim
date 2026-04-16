@@ -16,7 +16,7 @@ class SetAssigner(assemblyListener):
     def exitSection_directive(self, ctx: assemblyParser.Section_directiveContext) -> None:
         section_name = SectionNameConverter.convert_to_section_name(str(ctx.section_name().children[0])[1:])
 
-        name = ctx.Identifier()#标签对应的名字
+        name = ctx.Identifier()
         if name is not None:
             name = str(name)
         else:

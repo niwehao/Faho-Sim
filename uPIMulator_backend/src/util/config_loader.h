@@ -2,7 +2,6 @@
 #define UPMEM_SIM_UTIL_CONFIG_LOADER_H_
 
 #include "main.h"
-//配置的基本变量
 
 namespace upmem_sim::util {
 
@@ -16,8 +15,8 @@ class ConfigLoader {
   static int iram_address_width() { return 32; }
   static int iram_data_width() { return 96; }
     static int iram_data_width_align_bytes() { return 16; }
-  static Address iram_offset() { return 384 * 1024; }//对于iram的基地址的偏移,mram和iram在同一片物理地址中
-  static Address iram_size() { return 252 * 1024; }//代表可以接受的指令的总数
+  static Address iram_offset() { return 384 * 1024; }
+  static Address iram_size() { return 252 * 1024; }
 
   static int wram_address_width() { return 32; }
   static int wram_data_width() { return 32; }
@@ -37,14 +36,7 @@ class ConfigLoader {
 
   static int num_gp_registers() { return 24; }
   static int max_num_tasklets() { return 24; }
-  static int min_access_granularity() { return 8; }/**
-  最小访问粒度
-  最小访问粒度决定了 DRAM 访问的最小单位。
-  例如，如果最小访问粒度为 8 字节，则 DRAM 访问的最小单位为 8 字节。
-  如果最小访问粒度为 32 字节，则 DRAM 访问的最小单位为 32 字节。
-  最小访问粒度越小，DRAM 访问的效率越高，但同时也会增加访问的延迟。16
-  
-   */
+  static int min_access_granularity() { return 8; }
 };
 
 }  // namespace upmem_sim::util

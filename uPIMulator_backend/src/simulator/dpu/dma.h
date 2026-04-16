@@ -12,14 +12,14 @@ namespace upmem_sim::simulator::dpu {
 class DMA {
  public:
   explicit DMA()
-      : atomic_(nullptr),//原子操作区
-        iram_(nullptr),//指令内存
-        operand_collector_(nullptr),//操作数收集器
-        memory_controller_(nullptr),//内存控制器
+      : atomic_(nullptr),
+        iram_(nullptr),
+        operand_collector_(nullptr),
+        memory_controller_(nullptr),
         input_q_(new basic::Queue<DMACommand>(
-            util::ConfigLoader::max_num_tasklets())),//输入队列
+            util::ConfigLoader::max_num_tasklets())),
         ready_q_(new basic::Queue<DMACommand>(
-            util::ConfigLoader::max_num_tasklets())) {}//准备队列
+            util::ConfigLoader::max_num_tasklets())) {}
   ~DMA();
 
   void connect_atomic(sram::Atomic *atomic);

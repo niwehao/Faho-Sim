@@ -13,14 +13,7 @@ using ThreadStatus = std::string;
 
 class Thread {
  public:
-  enum State { EMBRYO = 0, RUNNABLE, SLEEP, BLOCK, ZOMBIE };//状态 
-  /**
-   *   EMBRYO = 0,  // 初始状态
-    RUNNABLE,    // 可运行状态
-    SLEEP,       // 休眠状态
-    BLOCK,       // 阻塞状态
-    ZOMBIE       // 僵尸状态
-   */
+  enum State { EMBRYO = 0, RUNNABLE, SLEEP, BLOCK, ZOMBIE };
 
   explicit Thread(ThreadID id,std::string benchmark,std::string bindir)
       : id_(id),
@@ -28,11 +21,11 @@ class Thread {
         reg_file_(new reg::RegFile(id_,benchmark,bindir)),
         issue_cycle_(0) {
     assert(0 <= id and id < upmem_sim::util::ConfigLoader::max_num_tasklets());
-    status_tracker_.emplace("WAIT_DATA", 0);//等待数据
-    status_tracker_.emplace("WAIT_SYNC", 0);//等待同步
-    status_tracker_.emplace("ARITHMETIC", 0);//算术运算
-    status_tracker_.emplace("SPM_ACCESS", 0);//spm访问
-    status_tracker_.emplace("WAIT_SCHEDULE", 0);//等待调度
+    status_tracker_.emplace("WAIT_DATA", 0);
+    status_tracker_.emplace("WAIT_SYNC", 0);
+    status_tracker_.emplace("ARITHMETIC", 0);
+    status_tracker_.emplace("SPM_ACCESS", 0);
+    status_tracker_.emplace("WAIT_SCHEDULE", 0);
   }
   ~Thread();
 
@@ -50,11 +43,11 @@ class Thread {
   std::map<ThreadStatus, int64_t> &status_tracker() { return status_tracker_; }
 
  private:
-  ThreadID id_;//线程id
-  State state_;//状态
-  std::map<ThreadStatus, int64_t> status_tracker_;//状态跟踪器
-  reg::RegFile *reg_file_;//寄存器文件
-  int issue_cycle_;//指令周期
+  ThreadID id_;
+  State state_;
+  std::map<ThreadStatus, int64_t> status_tracker_;
+  reg::RegFile *reg_file_;
+  int issue_cycle_;
 };
 
 }  // namespace upmem_sim::simulator::dpu

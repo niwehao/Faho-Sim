@@ -86,20 +86,19 @@ namespace upmem_sim::simulator::faho::def
         {
             if (end_flag == 1)
             {
-                exit(0); // 退出程序
+                exit(0);
             }
-            end_flag = 1; // 设置结束标志
+            end_flag = 1;
             return nullptr;
-            // 退出代码
         }
         def::Event *event_ = get_event(time_);
         if (event_ == nullptr)
         {
-            return nullptr; // 没有事件
+            return nullptr;
         }
         else
         {
-            return event_; // 返回事件
+            return event_;
         }
     }
     void SEL::check(int pid)
@@ -195,7 +194,7 @@ namespace upmem_sim::simulator::faho::def
 
         // Create an input file with arbitrary data
         read_input(A, input_size, input_size_dpu_round * nr_of_dpus);
-        event = init_NewProcess(1, 1000, NR_DPUS, "SEL.16"); // 只有new和lanuch指定role_id=1
+        event = init_NewProcess(1, 1000, NR_DPUS, "SEL.16");
         events_.push_back(event);
         event = init_LanuchProcess(1, 1000);
         events_.push_back(event);
@@ -204,7 +203,7 @@ namespace upmem_sim::simulator::faho::def
         int base_offset;
         for (uint32_t i = 0; i < nr_of_dpus; i++)
         {
-            event = init_ReadSocket(first_role + i); // dpu已经启动
+            event = init_ReadSocket(first_role + i);
             events_.push_back(event);
         }
         dpu_arguments_t input_arguments = {input_size_dpu * sizeof(T), static_cast<enum dpu_arguments_t::kernels>(kernel)};
@@ -241,12 +240,12 @@ namespace upmem_sim::simulator::faho::def
         {
             char ok;
             event = init_WriteSockets(first_role + i, 1000, 1,
-                                      transfer_buf_bytes(&ok, 1)); // 告诉dpu_code写入已经完成
+                                      transfer_buf_bytes(&ok, 1));
             events_.push_back(event);
         }
         for (uint32_t i = 0; i < nr_of_dpus; i++)
         {
-            event = init_ReadSocket(first_role + i); // dpu已经启动
+            event = init_ReadSocket(first_role + i);
             events_.push_back(event);
         }
 

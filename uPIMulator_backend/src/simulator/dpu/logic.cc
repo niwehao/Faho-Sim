@@ -21,7 +21,7 @@ namespace upmem_sim::simulator::dpu
   }
 
   util::StatFactory *Logic::stat_factory()
-  { // 统计
+  {
     auto stat_factory = new util::StatFactory("");
 
     util::StatFactory *cycle_rule_stat_factory = cycle_rule_->stat_factory();
@@ -112,19 +112,18 @@ namespace upmem_sim::simulator::dpu
   {
     if (pipeline_->can_push() and cycle_rule_->can_push() and
         wait_instruction_q_->can_push())
-    { // 流水线可以接收新指令 周期规则允许等待指令队列可用
+    {
       // if (pipeline_->can_push() and wait_instruction_q_->can_push()) {
-      Thread *thread = scheduler_->schedule(); // 调度一个线程
+      Thread *thread = scheduler_->schedule();
       if (thread != nullptr)
       {
         int chosen_thread_id = thread->id();
-        // 打印线程id:
         // std::cout<<"num ins "<<thread->reg_file()->read_pc_reg()<<std::endl;
 
         abi::instruction::Instruction *instruction =
-            iram_->read(thread->reg_file()->read_pc_reg()); // 从IRAM中读取指令,每一个thread维护一份指令表,通过修改iram的位置来完成数据传入
-        instruction->set_thread(thread);                    // 设置指令的线程
-        pipeline_->push(instruction);                       // 将指令加入流水线
+            iram_->read(thread->reg_file()->read_pc_reg());
+        instruction->set_thread(thread);
+        pipeline_->push(instruction);
         // std::string name=converter::InstructionConverter::to_string(instruction);
         // std::cout << "{" << dpu_id_ << "}"<< name << std::endl;
 
@@ -145,26 +144,9 @@ namespace upmem_sim::simulator::dpu
         }
         else
         {
-          scheduler_->block(thread->id()); // 堵塞该线程
+          scheduler_->block(thread->id());
           instruction->thread()->reg_file()->increment_pc_reg();
           wait_instruction_q_->push(instruction);
-          /**
-           // 普通指令（如ADD, SUB等）
-  execute_instruction(instruction) {
-      // 1. 立即完成
-      // 2. 不需要等待外部资源
-      // 3. 执行时间可预测
-      // 4. 结果立即可用
-  }
-
-  // DMA指令
-  dma_instruction {
-      // 1. 需要等待数据传输
-      // 2. 依赖外部内存/设备
-      // 3. 执行时间不确定
-      // 4. 结果需要等待
-  }
-           */
         }
 
         stat_factory_->increment("num_instructions");
@@ -207,7 +189,6 @@ namespace upmem_sim::simulator::dpu
 
   void Logic::service_pipeline()
   {
-    // 检查条件：流水线可以输出 且 周期规则允许
     if (pipeline_->can_pop() and cycle_rule_->can_push())
     {
       abi::instruction::Instruction *instruction = pipeline_->pop();
@@ -234,7 +215,6 @@ namespace upmem_sim::simulator::dpu
           instruction->thread()->update_thread_status("ARITHMETIC",
                                                       num_pipeline_stages_);
         }
-        // 将指令推入周期规则处理
 
         cycle_rule_->push(instruction);
       }
@@ -242,7 +222,7 @@ namespace upmem_sim::simulator::dpu
   }
 
   void Logic::service_cycle_rule()
-  { // 确切的执行DMA的位置
+  {
     if (cycle_rule_->can_pop())
     {
       abi::instruction::Instruction *instruction = cycle_rule_->pop();
@@ -258,7 +238,7 @@ namespace upmem_sim::simulator::dpu
           std::cout << "{" << dpu_id_ << "}";
           std::cout << converter::InstructionConverter::to_string(instruction) << std::endl;
         }
-        execute_instruction(instruction); // 如果是DMA,在这个位置才执行
+        execute_instruction(instruction);
 
         if (verbose_ >= 2)
         {
@@ -272,9 +252,6 @@ namespace upmem_sim::simulator::dpu
 
   void Logic::service_dma()
   {
-    // 检查两个条件：
-    // 1. 等待队列可以输出指令
-    // 2. DMA控制器有完成的命令
     if (wait_instruction_q_->can_pop() and dma_->can_pop())
     {
       DMACommand *dma_command = dma_->pop();
@@ -282,7 +259,6 @@ namespace upmem_sim::simulator::dpu
 
       assert(dma_command->instruction() == instruction);
 
-      // 4. 唤醒被阻塞的线程
 
       scheduler_->awake_block(instruction->thread()->id());
 
@@ -292,7 +268,7 @@ namespace upmem_sim::simulator::dpu
   }
 
   void Logic::execute_instruction(abi::instruction::Instruction *instruction)
-  { // 执行指令
+  {
     abi::instruction::Suffix suffix = instruction->suffix();
 
     if (suffix == abi::instruction::RICI)
@@ -619,29 +595,23 @@ namespace upmem_sim::simulator::dpu
 
   void Logic::execute_rici(abi::instruction::Instruction *instruction)
   {
-    // 1. 验证操作码和后缀
     assert(abi::instruction::Instruction::rici_op_codes().count(
         instruction->op_code()));
     assert(instruction->suffix() == abi::instruction::RICI);
-    // 2. 获取操作码
 
     abi::instruction::OpCode op_code = instruction->op_code();
-    // 3. 根据不同类型的RICI指令执行不同操作
     if (abi::instruction::Instruction::acquire_rici_op_codes().count(op_code))
     {
-      // 获取资源的RICI指令
       execute_acquire_rici(instruction);
     }
     else if (abi::instruction::Instruction::release_rici_op_codes().count(
                  op_code))
     {
-      // 释放资源的RICI指令
       execute_release_rici(instruction);
     }
     else if (abi::instruction::Instruction::boot_rici_op_codes().count(
                  op_code))
     {
-      // 启动相关的RICI指令
       execute_boot_rici(instruction);
     }
     else
@@ -651,31 +621,24 @@ namespace upmem_sim::simulator::dpu
   }
 
   void Logic::execute_acquire_rici(abi::instruction::Instruction *instruction)
-  { // 给atomic上锁
+  {
     assert(abi::instruction::Instruction::acquire_rici_op_codes().count(
         instruction->op_code()));
     assert(instruction->suffix() == abi::instruction::RICI);
-    // rici的指令的地址是ra+imm,所以映射hash
 
     int64_t ra = instruction->thread()->reg_file()->read_src_reg(
         instruction->ra(), abi::word::UNSIGNED);
     int64_t imm = instruction->imm()->value();
     Address atomic_address = ALU::atomic_address_hash(ra, imm);
-    /**
-     * 假设：
-  - ra = 1000
-  - imm = 24
-  - atomic_address_hash(1000, 24) = 映射到范围[0-255]内的某个值
-     */
 
-    bool can_acquire = atomic_->can_acquire(atomic_address); // 看是否可以获取资源
+    bool can_acquire = atomic_->can_acquire(atomic_address);
     if (can_acquire)
     {
-      atomic_->acquire(atomic_address, instruction->thread()->id()); // 上锁
+      atomic_->acquire(atomic_address, instruction->thread()->id());
     }
 
     instruction->thread()->reg_file()->clear_conditions();
-    set_acquire_cc(instruction, not can_acquire); // 设置条件码
+    set_acquire_cc(instruction, not can_acquire);
 
     if (instruction->thread()->reg_file()->condition(instruction->condition()))
     {
@@ -686,11 +649,11 @@ namespace upmem_sim::simulator::dpu
       instruction->thread()->reg_file()->increment_pc_reg();
     }
 
-    set_flags(instruction, not can_acquire, false); // 设置flag
+    set_flags(instruction, not can_acquire, false);
   }
 
   void Logic::execute_release_rici(abi::instruction::Instruction *instruction)
-  { /// 释放原子操作
+  {
     assert(abi::instruction::Instruction::release_rici_op_codes().count(
         instruction->op_code()));
     assert(instruction->suffix() == abi::instruction::RICI);
@@ -701,17 +664,17 @@ namespace upmem_sim::simulator::dpu
     Address atomic_address = ALU::atomic_address_hash(ra, imm);
 
     bool can_release =
-        atomic_->can_release(atomic_address, instruction->thread()->id()); // 尝试释放资源
+        atomic_->can_release(atomic_address, instruction->thread()->id());
     if (can_release)
     {
-      atomic_->release(atomic_address, instruction->thread()->id()); // 释放资源
+      atomic_->release(atomic_address, instruction->thread()->id());
     }
 
     instruction->thread()->reg_file()->clear_conditions();
     set_acquire_cc(instruction, not can_release);
 
     if (instruction->thread()->reg_file()->condition(instruction->condition()))
-    { // 如果条件码为真，则跳转到指定地址
+    {
       instruction->thread()->reg_file()->write_pc_reg(instruction->pc()->value());
     }
     else
@@ -723,7 +686,7 @@ namespace upmem_sim::simulator::dpu
   }
 
   void Logic::execute_boot_rici(abi::instruction::Instruction *instruction)
-  { // 执行线程启动/恢复指令
+  {
     assert(abi::instruction::Instruction::boot_rici_op_codes().count(
         instruction->op_code()));
     assert(instruction->suffix() == abi::instruction::RICI);
@@ -737,13 +700,13 @@ namespace upmem_sim::simulator::dpu
 
     abi::instruction::OpCode op_code = instruction->op_code();
     if (op_code == abi::instruction::BOOT)
-    { // 启动线程
+    {
       bool can_boot = scheduler_->boot(static_cast<ThreadID>(thread_id));
       set_boot_cc(instruction, ra, not can_boot);
       set_flags(instruction, not can_boot, false);
     }
     else if (op_code == abi::instruction::RESUME)
-    { // 恢复线程
+    {
       bool can_resume = scheduler_->awake(static_cast<ThreadID>(thread_id));
       set_boot_cc(instruction, ra, not can_resume);
       set_flags(instruction, not can_resume, false);
@@ -772,7 +735,7 @@ namespace upmem_sim::simulator::dpu
     abi::instruction::OpCode op_code = instruction->op_code();
     if (abi::instruction::Instruction::add_rri_op_codes().count(op_code))
     {
-      execute_add_rri(instruction); // 加法指令
+      execute_add_rri(instruction);
     }
     else if (abi::instruction::Instruction::asr_rri_op_codes().count(op_code))
     {
@@ -849,7 +812,6 @@ namespace upmem_sim::simulator::dpu
 
   void Logic::execute_asr_rri(abi::instruction::Instruction *instruction)
   {
-    // asr rc:wr32 ra:r32 shift:u5 按立即数进行移动
     /**
     - x = ra >>a shift[0:4]
 
@@ -986,7 +948,7 @@ namespace upmem_sim::simulator::dpu
   }
 
   void Logic::execute_add_rric(abi::instruction::Instruction *instruction)
-  { // 通过计算结果设置条件寄存器 计算imm+ra
+  {
     assert(abi::instruction::Instruction::add_rric_op_codes().count(
         instruction->op_code()));
     assert(instruction->suffix() == abi::instruction::RRIC);
@@ -1908,7 +1870,7 @@ namespace upmem_sim::simulator::dpu
   }
 
   void Logic::execute_add_rrrc(abi::instruction::Instruction *instruction)
-  { // 把ra+rb计算,根据标志位一起来决定对rc置零还是其他操作
+  {
     assert(abi::instruction::Instruction::add_rrrc_op_codes().count(
         instruction->op_code()));
     assert(instruction->suffix() == abi::instruction::RRRC);
@@ -2138,7 +2100,7 @@ namespace upmem_sim::simulator::dpu
     set_log_set_cc(instruction, result);
 
     if (instruction->thread()->reg_file()->condition(instruction->condition()))
-    { // 看
+    {
       instruction->thread()->reg_file()->write_gp_reg(instruction->rc(), 1);
     }
     else
@@ -2281,7 +2243,7 @@ namespace upmem_sim::simulator::dpu
   }
 
   void Logic::execute_add_rrrci(abi::instruction::Instruction *instruction)
-  { // 同rrrc,但是ra+rb会存到rc,然后根据立即数跳转到
+  {
     assert(abi::instruction::Instruction::add_rrrci_op_codes().count(
         instruction->op_code()));
     assert(instruction->suffix() == abi::instruction::RRRCI);
@@ -5823,7 +5785,7 @@ namespace upmem_sim::simulator::dpu
 
     if (instruction->thread()->reg_file()->condition(instruction->condition()))
     {
-      instruction->thread()->reg_file()->write_pc_reg(instruction->pc()->value()); // 修改下一个地址
+      instruction->thread()->reg_file()->write_pc_reg(instruction->pc()->value());
     }
     else
     {
@@ -6781,7 +6743,7 @@ namespace upmem_sim::simulator::dpu
   {
     throw std::bad_function_call();
   }
-  void Logic::execute_time_r(abi::instruction::Instruction *instruction) // 执行时间指令
+  void Logic::execute_time_r(abi::instruction::Instruction *instruction)
   {
     assert(abi::instruction::Instruction::time_r_op_codes().count(
         instruction->op_code()));
@@ -6854,7 +6816,7 @@ namespace upmem_sim::simulator::dpu
     if (instruction->thread()->reg_file()->condition(instruction->condition()))
     {
       instruction->thread()->reg_file()->write_pc_reg(instruction->pc()->value());
-      scheduler_->sleep(instruction->thread()->id()); // 关闭第一个线程
+      scheduler_->sleep(instruction->thread()->id());
     }
     else
     {
@@ -7226,7 +7188,7 @@ namespace upmem_sim::simulator::dpu
   }
 
   void Logic::execute_ldmai(abi::instruction::Instruction *instruction)
-  { // 传到iram中
+  {
     assert(abi::instruction::Instruction::ldmai_dma_rri_op_codes().count(
         instruction->op_code()));
     assert(instruction->suffix() == abi::instruction::DMA_RRI);

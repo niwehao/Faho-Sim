@@ -6,19 +6,19 @@
 
 namespace upmem_sim::abi::word {
 
-_BaseWord::_BaseWord(int width) {//储存各种字段,灵活的对比特流和字节流进行转换
+_BaseWord::_BaseWord(int width) {
   assert(width > 0);
   bits_.resize(width);
 }
 
 int64_t _BaseWord::bit_slice(Representation representation, int begin,
-                             int end) {//一段字符进行转换
+                             int end) {
   assert(0 <= begin and begin < end and end <= width());
   assert(end - begin < 64);
   int slice_width = end - begin;
   int64_t value = 0;
   for (int i = 0; i < slice_width; i++) {
-    if (bit(begin + i)) {//把二进制转换为十进制
+    if (bit(begin + i)) {
       if (representation == SIGNED and i == slice_width - 1) {
         value -= static_cast<int64_t>(pow(2, i));
       } else {
@@ -29,11 +29,11 @@ int64_t _BaseWord::bit_slice(Representation representation, int begin,
   return value;
 }
 
-void _BaseWord::set_bit_slice(int begin, int end, int64_t value) {//对单个字进行设置?value如果是偏移.为什么可以运行
-  assert(0 <= begin and begin < end and end <= width());//第一次,会将偏移转换为字节流
+void _BaseWord::set_bit_slice(int begin, int end, int64_t value) {
+  assert(0 <= begin and begin < end and end <= width());
   assert(end - begin < 64);
 
-  if (value >= 0) {//根据正负值选择不同的设置方法
+  if (value >= 0) {
     set_positive_bit_slice(begin, end, value);
   } else {
     set_negative_bit_slice(begin, end, value);
@@ -43,17 +43,17 @@ void _BaseWord::set_bit_slice(int begin, int end, int64_t value) {//对单个字
 encoder::ByteStream *_BaseWord::to_byte_stream() {
   int num_bytes = ceil(width() / 8.0);
   auto byte_stream = new encoder::ByteStream();
-  for (int i = 0; i < num_bytes; i++) {//字节流转换
+  for (int i = 0; i < num_bytes; i++) {
     int begin = 8 * i;
-    int end = std::min(begin + 8, width());//一个字节一个字节的进行转换
+    int end = std::min(begin + 8, width());
 
     auto byte = static_cast<int>(bit_slice(UNSIGNED, begin, end));
     byte_stream->append(byte);
   }
-  return byte_stream;//返回字节流
+  return byte_stream;
 }
 
-void _BaseWord::from_byte_stream(encoder::ByteStream *byte_stream) {//字节转比特流
+void _BaseWord::from_byte_stream(encoder::ByteStream *byte_stream) {
   for (int i = 0; i < byte_stream->size(); i++) {
     int begin = 8 * i;
     int end = std::min(begin + 8, width());
@@ -63,7 +63,7 @@ void _BaseWord::from_byte_stream(encoder::ByteStream *byte_stream) {//字节转�
   }
 }
 
-void _BaseWord::set_positive_bit_slice(int begin, int end, int64_t value) {//把13转换成1101
+void _BaseWord::set_positive_bit_slice(int begin, int end, int64_t value) {
   assert(0 <= begin and begin < end and end <= width());
   assert(value >= 0);
 

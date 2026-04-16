@@ -60,7 +60,7 @@ T *Queue<T>::front() {
   if (q_.empty()) {
     return nullptr;
   } else {
-    return q_.front();//第一个指令
+    return q_.front();
   }
 }
 

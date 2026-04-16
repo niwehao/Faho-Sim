@@ -5,19 +5,13 @@
 namespace upmem_sim::simulator::dpu {
 
 Pipeline::Pipeline(util::ArgumentParser *argument_parser)
-    : input_q_(new basic::Queue<abi::instruction::Instruction>(1)),//输入队列
-      ready_q_(new basic::Queue<abi::instruction::Instruction>(1)) {//输出队列
+    : input_q_(new basic::Queue<abi::instruction::Instruction>(1)),
+      ready_q_(new basic::Queue<abi::instruction::Instruction>(1)) {
   int num_pipeline_stages = static_cast<int>(
       argument_parser->get_int_parameter("num_pipeline_stages"));
   assert(num_pipeline_stages > 1);
   wait_q_ =
-      new basic::Queue<abi::instruction::Instruction>(num_pipeline_stages - 1);//等待队列(等待就是执行)
-      /**
-       * 假设连续执行5条指令：
-[输入队列] -> [等待队列] -> [等待队列] -> [等待队列] -> [就绪队列]
-   add6        add5         add4         add3          add2
-（新指令）    （解码）      （执行）      （访存）      （写回）
-       */
+      new basic::Queue<abi::instruction::Instruction>(num_pipeline_stages - 1);
 
   while (wait_q_->can_push()) {
     wait_q_->push(nullptr);
@@ -55,7 +49,7 @@ void Pipeline::cycle() {
   service_wait_q();
 }
 
-bool Pipeline::empty_wait_q() {//判断等待队列是否为空
+bool Pipeline::empty_wait_q() {
   std::queue<abi::instruction::Instruction *> wait_q;
   while (wait_q_->can_pop()) {
     abi::instruction::Instruction *instruction = wait_q_->pop();
@@ -74,7 +68,7 @@ bool Pipeline::empty_wait_q() {//判断等待队列是否为空
   return true;
 }
 
-void Pipeline::service_input_q() {//服务输入队列
+void Pipeline::service_input_q() {
   if (input_q_->can_pop() and wait_q_->can_push()) {
     abi::instruction::Instruction *instruction = input_q_->pop();
     wait_q_->push(instruction);

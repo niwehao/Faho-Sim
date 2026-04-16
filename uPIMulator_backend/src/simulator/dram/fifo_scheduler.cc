@@ -28,7 +28,7 @@ void FIFOScheduler::service_dma_command(dpu::DMACommand *dma_command) {
                  end_address) -
         address;
 
-    reorder_buffer_.push_back({dma_command, address, size});//DMA任务
+    reorder_buffer_.push_back({dma_command, address, size});
 
     address += size;
   }
@@ -44,14 +44,14 @@ bool FIFOScheduler::service_fcfs() {
   auto [dma_command, address, size] = reorder_buffer_[0];
   Address wordline_address = (address / wordline_size_) * wordline_size_;
 
-  if (row_address_ == nullptr and ready_q_->can_push(2)) {//空行 先激活位置,再执行
+  if (row_address_ == nullptr and ready_q_->can_push(2)) {
     reorder_buffer_.erase(reorder_buffer_.begin());
 
     ready_q_->push(
         new MemoryCommand(MemoryCommand::ACTIVATION, wordline_address));
 
     row_address_ = new abi::word::DataAddressWord();
-    row_address_->set_value(wordline_address);//缓存的字线只有一行
+    row_address_->set_value(wordline_address);
 
     if (dma_command->operation() == dpu::DMACommand::READ ||dma_command->operation() == dpu::DMACommand::READ_I) {
       ready_q_->push(
@@ -69,7 +69,7 @@ bool FIFOScheduler::service_fcfs() {
     return true;
   } else if (row_address_ != nullptr and
              row_address_->address() == wordline_address and
-             ready_q_->can_push(1)) {//命中
+             ready_q_->can_push(1)) {
     reorder_buffer_.erase(reorder_buffer_.begin());
 
     if (dma_command->operation() == dpu::DMACommand::READ || dma_command->operation() == dpu::DMACommand::READ_I) {
@@ -88,11 +88,11 @@ bool FIFOScheduler::service_fcfs() {
     return true;
   } else if (row_address_ != nullptr and
              row_address_->address() != wordline_address and
-             ready_q_->can_push(3)) {//先擦除
-    reorder_buffer_.erase(reorder_buffer_.begin());// erase(): 删除指定位置的元素
+             ready_q_->can_push(3)) {
+    reorder_buffer_.erase(reorder_buffer_.begin());
 
     ready_q_->push(
-        new MemoryCommand(MemoryCommand::PRECHARGE, row_address_->address()));//先擦除.擦除前需要写回
+        new MemoryCommand(MemoryCommand::PRECHARGE, row_address_->address()));
     ready_q_->push(
         new MemoryCommand(MemoryCommand::ACTIVATION, wordline_address));
 

@@ -154,9 +154,9 @@ int sbrk(int n) {
                 // critique
         processs[cur_process_index].prg.off_stack)
       goto err;
-    processs[cur_process_index].prg.size_data += n;//size_data本身就有栈
+    processs[cur_process_index].prg.size_data += n;
   }
-  ret = processs[cur_process_index].prg.size_data+WRAM_OFFSET;//因为有偏移
+  ret = processs[cur_process_index].prg.size_data+WRAM_OFFSET;
   
 err:
   if(ret<0){
@@ -255,7 +255,7 @@ void load_prg_memory(unsigned int prc_ind) {
   while (temp >= 0x800) { // write by slot of 255 1000 0000 0000 2048=256*8
 
     temp -= 0x800;
-    uint32_t ra = off | (0xff << 24);//15*16+15=255 自带1个数据  255+1=256 256>>3=0x800
+    uint32_t ra = off | (0xff << 24);
 
     __asm__ volatile( // there is no lib fun for IRAM data trasnfert so use the
                       // ldmai
@@ -264,7 +264,7 @@ void load_prg_memory(unsigned int prc_ind) {
         : [ra] "r"(ra), [mram_place] "r"(p->inode_text * SIZE_BLOCK + off));
     off += 0x800;
   }
-  uint32_t ra = off | (((temp-8) >> 3) << 24);//高位存大小低位存偏移
+  uint32_t ra = off | (((temp-8) >> 3) << 24);
   __asm__ volatile( // there is no lib fun forIRAM data trasnfert so use the
                     // ldmai
       "\tldmai %[ra], %[mram_place], 0\n"
@@ -408,7 +408,7 @@ int scheduler(void) {
                      // place in process tab)
         if (processs[loaded_idx].pid == pid_loaded) {
           print_debug(0,0);
-          save_wram_process(loaded_idx);//潜在的bug,如果分配的内存大于data
+          save_wram_process(loaded_idx);
           print_debug(1,0);
           // mram_write(jobs, job_mram.j[prc_idx], sizeof(jobs));
         }

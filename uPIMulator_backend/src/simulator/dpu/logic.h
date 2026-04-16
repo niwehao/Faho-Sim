@@ -21,21 +21,21 @@ class Logic {
   explicit Logic(DPUID dpu_id, util::ArgumentParser *argument_parser)
       : verbose_(argument_parser->get_int_parameter("verbose")),
         dpu_id_(dpu_id),
-        scheduler_(nullptr),//调度器
-        atomic_(nullptr),//原子操作
-        iram_(nullptr),//指令缓存
+        scheduler_(nullptr),
+        atomic_(nullptr),
+        iram_(nullptr),
         dma_(nullptr),//dma
-        pipeline_(new Pipeline(argument_parser)),//流水线
-        cycle_rule_(new CycleRule(argument_parser)),//周期规则
-        operand_collector_(nullptr),//操作收集器
+        pipeline_(new Pipeline(argument_parser)),
+        cycle_rule_(new CycleRule(argument_parser)),
+        operand_collector_(nullptr),
         wait_instruction_q_(new basic::Queue<abi::instruction::Instruction>(
-            util::ConfigLoader::max_num_tasklets())),//等待指令队列
-        stat_factory_(new util::StatFactory("Logic")),//统计工厂
+            util::ConfigLoader::max_num_tasklets())),
+        stat_factory_(new util::StatFactory("Logic")),
         num_pipeline_stages_(
             argument_parser->get_int_parameter("num_pipeline_stages"))
   {
 
-  }//流水线阶段
+  }
   ~Logic();
 
   DPUID dpu_id() { return dpu_id_; }
@@ -306,12 +306,11 @@ class Logic {
   sram::IRAM *iram_;
   DMA *dma_;
    PerformanceCounter *performance_counter_;
-  //每一个dpu只有一个pipline
 
-  Pipeline *pipeline_;//流水线
-  int num_pipeline_stages_;//流水线阶段
-  CycleRule *cycle_rule_;//周期规则
-  OperandCollector *operand_collector_;//操作收集器
+  Pipeline *pipeline_;
+  int num_pipeline_stages_;
+  CycleRule *cycle_rule_;
+  OperandCollector *operand_collector_;
 
   basic::Queue<abi::instruction::Instruction> *wait_instruction_q_;
 

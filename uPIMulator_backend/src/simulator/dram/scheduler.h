@@ -29,12 +29,12 @@ class Scheduler {
 
   void flush();
 
-  virtual void cycle() = 0;//虚函数
+  virtual void cycle() = 0;
 
  protected:
   basic::Queue<dpu::DMACommand> *input_q_;
   basic::Queue<MemoryCommand> *ready_q_;
-  abi::word::DataAddressWord *row_address_;//上次读的地址
+  abi::word::DataAddressWord *row_address_;
 
   std::vector<MemoryReference> reorder_buffer_;
 

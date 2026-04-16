@@ -79,20 +79,19 @@ namespace upmem_sim::simulator::faho::def
         {
             if (end_flag == 1)
             {
-                exit(0); // 退出程序
+                exit(0);
             }
-            end_flag = 1; // 设置结束标志
+            end_flag = 1;
             return nullptr;
-            // 退出代码
         }
         def::Event *event_ = get_event(time_);
         if (event_ == nullptr)
         {
-            return nullptr; // 没有事件
+            return nullptr;
         }
         else
         {
-            return event_; // 返回事件
+            return event_;
         }
     }
     void BS::check(int pid)
@@ -151,7 +150,7 @@ namespace upmem_sim::simulator::faho::def
         uint64_t slice_per_dpu = num_querys / nr_of_dpus;
         dpu_arguments_t input_arguments = {input_size, slice_per_dpu, static_cast<enum dpu_arguments_t::kernels>(0)};
         int first_role_id = 1;
-        event = init_NewProcess(1, 1000, NR_DPUS, "BS.16"); // 只有new和lanuch指定role_id=1
+        event = init_NewProcess(1, 1000, NR_DPUS, "BS.16");
         events_.push_back(event);
         event = init_LanuchProcess(1, 1000);
         events_.push_back(event);
@@ -159,7 +158,7 @@ namespace upmem_sim::simulator::faho::def
         {
             int role_id = i + first_role_id;
             event = init_ReadSocket(role_id);
-            events_.push_back(event); // DPU已经启动
+            events_.push_back(event);
         }
         for (uint32_t i = 0; i < nr_of_dpus; i++)
         {

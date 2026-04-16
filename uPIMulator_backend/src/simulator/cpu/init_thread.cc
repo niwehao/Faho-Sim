@@ -11,7 +11,7 @@ void InitThread::connect_rank(rank::Rank *rank) {
   rank_ = rank;
 }
 
-void InitThread::init() {//使用初始化kernel
+void InitThread::init() {
   dma_transfer_to_atomic();
   dma_transfer_to_iram();
   dma_transfer_to_wram();
@@ -38,8 +38,8 @@ void InitThread::dma_transfer_to_atomic() {
 }
 
 void InitThread::dma_transfer_to_iram() {
-  auto byte_stream = load_byte_stream("iram");//把编译好的指令放入iram
-  for (auto &dpu : rank_->dpus()) {//遍历dpu,所有dpu都读入
+  auto byte_stream = load_byte_stream("iram");
+  for (auto &dpu : rank_->dpus()) {
     dpu->dma()->transfer_to_iram(util::ConfigLoader::iram_offset()+util::ConfigLoader::iram_kernel_offset(),
                                  byte_stream);
   }

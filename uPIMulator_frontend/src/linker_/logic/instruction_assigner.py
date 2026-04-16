@@ -186,7 +186,6 @@ class InstructionAssigner(assemblyListener):
         pc = self._evaluate_program_counter(ctx.program_counter())
 
         instruction = Instruction(op_code, suffix, rc=rc, ra=ra, imm=imm, condition=condition, pc=pc)
-        #此处没有指定长度
 
         assert op_code == instruction.op_code()
         assert suffix == instruction.suffix()
@@ -3158,8 +3157,8 @@ class InstructionAssigner(assemblyListener):
         child = ctx.children[0]
         if isinstance(child, assemblyParser.NumberContext):
             return InstructionAssigner._evaluate_number(child)
-        elif isinstance(child, assemblyParser.Section_nameContext):#对于标签 把其转换为已经分配的地址
-            return self._evaluate_section_name(child)##对于标签 把其转换为已经分配的地址
+        elif isinstance(child, assemblyParser.Section_nameContext):
+            return self._evaluate_section_name(child)
         else:
             raise ValueError
 

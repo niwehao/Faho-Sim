@@ -2,7 +2,7 @@
 #include "NW_support/common.h"
 
 #define NR_DPUS 1
-uint64_t max_rows; // 一般data_prep是256
+uint64_t max_rows;
 uint64_t max_cols;
 static int32_t *input_itemsets_host;
 static int32_t *input_itemsets;
@@ -13,7 +13,6 @@ static int32_t *reference;
 static int32_t *dummy;
 static dpu_arguments_t *input_args;
 static unsigned int penalty = 1;
-// Compute output in the host 问题在于没有
 static void traceback(int *traceback_output, int32_t *input_itemsets,
                       int32_t *reference, unsigned int max_rows,
                       unsigned int max_cols, unsigned int penalty)
@@ -246,24 +245,24 @@ namespace upmem_sim::simulator::faho::def
                 else
                 {
                     assert((blk == 3) && (excution == 3));
-                    exit(0); // 退出程序
+                    exit(0);
                 }
                 std::cout << "blk:" << blk << std::endl;
             }
             else
             {
-                end_flag = 1; // 设置结束标志
+                end_flag = 1;
                 return nullptr;
             }
         }
         def::Event *event_ = get_event(time_);
         if (event_ == nullptr)
         {
-            return nullptr; // 没有事件
+            return nullptr;
         }
         else
         {
-            return event_; // 返回事件
+            return event_;
         }
     }
     void NW::check(int pid)
@@ -279,7 +278,6 @@ namespace upmem_sim::simulator::faho::def
                 {
                     status = false;
 
-                    // 转换为cout版本
                     std::cout << i * max_cols + j << " (" << i << ", " << j << "): "
                          << input_itemsets_host[i * max_cols + j] << " "
                          << input_itemsets[i * (max_cols + 1) + j] << std::endl;

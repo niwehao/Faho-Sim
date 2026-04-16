@@ -63,7 +63,7 @@ static void histogram_host(unsigned int *histo, T *A, unsigned int bins,
             for (unsigned int j = 0; j < nr_elements; j++)
             {
                 T d = A[j];
-                histo[i * bins + ((d * bins) >> DEPTH)] += 1;//大小是bin
+                histo[i * bins + ((d * bins) >> DEPTH)] += 1;
             }
         }
     }
@@ -85,20 +85,19 @@ namespace upmem_sim::simulator::faho::def
         {
             if (end_flag == 1)
             {
-                exit(0); // 退出程序
+                exit(0);
             }
-            end_flag = 1; // 设置结束标志
+            end_flag = 1;
             return nullptr;
-            // 退出代码
         }
         def::Event *event_ = get_event(time_);
         if (event_ == nullptr)
         {
-            return nullptr; // 没有事件
+            return nullptr;
         }
         else
         {
-            return event_; // 返回事件
+            return event_;
         }
     }
     void HSTS::check(int pid)
@@ -247,7 +246,7 @@ namespace upmem_sim::simulator::faho::def
         {
             event = init_ReadSocket(first_role_id + i);
 
-            events_.push_back(event); // DPU已经启动
+            events_.push_back(event);
         }
 
         for (uint32_t i = 0; i < nr_of_dpus; i++)

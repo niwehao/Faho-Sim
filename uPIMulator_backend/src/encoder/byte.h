@@ -21,9 +21,3 @@ class Byte {
 }  // namespace upmem_sim::encoder
 
 #endif
-/**这个类提供了：
-字节级别的数据封装
-值范围的安全保证
-清晰的数据表示
-简单的接口设计
-是UPMEM模拟器中基础的数据处理单元。 */

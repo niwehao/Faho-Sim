@@ -2,7 +2,7 @@
 
 #include <tuple>
 
-namespace upmem_sim::simulator::dpu {//操作数收集器
+namespace upmem_sim::simulator::dpu {
 
 void OperandCollector::connect_wram(sram::WRAM *wram) {
   assert(wram != nullptr);
@@ -10,25 +10,13 @@ void OperandCollector::connect_wram(sram::WRAM *wram) {
 
   wram_ = wram;
 }
-/**
- * // lbs: 读取有符号字节(byte)
-// lbu: 读取无符号字节
-// lhs: 读取有符号半字(half word)
-// lhu: 读取无符号半字
-// lw:  读取字(word)
-// ld:  读取双字(double word)
- */
 
 int64_t OperandCollector::lbs(Address address) {
-  //获取字节大小
   Address data_word_size = abi::word::DataWord().size();
-  //获取基地址,进行对齐,比如把5在转换为4字节,则基地址为4
   Address base_address = (address / data_word_size) * data_word_size;
   Address offset = address % data_word_size;
-  //获取数据字
   auto data_word = new abi::word::DataWord();
-  data_word->set_value(wram_->read(base_address));//读取数据字,在wram中
-  //把字节流转换为有符号整数
+  data_word->set_value(wram_->read(base_address));
   int64_t result =
       data_word->bit_slice(abi::word::SIGNED, static_cast<int>(8 * offset),
                            static_cast<int>(8 * (offset + 1)));
@@ -36,7 +24,6 @@ int64_t OperandCollector::lbs(Address address) {
   delete data_word;
 
   return result;
-  //根据不同的读取范围去读取数据字
 }
 
 int64_t OperandCollector::lbu(Address address) {

@@ -32,7 +32,7 @@ class TimerQueue {
  private:
   int size_;
   SimTime timer_;
-  std::vector<std::tuple<T *, int>> q_;//q_是
+  std::vector<std::tuple<T *, int>> q_;
 };
 
 template <typename T>
@@ -74,7 +74,7 @@ bool TimerQueue<T>::can_pop() {
   if (q_.empty()) {
     return false;
   } else {
-    auto [item, timer] = q_[0];//timer在这里的用法
+    auto [item, timer] = q_[0];
     if (timer <= 0) {
       return true;
     } else {
@@ -87,7 +87,7 @@ template <typename T>
 T *TimerQueue<T>::pop() {
   assert(can_pop());
   auto [item, timer] = q_[0];
-  q_.erase(q_.begin());//删除头部元素
+  q_.erase(q_.begin());
   return item;
 }
 

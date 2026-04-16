@@ -44,20 +44,19 @@ namespace upmem_sim::simulator::faho::def
         {
             if(end_flag == 1)
             {
-                exit(0); // 退出程序
+                exit(0);
             }
-            end_flag = 1; // 设置结束标志
+            end_flag = 1;
             return nullptr;
-            //退出代码
         }
         def::Event *event_ = get_event(time_);
         if (event_ == nullptr)
         {
-            return nullptr; // 没有事件
+            return nullptr;
         }
         else
         {
-            return event_; // 返回事件
+            return event_;
         }
     }
     void VA::check(int pid)
@@ -124,11 +123,11 @@ namespace upmem_sim::simulator::faho::def
         bufferC[0] = 0;
         def::Event *event;
         char ok;
-        event = init_NewProcess(1, 1000, NR_DPUS, "VA.16");//只有new和lanuch指定role_id=1
+        event = init_NewProcess(1, 1000, NR_DPUS, "VA.16");
         events_.push_back(event);
         event = init_LanuchProcess(1, 1100);
         events_.push_back(event);
-        event = init_ReadSocket(1);//dpu已经启动
+        event = init_ReadSocket(1);
         events_.push_back(event);
 
         event = init_InodeWrite(1, 1200, 0, transfer_buf_bytes(&input_arguments[0], sizeof(input_arguments[0])));
@@ -142,10 +141,10 @@ namespace upmem_sim::simulator::faho::def
 
 
         event = init_WriteSockets(1, 2000, 1,
-                                  transfer_buf_bytes(&ok, 1));//告诉dpu_code写入已经完成
+                                  transfer_buf_bytes(&ok, 1));
         events_.push_back(event);
 
-        event = init_ReadSocket(1);//告诉主机计算完成
+        event = init_ReadSocket(1);
         events_.push_back(event);
 
         event = init_InodeRead(1, 3000, bufferC, sizeof(input_arguments[0]) + input_size_dpu_8bytes * sizeof(T), input_size_dpu_8bytes * sizeof(T));

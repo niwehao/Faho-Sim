@@ -9,7 +9,7 @@ namespace upmem_sim::simulator::faho::def
     public:
         int need_read = 0;
         int app_id = 0;
-        int pid = 0; // 角色id
+        int pid = 0;
         void *buf = nullptr;
      
     };
@@ -34,9 +34,9 @@ namespace upmem_sim::simulator::faho::def
         std::vector<def::Event *> events_;
         std::vector<def::ReadBuffer *> ReadBuffer_;
         std::string bindir_;
-        virtual def::Event *benchmark(int time_) = 0; // 基准测试
-        virtual void benchmark_init(std::string bindir,int data_prep) = 0;            // 初始化基准测试
-        virtual void check(int pid) = 0; // 检查事件
+        virtual def::Event *benchmark(int time_) = 0;
+        virtual void benchmark_init(std::string bindir,int data_prep) = 0;
+        virtual void check(int pid) = 0;
     };
     class VA : public Host
     {

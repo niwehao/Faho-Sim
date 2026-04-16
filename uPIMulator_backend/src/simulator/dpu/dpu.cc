@@ -7,14 +7,14 @@ namespace upmem_sim::simulator::dpu {
 
 DPU::DPU(DPUID dpu_id, util::ArgumentParser *argument_parser)
     : dpu_id_(dpu_id),
-      atomic_(new sram::Atomic()),//原子操作
-      iram_(new sram::IRAM()),//指令缓存
-      wram_(new sram::WRAM()),//写缓存
-      mram_(new dram::MRAM(argument_parser)),//内存
-      logic_(new Logic(dpu_id, argument_parser)),//逻辑
+      atomic_(new sram::Atomic()),
+      iram_(new sram::IRAM()),
+      wram_(new sram::WRAM()),
+      mram_(new dram::MRAM(argument_parser)),
+      logic_(new Logic(dpu_id, argument_parser)),
       dma_(new DMA()),//dma
-      operand_collector_(new OperandCollector()),//操作收集器
-      memory_controller_(new dram::MemoryController(argument_parser)),//内存控制器
+      operand_collector_(new OperandCollector()),
+      memory_controller_(new dram::MemoryController(argument_parser)),
       stat_factory_(new util::StatFactory("DPU#" + std::to_string(dpu_id))),
       performance_counter_(new PerformanceCounter())
   {
@@ -99,7 +99,7 @@ util::StatFactory *DPU::stat_factory() {
   return stat_factory;
 }
 
-bool DPU::is_zombie() {//判断有没有僵尸
+bool DPU::is_zombie() {
   for (auto &thread : threads_) {
     if (thread->state() != Thread::ZOMBIE) {
       return false;
@@ -109,7 +109,7 @@ bool DPU::is_zombie() {//判断有没有僵尸
   return logic_->empty() and memory_controller_->empty();
 }
 
-void DPU::cycle() {//dpu的周期
+void DPU::cycle() {
   scheduler_->cycle();
   logic_->cycle();
   dma_->cycle();

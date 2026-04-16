@@ -79,7 +79,7 @@ void main1()
   dpu_results_t *result = &DPU_RESULTS[tasklet_id];
   // int cycle=DPU_INPUT_ARGUMENTS.slice_per_dpu / NR_FTHREAD;
 
-  for (int targets = 0; targets < (DPU_INPUT_ARGUMENTS.slice_per_dpu / NR_FTHREAD); targets++) // 循环不要用64位
+  for (int targets = 0; targets < (DPU_INPUT_ARGUMENTS.slice_per_dpu / NR_FTHREAD); targets++)
   {
     found = -1;
     print_debug(tasklet_id, 5);

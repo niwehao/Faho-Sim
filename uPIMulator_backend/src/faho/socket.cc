@@ -52,7 +52,7 @@ namespace upmem_sim::simulator::faho::def
             for (auto &process : DpuManager->processes)
             {
                 if(process == nullptr)
-                    continue; // 该位置没有进程
+                    continue;
                 if (process->pid == sc->pid)
                 {
                     p = process;

@@ -11,7 +11,7 @@ namespace upmem_sim::abi::reg {
 class GPReg {
  public:
   explicit GPReg(RegIndex index) : index_(index) {
-    assert(0 <= index and index < util::ConfigLoader::num_gp_registers());//检查寄存器编号是否在有效范围内
+    assert(0 <= index and index < util::ConfigLoader::num_gp_registers());
   }
   ~GPReg() = default;
 

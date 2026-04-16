@@ -6,20 +6,20 @@
 
 #include "abi/word/data_word.h"
 
-namespace upmem_sim::simulator::dpu {//加法器
+namespace upmem_sim::simulator::dpu {
 
-int64_t ALU::atomic_address_hash(int64_t operand1, int64_t operand2) {//检查原子地址是否在范围中
+int64_t ALU::atomic_address_hash(int64_t operand1, int64_t operand2) {
   assert(operand1 + operand2 < 256);
-  auto [result, carry, overflow] = add(operand1, operand2);//地址散列机制
+  auto [result, carry, overflow] = add(operand1, operand2);
   return result;
 }
 
 std::tuple<int64_t, bool, bool> ALU::add(int64_t operand1, int64_t operand2) {
-  return addc(operand1, operand2, false);//无进位加法
+  return addc(operand1, operand2, false);
 }
 
 std::tuple<int64_t, bool, bool> ALU::addc(int64_t operand1, int64_t operand2,
-                                          bool carry_flag) {//有进位加法
+                                          bool carry_flag) {
   auto data_word1 = new abi::word::DataWord();
   data_word1->set_value(operand1);
 
@@ -60,7 +60,7 @@ std::tuple<int64_t, bool, bool> ALU::addc(int64_t operand1, int64_t operand2,
   return {result, carry, overflow};
 }
 
-std::tuple<int64_t, bool, bool> ALU::sub(int64_t operand1, int64_t operand2) {//无进位减法
+std::tuple<int64_t, bool, bool> ALU::sub(int64_t operand1, int64_t operand2) {
   auto data_word1 = new abi::word::DataWord();
   data_word1->set_value(operand1);
 
@@ -103,7 +103,7 @@ std::tuple<int64_t, bool, bool> ALU::sub(int64_t operand1, int64_t operand2) {//
 }
 
 std::tuple<int64_t, bool, bool> ALU::subc(int64_t operand1, int64_t operand2,
-                                          bool carry_flag) {//有进位减法
+                                          bool carry_flag) {
   auto data_word1 = new abi::word::DataWord();
   data_word1->set_value(operand1);
 
@@ -145,7 +145,7 @@ std::tuple<int64_t, bool, bool> ALU::subc(int64_t operand1, int64_t operand2,
   return {result, carry, overflow};
 }
 
-int64_t ALU::and_(int64_t operand1, int64_t operand2) {//与运算
+int64_t ALU::and_(int64_t operand1, int64_t operand2) {
   auto data_word1 = new abi::word::DataWord();
   data_word1->set_value(operand1);
 
@@ -170,7 +170,7 @@ int64_t ALU::and_(int64_t operand1, int64_t operand2) {//与运算
   return result;
 }
 
-int64_t ALU::nand(int64_t operand1, int64_t operand2) {//与非运算
+int64_t ALU::nand(int64_t operand1, int64_t operand2) {
   auto data_word1 = new abi::word::DataWord();
   data_word1->set_value(operand1);
 
@@ -195,7 +195,7 @@ int64_t ALU::nand(int64_t operand1, int64_t operand2) {//与非运算
   return result;
 }
 
-int64_t ALU::andn(int64_t operand1, int64_t operand2) {//与非运算
+int64_t ALU::andn(int64_t operand1, int64_t operand2) {
   auto data_word1 = new abi::word::DataWord();
   data_word1->set_value(operand1);
 
@@ -220,7 +220,7 @@ int64_t ALU::andn(int64_t operand1, int64_t operand2) {//与非运算
   return result;
 }
 
-int64_t ALU::or_(int64_t operand1, int64_t operand2) {//或运算
+int64_t ALU::or_(int64_t operand1, int64_t operand2) {
   auto data_word1 = new abi::word::DataWord();
   data_word1->set_value(operand1);
 
@@ -245,7 +245,7 @@ int64_t ALU::or_(int64_t operand1, int64_t operand2) {//或运算
   return result;
 }
 
-int64_t ALU::nor(int64_t operand1, int64_t operand2) {//或非运算
+int64_t ALU::nor(int64_t operand1, int64_t operand2) {
   auto data_word1 = new abi::word::DataWord();
   data_word1->set_value(operand1);
 
@@ -349,7 +349,7 @@ int64_t ALU::nxor(int64_t operand1, int64_t operand2) {
   return result;
 }
 
-int64_t ALU::asr(int64_t operand, int64_t shift) {//算术右移
+int64_t ALU::asr(int64_t operand, int64_t shift) {
   auto data_word = new abi::word::DataWord();
   data_word->set_value(operand);
   bool msb = data_word->sign_bit();

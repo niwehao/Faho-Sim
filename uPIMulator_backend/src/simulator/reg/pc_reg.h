@@ -13,7 +13,7 @@ class PCReg {
 
   int64_t read() { return word_->address(); }
   void write(int64_t value) { word_->set_value(value); }
-  void increment() { write(read() + abi::word::InstructionWord().size()); }//指向下一指令
+  void increment() { write(read() + abi::word::InstructionWord().size()); }
   void cycle() = delete;
 
  private:

@@ -6,17 +6,17 @@
 
 namespace upmem_sim::simulator::dram {
 MemoryController::MemoryController(util::ArgumentParser *argument_parser)
-    : wordline_size_(argument_parser->get_int_parameter("wordline_size")),//子线大小
-      row_buffer_(new RowBuffer(argument_parser)),//行缓冲区
+    : wordline_size_(argument_parser->get_int_parameter("wordline_size")),
+      row_buffer_(new RowBuffer(argument_parser)),
       mram_(nullptr),//MRAM
-      input_q_(new basic::Queue<dpu::DMACommand>(-1)),//输入队列
-      wait_q_(new basic::Queue<dpu::DMACommand>(-1)),//等待队列
-      memory_command_q_(new basic::Queue<MemoryCommand>(1)),//内存命令队列
-      ready_q_(new basic::Queue<dpu::DMACommand>(-1)),//准备队列
-      stat_factory_(new util::StatFactory("MemoryController")) {//统计工厂
+      input_q_(new basic::Queue<dpu::DMACommand>(-1)),
+      wait_q_(new basic::Queue<dpu::DMACommand>(-1)),
+      memory_command_q_(new basic::Queue<MemoryCommand>(1)),
+      ready_q_(new basic::Queue<dpu::DMACommand>(-1)),
+      stat_factory_(new util::StatFactory("MemoryController")) {
   std::string memory_scheduling_policy =
       argument_parser->get_string_parameter("memory_scheduling_policy");
-  if (memory_scheduling_policy == "fifo") {//选择调度器
+  if (memory_scheduling_policy == "fifo") {
     scheduler_ = new FIFOScheduler(argument_parser);
   } else if (memory_scheduling_policy == "frfcfs") {
     scheduler_ = new FRFCFSScheduler(argument_parser);
@@ -75,7 +75,7 @@ dpu::DMACommand *MemoryController::front() {
   return ready_q_->front();
 }
 
-std::vector<int> MemoryController::read(Address address, Address size) {//读取内存
+std::vector<int> MemoryController::read(Address address, Address size) {
   Address end_address = address + size;
 
   Address cur_address = address;
@@ -92,7 +92,7 @@ std::vector<int> MemoryController::read(Address address, Address size) {//读取
     std::vector<int> mram_bytes = mram_->read(cur_wordline_address);
 
     bytes.insert(bytes.end(), mram_bytes.begin() + cur_offset,
-                 mram_bytes.begin() + cur_offset + cur_size);//从末尾插入,从mram_bytes的cur_offset开始,插入cur_size个元素
+                 mram_bytes.begin() + cur_offset + cur_size);
 
     cur_address += cur_size;
   }
@@ -108,7 +108,6 @@ void MemoryController::write(Address address, Address size,
   Address end_address = address + size;
 
 
-  // 打印开始和结束地址
   std::cout << "MemContro writing to address " << address << " to " << end_address - 1 << std::endl;
 
   Address cur_address = address;
@@ -123,9 +122,9 @@ void MemoryController::write(Address address, Address size,
 
     std::vector<int> mram_bytes = mram_->read(cur_wordline_address);
 
-    std::copy(bytes.begin() + cur_bytes_offset,//开始位置
-              bytes.begin() + cur_bytes_offset + cur_size,//结束位置
-              mram_bytes.begin() + cur_offset);//拷贝目标位置
+    std::copy(bytes.begin() + cur_bytes_offset,
+              bytes.begin() + cur_bytes_offset + cur_size,
+              mram_bytes.begin() + cur_offset);
 
     mram_->write(cur_wordline_address, mram_bytes);
 
@@ -194,7 +193,7 @@ void MemoryController::service_input_q() {
 }
 
 void MemoryController::service_scheduler() {
-  if (scheduler_->can_pop() and memory_command_q_->can_push()) {//调度器完成调度
+  if (scheduler_->can_pop() and memory_command_q_->can_push()) {
     MemoryCommand *memory_command = scheduler_->pop();
     memory_command_q_->push(memory_command);
   }
@@ -202,36 +201,28 @@ void MemoryController::service_scheduler() {
 
 void MemoryController::service_memory_command_q() {
   if (memory_command_q_->can_pop() and row_buffer_->can_push()) {
-    MemoryCommand *memory_command = memory_command_q_->pop();//写入rowbuffer
+    MemoryCommand *memory_command = memory_command_q_->pop();
     row_buffer_->push(memory_command);
   }
 }
 
 void MemoryController::service_row_buffer() {
-  if (row_buffer_->can_pop()) {//处理
+  if (row_buffer_->can_pop()) {
     MemoryCommand *memory_command = row_buffer_->pop();
 
     if (memory_command->operation() == MemoryCommand::ACTIVATION or
-        memory_command->operation() == MemoryCommand::PRECHARGE) {//处理完成后直接删除命令
+        memory_command->operation() == MemoryCommand::PRECHARGE) {
       delete memory_command;
     } else if (memory_command->operation() == MemoryCommand::READ) {
       memory_command->dma_command()->set_bytes(memory_command->address(),
                                                memory_command->size(),
-                                               memory_command->bytes());//把MemoryCommand的操作拷贝到dma_command
-                                               /*
-                                               - 设置读取到的数据
-- 通知DMA读取完成
-- 删除命令*/
+                                               memory_command->bytes());
       memory_command->dma_command()->ack_bytes(memory_command->address(),
                                                memory_command->size());
       delete memory_command;
     } else if (memory_command->operation() == MemoryCommand::WRITE) {
       memory_command->dma_command()->ack_bytes(memory_command->address(),
                                                memory_command->size());
-                                               /*
-                                               // 完成后：
-- 通知DMA写入完成
-- 删除命令*/
       delete memory_command;
     } else {
       throw std::invalid_argument("");
@@ -240,7 +231,7 @@ void MemoryController::service_row_buffer() {
 }
 
 void MemoryController::service_wait_q() {
-  if (not wait_q_->empty()) {//wait需要进行等待直到dmacommand的ack全部为true
+  if (not wait_q_->empty()) {
     dpu::DMACommand *dma_command = wait_q_->front();
 
     if (dma_command->is_ready() and ready_q_->can_push()) {

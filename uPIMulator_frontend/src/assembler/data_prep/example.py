@@ -12,8 +12,8 @@ from util.config_loader import ConfigLoader
 
 
 class TEST1DataPrep:
-    def __init__(self, num_tasklets: int, data_prep_param: List[int], num_dpus: int):#data_prep_param 是输入参数
-        assert 0 < num_tasklets < ConfigLoader.max_num_tasklets()#结果的储存取决于结果的储存方式,所以input和output大小需要对称
+    def __init__(self, num_tasklets: int, data_prep_param: List[int], num_dpus: int):
+        assert 0 < num_tasklets < ConfigLoader.max_num_tasklets()
 
         self._num_tasklets: int = num_tasklets
         self._num_dpus: int = num_dpus
@@ -55,7 +55,6 @@ class TEST1DataPrep:
                 self._iram.append(num)
                 count=count+1
                 if(count==12):
-                    #遍历128-96次
                     for i in range(4):
                         self._iram.append(i)
                     count=0
@@ -76,7 +75,6 @@ class TEST1DataPrep:
             bytes_.append(Byte(i))
 
 
-        #element_immediate = Immediate(Representation.UNSIGNED, 32, self.a)#32位转4字节
         #bytes_ += element_immediate.to_bytes()
 
         return Bin(bytes_)

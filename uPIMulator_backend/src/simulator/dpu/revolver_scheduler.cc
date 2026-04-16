@@ -3,11 +3,11 @@
 namespace upmem_sim::simulator::dpu {
 
 RevolverScheduler::RevolverScheduler(util::ArgumentParser *argument_parser,
-                                     std::vector<Thread *> threads)//线程
-    : thread_q_(new basic::Queue<Thread>(threads.size())),//线程队列
+                                     std::vector<Thread *> threads)
+    : thread_q_(new basic::Queue<Thread>(threads.size())),
       stat_factory_(new util::StatFactory("RevolverScheduler")) { 
   num_revolver_scheduling_cycles_ = static_cast<int>(
-      argument_parser->get_int_parameter("num_revolver_scheduling_cycles"));//每一个线程必须要等待的周期数
+      argument_parser->get_int_parameter("num_revolver_scheduling_cycles"));
 
   assert(num_revolver_scheduling_cycles_ > 0);
 
@@ -35,24 +35,24 @@ util::StatFactory *RevolverScheduler::stat_factory() {
 Thread *RevolverScheduler::schedule() {
   bool is_blocked = false;
   for (int i = 0; i < thread_q_->size(); i++) {
-    Thread *thread = thread_q_->pop();//从队列中弹出一个线程
-    thread_q_->push(thread);//将线程放回队列,来调整顺序
+    Thread *thread = thread_q_->pop();
+    thread_q_->push(thread);
 
-    if (thread->issue_cycle() >= num_revolver_scheduling_cycles_) {//如果线程的指令周期大于等于每一个线程必须要等待的周期数
-      if (thread->state() == Thread::RUNNABLE) {//如果线程处于可运行状态
-        thread->reset_issue_cycle();//重置指令周期,指令周期是在被调度的时候重新被设置
+    if (thread->issue_cycle() >= num_revolver_scheduling_cycles_) {
+      if (thread->state() == Thread::RUNNABLE) {
+        thread->reset_issue_cycle();
 
         stat_factory_->increment("breakdown_run");
 
         return thread;
       } else if (thread->state() == Thread::BLOCK) {
-        is_blocked = true;//记录堵塞以便统计
+        is_blocked = true;
       }
     }
   }
 
   if (is_blocked) {
-    stat_factory_->increment("breakdown_dma");//为什么发生了堵塞
+    stat_factory_->increment("breakdown_dma");
   } else {
     stat_factory_->increment("breakdown_etc");
   }
@@ -64,7 +64,7 @@ bool RevolverScheduler::boot(ThreadID id) {
   Thread *thread = threads_[id];
   assert(thread->id() == id);
 
-  if (thread->state() == Thread::EMBRYO) {//启动线程
+  if (thread->state() == Thread::EMBRYO) {
     thread->set_state(Thread::RUNNABLE);
     return true;
   } else if (thread->state() == Thread::ZOMBIE) {
@@ -76,7 +76,7 @@ bool RevolverScheduler::boot(ThreadID id) {
   }
 }
 
-bool RevolverScheduler::sleep(ThreadID id) {//休眠线程
+bool RevolverScheduler::sleep(ThreadID id) {
   Thread *thread = threads_[id];
   assert(thread->id() == id);
 
@@ -88,7 +88,7 @@ bool RevolverScheduler::sleep(ThreadID id) {//休眠线程
   }
 }
 
-bool RevolverScheduler::block(ThreadID id) {//阻塞线程
+bool RevolverScheduler::block(ThreadID id) {
   Thread *thread = threads_[id];
   assert(thread->id() == id);
 
@@ -111,7 +111,7 @@ bool RevolverScheduler::awake_block(ThreadID id) {
     assert(0);
   }
 }
-bool RevolverScheduler::awake(ThreadID id) {//唤醒线程
+bool RevolverScheduler::awake(ThreadID id) {
   Thread *thread = threads_[id];
   assert(thread->id() == id);
   //std::cout << "Awake thread: " << id << "state: " << thread->state() << std::endl;
@@ -126,12 +126,12 @@ bool RevolverScheduler::awake(ThreadID id) {//唤醒线程
   } else {
     // std::cout << "Thread " << id << " is in state: " << thread->state()
     //       << ", cannot awake." << std::endl;
-    return false; // 线程处于其他状态,无法唤醒
+    return false;
 
   }
 }
 
-bool RevolverScheduler::shutdown(ThreadID id) {//关闭线程
+bool RevolverScheduler::shutdown(ThreadID id) {
   Thread *thread = threads_[id];
   assert(thread->id() == id);
 
@@ -145,16 +145,11 @@ bool RevolverScheduler::shutdown(ThreadID id) {//关闭线程
 
 void RevolverScheduler::cycle() {
   int num_active_tasklets = 0, num_embryo = 0, num_sleep = 0, num_block = 0,
-      num_zombie = 0;/**
-      int num_active_tasklets = 0,  // 活动线程数
-    num_embryo = 0,          // 初始状态线程数
-    num_sleep = 0,           // 休眠线程数
-    num_block = 0,           // 阻塞线程数
-    num_zombie = 0;          // 僵尸线程数 */
+      num_zombie = 0;
 
   for (auto &thread : threads_) {
     if (thread->state() == Thread::RUNNABLE and
-        thread->issue_cycle() < num_revolver_scheduling_cycles_) {//可以运行但是由于没有到达等待周期而等待
+        thread->issue_cycle() < num_revolver_scheduling_cycles_) {
       stat_factory_->increment("revolver_wait");                 
       stat_factory_->increment(std::to_string(thread->id()) +
                                "_revolver_wait");
@@ -175,7 +170,6 @@ void RevolverScheduler::cycle() {
     else
       assert(0);
   }
-  // 更新统计信息
   std::string info_new="num_active_tasklets: "+std::to_string(num_active_tasklets)+
         ", num_embryo: "+std::to_string(num_embryo)+
         ", num_sleep: "+std::to_string(num_sleep)+
@@ -185,9 +179,9 @@ void RevolverScheduler::cycle() {
   //   std::cout << info_new << std::endl;
   // }
   info_ = info_new;
-  assert(num_active_tasklets <= 16);//活动线程数不能超过16,这是dpu的限制
+  assert(num_active_tasklets <= 16);
   stat_factory_->overwrite("current_active_tasklets",
-                           num_active_tasklets); //更新当前活动线程数
+                           num_active_tasklets);
 
   stat_factory_->increment("active_tasklets_" +
                            std::to_string(num_active_tasklets));

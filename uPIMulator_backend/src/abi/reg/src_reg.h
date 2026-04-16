@@ -8,9 +8,9 @@ namespace upmem_sim::abi::reg {
 
 class SrcReg {
  public:
-  explicit SrcReg(GPReg *reg)//从通用寄存器开始
+  explicit SrcReg(GPReg *reg)
       : gp_reg_(new GPReg(reg->index())), sp_reg_(nullptr) {}
-  explicit SrcReg(SPReg *reg) : gp_reg_(nullptr), sp_reg_(new SPReg(*reg)) {}//从特殊寄存器开始
+  explicit SrcReg(SPReg *reg) : gp_reg_(nullptr), sp_reg_(new SPReg(*reg)) {}
   ~SrcReg();
 
   bool is_gp_reg() { return gp_reg_ != nullptr; }

@@ -25,39 +25,25 @@ namespace upmem_sim::abi::instruction {
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
                          int64_t imm, isa::Condition condition, int64_t pc)
-    : op_code_(op_code),//操作码
-      suffix_(suffix),//后缀
-      rc_(nullptr),//目标通用寄存器
-      ra_(nullptr),//源寄存器A
-      rb_(nullptr),//源寄存器B
-      dc_(nullptr),//目标对寄存器 对寄存器由两个连续的通用寄存器组成
-      db_(nullptr),//源对寄存器
-      condition_(nullptr),//条件
-      imm_(nullptr),//立即数
-      off_(nullptr),//偏移
-      pc_(nullptr),//程序计数器
-      endian_(nullptr),//字节序 大端or小端
-      thread_(nullptr) {//线程
-  assert(ra != nullptr);//断言
+    : op_code_(op_code),
+      suffix_(suffix),
+      rc_(nullptr),
+      ra_(nullptr),
+      rb_(nullptr),
+      dc_(nullptr),
+      db_(nullptr),
+      condition_(nullptr),
+      imm_(nullptr),
+      off_(nullptr),
+      pc_(nullptr),
+      endian_(nullptr),
+      thread_(nullptr) {
+  assert(ra != nullptr);
 
   if (suffix_ == RICI) {//Register-Immediate-Condition-Immediate
-  /**
-   * RICI (Register-Immediate-Condition-Immediate):
-Register: 使用寄存器作为操作数
-Immediate: 第一个立即数作为操作数
-Condition: 条件码，用于控制指令执行的条件
-Immediate: 第二个立即数（通常是PC值）
-   */
-    init_rici(ra, imm, condition, pc);//可能是pc?
+    init_rici(ra, imm, condition, pc);
   } else if (suffix_ == ZRICI) {//Zero-Register-Immediate-Condition-Immediate
     init_zrici(ra, imm, condition, pc);
-    /**ZRICI (Zero-Register-Immediate-Condition-Immediate):
-Zero: 不使用目标寄存器（结果不需要存储）
-Register: 使用寄存器作为操作数
-Immediate: 第一个立即数作为操作数
-Condition: 条件码
-Immediate: 第二个立即数（通常是PC值）
-ZRICI常用于条件判断、比较等不需要保存结果的指令 */
   } else {
     throw std::invalid_argument("");
   }
@@ -103,22 +89,8 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
   assert(ra != nullptr);
 
   if (suffix_ == RRIC) {//Register-Register-Immediate-Condition
-  /**
-   * RRIC (Register-Register-Immediate-Condition):
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-Immediate: 立即数作为操作数
-Condition: 条件码，用于控制指令执行的条件 cond由多个flag组成来决定
-   */
     init_rric(rc, ra, imm, condition);
   } else if (suffix_ == RRIF) {//Register-Register-Immediate-Flag
-    /**
-     * RRIF (Register-Register-Immediate-Flag):
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-Immediate: 立即数作为操作数
-Flag: 标志位，用于控制指令执行的条件
-     */
     init_rrif(rc, ra, imm, condition);
   } else {
     throw std::invalid_argument("");
@@ -129,7 +101,7 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
                          reg::SrcReg *ra, int64_t imm, isa::Condition condition,
                          int64_t pc)
     : op_code_(op_code),
-      suffix_(suffix),//指示指令格式
+      suffix_(suffix),
       rc_(nullptr),
       ra_(nullptr),
       rb_(nullptr),
@@ -145,14 +117,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
   assert(ra != nullptr);
 
   init_rrici(rc, ra, imm, condition, pc);
-  /**
-   * RRICI (Register-Register-Immediate-Condition-Immediate):
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-Immediate: 立即数作为操作数
-Condition: 条件码
-Immediate: 第二个立即数（通常是PC值）
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
@@ -175,12 +139,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
   assert(rb != nullptr);
 
   init_rrr(rc, ra, rb);
-  /**
-   * RRR (Register-Register-Register):
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-Register: 第三个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
@@ -204,13 +162,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
   assert(rb != nullptr);
 
   init_rrrc(rc, ra, rb, condition);
-  /**
-   * RRRC (Register-Register-Register-Condition):
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-Register: 第三个寄存器作为操作数
-Condition: 条件码，用于控制指令执行的条件
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
@@ -234,12 +185,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
   assert(rb != nullptr);
 
   init_rrrci(rc, ra, rb, condition, pc);
-  /**
-   * RRRCI (Register-Register-Register-Condition-Immediate):
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-Register: 第三个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
@@ -260,12 +205,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
   assert(ra != nullptr);
 
   init_zri(ra, imm);
-  /**
-   * ZRI (Zero-Register-Immediate):
-Zero: 不使用目标寄存器（结果不需要存储）
-Register: 使用寄存器作为操作数
-Immediate: 立即数作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
@@ -287,22 +226,8 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
 
   if (suffix_ == ZRIC) {
     init_zric(ra, imm, condition);
-    /**
-     * ZRIC (Zero-Register-Immediate-Condition):
-Zero: 不使用目标寄存器（结果不需要存储）
-Register: 使用寄存器作为操作数
-Immediate: 立即数作为操作数
-Condition: 条件码，用于控制指令执行的条件
-     */
   } else if (suffix_ == ZRIF) {
     init_zrif(ra, imm, condition);
-    /**
-     * ZRIF (Zero-Register-Immediate-Flag):
-Zero: 不使用目标寄存器（结果不需要存储）
-Register: 使用寄存器作为操作数
-Immediate: 立即数作为操作数
-Flag: 标志位，用于控制指令执行的条件
-     */
   } else {
     throw std::invalid_argument("");
   }
@@ -327,12 +252,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
   assert(rb != nullptr);
 
   init_zrr(ra, rb);
-  /**
-   * ZRR (Zero-Register-Register):
-Zero: 不使用目标寄存器（结果不需要存储）
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
@@ -354,12 +273,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
   assert(rb != nullptr);
 
   init_zrrc(ra, rb, condition);
-  /**
-   * ZRRC (Zero-Register-Register-Condition):
-Zero: 不使用目标寄存器（结果不需要存储）
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
@@ -381,12 +294,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
   assert(rb != nullptr);
 
   init_zrrci(ra, rb, condition, pc);
-  /**
-   * ZRRCI (Zero-Register-Register-Condition-Immediate):
-Zero: 不使用目标寄存器（结果不需要存储）
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
@@ -408,12 +315,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
   assert(ra != nullptr);
 
   init_s_rri(dc, ra, imm);
-  /**
-   * S_RRI (Store-Register-Immediate):
-Store: 存储操作
-Register: 使用寄存器作为操作数
-Immediate: 立即数作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
@@ -436,22 +337,8 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
 
   if (suffix == S_RRIC or suffix == U_RRIC) {
     init_s_rric(dc, ra, imm, condition);
-    /**
-     * S_RRIC (Store-Register-Immediate-Condition):
-Store: 存储操作
-Register: 使用寄存器作为操作数
-Immediate: 立即数作为操作数
-Condition: 条件码，用于控制指令执行的条件
-     */
   } else if (suffix == S_RRIF or suffix == U_RRIF) {
     init_s_rrif(dc, ra, imm, condition);
-    /**
-     * S_RRIF (Store-Register-Immediate-Flag):
-Store: 存储操作
-Register: 使用寄存器作为操作数
-Immediate: 立即数作为操作数
-Flag: 标志位，用于控制指令执行的条件
-     */
   } else {
     throw std::invalid_argument("");
   }
@@ -499,13 +386,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
   assert(rb != nullptr);
 
   init_s_rrr(dc, ra, rb);
-  /**
-   * S_RRR (Store-Register-Register):
-Store: 存储操作
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-Register: 第三个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
@@ -529,12 +409,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
   assert(rb != nullptr);
 
   init_s_rrrc(dc, ra, rb, condition);
-  /**
-   * S_RRRC (Store-Register-Register-Condition):
-Store: 存储操作
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
@@ -579,11 +453,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
   assert(ra != nullptr);
 
   init_rr(rc, ra);
-  /**
-   * RR (Register-Register):
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
@@ -605,12 +474,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
   assert(ra != nullptr);
 
   init_rrc(rc, ra, condition);  
-  /**
-   * RRC (Register-Register-Condition):
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-Condition: 条件码，用于控制指令执行的条件
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
@@ -632,12 +495,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
   assert(ra != nullptr);
 
   init_rrci(rc, ra, condition, pc);
-  /**
-   * RRCI (Register-Register-Condition-Immediate):
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-Condition: 条件码
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra)
@@ -657,11 +514,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra)
   assert(ra != nullptr);
 
   init_zr(ra);
-  /**
-   * ZR (Zero-Register):
-Zero: 不使用目标寄存器（结果不需要存储）
-Register: 使用寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
@@ -682,12 +534,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
   assert(ra != nullptr);
 
   init_zrc(ra, condition);
-  /**
-   * ZRC (Zero-Register-Condition):
-Zero: 不使用目标寄存器（结果不需要存储）
-Register: 使用寄存器作为操作数
-Condition: 条件码，用于控制指令执行的条件
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
@@ -708,12 +554,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
   assert(ra != nullptr);
 
   init_zrci(ra, condition, pc);
-  /**
-   * ZRCI (Zero-Register-Condition-Immediate):
-Zero: 不使用目标寄存器（结果不需要存储）
-Register: 使用寄存器作为操作数
-Condition: 条件码
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
@@ -735,12 +575,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
   assert(ra != nullptr);
 
   init_s_rr(dc, ra);
-  /**
-   * S_RR (Store-Register):
-Store: 存储操作
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
@@ -762,12 +596,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
   assert(ra != nullptr);
 
   init_s_rrc(dc, ra, condition);
-  /**
-   * S_RRC (Store-Register-Condition):
-Store: 存储操作
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
@@ -789,12 +617,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
   assert(ra != nullptr);
 
   init_s_rrci(dc, ra, condition, pc);
-  /**
-   * S_RRCI (Store-Register-Condition-Immediate):
-Store: 存储操作
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
@@ -818,15 +640,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
   assert(db != nullptr);
 
   init_drdici(dc, ra, db, imm, condition, pc);
-  /**
-   * DRDICI (Double-Register-Double-Immediate-Condition-Immediate):
-Double: 使用一对寄存器作为操作数
-Register: 使用寄存器作为操作数
-Double: 使用另一对寄存器作为操作数
-Immediate: 立即数作为操作数
-Condition: 条件码
-Immediate: 第二个立即数（通常是PC值）
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
@@ -849,12 +662,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
   assert(rb != nullptr);
 
   init_rrri(rc, ra, rb, imm);
-  /**
-   * RRRI (Register-Register-Register-Immediate):
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-Register: 第三个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
@@ -878,12 +685,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
   assert(rb != nullptr);
 
   init_rrrici(rc, ra, rb, imm, condition, pc);
-  /**
-   * RRRI (Register-Register-Register-Immediate):
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-Register: 第三个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
@@ -906,22 +707,8 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
 
   if (suffix == ZRRI) {
     init_zrri(ra, rb, imm);
-    /**
-     * ZRRI (Zero-Register-Register-Immediate):
-Zero: 不使用目标寄存器（结果不需要存储）
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-Immediate: 立即数作为操作数
-   */
   } else if (suffix == DMA_RRI) {
     init_dma_rri(ra, rb, imm);
-    /**
-     * DMA_RRI (DMA-Register-Register-Immediate):
-DMA: 数据移动操作
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-Immediate: 立即数作为操作数
-   */
   } else {
     throw std::invalid_argument("");
   }
@@ -947,15 +734,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::SrcReg *ra,
   assert(rb != nullptr);
 
   init_zrrici(ra, rb, imm, condition, pc);
-  /**
-   * ZRRI (Zero-Register-Register-Immediate):
-Zero: 不使用目标寄存器（结果不需要存储）
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-Immediate: 立即数作为操作数
-Condition: 条件码
-Immediate: 第二个立即数（通常是PC值）
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
@@ -978,12 +756,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
   assert(rb != nullptr);
 
   init_s_rrri(dc, ra, rb, imm);
-  /**
-   * S_RRRI (Store-Register-Register-Immediate):
-Store: 存储操作
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
@@ -1007,12 +779,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
   assert(rb != nullptr);
 
   init_s_rrrici(dc, ra, rb, imm, condition, pc);
-  /**
-   * S_RRRI (Store-Register-Register-Immediate):
-Store: 存储操作
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
@@ -1034,12 +800,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
   assert(ra != nullptr);
 
   init_rir(rc, imm, ra);
-  /**
-   * RIR (Register-Immediate-Register):
-Register: 使用寄存器作为操作数
-Immediate: 立即数作为操作数
-Register: 使用寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
@@ -1061,12 +821,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
   assert(ra != nullptr);
 
   init_rirc(rc, imm, ra, condition);
-  /**
-   * RIR (Register-Immediate-Register):
-Register: 使用寄存器作为操作数
-Immediate: 立即数作为操作数
-Register: 使用寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
@@ -1089,12 +843,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
   assert(ra != nullptr);
 
   init_rirci(rc, imm, ra, condition, pc);
-  /**
-   * RIR (Register-Immediate-Register):
-Register: 使用寄存器作为操作数
-Immediate: 立即数作为操作数
-Register: 使用寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, int64_t imm,
@@ -1115,12 +863,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, int64_t imm,
   assert(ra != nullptr);
 
   init_zir(imm, ra);
-  /**
-   * ZIR (Zero-Immediate-Register):
-Zero: 不使用目标寄存器（结果不需要存储）
-Immediate: 立即数作为操作数
-Register: 使用寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, int64_t imm,
@@ -1141,12 +883,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, int64_t imm,
   assert(ra != nullptr);
 
   init_zirc(imm, ra, condition);
-  /**
-   * ZIR (Zero-Immediate-Register):
-Zero: 不使用目标寄存器（结果不需要存储）
-Immediate: 立即数作为操作数
-Register: 使用寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, int64_t imm,
@@ -1167,12 +903,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, int64_t imm,
   assert(ra != nullptr);
 
   init_zirci(imm, ra, condition, pc);
-  /**
-   * ZIR (Zero-Immediate-Register):
-Zero: 不使用目标寄存器（结果不需要存储）
-Immediate: 立即数作为操作数
-Register: 使用寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
@@ -1194,14 +924,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
   assert(ra != nullptr);
 
   init_s_rirc(dc, imm, ra, condition);
-  /**
-   * S_RIRC (Store-Register-Immediate-Register-Condition):
-Store: 存储操作
-Register: 使用寄存器作为操作数
-Immediate: 立即数作为操作数
-Register: 使用寄存器作为操作数
-Condition: 条件码
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
@@ -1224,14 +946,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
   assert(ra != nullptr);
 
   init_s_rirci(dc, imm, ra, condition, pc);
-  /**
-   * S_RIRC (Store-Register-Immediate-Register-Condition):
-Store: 存储操作
-Register: 使用寄存器作为操作数
-Immediate: 立即数作为操作数
-Register: 使用寄存器作为操作数
-Condition: 条件码
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc)
@@ -1251,10 +965,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc)
   assert(rc != nullptr);
 
   init_r(rc);
-  /**
-   * R (Register):
-Register: 使用寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
@@ -1275,12 +985,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::GPReg *rc,
   assert(rc != nullptr);
 
   init_rci(rc, condition, pc);
-  /**
-   * RCI (Register-Condition-Immediate):
-Register: 使用寄存器作为操作数
-Condition: 条件码
-Immediate: 立即数（通常是PC值）
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix)
@@ -1298,10 +1002,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix)
       endian_(nullptr),
       thread_(nullptr) {
   init_z();
-  /**
-   * Z (Zero):
-Zero: 不使用目标寄存器（结果不需要存储）
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix,
@@ -1321,19 +1021,8 @@ Instruction::Instruction(OpCode op_code, Suffix suffix,
       thread_(nullptr) {
   if (suffix == ZCI) {
     init_zci(condition, pc);
-    /**
-     * ZCI (Zero-Condition-Immediate):
-Zero: 不使用目标寄存器（结果不需要存储）
-Condition: 条件码
-Immediate: 立即数（通常是PC值）
-   */
   } else if (suffix == CI) {
     init_ci(condition, pc);
-    /**
-     * CI (Condition-Immediate):
-Condition: 条件码
-Immediate: 立即数（通常是PC值）
-   */
   } else {
     throw std::invalid_argument("");
   }
@@ -1356,12 +1045,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc)
   assert(dc != nullptr);
 
   init_s_r(dc);
-  /**
-   * S_R (Store-Register):
-Store: 存储操作
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
@@ -1382,13 +1065,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
   assert(dc != nullptr);
 
   init_s_rci(dc, condition, pc);
-  /**
-   * S_RCI (Store-Register-Condition-Immediate):
-Store: 存储操作
-Register: 使用寄存器作为操作数
-Condition: 条件码
-Immediate: 立即数（通常是PC值）
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, int64_t imm)
@@ -1406,10 +1082,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, int64_t imm)
       endian_(nullptr),
       thread_(nullptr) {
   init_i(imm);
-  /**
-   * I (Immediate):
-Immediate: 立即数作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
@@ -1431,13 +1103,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, reg::PairReg *dc,
   assert(db != nullptr);
 
   init_ddci(dc, db, condition, pc);
-  /**
-   * DDCI (Double-Double-Condition-Immediate):
-Double: 使用一对寄存器作为操作数
-Double: 使用另一对寄存器作为操作数
-Condition: 条件码
-Immediate: 立即数（通常是PC值）
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, isa::Endian endian,
@@ -1459,12 +1124,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, isa::Endian endian,
   assert(ra != nullptr);
 
   init_erri(endian, rc, ra, off);
-  /**
-   * ERRI (Endian-Register-Register-Immediate):
-Endian: 字节序
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, isa::Endian endian,
@@ -1487,21 +1146,8 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, isa::Endian endian,
 
   if (suffix == S_ERRI or suffix == U_ERRI) {
     init_s_erri(endian, dc, ra, off);
-    /**
-     * S_ERRI (Store-Endian-Register-Register-Immediate):
-Store: 存储操作
-Endian: 字节序
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-   */
   } else if (suffix == EDRI) {
     init_edri(endian, dc, ra, off);
-    /**
-     * EDRI (Endian-Double-Register-Immediate):
-Endian: 字节序
-Double: 使用一对寄存器作为操作数
-Immediate: 立即数作为操作数
-   */
   } else {
     throw std::invalid_argument("");
   }
@@ -1525,12 +1171,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, isa::Endian endian,
   assert(ra != nullptr);
 
   init_erii(endian, ra, off, imm);
-  /**
-   * ERII (Endian-Register-Immediate-Immediate):
-Endian: 字节序
-Register: 使用寄存器作为操作数
-Immediate: 立即数作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, isa::Endian endian,
@@ -1552,12 +1192,6 @@ Instruction::Instruction(OpCode op_code, Suffix suffix, isa::Endian endian,
   assert(rb != nullptr);
 
   init_erir(endian, ra, off, rb);
-  /**
-   * ERIR (Endian-Register-Immediate-Register):
-Endian: 字节序
-Register: 使用寄存器作为操作数
-Register: 第二个寄存器作为操作数
-   */
 }
 
 Instruction::Instruction(OpCode op_code, Suffix suffix, isa::Endian endian,

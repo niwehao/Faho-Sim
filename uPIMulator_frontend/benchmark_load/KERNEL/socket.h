@@ -87,7 +87,7 @@ void init_sockets(void);
  * @return int
  */
 int wakeup_sleepy_socket(void);
-extern unsigned char * mutex_sockets;//修改 删除const标志
+extern unsigned char * mutex_sockets;
 
 uint8_t sync_extern_socket __attribute__((section(".data"))) =
     0; // When an exertn socket is in creation the process sleep on this addr

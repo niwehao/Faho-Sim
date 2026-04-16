@@ -1,6 +1,67 @@
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# ---------- C/C++ build ----------
 uPIMulator_backend/build/
-doc/
-PrIM_Faho/
+build/
+*.o
+*.obj
+*.a
+*.lib
+*.so.*
+*.dylib
+*.exe
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+
+# ---------- Editor / OS ----------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+
+# ---------- Simulator outputs / logs ----------
+# Raw simulator stdout redirected by auto.py / manual runs
+uPIMulator_backend/atuo/
+uPIMulator_backend/autolog/
+uPIMulator_backend/trace.txt
+uPIMulator_backend/back.txt
+uPIMulator_backend/t.txt
+# Result .txt / .csv (keep .ipynb analysis notebooks and .png figures)
+uPIMulator_backend/result/**/*.txt
+uPIMulator_backend/result/**/*.csv
+# Frontend linker cache / logs
+uPIMulator_frontend/src/logs/
 uPIMulator_frontend/src/save_lib.pkl
-uPIMulator_backend/atuo
-uPIMulator_frontend/src/logs
+uPIMulator_frontend/src/*.pkl
+
+# Generated linker output (binaries, assembly, symbol maps)
+uPIMulator_frontend/bin/
+
+# ---------- Third-party / external ----------
+PrIM_Faho/
+doc/
+
+# ---------- Misc ----------
+*.log
+*.tmp
+*.bak

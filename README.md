@@ -1,272 +1,213 @@
-# ⚙️ Usage
-## Currently Supported Mode
-uPIMulator operates in an execution-driven simulation mode, enabling cycle-accurate performance analysis of PIM-based applications.
+# Faho_Sim (faho-mmu)
 
-## Workflow
-The typical usage workflow comprises two primary stages:
+> **Branch:** this branch adds an **MMU / virtual-memory layer** on top of
+> the Faho kernel, exposing page-fault-driven paging for DPU workloads.
+> See the `mmu*` notebooks under `uPIMulator_backend/result/` for the
+> evaluation.
 
-1. **Binary Generation:** Compile, assemble, and link your application code to generate the required binary files for simulation.
-2. **Cycle-Level Simulation:** Utilize the generated binary files as input to the cycle-level simulator to obtain detailed performance metrics and insights.
+Faho_Sim is a cycle-accurate simulator for the UPMEM Processing-in-Memory
+(PIM) platform with a **custom on-DPU kernel (Faho)** that supports running
+multiple processes/applications on a single DPU with job scheduling, inode
+I/O, inter-process sockets, and software preemption.
 
-We aim to expand uPIMulator's capabilities and may introduce additional usage modes in future releases.
+It is a fork of [uPIMulator](https://github.com/VIA-Research/uPIMulator) with
+the following additions:
 
-## Installation & Build
-### Prerequisites
-- **Python:** Python 3.10 or higher
-- **C++ Compiler:** C++20 compliant compiler
-- **CMake:** CMake 3.16 or higher
-- **Docker:** Docker Engine
-- **User Permissions:** Your Ubuntu user account must be a member of the `docker` group.
-- **Operating System:** Ubuntu 18.04 or later (recommended)
-- **Environment Management (Optional):** We recommend using a tool like [Anaconda](https://www.anaconda.com/) for managing your Python environment.
+- A small in-DPU kernel (`faho`) that orchestrates multiple user
+  applications (benchmarks) on one DPU.
+- Extended backend simulator flags (`--application`, `--data_prep`) that
+  select and size the guest application run by the kernel.
+- Cooperative / preemptive scheduling between tasklets, synchronization
+  primitives (sockets, barriers, mutexes), and a small inode-style file
+  interface on MRAM.
 
-### Installation Steps
-1. **Install Linker Dependencies:** Navigate to the `uPIMulator_frontend` directory and install the required Python packages using `pip`:
+## Repository Layout
 
-   ```bash
-   cd /path/to/uPIMulator/python_cpp/uPIMulator_frontend
-   pip install -r requirements.txt
-   ```
-
-2. **Build the Cycle-level Simulator:** Navigate to the `uPIMulator_backend/script` directory and execute the build script:
-
-   ```bash
-   cd /path/to/uPIMulator/python_cpp/uPIMulator_backend/script
-   sh build.sh
-   ```
-
-> **Note:** Replace `/path/to/uPIMulator` with the actual path to your uPIMulator repository. 
-
-If you encounter any issues during the installation or build process, please refer to the troubleshooting section in the documentation or open an issue on our GitHub repository.
-
-## Binary Files Generation
-We will use the VA (vector addition) benchmark as an example to demonstrate the binary file generation phase.
-After compiling, assembling, and linking, you will find the generated binary files within the `uPIMulator_frontend/bin` directory.
-
-> **Pre-Generated Binaries:** To expedite the setup process, you can utilize our pre-generated binary files available at the following [link](https://drive.google.com/file/d/1kfL-xGn1F18Ezmw81IvAhxEaLiZZOLFR/view?usp=sharing).
-
-### Compilation
-
-```bash
-cd /path/to/uPIMulator/python_cpp/uPIMulator_frontend/src
-python main.py --mode compile --num_tasklets 16 --benchmark VA --num_dpus 1
+```
+Faho_Sim/
+├── uPIMulator_frontend/       # Toolchain (Python)
+│   ├── src/                   # compiler, linker, encoder, assembler
+│   │   ├── main.py            # toolchain driver (compile + link)
+│   │   ├── compiler/          # benchmark -> .S driver
+│   │   ├── linker_/           # .S -> iram/wram/mram binaries
+│   │   ├── assembler/         # data-prep helpers per benchmark
+│   │   ├── encoder/           # UPMEM ISA encoder
+│   │   └── parser_/           # ANTLR-generated assembly parser
+│   ├── benchmark/             # benchmark source trees (includes KERNEL)
+│   ├── benchmark_load/        # alternate benchmark variants
+│   ├── asm/                   # generated/checked-in assembly
+│   ├── sdk/                   # UPMEM stdlib / syslib / misc
+│   ├── docker/                # compiler toolchain image
+│   └── bin/                   # linker output (*.bin, ignored by git)
+└── uPIMulator_backend/        # Cycle-level simulator (C++20)
+    ├── src/
+    │   ├── main.cc            # simulator entry
+    │   ├── simulator/         # DPU / DRAM / SRAM / pipeline / scheduler
+    │   ├── abi/               # UPMEM ISA definitions
+    │   ├── encoder/ converter/ initializer/   # binary loading
+    │   ├── faho/              # Faho kernel host-side model
+    │   │   ├── def.{h,cc}     # process/job/inode/socket definitions
+    │   │   ├── k1.{h,cc}      # K1 kernel orchestrator + syscalls
+    │   │   ├── inode.{h,cc}   # inode-style I/O on MRAM
+    │   │   ├── socket.{h,cc}  # inter-process sockets
+    │   │   └── benchmark/     # per-application host classes
+    │   └── util/
+    ├── script/                # build.sh, run.sh, format.sh
+    └── result/                # notebooks / figures (outputs ignored)
 ```
 
-### Assembly and Linking
+The on-DPU kernel itself is built from
+`uPIMulator_frontend/benchmark/KERNEL/` (`kernel.c`, `kernel.h`,
+`jobs.h`, `sync.h`, `socket.h`, `inode.h`, `syscall.h`, `lib.S`, ...).
+Applications running inside the kernel are the usual PrIM-style
+workloads (BFS, BS, GEMV, HST-S, MLP, NW, RED, SEL, TS, VA).
+
+## Branches
+
+| Branch         | Purpose                                                    |
+|----------------|------------------------------------------------------------|
+| `faho`         | Baseline: multi-process kernel + software preemption.       |
+| `faho-mmu`     | Adds an MMU / virtual-memory layer on the DPU.             |
+| `faho-preempt` | Focused work on preemption refinements and evaluation.     |
+
+## Prerequisites
+
+- Python ≥ 3.10
+- C++20-compliant compiler (g++ 10+, clang 12+)
+- CMake ≥ 3.16
+- Docker (for the UPMEM compiler toolchain)
+- Linux (tested on Ubuntu 20.04 / 22.04)
+- User must be in the `docker` group
+
+## Install & Build
+
+### 1. Python dependencies (frontend)
 
 ```bash
-cd /path/to/uPIMulator/python_cpp/uPIMulator_frontend/src
-python main.py --mode link --num_tasklets 16 --benchmark VA --data_prep_param 1024 --num_dpus 1
+cd uPIMulator_frontend
+pip install -r requirements.txt
 ```
 
-> **Troubleshooting:** In the event that the linking command encounters errors, please execute the following Docker build command and then reattempt the compilation and linking steps:
+### 2. Build the UPMEM compiler image
+
+Pull or build the compiler image once:
 
 ```bash
-docker build -t bongjoonhyun/compiler -f /path/to/uPIMulator/python_cpp/uPIMulator_frontend/docker/compiler.dockerfile .
+docker build -t bongjoonhyun/compiler \
+    -f uPIMulator_frontend/docker/compiler.dockerfile .
 ```
 
-> **Supported Benchmarks and Performance Note:** uPIMulator currently supports 13 PrIM benchmarks.
-> Please be aware that the initial compile/assemble/link process may take approximately 30 minutes.
-
-## Cycle-level Simulation
-### Executing a Simulation
-Initiate a cycle-level simulation by providing the following inputs to the `uPIMulator` executable:
-
-- Benchmark name
-- Number of tasklets
-- Absolute path to the directory containing the generated binary files (`bindir`)
-
-You can further customize the simulation behavior using various command-line options. 
-
-### Simulation Output
-The simulation results will be printed directly to the standard output (`stdout`).
-
-### Example Command
+### 3. Build the backend simulator
 
 ```bash
-cd /path/to/uPIMulator/uPIMulator_backend/build/
-./src/uPIMulator --benchmark VA --num_tasklets 16 --bindir /path/to/uPIMulator/uPIMulator_frontend/bin/1_dpus/ --logdir .
+cd uPIMulator_backend/script
+sh build.sh          # runs cmake + make into ../build/
 ```
 
-> **Important Note:** Ensure that you provide the absolute path to the `bindir` when executing the simulation.
+The executable is at `uPIMulator_backend/build/src/uPIMulator`.
 
-Feel free to explore different benchmark configurations and utilize the command-line options to tailor the simulation to your specific requirements.
+## Usage
 
-# 📄 Reproducing Figures from the Paper
-This section provides instructions for replicating the figures presented in our paper.
-We offer detailed replication manuals for figures used in **Section 4 (Demystifying UPMEM-PIM with uPIMulator)**.
-Please note that Figure 8 is omitted for brevity.
+Running a simulation is a two-stage pipeline:
 
-## Configuration of PrIM Benchmarks
-- **Single DPU Focus:** For Figures 5, 6, 7, and 9, the `num_dpus` parameter must always be set to `1`, as these experiments specifically characterize the behavior of a single DPU.
-- **Data Preparation Parameter:**  When generating the binary files for the PrIM benchmarks, please configure the `data_prep_param` parameter according to the following table:
+1. **Frontend** — compile benchmark C → assembly → linked binary blobs
+   (`iram.bin`, `wram.bin`, `mram.bin`, ...) under
+   `uPIMulator_frontend/bin/<num_dpus>_dpus/<BENCHMARK>.<num_tasklets>/`.
+2. **Backend** — load those blobs into the cycle-level simulator.
 
-| Benchmark | `data_prep_param` (Figures 5, 6, 7, 9) | `data_prep_param` (Figure 10) |
-|---|---|---|
-| BS       | 32768 | 131072 |
-| GEMV     | 2048  | 4096   |
-| HST-L    | 131072 | 524288 |
-| HST-S    | 131072 | 524288 |
-| MLP      | 256   | 1024   |
-| RED      | 524288 | 2097152|
-| SCAN-RSS | 262144 | 1048576|
-| SCAN-SSA | 262144 | 1048576|
-| SEL      | 524288 | 2097152|
-| TRNS     | 1024  | 128    |
-| TS       | 2048  | 65536  |
-| UNI      | 524288 | 2097152|
-| VA       | 524288 | 2097152|
-
-## Example Command
+### Frontend: build the KERNEL binary
 
 ```bash
-python main.py --mode link --num_tasklets 16 --benchmark VA --data_prep_param 524288 --num_dpus 1
-``` 
+cd uPIMulator_frontend/src
+python main.py --mode all \
+               --benchmark KERNEL \
+               --num_tasklets 16 \
+               --num_dpus 1 \
+               --data_prep_param 2048
+```
 
-Please ensure you adhere to these configurations to accurately replicate the figures presented in the paper. 
+Available `--mode` values (see `main.py`):
 
-## Figure 5: PrIM Compute and Memory Utilization
-<img src="../assets/uPIMulator_figure5.png" width="400"/>
+| Mode                  | What it does                                           |
+|-----------------------|--------------------------------------------------------|
+| `compile_sdk`         | Compile the SDK libraries (`misc`, `stdlib`, `syslib`).|
+| `compile_by_toolchain`| Compile one benchmark via the UPMEM toolchain + link.  |
+| `compile_load`        | Same, but from `benchmark_load/`.                      |
+| `all`                 | `compile_sdk` + `compile_by_toolchain`.                |
 
-This figure illustrates the compute utilization (red points) and memory read bandwidth utilization (blue points) of the PrIM benchmarks when executed with 1, 4, and 16 threads (tasklets).
+`--benchmark KERNEL` is the primary target in Faho_Sim — the Faho kernel
+is what actually runs on the DPU, and the guest *application* is picked
+at simulation time via `--application`.
 
-### Calculation Formulas
+### Backend: run the simulator
 
-- **Compute Utilization (IPC):**  `num_instructions` / (`logic_cycle` - `communication_cycle`)
-- **Memory Read Bandwidth Utilization (GB/s):** Please refer to the provided Excel sheet for the calculation at the following [link](../assets/figure5_mem_util_calculator.xlsx)
+```bash
+cd uPIMulator_backend
+./build/src/uPIMulator \
+    --bindir  $(pwd)/../uPIMulator_frontend/bin/1_dpus/ \
+    --logdir  . \
+    --benchmark   KERNEL \
+    --application BFS \
+    --num_tasklets 16 \
+    --num_dpus 1 \
+    --data_prep 0
+```
 
-> **Note:** The required values for these calculations can be obtained from the simulation results generated by uPIMulator. 
+Key flags (see `uPIMulator_backend/src/main.cc`):
 
-## Figure 6: DPU Runtime Breakdown
-<img src="../assets/uPIMulator_fiture6.png" width="400"/>
+| Flag              | Meaning                                                                  |
+|-------------------|--------------------------------------------------------------------------|
+| `--bindir`        | Absolute path to the frontend output (`bin/<N>_dpus/`).                  |
+| `--logdir`        | Directory for simulator log files.                                       |
+| `--benchmark`     | The top-level program loaded on the DPU — use `KERNEL` for Faho runs.    |
+| `--application`   | Guest application the kernel should launch (`BFS`, `BS`, `GEMV`, `HST-S`,`MLP`, `NW`, `RED`, `SEL`, `TS`, `VA`). |
+| `--data_prep`     | Integer sizing parameter passed to the application's data-prep routine.  |
+| `--num_tasklets`  | Number of tasklets (hardware threads) per DPU.                           |
+| `--num_dpus`      | Number of DPUs to simulate.                                              |
+| `--verbose`       | 0 = summary only, 1 = per-cycle instruction trace, 2 = + register dump.  |
 
-This figure presents a breakdown of DPU runtime, categorizing cycles into active (black) and various idle states (red, yellow, blue).
-The following formulas can be used to calculate the proportions of each category:
+Simulation results are printed to stdout; redirect as needed.
 
-### Calculation Formulas
+### Batch runs
 
-- **Issuable Ratio:**  `breakdown_run` / (`logic_cycle` - `communication_cycle`)
-- **Idle (Memory) Ratio:** `breakdown_dma` / (`logic_cycle` - `communication_cycle`)
-- **Idle (Revolver) Ratio:** (`breakdown_etc` - `communication_cycle`) / (`logic_cycle` - `communication_cycle`)
-- **Idle (RF) Ratio:** `backpressuer` / (`logic_cycle` - `communication_cycle`)
+`uPIMulator_backend/auto.py` runs a list of `(application, data_prep)`
+configurations in one shot, writing each one's stdout under
+`uPIMulator_backend/autolog/`.
 
-> **Note:** The values for the variables in these formulas (e.g., `breakdown_run`, `logic_cycle`) can be extracted from the simulation results generated by uPIMulator. 
+```bash
+cd uPIMulator_backend
+python auto.py
+```
 
-## Figure 7: Issuable Tasklets
-<img src="../assets/uPIMulator_figure7.png" width="400"/>
+Edit the `tasks` list in `auto.py` to pick the applications to run.
 
-Figure 7 visualizes the number of tasklets (threads) that are ready for execution (issuable) by the DPU scheduler at each cycle.
+## Adding a new application
 
-### Replication
-To reproduce this figure, utilize the provided [Excel sheet](../assets/figure7_active_tasklet_breakdown.xlsx).
-The spreadsheet includes instructions on how to populate it with the relevant simulation output data, and it will automatically generate the corresponding figure.
+Applications run by the kernel are declared in two places:
 
-> **Important Configuration Note:** Please ensure that the number of threads is configured to **16 tasklets** when running the simulations for this figure.
-> You can achieve this by using the following command-line argument: `--num_tasklets 16`.
+- **DPU side**: a C source tree under
+  `uPIMulator_frontend/benchmark/<NAME>/` (same structure as the
+  existing PrIM-style benchmarks; a `dpu/` subfolder and a `makefile`).
+- **Host/simulator side**: a class under
+  `uPIMulator_backend/src/faho/benchmark/` that derives from the
+  `Host` base and wires up `--application <NAME>` to the guest.
 
-## Figure 9: Instruction Mix (Single DPU)
-<img src="../assets/uPIMulator_figure9.png" width="400"/>
+Once both are registered, rebuild the frontend KERNEL binary and pass
+the new name via `--application`.
 
-Figure 9 provides a breakdown of the instruction mix observed during single-DPU execution.
-To generate this figure, follow the steps outlined below using the `upmem_profiler` tool and the accompanying Excel sheet.
+## Troubleshooting
 
-### Procedure
+- **`./build/src/uPIMulator not found`** — run `sh script/build.sh`
+  from `uPIMulator_backend/`.
+- **Linker / ANTLR errors on first frontend run** — rebuild the
+  compiler image (`docker build -t bongjoonhyun/compiler ...`) and
+  delete `uPIMulator_frontend/src/save_lib.pkl` to force a fresh link.
+- **Simulation exits immediately with "failed to open file"** — check
+  that `--bindir` is an *absolute* path and points at the
+  `<num_dpus>_dpus/` directory produced by the frontend.
 
-1. **Build the Profiler**
+## License
 
-   ```bash
-   cd /path/to/uPIMulator/tools/upmem_profiler/script
-   bash build.sh
-   ```
-
-2. **Extract Instructions**
-   Run the simulation with the `--verbose 1` flag to capture detailed instruction traces.
-
-   ```bash
-   cd /path/to/uPIMulator/python_cpp/uPIMulator_backend/
-   ./build/src/uPIMulator --benchmark VA --num_tasklets 16 --bindir /path/to/uPIMulator/python_cpp/uPIMulator_frontend/bin/1_dpus/ --logdir . --verbose 1 > trace.txt
-   ```
-
-3. **Run the Profiler**
-   Process the generated trace file using the `upmem_profiler` in `instruction_mix` mode.
-
-   ```bash
-   cd /path/to/uPIMulator/tools/upmem_profiler/
-   ./build/src/upmem_profiler --logpath /path/to/uPIMulator/python_cpp/uPIMulator_backend/trace.txt --mode instruction_mix
-   ```
-
-4. **Generate the Figure**
-   Utilize the profiler's output to populate the provided [Excel sheet](../assets/figure9_instruction_mix.xlsx), which will automatically generate the instruction mix figure.
-
-> **Important Configuration Note:** Similar to Figure 7, the instruction mix analysis in Figure 9 is based on simulations with **16 tasklets**.
-> Ensure that you maintain this configuration (`--num_tasklets 16`) for accurate replication. 
-
-## Figure 10: Multi-DPU Latency Breakdown and Speedup
-<img src="../assets/uPIMulator_figure10.png" width="400"/>
-
-Figure 10 presents the latency breakdown and speedup achieved in multi-DPU scenarios.
-
-### Configuring the Number of DPUs
-You can adjust the number of DPUs by modifying the `num_dpus` parameter in both the `uPIMulator_frontend` and `uPIMulator_backend`.
-
-### Generating the Latency Breakdown
-To obtain the latency breakdown data for plotting, utilize the `upmem_reg_model` tool located in the `tools/upmem_reg_model/` directory.
-This tool implements a communication model between the host and DPUs based on linear regression.
-
-### Procedure
-
-1. **Prepare Input Excel:**
-   - We provide a sample input Excel file as a template.
-   - Append a new row to this file, specifying the benchmark name, number of DPUs, and the `data_prep_param` used in your simulation.
-   - Fill in the relevant time values (in milliseconds) obtained from your simulation results, such as kernel execution time.
-
-2. **Run the Regression Model:**
-
-   ```bash
-   cd /path/to/uPIMulator/tools/upmem_reg_model/src
-   python main.py --input_excel_filepath /path/to/your/input_excel_file --output_excel_filepath /path/to/your/output_excel_file
-   ```
-
-3. **Access the Output:** 
-   - The linear regression results will be available in the specified output Excel file.
-   - Use this data to create the latency breakdown plots as shown in Figure 10.
-
-Please ensure that you follow these steps carefully to accurately reproduce the multi-DPU latency breakdown and speedup analysis presented in the paper.
-
-# 🌋 Adding Custom Benchmarks
-uPIMulator empowers you to go beyond the provided PrIM benchmark suite by incorporating your own custom benchmarks.
-This is particularly beneficial if you have access to UPMEM-PIM hardware and want to evaluate your code's performance in a simulated environment.
-
-## Requirements
-To successfully integrate a new benchmark, ensure it adheres to the following:
-
-1. **UPMEM-C Language:**  The benchmark must be implemented in UPMEM-C, a C-like language tailored for UPMEM-PIM programming.
-Consult the [UPMEM SDK documentation](https://sdk.upmem.com/2021.4.0/) for detailed programming guidelines.
-
-2. **File Structure and Naming:**  
-   - Maintain the same file hierarchy as the PrIM benchmarks, including a `dpu` subdirectory.
-   - Utilize the same `Makefile` structure used by the PrIM suite for automated compilation.
-
-3. **Communication Variables:**
-   - **Host-to-DPU:** Use the `DPU_INPUT_ARGUMENTS` variable for data transfer from the host to DPUs via WRAM.
-   - **DPU-to-Host:**  Use the `DPU_RESULTS` variable for data transfer from DPUs to the host via WRAM.
-   > **Important:** Deviating from these variable names will result in the linker ignoring the communication during the linking phase.
-
-## Data Preparation
-Once your benchmark meets the above criteria, it's ready for data input.
-Since UPMEM PIM-enabled memory directly utilizes physical addresses, exercise caution when feeding input/output data. 
-
-You'll need to provide a Python script to handle data preparation for your benchmark.
-This script should reside in the `uPIMulator_frontend/src/assembler/data_prep` directory and be recognized by `uPIMulator_frontend/src/assembler/assembler.py`.
-
-> **Key Considerations for Data Preparation Scripts: 
-> - Data transferred from the host to DPUs using `dpu_push_xfer` must be organized within the `input_dpu_mram_heap_pointer_name` variable in your data preparation script.
-> - Similarly, data transferred from DPUs to the host using `dpu_push_xfer` should be placed within the `output_dpu_mram_heap_pointer_name` variable.
-
-## Reference Examples
-We have included data preparation scripts for the 13 supported PrIM benchmarks.
-These serve as excellent references for structuring your custom data preparation scripts.
-
-By following these guidelines, you can seamlessly integrate your benchmarks into uPIMulator for comprehensive performance evaluation and analysis. 
-
-If you have any questions or encounter any difficulties during the integration process, contact us with any questions or difficulties.
+Inherits the upstream uPIMulator license for the simulator core. The
+Faho kernel additions are released under the same terms unless a
+branch-specific LICENSE says otherwise.

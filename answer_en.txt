@@ -1,0 +1,67 @@
+1. Linker / assembler: ANTLR vs. patching the UPMEM SDK
+
+Question:
+I saw you built your own linker and assembler using ANTLR instead of just patching the UPMEM SDK. Was it easier to start from scratch with a new grammar or did you try to modify the existing LLVM backend first?
+
+Answer:
+I would not frame it as simply choosing ANTLR instead of LLVM from zero. uPIMulator already had an ANTLR-based assembly parsing flow, and that fit our needs better than patching the SDK. The main limitation of relying too deeply on the UPMEM SDK is that it assumes a fixed physical-address layout. That becomes restrictive if you want to explore larger MRAM/WRAM configurations or add experimental instructions.
+
+Using ANTLR gives us a more flexible place to intervene. If we need a custom instruction, we can extend the grammar and then update the linker, assembler, and encoder around that instruction. That is much more direct for simulator research than modifying the full LLVM backend and SDK stack.
+
+So the pipeline is split deliberately: the UPMEM toolchain still compiles C into assembly, and then our frontend parses that assembly and produces the final binaries. It is more engineering work, but it gives us control over sections, symbols, DMA instructions, and binary layout, which are exactly the parts we needed to experiment with.
+
+
+2. Using reserved performance-counter bits for MMU thread/process IDs
+
+Question:
+Using the reserved bits of the performance counter to store thread IDs for the MMU is a pretty clever hack. How did you figure out those bits were safe to use without breaking the simulation logic?
+
+Answer:
+I treated the UPMEM SDK manual as the source of truth. In the documentation, bits 36-39 of the performance counter are marked as reserved, so they are not assigned any architectural meaning in the current SDK.
+
+That made them a reasonable place to store simulator-only metadata for the MMU, such as the current thread or process context. I used the same method for other register-level changes: check the SDK manual first, then make sure the simulator implementation follows that documented behavior. Since the simulator is designed to track the UPMEM SDK closely, using reserved bits avoids conflicting with any defined counter function.
+
+
+3. Timing accuracy for host-side calls such as inode_read and launch_process
+
+Question:
+Since uPIMulator doesn't simulate the host CPU, you had to build that interface layer for things like inode_read and launch_process. How did you make sure the timing of those host-side calls was accurate compared to a real system?
+
+Answer:
+I would be careful about calling those host-side timings “accurate” in the same sense as DPU timing. uPIMulator does not model host CPU instruction execution. In the original simulator, some host-to-DPU transfer costs are approximated with preset latency values rather than simulated from a real CPU pipeline.
+
+In Faho + uPIMulator, our focus is the behavior inside the DPU, so we intentionally omit most CPU-side overhead, including host syscall cost. The interface layer is there to make the DPU-visible state correct, not to claim cycle-accurate host execution.
+
+If later work needs to include host-side latency, it can be added as an explicit model. The original uPIMulator DMA-latency modeling is a good reference point for that kind of extension: https://github.com/VIA-Research/uPIMulator
+
+
+4. DMA congestion formula vs. PrIM benchmark behavior
+
+Question:
+Your DMA congestion model (sum(max(0, x / n_i - 1))) is interesting. When you were running the PrIM benchmarks, did you find cases where the simulator's behavior totally contradicted your formula, or did it always line up?
+
+Answer:
+That model came after looking at the benchmark results, not before. I noticed that some workloads were spending much more time than expected in DMA, so I started collecting statistics to understand where the delay was coming from.
+
+BS was the clearest case: its DMA congestion was very severe compared with the others. The formula was my attempt to summarize that behavior in a compact way. So I would describe it as a result-driven model, built to explain the measured congestion, rather than a theoretical model that I expected every benchmark to follow perfectly.
+
+
+5. About adding a `meet` function for exploring the code
+
+Question:
+I cloned the code you provided, but I admit I'm not entirely familiar with it. Could you program a `meet` function where we could further explore the code?
+
+Answer:
+I would not add a completely new high-level exploration tool. The most useful hook is already close to what we need. In `uPIMulator_backend/src/simulator/dpu/logic.cc`, around line 5563, the simulator handles the `time_cfg` instruction. In this implementation, when the register value is greater than 8, that path is used for debug-style tracing and is safe to call from assembly.
+
+For example, you can use an assembly helper like this:
+
+```asm
+print_debug:                                // @syscall
+// %bb.0:
+    add r1, r1, 8
+    time_cfg r0, r1
+    jump r23
+```
+
+Calling this helper causes the trace to print the value you want to observe. Since the simulator runs assembly-level code, this is the most direct way to inspect what is happening along a code path. The original project does not provide a richer exploration interface, so this `time_cfg`-based debug hook is the practical way to implement a “meet” function for code exploration.

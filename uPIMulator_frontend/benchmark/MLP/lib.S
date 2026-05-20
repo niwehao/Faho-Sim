@@ -27,3 +27,6 @@ print_debug:                                // @syscall
 	add r1, r1, 89
 	time_cfg r0,r1
 	jump r23
+
+
+

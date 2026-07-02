@@ -150,7 +150,7 @@ cd uPIMulator_backend
     --application BFS \
     --num_tasklets 16 \
     --num_dpus 1 \
-    --data_prep 0
+    --data_prep 4096
 ```
 
 Key flags (see `uPIMulator_backend/src/main.cc`):
